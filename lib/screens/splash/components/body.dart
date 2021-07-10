@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
-import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
-import 'package:shop_app/size_config.dart';
+import 'package:orev/constants.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
+import 'package:orev/size_config.dart';
 
 // This is the best practice
 import '../components/splash_content.dart';
@@ -18,18 +18,18 @@ class _BodyState extends State<Body> {
     {
       "text": "Welcome to Orev, Let’s shop!",
       "image": "assets/images/splash_1.png",
-      "anim":""
+      "anim": ""
     },
     {
       "text":
           "We help people conect with store \naround United State of America",
       "image": "assets/images/splash_2.png",
-      "anim":"assets/animation/splash_2.json"
+      "anim": "assets/animation/splash_2.json"
     },
     {
       "text": "We show the easy way to shop. \nJust stay at home with us",
       "image": "assets/images/splash_3.png",
-      "anim":"assets/animation/splash_3.json"
+      "anim": "assets/animation/splash_3.json"
     },
   ];
   @override

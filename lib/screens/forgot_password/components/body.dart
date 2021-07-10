@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/custom_surfix_icon.dart';
-import 'package:shop_app/components/default_button.dart';
-import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/components/no_account_text.dart';
-import 'package:shop_app/size_config.dart';
+import 'package:orev/components/custom_surfix_icon.dart';
+import 'package:orev/components/default_button.dart';
+import 'package:orev/components/form_error.dart';
+import 'package:orev/components/no_account_text.dart';
+import 'package:orev/size_config.dart';
 
 import '../../../constants.dart';
 
@@ -64,7 +64,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 setState(() {
                   errors.remove(kPhoneNumberNullError);
                 });
-              } else if (value.length==10) {
+              } else if (value.length == 10) {
                 setState(() {
                   errors.remove(kShortNumberError);
                   errors.remove(kLongNumberError);
@@ -77,12 +77,11 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 setState(() {
                   errors.add(kPhoneNumberNullError);
                 });
-              } else if (value.length<10) {
+              } else if (value.length < 10) {
                 setState(() {
                   errors.add(kShortNumberError);
                 });
-              }
-              else if (value.length>10) {
+              } else if (value.length > 10) {
                 setState(() {
                   errors.add(kLongNumberError);
                 });

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/custom_surfix_icon.dart';
-import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/helper/keyboard.dart';
-import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
-import 'package:shop_app/screens/login_success/login_success_screen.dart';
+import 'package:orev/components/custom_surfix_icon.dart';
+import 'package:orev/components/form_error.dart';
+import 'package:orev/helper/keyboard.dart';
+import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
+import 'package:orev/screens/login_success/login_success_screen.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
@@ -124,19 +124,18 @@ class _SignFormState extends State<SignForm> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
-        if(isNumeric(value)){
+        if (isNumeric(value)) {
           if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
             setState(() {
               errors.remove(kPhoneNumberNullError);
             });
-          } else if (value.length==10) {
+          } else if (value.length == 10) {
             setState(() {
               errors.remove(kShortNumberError);
               errors.remove(kLongNumberError);
             });
           }
-        }
-        else{
+        } else {
           if (value.isNotEmpty) {
             removeError(error: kEmailNullError);
           } else if (emailValidatorRegExp.hasMatch(value)) {
@@ -146,23 +145,21 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if(isNumeric(value)){
+        if (isNumeric(value)) {
           if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
             setState(() {
               errors.add(kPhoneNumberNullError);
             });
-          } else if (value.length<10) {
+          } else if (value.length < 10) {
             setState(() {
               errors.add(kShortNumberError);
             });
-          }
-          else if (value.length>10) {
+          } else if (value.length > 10) {
             setState(() {
               errors.add(kLongNumberError);
             });
           }
-        }
-        else{
+        } else {
           if (value.isEmpty) {
             addError(error: kEmailNullError);
             return "";
@@ -184,8 +181,9 @@ class _SignFormState extends State<SignForm> {
     );
   }
 }
+
 bool isNumeric(String s) {
-  if(s == null) {
+  if (s == null) {
     return false;
   }
   return double.parse(s, (e) => null) != null;
