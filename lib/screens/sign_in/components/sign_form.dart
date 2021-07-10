@@ -150,24 +150,38 @@ class _SignFormState extends State<SignForm> {
           if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
             setState(() {
               errors.add(kPhoneNumberNullError);
+              errors.remove(kEmailNullError);
+              errors.remove(kInvalidEmailError);
+
             });
           } else if (value.length<10) {
             setState(() {
               errors.add(kShortNumberError);
+              errors.remove(kEmailNullError);
+              errors.remove(kInvalidEmailError);
             });
           }
           else if (value.length>10) {
             setState(() {
               errors.add(kLongNumberError);
+              errors.remove(kEmailNullError);
+              errors.remove(kInvalidEmailError);
             });
           }
         }
         else{
           if (value.isEmpty) {
             addError(error: kEmailNullError);
+            errors.remove(kPhoneNumberNullError);
+            errors.remove(kShortNumberError);
+            errors.remove(kLongNumberError);
+
             return "";
           } else if (!emailValidatorRegExp.hasMatch(value)) {
             addError(error: kInvalidEmailError);
+            errors.remove(kPhoneNumberNullError);
+            errors.remove(kShortNumberError);
+            errors.remove(kLongNumberError);
             return "";
           }
         }
