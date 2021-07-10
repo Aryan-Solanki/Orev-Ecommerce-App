@@ -103,6 +103,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             text: "Continue",
             press: () {
+              errors = [];
               if (_formKey.currentState.validate()) {
                 // Do what you want to do
               }
