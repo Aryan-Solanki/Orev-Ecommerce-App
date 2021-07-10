@@ -73,6 +73,15 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () {
+              errors.remove(kInvalidEmailError);
+              errors.remove(kEmailNullError);
+              errors.remove(kPhoneNumberNullError);
+              errors.remove(kLongNumberError);
+              errors.remove(kShortNumberError);
+              errors.remove(kPassNullError);
+              errors.remove(kMatchPassError);
+              errors.remove(kShortPassError);
+
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
