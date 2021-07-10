@@ -4,8 +4,10 @@ import 'package:orev/components/form_error.dart';
 import 'package:orev/helper/keyboard.dart';
 import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../components/default_button.dart';
+import '../../../constants.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -19,7 +21,7 @@ class _SignFormState extends State<SignForm> {
   String email;
   String password;
   bool remember = false;
-  final List<String> errors = [];
+  List<String> errors = [];
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -72,21 +74,29 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
-              errors.remove(kInvalidEmailError);
-              errors.remove(kEmailNullError);
-              errors.remove(kPhoneNumberNullError);
-              errors.remove(kLongNumberError);
-              errors.remove(kShortNumberError);
-              errors.remove(kPassNullError);
-              errors.remove(kMatchPassError);
-              errors.remove(kShortPassError);
-
+            press: () async {
+              errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                try {
+                  UserCredential userCredential =
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    setState(() {
+                      addError(error: kUserNotFoundError);
+                    });
+                  } else if (e.code == 'wrong-password') {
+                    setState(() {
+                      addError(error: kPassWrongError);
+                    });
+                  }
+                }
               }
             },
           ),
@@ -160,7 +170,6 @@ class _SignFormState extends State<SignForm> {
               errors.add(kPhoneNumberNullError);
               errors.remove(kEmailNullError);
               errors.remove(kInvalidEmailError);
-
             });
           } else if (value.length < 10) {
             setState(() {
