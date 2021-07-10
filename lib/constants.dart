@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/size_config.dart';
 
-const kPrimaryColor = Color(0xFFFF7643);
+const kPrimaryColor = Color(0xff59b24d);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
@@ -33,6 +33,8 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
+const String kShortNumberError = "Phone number is too short";
+const String kLongNumberError = "Phone number is too long";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

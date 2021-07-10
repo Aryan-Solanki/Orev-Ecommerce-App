@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
                 ),
               ),
               Text(
-                "Please enter your email and we will send \nyou a link to return to your account",
+                "Please enter your phone number and we will send \nyou an otp to return to your account",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -57,41 +57,45 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.phone,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
+              if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
                 setState(() {
-                  errors.remove(kEmailNullError);
+                  errors.remove(kPhoneNumberNullError);
                 });
-              } else if (emailValidatorRegExp.hasMatch(value) &&
-                  errors.contains(kInvalidEmailError)) {
+              } else if (value.length==10) {
                 setState(() {
-                  errors.remove(kInvalidEmailError);
+                  errors.remove(kShortNumberError);
+                  errors.remove(kLongNumberError);
                 });
               }
               return null;
             },
             validator: (value) {
-              if (value.isEmpty && !errors.contains(kEmailNullError)) {
+              if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
                 setState(() {
-                  errors.add(kEmailNullError);
+                  errors.add(kPhoneNumberNullError);
                 });
-              } else if (!emailValidatorRegExp.hasMatch(value) &&
-                  !errors.contains(kInvalidEmailError)) {
+              } else if (value.length<10) {
                 setState(() {
-                  errors.add(kInvalidEmailError);
+                  errors.add(kShortNumberError);
+                });
+              }
+              else if (value.length>10) {
+                setState(() {
+                  errors.add(kLongNumberError);
                 });
               }
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
+              labelText: "Phone",
+              hintText: "Enter your phone",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
