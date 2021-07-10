@@ -19,7 +19,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String conform_password;
   bool remember = false;
   String phone;
-  final List<String> errors = [];
+  List<String> errors = [];
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -53,17 +53,13 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              errors.remove(kInvalidEmailError);
-              errors.remove(kPhoneNumberNullError);
-              errors.remove(kLongNumberError);
-              errors.remove(kShortNumberError);
-              errors.remove(kPassNullError);
-              errors.remove(kMatchPassError);
-              errors.remove(kShortPassError);
+              errors=[];
               if (_formKey.currentState.validate()) {
+
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
                 Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+
               }
             },
           ),
