@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/size_config.dart';
@@ -9,10 +10,8 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: SizeConfig.screenHeight * 0.04),
-        Image.asset(
-          "assets/images/success.png",
-          height: SizeConfig.screenHeight * 0.4, //40%
-        ),
+        Lottie.asset("assets/animation/success.json",
+            repeat: true), // Background Image !
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
           "Login Success",

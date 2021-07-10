@@ -31,6 +31,9 @@ dependencies:
   flutter_svg: ^0.19.1 # help us to use SVG in our app
   provider: ^4.3.1 # for State management
   lottie:
+  firebase_core: ^1.0.4
+  firebase_auth:
+
 
 dev_dependencies:
   flutter_test:
