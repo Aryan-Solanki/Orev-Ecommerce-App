@@ -102,9 +102,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               boxedPinPutWithPreFilledSymbol(),
-              SizedBox(height: SizeConfig.screenHeight * 0.02),
-              buildTimer(),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              SizedBox(height: SizeConfig.screenHeight * 0.05),
               Text(
                 "Please enter the OTP that you have received on \nyour provided phone number",
                 textAlign: TextAlign.center,
@@ -113,7 +111,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               DefaultButton(
                 text: "Submit",
                 press: () {
-                  print(timer);
                   errors = [];
                   if (_formKey.currentState.validate()) {
                     //nxt pagee
@@ -129,37 +126,10 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         // backgroundColor: Colors.yellow,
         );
   }
-  Row buildTimer() {
-    return
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        TweenAnim(),
-      ],
-    );
-  }
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String email;
-  double timer=10.0;
-  TweenAnimationBuilder TweenAnim(){
-    return TweenAnimationBuilder(
-      tween: Tween(begin: timer, end: 0.0),
-      duration: Duration(seconds: 10),
-      builder: (_, value, child) => value==0.0?TextButton(
-        onPressed: (){
-            TweenAnim();
-        }
-        ,
-        child: Text("resend otp"),
-      ):Text(
-        "Resend OTP in "+"00:${value}",
-        style: TextStyle(color: kPrimaryColor),
-      ),
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Form(
