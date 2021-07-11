@@ -33,6 +33,8 @@ dependencies:
   lottie:
   firebase_core: ^1.0.4
   firebase_auth:
+  slide_popup_dialog: ^0.0.2
+  pinput: ^1.2.0
 
 dev_dependencies:
   flutter_test:
