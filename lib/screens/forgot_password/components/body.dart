@@ -10,9 +10,7 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:pinput/pin_put/pin_put_state.dart';
 
-
 class Body extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -58,71 +56,93 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
       color: Color(0xffededed),
-      border: Border.all(color: Colors.deepPurpleAccent),
-      borderRadius: BorderRadius.circular(15.0),
+      border: Border.all(color: kPrimaryColor),
+      // borderRadius: BorderRadius.circular(15.0),
     );
   }
+
+  Widget boxedPinPutWithPreFilledSymbol() {
+    final BoxDecoration pinPutDecoration = BoxDecoration(
+      color: kPrimaryColor,
+      borderRadius: BorderRadius.circular(5.0),
+    );
+
+    return PinPut(
+      withCursor: true,
+      fieldsCount: 6,
+      textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+      eachFieldWidth: 50.0,
+      eachFieldHeight: 50.0,
+      onSubmit: (String pin) => print(pin),
+      focusNode: _pinPutFocusNode,
+      controller: _pinPutController,
+      submittedFieldDecoration: pinPutDecoration,
+      selectedFieldDecoration:
+          pinPutDecoration.copyWith(color: Colors.lightGreen),
+      followingFieldDecoration: pinPutDecoration,
+    );
+  }
+
   void _showDialog() {
     slideDialog.showSlideDialog(
-      context: context,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-        child: Column(
-          children: [
-            Text(
-              "One Time Password",
-              style: TextStyle(
-                fontSize: getProportionateScreenWidth(28),
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: SizeConfig.screenHeight * 0.05),
-            PinPut(
-              fieldsCount: 6,
-              onSubmit: (pin) async {
-                print("hooooooooooo");
-              },
-              focusNode: _pinPutFocusNode,
-              controller: _pinPutController,
-              submittedFieldDecoration: _pinPutDecoration.copyWith(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              selectedFieldDecoration: _pinPutDecoration,
-              followingFieldDecoration: _pinPutDecoration.copyWith(
-                borderRadius: BorderRadius.circular(5.0),
-                border: Border.all(
-                  color: Colors.deepPurpleAccent.withOpacity(.5),
+        context: context,
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: Column(
+            children: [
+              Text(
+                "One Time Password",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(28),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(height: SizeConfig.screenHeight * 0.1),
+              SizedBox(height: SizeConfig.screenHeight * 0.05),
+              boxedPinPutWithPreFilledSymbol(),
+              // PinPut(
+              //   fieldsCount: 6,
+              //   onSubmit: (pin) async {
+              //     print("hooooooooooo");
+              //   },
+              //   focusNode: _pinPutFocusNode,
+              //   controller: _pinPutController,
+              //   submittedFieldDecoration: _pinPutDecoration.copyWith(
+              //     borderRadius: BorderRadius.circular(15.0),
+              //   ),
+              //   selectedFieldDecoration: _pinPutDecoration,
+              //   followingFieldDecoration: _pinPutDecoration.copyWith(
+              //     borderRadius: BorderRadius.circular(5.0),
+              //     border: Border.all(
+              //       color: kPrimaryColor.withOpacity(.5),
+              //     ),
+              //   ),
+              // ),
+              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              Text(
+                "Please enter the OTP that you have received on \nyour provided phone number",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              DefaultButton(
+                text: "Submit",
+                press: () {
+                  errors = [];
+                  if (_formKey.currentState.validate()) {
+                    //nxt pagee
+                  }
+                },
+              )
+            ],
+          ),
+        )
 
-            Text(
-              "Please enter the OTP that you have received on \nyour provided phone number",
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: SizeConfig.screenHeight * 0.1),
-            DefaultButton(
-              text: "Submit",
-              press: () {
-                errors = [];
-                if (_formKey.currentState.validate()) {
-             //nxt pagee
-                }
-              },
-            )
-
-          ],
-        ),
-      )
-
-      // barrierColor: Colors.white.withOpacity(0.7),
-      // pillColor: Colors.red,
-      // backgroundColor: Colors.yellow,
-    );
+        // barrierColor: Colors.white.withOpacity(0.7),
+        // pillColor: Colors.red,
+        // backgroundColor: Colors.yellow,
+        );
   }
-
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
