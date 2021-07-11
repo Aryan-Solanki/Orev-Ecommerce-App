@@ -77,30 +77,30 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: SizeConfig.screenHeight * 0.05),
+            PinPut(
+              fieldsCount: 6,
+              onSubmit: (pin) async {
+                print("hooooooooooo");
+              },
+              focusNode: _pinPutFocusNode,
+              controller: _pinPutController,
+              submittedFieldDecoration: _pinPutDecoration.copyWith(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              selectedFieldDecoration: _pinPutDecoration,
+              followingFieldDecoration: _pinPutDecoration.copyWith(
+                borderRadius: BorderRadius.circular(5.0),
+                border: Border.all(
+                  color: Colors.deepPurpleAccent.withOpacity(.5),
+                ),
+              ),
+            ),
+            SizedBox(height: SizeConfig.screenHeight * 0.1),
+
             Text(
               "Please enter the OTP that you have received on \nyour provided phone number",
               textAlign: TextAlign.center,
-            ),
-            SizedBox(height: SizeConfig.screenHeight * 0.1),
-            Container(
-              child: PinPut(
-                fieldsCount: 6,
-                onSubmit: (pin) async {
-
-                },
-                focusNode: _pinPutFocusNode,
-                controller: _pinPutController,
-                submittedFieldDecoration: _pinPutDecoration.copyWith(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                selectedFieldDecoration: _pinPutDecoration,
-                followingFieldDecoration: _pinPutDecoration.copyWith(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                    color: Colors.deepPurpleAccent.withOpacity(.5),
-                  ),
-                ),
-              ),
             ),
             SizedBox(height: SizeConfig.screenHeight * 0.1),
             DefaultButton(
