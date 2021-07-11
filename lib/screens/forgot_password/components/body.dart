@@ -10,6 +10,7 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:pinput/pin_put/pin_put_state.dart';
 
+
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -101,24 +102,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               boxedPinPutWithPreFilledSymbol(),
-              // PinPut(
-              //   fieldsCount: 6,
-              //   onSubmit: (pin) async {
-              //     print("hooooooooooo");
-              //   },
-              //   focusNode: _pinPutFocusNode,
-              //   controller: _pinPutController,
-              //   submittedFieldDecoration: _pinPutDecoration.copyWith(
-              //     borderRadius: BorderRadius.circular(15.0),
-              //   ),
-              //   selectedFieldDecoration: _pinPutDecoration,
-              //   followingFieldDecoration: _pinPutDecoration.copyWith(
-              //     borderRadius: BorderRadius.circular(5.0),
-              //     border: Border.all(
-              //       color: kPrimaryColor.withOpacity(.5),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: SizeConfig.screenHeight * 0.02),
+              buildTimer(),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
               Text(
                 "Please enter the OTP that you have received on \nyour provided phone number",
@@ -128,6 +113,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               DefaultButton(
                 text: "Submit",
                 press: () {
+                  print(timer);
                   errors = [];
                   if (_formKey.currentState.validate()) {
                     //nxt pagee
@@ -143,10 +129,37 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         // backgroundColor: Colors.yellow,
         );
   }
+  Row buildTimer() {
+    return
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+
+        TweenAnim(),
+      ],
+    );
+  }
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String email;
+  double timer=10.0;
+  TweenAnimationBuilder TweenAnim(){
+    return TweenAnimationBuilder(
+      tween: Tween(begin: timer, end: 0.0),
+      duration: Duration(seconds: 10),
+      builder: (_, value, child) => value==0.0?TextButton(
+        onPressed: (){
+            TweenAnim();
+        }
+        ,
+        child: Text("resend otp"),
+      ):Text(
+        "Resend OTP in "+"00:${value}",
+        style: TextStyle(color: kPrimaryColor),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
