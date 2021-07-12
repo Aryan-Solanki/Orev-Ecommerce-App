@@ -43,7 +43,7 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
+          buildPhoneFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -79,7 +79,6 @@ class _SignFormState extends State<SignForm> {
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                print("hiiii");
                 KeyboardUtil.hideKeyboard(context);
                 try {
                   UserCredential userCredential =
@@ -114,7 +113,7 @@ class _SignFormState extends State<SignForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -140,43 +139,39 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField buildPhoneFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => number = newValue,
       onChanged: (value) {
-        number=value;
-        if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
-          setState(() {
-            errors.remove(kPhoneNumberNullError);
-          });
-        } else if (value.length == 10) {
-          setState(() {
-            errors.remove(kShortNumberError);
-            errors.remove(kLongNumberError);
-          });
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        } if (value.length == 10) {
+          removeError(error: kShortNumberError);
+          removeError(error: kLongNumberError);
         }
         return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
-          setState(() {
-            errors.add(kPhoneNumberNullError);
-          });
+        if (value.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
         } else if (value.length < 10) {
-          setState(() {
-            errors.add(kShortNumberError);
-          });
-        } else if (value.length > 10) {
-          setState(() {
-            errors.add(kLongNumberError);
-          });
+          addError(error: kShortNumberError);
+
+          return "";
         }
+        else if (value.length > 10) {
+          addError(error: kLongNumberError);
+
+          return "";
+        }
+
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Phone",
-        hintText: "Enter your phone",
+        labelText: "Number",
+        hintText: "Enter your number",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,

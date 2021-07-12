@@ -128,6 +128,12 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         errors.add(error);
       });
   }
+  void removeError({String error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+91' + number,
@@ -164,66 +170,20 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            keyboardType: TextInputType.phone,
-            onSaved: (newValue) => number = newValue,
-            onChanged: (value) {
-              number=value;
-              if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
-                setState(() {
-                  errors.remove(kPhoneNumberNullError);
-                });
-              } else if (value.length == 10) {
-                setState(() {
-                  errors.remove(kShortNumberError);
-                  errors.remove(kLongNumberError);
-                });
-              }
-              return null;
-            },
-            validator: (value) {
-              if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
-                setState(() {
-                  addError(error: kPhoneNumberNullError);
-                  return "";
-                });
-              } else if (value.length < 10) {
-                setState(() {
-                  addError(error: kShortNumberError);
-                  return "";
-                });
-              } else if (value.length > 10) {
-                setState(() {
-                  addError(error: kLongNumberError);
-                  return "";
-                });
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              labelText: "Phone",
-              hintText: "Enter your phone",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
-            ),
-          ),
+          buildPhoneFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () {
-              errors = [];
+            press: () async {
               print(errors);
+              errors = [];
               if (_formKey.currentState.validate()) {
-                    // _formKey.currentState.save();
-                    print("hiiii");
-                    // _verifyPhone();
-                    // _showDialog();
-                }
-
+                _formKey.currentState.save();
+                _verifyPhone();
+                _showDialog();
+              }
             },
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -233,4 +193,44 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     );
   }
 
+  TextFormField buildPhoneFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.phone,
+      onSaved: (newValue) => number = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        } if (value.length == 10) {
+          removeError(error: kShortNumberError);
+          removeError(error: kLongNumberError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if (value.length < 10) {
+          addError(error: kShortNumberError);
+
+          return "";
+        }
+        else if (value.length > 10) {
+          addError(error: kLongNumberError);
+
+          return "";
+        }
+
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Number",
+        hintText: "Enter your number",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+      ),
+    );
+  }
 }
