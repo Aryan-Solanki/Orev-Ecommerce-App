@@ -7,7 +7,7 @@ import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -38,6 +38,36 @@ class _SignUpFormState extends State<SignUpForm> {
         errors.remove(error);
       });
   }
+
+  _verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+91' + number,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              print("nothinggggg");
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+          print("e.message");
+        },
+        codeSent: (String verficationID, int resendToken) {
+          setState(() {
+            _verificationCode = verficationID;
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 30));
+  }
+
   Widget boxedPinPutWithPreFilledSymbol() {
     final BoxDecoration pinPutDecoration = BoxDecoration(
       color: kPrimaryColor,
@@ -50,21 +80,36 @@ class _SignUpFormState extends State<SignUpForm> {
       textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
       eachFieldWidth: 50.0,
       eachFieldHeight: 50.0,
-      onSubmit: (String pin) => print(pin),
+      onSubmit: (String pin) async {
+        try {
+          await FirebaseAuth.instance
+              .signInWithCredential(PhoneAuthProvider.credential(
+                  verificationId: _verificationCode, smsCode: pin))
+              .then((value) async {
+            if (value.user != null) {
+              print("Code Verified");
+              // Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
+            }
+          });
+        } catch (e) {
+          print(e);
+        }
+      },
       focusNode: _pinPutFocusNode,
       controller: _pinPutController,
       submittedFieldDecoration: pinPutDecoration,
       selectedFieldDecoration:
-      pinPutDecoration.copyWith(color: Colors.lightGreen),
+          pinPutDecoration.copyWith(color: Colors.lightGreen),
       followingFieldDecoration: pinPutDecoration,
     );
   }
+
   void _showDialog() {
     slideDialog.showSlideDialog(
         context: context,
         child: Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
             children: [
               Text(
@@ -83,25 +128,27 @@ class _SignUpFormState extends State<SignUpForm> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
-              DefaultButton(
-                text: "Submit",
-                press: () {
-                  errors = [];
-                  if (_formKey.currentState.validate()) {
-                    //nxt pagee
-                  }
-                },
-              )
+              // DefaultButton(
+              //   text: "Submit",
+              //   press: () {
+              //     errors = [];
+              //     if (_formKey.currentState.validate()) {
+              //       //nxt pagee
+              //     }
+              //   },
+              // )
             ],
           ),
         )
 
-      // barrierColor: Colors.white.withOpacity(0.7),
-      // pillColor: Colors.red,
-      // backgroundColor: Colors.yellow,
-    );
+        // barrierColor: Colors.white.withOpacity(0.7),
+        // pillColor: Colors.red,
+        // backgroundColor: Colors.yellow,
+        );
   }
 
+  String _verificationCode;
+  String number;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -118,11 +165,12 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              errors=[];
+              errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                print(phone+"    "+password);
+                print(number + "    " + password);
+                _verifyPhone();
                 _showDialog();
                 // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
 
@@ -141,7 +189,8 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
+        }
+        if (value.isNotEmpty && password == conform_password) {
           removeError(error: kMatchPassError);
         }
         conform_password = value;
@@ -150,7 +199,8 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if ((password != value)) {
+        }
+        if ((password != value)) {
           addError(error: kMatchPassError);
           return "";
         }
@@ -174,7 +224,8 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        }
+        if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -183,7 +234,8 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        }
+        if (value.length < 8) {
           addError(error: kShortPassError);
           return "";
         }
@@ -203,46 +255,36 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPhoneFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phone = newValue,
+      onSaved: (newValue) => number = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
-          setState(() {
-            errors.remove(kPhoneNumberNullError);
-          });
-        } else if (value.length == 10) {
-          setState(() {
-            errors.remove(kShortNumberError);
-            errors.remove(kLongNumberError);
-          });
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        }
+        if (value.length == 10) {
+          removeError(error: kShortNumberError);
+          removeError(error: kLongNumberError);
         }
         return null;
       },
       validator: (value) {
-        if(isNumeric(value)){
-          if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
-            setState(() {
-              errors.add(kPhoneNumberNullError);
-            });
-          } else if (value.length<10) {
-            setState(() {
-              errors.add(kShortNumberError);
-            });
-          }
-          else if (value.length>10) {
-            setState(() {
-              errors.add(kLongNumberError);
-            });
-          }
-        }
-        else{
-        errors.add(kInvalidPhoneError);
+        if (value.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if (value.length < 10) {
+          addError(error: kShortNumberError);
+
+          return "";
+        } else if (value.length > 10) {
+          addError(error: kLongNumberError);
+
+          return "";
         }
 
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Phone",
-        hintText: "Enter your phone",
+        labelText: "Number",
+        hintText: "Enter your number",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -250,8 +292,8 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
-
 }
+
 bool isNumeric(String s) {
   if (s == null) {
     return false;

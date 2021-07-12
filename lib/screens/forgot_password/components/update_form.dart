@@ -43,8 +43,6 @@ class _UpdateFormState extends State<UpdateForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildOldPasswordField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildConformPassFormField(),
@@ -53,11 +51,11 @@ class _UpdateFormState extends State<UpdateForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              errors=[];
+              errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                print(oldpassword+"    "+password);
+                print(password);
                 // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
 
               }
@@ -75,7 +73,8 @@ class _UpdateFormState extends State<UpdateForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
+        }
+        if (value.isNotEmpty && password == conform_password) {
           removeError(error: kMatchPassError);
         }
         conform_password = value;
@@ -84,7 +83,8 @@ class _UpdateFormState extends State<UpdateForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if ((password != value)) {
+        }
+        if ((password != value)) {
           addError(error: kMatchPassError);
           return "";
         }
@@ -108,7 +108,8 @@ class _UpdateFormState extends State<UpdateForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        }
+        if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -117,7 +118,8 @@ class _UpdateFormState extends State<UpdateForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        }
+        if (value.length < 8) {
           addError(error: kShortPassError);
           return "";
         }
@@ -133,41 +135,8 @@ class _UpdateFormState extends State<UpdateForm> {
       ),
     );
   }
-
-  TextFormField buildOldPasswordField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => oldpassword = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        oldpassword = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
-
 }
+
 bool isNumeric(String s) {
   if (s == null) {
     return false;

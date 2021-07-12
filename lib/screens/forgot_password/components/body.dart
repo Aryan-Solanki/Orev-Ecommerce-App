@@ -10,9 +10,9 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../update_password_screen.dart';
 
 class Body extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -48,7 +48,6 @@ class Body extends StatelessWidget {
 
 class ForgotPassForm extends StatefulWidget {
   @override
-
   _ForgotPassFormState createState() => _ForgotPassFormState();
 }
 
@@ -72,16 +71,14 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         try {
           await FirebaseAuth.instance
               .signInWithCredential(PhoneAuthProvider.credential(
-              verificationId: _verificationCode, smsCode: pin))
+                  verificationId: _verificationCode, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
-              print("hiii");
-              // Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
+              Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
             }
           });
         } catch (e) {
           print(e);
-
         }
       },
       focusNode: _pinPutFocusNode,
@@ -144,12 +141,14 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         errors.add(error);
       });
   }
+
   void removeError({String error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
       });
   }
+
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+91' + number,
@@ -178,6 +177,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         },
         timeout: Duration(seconds: 30));
   }
+
   String _verificationCode;
   String number;
   @override
@@ -191,7 +191,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
-
             text: "Continue",
             press: () async {
               print(errors);
@@ -217,7 +216,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
-        } if (value.length == 10) {
+        }
+        if (value.length == 10) {
           removeError(error: kShortNumberError);
           removeError(error: kLongNumberError);
         }
@@ -231,8 +231,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           addError(error: kShortNumberError);
 
           return "";
-        }
-        else if (value.length > 10) {
+        } else if (value.length > 10) {
           addError(error: kLongNumberError);
 
           return "";
