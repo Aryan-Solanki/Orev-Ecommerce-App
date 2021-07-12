@@ -8,10 +8,10 @@ import '../../../constants.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:pinput/pin_put/pin_put_state.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Body extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,14 +53,6 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
-
-  BoxDecoration get _pinPutDecoration {
-    return BoxDecoration(
-      color: Color(0xffededed),
-      border: Border.all(color: kPrimaryColor),
-      // borderRadius: BorderRadius.circular(15.0),
-    );
-  }
 
   Widget boxedPinPutWithPreFilledSymbol() {
     final BoxDecoration pinPutDecoration = BoxDecoration(
@@ -129,7 +121,36 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
-  String email;
+  _verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+91' + number,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              print("nothinggggg");
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+          print("e.message");
+        },
+        codeSent: (String verficationID, int resendToken) {
+          setState(() {
+            _verificationCode = verficationID;
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 30));
+  }
+  String _verificationCode;
+  String number;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -138,8 +159,9 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => email = newValue,
+            onSaved: (newValue) => number = newValue,
             onChanged: (value) {
+              number=value;
               if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
                 setState(() {
                   errors.remove(kPhoneNumberNullError);
@@ -185,6 +207,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             press: () {
               errors = [];
               if (_formKey.currentState.validate()) {
+                _verifyPhone();
                 _showDialog();
               }
             },
@@ -195,4 +218,5 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       ),
     );
   }
+
 }
