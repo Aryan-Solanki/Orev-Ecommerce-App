@@ -47,6 +47,7 @@ class Body extends StatelessWidget {
 
 class ForgotPassForm extends StatefulWidget {
   @override
+
   _ForgotPassFormState createState() => _ForgotPassFormState();
 }
 
@@ -121,6 +122,12 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
+  void addError({String error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error);
+      });
+  }
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+91' + number,
@@ -177,15 +184,18 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             validator: (value) {
               if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
                 setState(() {
-                  errors.add(kPhoneNumberNullError);
+                  addError(error: kPhoneNumberNullError);
+                  return "";
                 });
               } else if (value.length < 10) {
                 setState(() {
-                  errors.add(kShortNumberError);
+                  addError(error: kShortNumberError);
+                  return "";
                 });
               } else if (value.length > 10) {
                 setState(() {
-                  errors.add(kLongNumberError);
+                  addError(error: kLongNumberError);
+                  return "";
                 });
               }
               return null;
@@ -205,14 +215,15 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             text: "Continue",
             press: () {
+              errors = [];
               print(errors);
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+              if (_formKey.currentState.validate()) {
+                    // _formKey.currentState.save();
                     print("hiiii");
                     // _verifyPhone();
                     // _showDialog();
                 }
-              // errors = [];
+
             },
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),

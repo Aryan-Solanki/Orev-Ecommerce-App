@@ -79,6 +79,7 @@ class _SignFormState extends State<SignForm> {
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                print("hiiii");
                 KeyboardUtil.hideKeyboard(context);
                 try {
                   UserCredential userCredential =
