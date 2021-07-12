@@ -10,6 +10,7 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class Body extends StatelessWidget {
 
   @override
@@ -74,7 +75,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               verificationId: _verificationCode, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
-              print("hurray right pincode");
+              print("hiii");
+              // Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
             }
           });
         } catch (e) {

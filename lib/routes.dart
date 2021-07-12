@@ -3,6 +3,7 @@ import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
+import 'package:orev/screens/forgot_password/update_password_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
@@ -18,6 +19,7 @@ final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
   SignInScreen.routeName: (context) => SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
+  UpdatePasswordScreen.routeName: (context) => UpdatePasswordScreen(),
   LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
