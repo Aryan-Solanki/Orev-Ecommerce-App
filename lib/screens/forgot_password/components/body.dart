@@ -205,11 +205,14 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              errors = [];
-              if (_formKey.currentState.validate()) {
-                _verifyPhone();
-                _showDialog();
-              }
+              print(errors);
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    print("hiiii");
+                    // _verifyPhone();
+                    // _showDialog();
+                }
+              // errors = [];
             },
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),

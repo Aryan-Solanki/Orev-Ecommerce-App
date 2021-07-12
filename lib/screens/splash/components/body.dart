@@ -22,12 +22,12 @@ class _BodyState extends State<Body> {
     },
     {
       "text":
-          "We help people conect with store \naround United State of America",
+          "Nature is Organic,We at Orev delivers\n highest quality Organic Products.",
       "image": "assets/images/splash_2.png",
       "anim": "assets/animation/splash_2.json"
     },
     {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
+      "text": "Best Quality Organic Products \nat your doorstep.",
       "image": "assets/images/splash_3.png",
       "anim": "assets/animation/splash_3.json"
     },

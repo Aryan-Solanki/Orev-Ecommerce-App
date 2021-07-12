@@ -18,7 +18,7 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String email;
+  String number;
   String password;
   bool remember = false;
   List<String> errors = [];
@@ -75,6 +75,7 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () async {
+              print(errors);
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
@@ -82,7 +83,7 @@ class _SignFormState extends State<SignForm> {
                 try {
                   UserCredential userCredential =
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
+                    email: number+"orev.com",
                     password: password,
                   );
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
@@ -140,78 +141,49 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      keyboardType: TextInputType.phone,
+      onSaved: (newValue) => number = newValue,
       onChanged: (value) {
-        if (isNumeric(value)) {
-          if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
-            setState(() {
-              errors.remove(kPhoneNumberNullError);
-            });
-          } else if (value.length == 10) {
-            setState(() {
-              errors.remove(kShortNumberError);
-              errors.remove(kLongNumberError);
-            });
-          }
-        } else {
-          if (value.isNotEmpty) {
-            removeError(error: kEmailNullError);
-          } else if (emailValidatorRegExp.hasMatch(value)) {
-            removeError(error: kInvalidEmailError);
-          }
+        number=value;
+        if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
+          setState(() {
+            errors.remove(kPhoneNumberNullError);
+          });
+        } else if (value.length == 10) {
+          setState(() {
+            errors.remove(kShortNumberError);
+            errors.remove(kLongNumberError);
+          });
         }
         return null;
       },
       validator: (value) {
-        if (isNumeric(value)) {
-          if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
-            setState(() {
-              errors.add(kPhoneNumberNullError);
-              errors.remove(kEmailNullError);
-              errors.remove(kInvalidEmailError);
-            });
-          } else if (value.length < 10) {
-            setState(() {
-              errors.add(kShortNumberError);
-              errors.remove(kEmailNullError);
-              errors.remove(kInvalidEmailError);
-            });
-          } else if (value.length > 10) {
-            setState(() {
-              errors.add(kLongNumberError);
-              errors.remove(kEmailNullError);
-              errors.remove(kInvalidEmailError);
-            });
-          }
-        } else {
-          if (value.isEmpty) {
-            addError(error: kEmailNullError);
-            errors.remove(kPhoneNumberNullError);
-            errors.remove(kShortNumberError);
-            errors.remove(kLongNumberError);
-
-            return "";
-          } else if (!emailValidatorRegExp.hasMatch(value)) {
-            addError(error: kInvalidEmailError);
-            errors.remove(kPhoneNumberNullError);
-            errors.remove(kShortNumberError);
-            errors.remove(kLongNumberError);
-            return "";
-          }
+        if (value.isEmpty && !errors.contains(kPhoneNumberNullError)) {
+          setState(() {
+            errors.add(kPhoneNumberNullError);
+          });
+        } else if (value.length < 10) {
+          setState(() {
+            errors.add(kShortNumberError);
+          });
+        } else if (value.length > 10) {
+          setState(() {
+            errors.add(kLongNumberError);
+          });
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email / Phone",
-        hintText: "Enter your email or phone",
+        labelText: "Phone",
+        hintText: "Enter your phone",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
       ),
     );
   }
+
 }
 
 bool isNumeric(String s) {
