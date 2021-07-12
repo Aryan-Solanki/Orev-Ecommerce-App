@@ -67,7 +67,21 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
       eachFieldWidth: 50.0,
       eachFieldHeight: 50.0,
-      onSubmit: (String pin) => print(pin),
+      onSubmit: (String pin) async {
+        try {
+          await FirebaseAuth.instance
+              .signInWithCredential(PhoneAuthProvider.credential(
+              verificationId: _verificationCode, smsCode: pin))
+              .then((value) async {
+            if (value.user != null) {
+              print("hurray right pincode");
+            }
+          });
+        } catch (e) {
+          print(e);
+
+        }
+      },
       focusNode: _pinPutFocusNode,
       controller: _pinPutController,
       submittedFieldDecoration: pinPutDecoration,
@@ -175,6 +189,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
+
             text: "Continue",
             press: () async {
               print(errors);
