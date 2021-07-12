@@ -8,10 +8,10 @@ import '../../../constants.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:pinput/pin_put/pin_put_state.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Body extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -54,14 +54,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
 
-  BoxDecoration get _pinPutDecoration {
-    return BoxDecoration(
-      color: Color(0xffededed),
-      border: Border.all(color: kPrimaryColor),
-      // borderRadius: BorderRadius.circular(15.0),
-    );
-  }
-
   Widget boxedPinPutWithPreFilledSymbol() {
     final BoxDecoration pinPutDecoration = BoxDecoration(
       color: kPrimaryColor,
@@ -102,9 +94,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               boxedPinPutWithPreFilledSymbol(),
-              SizedBox(height: SizeConfig.screenHeight * 0.02),
-              buildTimer(),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              SizedBox(height: SizeConfig.screenHeight * 0.05),
               Text(
                 "Please enter the OTP that you have received on \nyour provided phone number",
                 textAlign: TextAlign.center,
@@ -113,7 +103,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               DefaultButton(
                 text: "Submit",
                 press: () {
-                  print(timer);
                   errors = [];
                   if (_formKey.currentState.validate()) {
                     //nxt pagee
@@ -129,37 +118,39 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         // backgroundColor: Colors.yellow,
         );
   }
-  Row buildTimer() {
-    return
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        TweenAnim(),
-      ],
-    );
-  }
 
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
-  String email;
-  double timer=10.0;
-  TweenAnimationBuilder TweenAnim(){
-    return TweenAnimationBuilder(
-      tween: Tween(begin: timer, end: 0.0),
-      duration: Duration(seconds: 10),
-      builder: (_, value, child) => value==0.0?TextButton(
-        onPressed: (){
-            TweenAnim();
-        }
-        ,
-        child: Text("resend otp"),
-      ):Text(
-        "Resend OTP in "+"00:${value}",
-        style: TextStyle(color: kPrimaryColor),
-      ),
-    );
+  _verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+91' + number,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              print("nothinggggg");
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+          print("e.message");
+        },
+        codeSent: (String verficationID, int resendToken) {
+          setState(() {
+            _verificationCode = verficationID;
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 30));
   }
+  String _verificationCode;
+  String number;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -168,8 +159,9 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => email = newValue,
+            onSaved: (newValue) => number = newValue,
             onChanged: (value) {
+              number=value;
               if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
                 setState(() {
                   errors.remove(kPhoneNumberNullError);
@@ -215,6 +207,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             press: () {
               errors = [];
               if (_formKey.currentState.validate()) {
+                _verifyPhone();
                 _showDialog();
               }
             },
@@ -225,4 +218,5 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       ),
     );
   }
+
 }

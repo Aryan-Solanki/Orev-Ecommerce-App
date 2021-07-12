@@ -25,18 +25,19 @@ const defaultDuration = Duration(milliseconds: 250);
 // Form Error
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-const String kEmailNullError = "Please Enter your email";
+const String kEmailNullError = "Please Enter Your Email";
 const String kInvalidEmailError = "Please Enter Valid Email";
-const String kPassNullError = "Please Enter your password";
-const String kUserNotFoundError = "This user does not exist";
-const String kPassWrongError = "Password is incorrect";
-const String kShortPassError = "Password is too short";
-const String kMatchPassError = "Passwords don't match";
-const String kNamelNullError = "Please Enter your name";
-const String kPhoneNumberNullError = "Please Enter your phone number";
-const String kAddressNullError = "Please Enter your address";
-const String kShortNumberError = "Phone number is too short";
-const String kLongNumberError = "Phone number is too long";
+const String kPassNullError = "Please Enter Your Password";
+const String kUserNotFoundError = "This User Does Not Exist";
+const String kPassWrongError = "Password Is Incorrect";
+const String kShortPassError = "Password Is Too Short";
+const String kMatchPassError = "Passwords Don't Match";
+const String kNamelNullError = "Please Enter Your Name";
+const String kPhoneNumberNullError = "Please Enter Your Phone Number";
+const String kAddressNullError = "Please Enter Your Address";
+const String kShortNumberError = "Phone Number Is Too Short";
+const String kLongNumberError = "Phone Number Is Too Long";
+const String kInvalidPhoneError = "Please Enter Valid Phone Number";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
