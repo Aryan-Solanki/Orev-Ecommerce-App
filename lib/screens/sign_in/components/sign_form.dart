@@ -83,7 +83,7 @@ class _SignFormState extends State<SignForm> {
                 try {
                   UserCredential userCredential =
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: number+"orev.com",
+                    email: number + "orev.user",
                     password: password,
                   );
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
@@ -113,7 +113,8 @@ class _SignFormState extends State<SignForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } if (value.length >= 8) {
+        }
+        if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -146,7 +147,8 @@ class _SignFormState extends State<SignForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
-        } if (value.length == 10) {
+        }
+        if (value.length == 10) {
           removeError(error: kShortNumberError);
           removeError(error: kLongNumberError);
         }
@@ -160,8 +162,7 @@ class _SignFormState extends State<SignForm> {
           addError(error: kShortNumberError);
 
           return "";
-        }
-        else if (value.length > 10) {
+        } else if (value.length > 10) {
           addError(error: kLongNumberError);
 
           return "";
@@ -179,7 +180,6 @@ class _SignFormState extends State<SignForm> {
       ),
     );
   }
-
 }
 
 bool isNumeric(String s) {

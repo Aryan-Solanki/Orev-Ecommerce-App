@@ -5,6 +5,8 @@ import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
+import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/services/user_services.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
@@ -45,7 +47,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   }
 
   _verifyPhone() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    await auth.verifyPhoneNumber(
         phoneNumber: '+91' + number,
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
@@ -73,10 +75,6 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         timeout: Duration(seconds: 30));
   }
 
-
-
-
-
   Future<bool> Query(num) async {
     var bo = false;
     QuerySnapshot snapshot =
@@ -99,13 +97,23 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
-    String uid_real;
-    void createNewUser(number, name, password) {
+    UserServices _userServices = UserServices();
+    Future<void> createNewUser(number, name, password) async {
+      String uid_real;
       var tempemail = number + "@orev.user";
-      _auth.signUp(email: tempemail, password: password);
+      await _auth.signUp(email: tempemail, password: password);
       uid_real = _auth.user.uid;
-      print("Real UID is $uid_real");
+      print("Email UID is $uid_real");
+      Map<String, dynamic> UserInfo = {
+        "id": uid_real,
+        "name": name,
+        "number": "+91" + number,
+        "address": null
+      };
+      _userServices.createUserData(UserInfo);
+      Navigator.pushNamed(context, HomeScreen.routeName);
     }
+
     Widget boxedPinPutWithPreFilledSymbol() {
       final BoxDecoration pinPutDecoration = BoxDecoration(
         color: kPrimaryColor,
@@ -122,14 +130,12 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
           try {
             await auth
                 .signInWithCredential(PhoneAuthProvider.credential(
-                verificationId: _verificationCode, smsCode: pin))
+                    verificationId: _verificationCode, smsCode: pin))
                 .then((value) async {
               if (value.user != null) {
-                print("Code Verified $_verificationCode");
+                print("Phone Auth " + auth.currentUser.uid);
+                auth.signOut();
                 createNewUser(number, Name, password);
-                // final User user = auth.currentUser;
-                // final uid = user.uid;
-                // print(uid);
               }
             });
           } catch (e) {
@@ -140,16 +146,17 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         controller: _pinPutController,
         submittedFieldDecoration: pinPutDecoration,
         selectedFieldDecoration:
-        pinPutDecoration.copyWith(color: Colors.lightGreen),
+            pinPutDecoration.copyWith(color: Colors.lightGreen),
         followingFieldDecoration: pinPutDecoration,
       );
     }
+
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
           child: Padding(
-            padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
             child: Column(
               children: [
                 Text(
@@ -164,7 +171,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                 boxedPinPutWithPreFilledSymbol(),
                 SizedBox(height: SizeConfig.screenHeight * 0.05),
                 Text(
-                  "Please enter the OTP that you have received on \nyour provided phone number",
+                  "Please enter the OTP that you have received on \nyour provided phone number $number",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -172,9 +179,6 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
             ),
           ));
     }
-
-
-
 
     return Form(
       key: _formKey,
@@ -202,7 +206,6 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                 } else {
                   _verifyPhone();
                   _showDialog();
-
                 }
                 // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }

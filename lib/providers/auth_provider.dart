@@ -46,6 +46,7 @@ class AuthProvider with ChangeNotifier {
   String getuserid() {
     final User user = _auth.currentUser;
     final uid_real = user.uid;
+    return uid_real;
   }
 
   void _createUser({String id, String number}) {
