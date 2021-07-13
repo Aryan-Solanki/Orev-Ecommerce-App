@@ -73,72 +73,9 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         timeout: Duration(seconds: 30));
   }
 
-  Widget boxedPinPutWithPreFilledSymbol() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: kPrimaryColor,
-      borderRadius: BorderRadius.circular(5.0),
-    );
 
-    return PinPut(
-      withCursor: true,
-      fieldsCount: 6,
-      textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-      eachFieldWidth: 50.0,
-      eachFieldHeight: 50.0,
-      onSubmit: (String pin) async {
-        try {
-          await auth
-              .signInWithCredential(PhoneAuthProvider.credential(
-                  verificationId: _verificationCode, smsCode: pin))
-              .then((value) async {
-            if (value.user != null) {
-              print("Code Verified $_verificationCode");
-              // final User user = auth.currentUser;
-              // final uid = user.uid;
-              // print(uid);
-            }
-          });
-        } catch (e) {
-          print(e);
-        }
-      },
-      focusNode: _pinPutFocusNode,
-      controller: _pinPutController,
-      submittedFieldDecoration: pinPutDecoration,
-      selectedFieldDecoration:
-          pinPutDecoration.copyWith(color: Colors.lightGreen),
-      followingFieldDecoration: pinPutDecoration,
-    );
-  }
 
-  void _showDialog() {
-    slideDialog.showSlideDialog(
-        context: context,
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Column(
-            children: [
-              Text(
-                "One Time Password",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(28),
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
-              boxedPinPutWithPreFilledSymbol(),
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
-              Text(
-                "Please enter the OTP that you have received on \nyour provided phone number",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
-            ],
-          ),
-        ));
-  }
+
 
   Future<bool> Query(num) async {
     var bo = false;
@@ -163,13 +100,81 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
     String uid_real;
-
     void createNewUser(number, name, password) {
       var tempemail = number + "@orev.user";
       _auth.signUp(email: tempemail, password: password);
       uid_real = _auth.user.uid;
       print("Real UID is $uid_real");
     }
+    Widget boxedPinPutWithPreFilledSymbol() {
+      final BoxDecoration pinPutDecoration = BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(5.0),
+      );
+
+      return PinPut(
+        withCursor: true,
+        fieldsCount: 6,
+        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+        eachFieldWidth: 50.0,
+        eachFieldHeight: 50.0,
+        onSubmit: (String pin) async {
+          try {
+            await auth
+                .signInWithCredential(PhoneAuthProvider.credential(
+                verificationId: _verificationCode, smsCode: pin))
+                .then((value) async {
+              if (value.user != null) {
+                print("Code Verified $_verificationCode");
+                createNewUser(number, Name, password);
+                // final User user = auth.currentUser;
+                // final uid = user.uid;
+                // print(uid);
+              }
+            });
+          } catch (e) {
+            print(e);
+          }
+        },
+        focusNode: _pinPutFocusNode,
+        controller: _pinPutController,
+        submittedFieldDecoration: pinPutDecoration,
+        selectedFieldDecoration:
+        pinPutDecoration.copyWith(color: Colors.lightGreen),
+        followingFieldDecoration: pinPutDecoration,
+      );
+    }
+    void _showDialog() {
+      slideDialog.showSlideDialog(
+          context: context,
+          child: Padding(
+            padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            child: Column(
+              children: [
+                Text(
+                  "One Time Password",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(28),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
+                boxedPinPutWithPreFilledSymbol(),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
+                Text(
+                  "Please enter the OTP that you have received on \nyour provided phone number",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.1),
+              ],
+            ),
+          ));
+    }
+
+
+
 
     return Form(
       key: _formKey,
@@ -197,7 +202,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                 } else {
                   _verifyPhone();
                   _showDialog();
-                  createNewUser(number, Name, password);
+
                 }
                 // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
