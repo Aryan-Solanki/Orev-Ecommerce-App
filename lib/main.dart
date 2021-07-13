@@ -1,15 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/routes.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/splash/splash_screen.dart';
 import 'package:orev/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

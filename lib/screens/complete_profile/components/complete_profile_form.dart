@@ -17,7 +17,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final List<String> errors = [];
   String firstName;
   String lastName;
-  String phoneNumber;
   String address;
 
   void addError({String error}) {
@@ -43,8 +42,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           buildFirstNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildLastNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildPhoneNumberFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildAddressFormField(),
           FormError(errors: errors),
@@ -86,34 +83,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
             CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
-      ),
-    );
-  }
-
-  TextFormField buildPhoneNumberFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
       ),
     );
   }

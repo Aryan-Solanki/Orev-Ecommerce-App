@@ -1,29 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/custom_surfix_icon.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
-
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   final _formKey = GlobalKey<FormState>();
   String password;
   String conform_password;
   bool remember = false;
   String phone;
+  String Name;
+  DocumentSnapshot snapshot;
   List<String> errors = [];
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -53,7 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
         },
         verificationFailed: (FirebaseAuthException e) {
           print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-          print("e.message");
+          print(e.message);
         },
         codeSent: (String verficationID, int resendToken) {
           setState(() {
@@ -82,13 +87,15 @@ class _SignUpFormState extends State<SignUpForm> {
       eachFieldHeight: 50.0,
       onSubmit: (String pin) async {
         try {
-          await FirebaseAuth.instance
+          await auth
               .signInWithCredential(PhoneAuthProvider.credential(
                   verificationId: _verificationCode, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
-              print("Code Verified");
-              // Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
+              print("Code Verified $_verificationCode");
+              // final User user = auth.currentUser;
+              // final uid = user.uid;
+              // print(uid);
             }
           });
         } catch (e) {
@@ -128,33 +135,48 @@ class _SignUpFormState extends State<SignUpForm> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
-              // DefaultButton(
-              //   text: "Submit",
-              //   press: () {
-              //     errors = [];
-              //     if (_formKey.currentState.validate()) {
-              //       //nxt pagee
-              //     }
-              //   },
-              // )
             ],
           ),
-        )
+        ));
+  }
 
-        // barrierColor: Colors.white.withOpacity(0.7),
-        // pillColor: Colors.red,
-        // backgroundColor: Colors.yellow,
-        );
+  Future<bool> Query(num) async {
+    var bo = false;
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection("users").get();
+    snapshot.docs.forEach((document) {
+      if (document.exists) {
+        if (document['number'] == num) {
+          bo = true;
+          return;
+        }
+      } else {
+        print('document does not exist');
+      }
+    });
+    return bo;
   }
 
   String _verificationCode;
   String number;
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthProvider>(context);
+    String uid_real;
+
+    void createNewUser(number, name, password) {
+      var tempemail = number + "@orev.user";
+      _auth.signUp(email: tempemail, password: password);
+      uid_real = _auth.user.uid;
+      print("Real UID is $uid_real");
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          buildFirstNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildPhoneFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
@@ -164,20 +186,51 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                print(number + "    " + password);
-                _verifyPhone();
-                _showDialog();
+                var bo = await Query("+91" + number);
+                if (bo) {
+                  addError(error: kUserExistsError);
+                } else {
+                  _verifyPhone();
+                  _showDialog();
+                  createNewUser(number, Name, password);
+                }
                 // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-
               }
             },
           ),
         ],
+      ),
+    );
+  }
+
+  TextFormField buildFirstNameFormField() {
+    return TextFormField(
+      onSaved: (newValue) => Name = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNamelNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kNamelNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Full Name",
+        hintText: "Enter your full name",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
   }
@@ -270,11 +323,13 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 10) {
+        }
+        if (value.length < 10) {
           addError(error: kShortNumberError);
 
           return "";
-        } else if (value.length > 10) {
+        }
+        if (value.length > 10) {
           addError(error: kLongNumberError);
 
           return "";

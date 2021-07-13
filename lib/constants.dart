@@ -28,6 +28,7 @@ final RegExp emailValidatorRegExp =
 const String kEmailNullError = "Please Enter Your Email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter Your Password";
+const String kUserExistsError = "This user already exists";
 const String kUserNotFoundError = "This User Does Not Exist";
 const String kPassWrongError = "Password Is Incorrect";
 const String kShortPassError = "Password Is Too Short";

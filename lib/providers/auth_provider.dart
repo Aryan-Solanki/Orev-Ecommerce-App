@@ -13,153 +13,43 @@ class AuthProvider with ChangeNotifier {
   bool loading = false;
   String screen;
   DocumentSnapshot snapshot;
+  get user => _auth.currentUser;
 
-  Future<void> verifyPhone({BuildContext context, String number}) async {
-    this.loading = true;
-    notifyListeners();
-
-    final PhoneVerificationCompleted verificationCompleted =
-        (PhoneAuthCredential credential) async {
-      this.loading = false;
-      notifyListeners();
-      await _auth.signInWithCredential(credential);
-    };
-
-    final PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException e) {
-      this.loading = false;
-      print(e.code);
-      this.error = e.toString();
-      notifyListeners();
-    };
-
-    final PhoneCodeSent smsOtpSend = (String verId, int resendToken) async {
-      this.verificationId = verId;
-      //open dialog to enter received OTP SMS
-      smsOtpDialog(context, number);
-    };
-
+  Future signUp({String email, String password}) async {
     try {
-      _auth.verifyPhoneNumber(
-        phoneNumber: number,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: smsOtpSend,
-        codeAutoRetrievalTimeout: (String verId) {
-          this.verificationId = verId;
-        },
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-    } catch (e) {
+      return null;
+    } on FirebaseAuthException catch (e) {
       this.error = e.toString();
-      this.loading = false;
-      notifyListeners();
-      print(e);
+      print(e.message);
     }
   }
 
-  Future<void> smsOtpDialog(BuildContext context, String number) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Column(
-              children: [
-                Text('Verification Code'),
-                SizedBox(
-                  height: 6,
-                ),
-                Text(
-                  'Enter 6 digit OTP received as SMS',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-              ],
-            ),
-            content: Container(
-              height: 85,
-              child: TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLength: 6,
-                onChanged: (value) {
-                  this.smsOtp = value;
-                },
-              ),
-            ),
-            actions: [
-              FlatButton(
-                onPressed: () async {
-                  try {
-                    PhoneAuthCredential phoneAuthCredential =
-                        PhoneAuthProvider.credential(
-                            verificationId: verificationId, smsCode: smsOtp);
+  Future signIn({String email, String password}) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      this.error = e.toString();
+      print(e.message);
+    }
+  }
 
-                    final User user =
-                        (await _auth.signInWithCredential(phoneAuthCredential))
-                            .user;
+  Future signOut() async {
+    await _auth.signOut();
+    print('signout');
+  }
 
-                    if (user != null) {
-                      this.loading = false;
-                      notifyListeners();
-
-                      _userServices.getUserById(user.uid).then((snapShot) {
-                        if (snapShot.exists) {
-                          //user data already exists
-                          if (this.screen == 'Login') {
-                            //need to check user data already exists in db or not.
-                            //if its 'login'. no new data, so no need to update
-                            if (snapShot.data()['address'] != null) {
-                              Navigator.pushReplacementNamed(
-                                  context, MainScreen.id);
-                            }
-                            Navigator.pushReplacementNamed(
-                                context, LandingScreen.id);
-                          } else {
-                            //need to update new selected address
-                            updateUser(id: user.uid, number: user.phoneNumber);
-                            Navigator.pushReplacementNamed(
-                                context, MainScreen.id);
-                          }
-                        } else {
-                          //user data does not exists
-                          //will create new data in db
-
-                          _createUser(id: user.uid, number: user.phoneNumber);
-                          // Navigator.pushReplacementNamed(
-                          //     context, LandingScreen.id);
-                        }
-                      });
-                    } else {
-                      print('Login failed');
-                    }
-                  } catch (e) {
-                    this.error = 'Invalid OTP';
-                    notifyListeners();
-                    print(e.toString());
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Text(
-                  'DONE',
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
-              ),
-            ],
-          );
-        }).whenComplete(() {
-      this.loading = false;
-      notifyListeners();
-    });
+  String getuserid() {
+    final User user = _auth.currentUser;
+    final uid_real = user.uid;
   }
 
   void _createUser({String id, String number}) {
-    _userServices.createUserData({
-      'id': id,
-      'number': number,
-      'latitude': this.latitude,
-      'longitude': this.longitude,
-      'address': this.address,
-      'location': this.location
-    });
+    _userServices.createUserData({'id': id, 'number': number});
     this.loading = false;
     notifyListeners();
   }
@@ -171,13 +61,9 @@ class AuthProvider with ChangeNotifier {
     _userServices.updateUserData({
       'id': id,
       'number': number,
-      'latitude': this.latitude,
-      'longitude': this.longitude,
-      'address': this.address,
-      'location': this.location,
       'firstName': null,
       'lastName': null,
-      'Email': null
+      'email': null
     });
     this.loading = false;
     notifyListeners();
