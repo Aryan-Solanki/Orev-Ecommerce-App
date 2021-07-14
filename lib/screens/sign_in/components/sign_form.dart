@@ -83,7 +83,7 @@ class _SignFormState extends State<SignForm> {
                 try {
                   UserCredential userCredential =
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: number + "orev.user",
+                    email: number + "@orev.user",
                     password: password,
                   );
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
@@ -95,6 +95,10 @@ class _SignFormState extends State<SignForm> {
                   } else if (e.code == 'wrong-password') {
                     setState(() {
                       addError(error: kPassWrongError);
+                    });
+                  } else if (e.code == 'network-request-failed') {
+                    setState(() {
+                      addError(error: kFirebaseNetworkError);
                     });
                   }
                 }
