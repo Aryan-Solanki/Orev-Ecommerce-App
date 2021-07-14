@@ -22,7 +22,7 @@ class UpdateForm extends StatefulWidget {
 }
 
 class _UpdateFormState extends State<UpdateForm> {
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+
   final _formKey = GlobalKey<FormState>();
   String oldpassword;
   String password;
@@ -77,10 +77,14 @@ class _UpdateFormState extends State<UpdateForm> {
                   };
                   _userServices.updateKeyPass(values);
                   _auth.signOut();
-                  Navigator.pushNamed(context, SignInScreen.routeName);
-                  FocusScope.of(context).unfocus();
-                  _scaffoldkey.currentState
-                      .showSnackBar(SnackBar(content: Text('Password Changed')));
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SignInScreen(snackbar: true)));
+
+                  // Navigator.pushNamed(context, SignInScreen.routeName);
 
                 }).catchError((error) {
                   print("Password can't be changed" + error.toString());
