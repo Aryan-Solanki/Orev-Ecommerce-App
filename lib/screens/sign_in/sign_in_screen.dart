@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orev/constants.dart';
 
 import 'components/body.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({
     Key key,
     this.snackbar=false,
@@ -11,16 +12,31 @@ class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
 
   @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldstate= new GlobalKey<ScaffoldState>();
+  _SignInScreenState createState() => _SignInScreenState(snackbar:snackbar);
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  _SignInScreenState({
+    this.snackbar=false,
+  });
+  final bool snackbar;
+
+
+  @override
+  void initState() {
+    super.initState();
     if(snackbar){
-      print("errrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-      FocusScope.of(context).unfocus();
-      _scaffoldstate.currentState
-          .showSnackBar(SnackBar(content: Text('Password Changed')));
+      Future(() {
+        final snackBar = SnackBar(content: Text('Password Updated'),backgroundColor: kPrimaryColor,);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
     }
+    // Shows the SnackBar as soon as this page is opened.
+
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldstate,
       appBar: AppBar(
         title: Text("Sign In"),
       ),
@@ -28,3 +44,4 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
+
