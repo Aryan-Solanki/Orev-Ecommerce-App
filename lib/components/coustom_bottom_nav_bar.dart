@@ -5,6 +5,7 @@ import 'package:orev/screens/profile/profile_screen.dart';
 
 import '../constants.dart';
 import '../enums.dart';
+import 'package:orev/screens/liked_item/like_screen.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
@@ -45,12 +46,23 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
+                  onPressed: () {
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                    print(selectedMenu);
+                  }
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset(
+                  "assets/icons/Heart Icon.svg",
+                  color: MenuState.favourite == selectedMenu
+                  ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
+
+                onPressed: () {
+                  Navigator.pushNamed(context, LikedScreen.routeName);
+                  print(selectedMenu);
+                },
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
@@ -63,8 +75,10 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, ProfileScreen.routeName),
+                  onPressed: () {
+                    Navigator.pushNamed(context, ProfileScreen.routeName);
+                    print(selectedMenu);
+                  }
               ),
             ],
           )),

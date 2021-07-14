@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
+import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
@@ -27,5 +28,6 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  LikedScreen.routeName: (context) => LikedScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };
