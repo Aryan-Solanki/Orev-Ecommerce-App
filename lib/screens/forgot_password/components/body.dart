@@ -3,6 +3,8 @@ import 'package:orev/components/custom_surfix_icon.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
 import 'package:orev/components/no_account_text.dart';
+import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/services/user_services.dart';
 import 'package:orev/size_config.dart';
 import '../../../constants.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
@@ -11,6 +13,7 @@ import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../update_password_screen.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -54,87 +57,10 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
-
-  Widget boxedPinPutWithPreFilledSymbol() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: kPrimaryColor,
-      borderRadius: BorderRadius.circular(5.0),
-    );
-
-    return PinPut(
-      withCursor: true,
-      fieldsCount: 6,
-      textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-      eachFieldWidth: 50.0,
-      eachFieldHeight: 50.0,
-      onSubmit: (String pin) async {
-        try {
-          await FirebaseAuth.instance
-              .signInWithCredential(PhoneAuthProvider.credential(
-                  verificationId: _verificationCode, smsCode: pin))
-              .then((value) async {
-            if (value.user != null) {
-              Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
-            }
-          });
-        } catch (e) {
-          print(e);
-        }
-      },
-      focusNode: _pinPutFocusNode,
-      controller: _pinPutController,
-      submittedFieldDecoration: pinPutDecoration,
-      selectedFieldDecoration:
-          pinPutDecoration.copyWith(color: Colors.lightGreen),
-      followingFieldDecoration: pinPutDecoration,
-    );
-  }
-
-  void _showDialog() {
-    slideDialog.showSlideDialog(
-        context: context,
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Column(
-            children: [
-              Text(
-                "One Time Password",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(28),
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
-              boxedPinPutWithPreFilledSymbol(),
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
-              Text(
-                "Please enter the OTP that you have received on \nyour provided phone number",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
-              DefaultButton(
-                text: "Submit",
-                press: () {
-                  errors = [];
-                  if (_formKey.currentState.validate()) {
-                    //nxt pagee
-                  }
-                },
-              )
-            ],
-          ),
-        )
-
-        // barrierColor: Colors.white.withOpacity(0.7),
-        // pillColor: Colors.red,
-        // backgroundColor: Colors.yellow,
-        );
-  }
-
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
@@ -150,7 +76,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   }
 
   _verifyPhone() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    await auth.verifyPhoneNumber(
         phoneNumber: '+91' + number,
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
@@ -163,7 +89,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         },
         verificationFailed: (FirebaseAuthException e) {
           print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-          print("e.message");
+          print(e.message);
         },
         codeSent: (String verficationID, int resendToken) {
           setState(() {
@@ -182,6 +108,82 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   String number;
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthProvider>(context);
+    UserServices _userServices = UserServices();
+    String phone_uid;
+
+    Widget boxedPinPutWithPreFilledSymbol() {
+      final BoxDecoration pinPutDecoration = BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(5.0),
+      );
+
+      return PinPut(
+        withCursor: true,
+        fieldsCount: 6,
+        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+        eachFieldWidth: 50.0,
+        eachFieldHeight: 50.0,
+        onSubmit: (String pin) async {
+          try {
+            await auth
+                .signInWithCredential(PhoneAuthProvider.credential(
+                    verificationId: _verificationCode, smsCode: pin))
+                .then((value) async {
+              if (value.user != null) {
+                phone_uid = auth.currentUser.uid;
+                auth.signOut();
+                String password = await _userServices.getKeyPass(phone_uid);
+                print("password is $password");
+                await _auth.signIn(
+                    email: number + "@orev.user", password: password);
+                var uid_real = _auth.user.uid;
+                print("Email UID is $uid_real");
+                Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
+              }
+            });
+          } catch (e) {
+            print(e);
+          }
+        },
+        focusNode: _pinPutFocusNode,
+        controller: _pinPutController,
+        submittedFieldDecoration: pinPutDecoration,
+        selectedFieldDecoration:
+            pinPutDecoration.copyWith(color: Colors.lightGreen),
+        followingFieldDecoration: pinPutDecoration,
+      );
+    }
+
+    void _showDialog() {
+      slideDialog.showSlideDialog(
+          context: context,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
+            child: Column(
+              children: [
+                Text(
+                  "One Time Password",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(28),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
+                boxedPinPutWithPreFilledSymbol(),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
+                Text(
+                  "Please enter the OTP that you have received on \nyour provided phone number $number",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.1),
+              ],
+            ),
+          ));
+    }
+
     return Form(
       key: _formKey,
       child: Column(

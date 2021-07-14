@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/custom_surfix_icon.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
+import 'package:orev/services/user_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
-
+import 'package:provider/provider.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class UpdateForm extends StatefulWidget {
@@ -39,6 +41,8 @@ class _UpdateFormState extends State<UpdateForm> {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthProvider>(context);
+    UserServices _userServices = UserServices();
     return Form(
       key: _formKey,
       child: Column(
@@ -56,8 +60,19 @@ class _UpdateFormState extends State<UpdateForm> {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
                 print(password);
-                // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-
+                var user = _auth.user;
+                user.updatePassword(password).then((_) {
+                  print("Successfully changed password");
+                  Map<String, dynamic> values = {
+                    "id": _auth.user.uid,
+                    "pass": password
+                  };
+                  _userServices.updateKeyPass(values);
+                  _auth.signOut();
+                }).catchError((error) {
+                  print("Password can't be changed" + error.toString());
+                  //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+                });
               }
             },
           ),

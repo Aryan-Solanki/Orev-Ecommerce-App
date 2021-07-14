@@ -15,7 +15,7 @@ class AuthProvider with ChangeNotifier {
   DocumentSnapshot snapshot;
   get user => _auth.currentUser;
 
-  Future signUp({String email, String password}) async {
+  Future signUp({String email, var password}) async {
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,

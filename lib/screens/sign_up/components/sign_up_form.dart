@@ -98,6 +98,8 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
     UserServices _userServices = UserServices();
+    String phone_uid;
+
     Future<void> createNewUser(number, name, password) async {
       String uid_real;
       var tempemail = number + "@orev.user";
@@ -110,7 +112,9 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         "number": "+91" + number,
         "address": null
       };
+      Map<String, dynamic> keypass = {"id": phone_uid, "address": password};
       _userServices.createUserData(UserInfo);
+      _userServices.setKeyPass(keypass);
       Navigator.pushNamed(context, HomeScreen.routeName);
     }
 
@@ -133,7 +137,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                     verificationId: _verificationCode, smsCode: pin))
                 .then((value) async {
               if (value.user != null) {
-                print("Phone Auth " + auth.currentUser.uid);
+                phone_uid = auth.currentUser.uid;
                 auth.signOut();
                 createNewUser(number, Name, password);
               }
