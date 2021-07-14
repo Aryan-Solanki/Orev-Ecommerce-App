@@ -13,8 +13,11 @@ import 'package:provider/provider.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class UpdateForm extends StatefulWidget {
+  String phone_uid;
+  UpdateForm({this.phone_uid});
+
   @override
-  _UpdateFormState createState() => _UpdateFormState();
+  _UpdateFormState createState() => _UpdateFormState(phone_uid: phone_uid);
 }
 
 class _UpdateFormState extends State<UpdateForm> {
@@ -24,6 +27,9 @@ class _UpdateFormState extends State<UpdateForm> {
   String conform_password;
   bool remember = false;
   List<String> errors = [];
+  String phone_uid;
+
+  _UpdateFormState({this.phone_uid});
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -64,7 +70,7 @@ class _UpdateFormState extends State<UpdateForm> {
                 user.updatePassword(password).then((_) {
                   print("Successfully changed password");
                   Map<String, dynamic> values = {
-                    "id": _auth.user.uid,
+                    "id": phone_uid,
                     "pass": password
                   };
                   _userServices.updateKeyPass(values);

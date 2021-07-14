@@ -139,7 +139,11 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                     email: number + "@orev.user", password: password);
                 var uid_real = _auth.user.uid;
                 print("Email UID is $uid_real");
-                Navigator.pushNamed(context, UpdatePasswordScreen.routeName);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            UpdatePasswordScreen(phone_uid: phone_uid)));
               }
             });
           } catch (e) {
