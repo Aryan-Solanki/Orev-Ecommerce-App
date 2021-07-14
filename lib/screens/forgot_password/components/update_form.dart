@@ -4,6 +4,7 @@ import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/user_services.dart';
 
 import '../../../constants.dart';
@@ -18,6 +19,7 @@ class UpdateForm extends StatefulWidget {
 }
 
 class _UpdateFormState extends State<UpdateForm> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   String oldpassword;
   String password;
@@ -69,6 +71,11 @@ class _UpdateFormState extends State<UpdateForm> {
                   };
                   _userServices.updateKeyPass(values);
                   _auth.signOut();
+                  Navigator.pushNamed(context, SignInScreen.routeName);
+                  FocusScope.of(context).unfocus();
+                  _scaffoldkey.currentState
+                      .showSnackBar(SnackBar(content: Text('Password Changed')));
+
                 }).catchError((error) {
                   print("Password can't be changed" + error.toString());
                   //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
