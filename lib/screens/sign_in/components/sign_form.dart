@@ -16,7 +16,6 @@ import '../../../size_config.dart';
 import 'package:provider/provider.dart';
 
 class SignForm extends StatefulWidget {
-
   @override
   _SignFormState createState() => _SignFormState();
 }
@@ -43,8 +42,6 @@ class _SignFormState extends State<SignForm> {
   }
 
   @override
-
-
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
     UserServices _userServices = UserServices();
@@ -96,7 +93,6 @@ class _SignFormState extends State<SignForm> {
                   );
                   String emailuid = _auth.user.uid;
                   UserSimplePreferences.setAuthKey(emailuid);
-
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
