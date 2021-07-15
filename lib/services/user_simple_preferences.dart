@@ -14,8 +14,8 @@ class UserSimplePreferences {
   static const _keyImagePath = 'imgpath';
   static const _keyUserPoints = 'user_points';
   static const _keyImagelink = 'image_link';
-  static const _keyIsModerator = 'isModerator';
-  static const _keyIsVolunteer = 'isVolunteer';
+  static const _keyAuth = 'authkey';
+  static const _keyUserPhone = 'userphone';
   static const _keyIsBenefeciary = 'isBenefeciary';
   static const _keyIsFirst = 'isFirst';
   static const _keyIsFirst1 = 'isFirst1';
@@ -23,19 +23,15 @@ class UserSimplePreferences {
   static Future init() async =>
       _preferences = await SharedPreferences.getInstance();
 
-  static Future setisModerator(String status) async =>
-      await _preferences.setString(_keyIsModerator, status);
+  static Future setAuthKey(String status) async =>
+      await _preferences.setString(_keyAuth, status);
 
-  static String getisModerator() => _preferences.getString(_keyIsModerator);
+  static String getAuthKey() => _preferences.getString(_keyAuth);
 
-  //
+  static Future setUserPhnum(String status) async =>
+      await _preferences.setString(_keyUserPhone, status);
 
-  static Future setisVolunteer(String status) async =>
-      await _preferences.setString(_keyIsVolunteer, status);
-
-  static String getisVolunteer() => _preferences.getString(_keyIsVolunteer);
-
-  //
+  static String getUserPhnum() => _preferences.getString(_keyUserPhone);
 
   static Future setisBenefeciary(String status) async =>
       await _preferences.setString(_keyIsBenefeciary, status);

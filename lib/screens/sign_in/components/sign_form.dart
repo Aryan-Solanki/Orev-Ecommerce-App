@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/custom_surfix_icon.dart';
 import 'package:orev/components/form_error.dart';
 import 'package:orev/helper/keyboard.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:orev/services/user_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'package:provider/provider.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -39,6 +43,8 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthProvider>(context);
+    UserServices _userServices = UserServices();
     return Form(
       key: _formKey,
       child: Column(
@@ -81,11 +87,13 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState.save();
                 KeyboardUtil.hideKeyboard(context);
                 try {
-                  UserCredential userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  UserCredential userCredential = await _auth.signIn(
                     email: number + "@orev.user",
                     password: password,
                   );
+                  String emailuid = _auth.user.uid;
+                  UserSimplePreferences.setAuthKey(emailuid);
+
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
