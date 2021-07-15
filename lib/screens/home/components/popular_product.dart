@@ -16,23 +16,22 @@ class PopularProducts extends StatelessWidget {
           child: SectionTitle(title: "Popular Products", press: () {}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ...List.generate(
-                demoProducts.length,
-                (index) {
-                  if (demoProducts[index].isPopular)
-                    return ProductCard(product: demoProducts[index]);
+        GridView.count(
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          children: [
+            ...List.generate(
+              demoProducts.length,
+              (index) {
+                if (demoProducts[index].isPopular)
+                  return ProductCard(product: demoProducts[index]);
 
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
-              ),
-              SizedBox(width: getProportionateScreenWidth(20)),
-            ],
-          ),
+                return SizedBox
+                    .shrink(); // here by default width and height is 0
+              },
+            ),
+          ],
         )
       ],
     );

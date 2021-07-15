@@ -9,6 +9,7 @@ import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
+import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/screens/splash/splash_screen.dart';
 
@@ -30,4 +31,5 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (context) => CartScreen(),
   LikedScreen.routeName: (context) => LikedScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
+  SeeMore.routeName: (context) => SeeMore(),
 };

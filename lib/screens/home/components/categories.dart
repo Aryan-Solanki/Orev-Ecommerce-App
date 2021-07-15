@@ -88,7 +88,8 @@ class CategoryCard extends StatelessWidget {
               child: Icon(icon,color: kPrimaryColor,),
             ),
             SizedBox(height: 5),
-            Text(text, textAlign: TextAlign.center)
+            Text(text, textAlign: TextAlign.center),
+            SizedBox(height: 15),
           ],
         ),
       ),

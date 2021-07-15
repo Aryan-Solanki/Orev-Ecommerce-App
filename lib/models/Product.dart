@@ -96,6 +96,7 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isFavourite: true,
+    isPopular: true,
   ),
 ];
 

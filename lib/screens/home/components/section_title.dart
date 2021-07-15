@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/seemore/seemore.dart';
 
 import '../../../size_config.dart';
 
@@ -7,10 +8,12 @@ class SectionTitle extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.press,
+    @required this.seemore=true,
   }) : super(key: key);
 
   final String title;
   final GestureTapCallback press;
+  final bool seemore;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +27,15 @@ class SectionTitle extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        GestureDetector(
-          onTap: press,
+        seemore==true?GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, SeeMore.routeName);
+          },
           child: Text(
             "See More",
             style: TextStyle(color: Color(0xFFBBBBBB)),
           ),
-        ),
+        ):Text(""),
       ],
     );
   }
