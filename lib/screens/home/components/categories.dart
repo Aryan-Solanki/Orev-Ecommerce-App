@@ -1,31 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:orev/constants.dart';
 
 import '../../../size_config.dart';
 
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Bill"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Game"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/icons/Discover.svg", "text": "More"},
-    ];
-    return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          categories.length,
-          (index) => CategoryCard(
-            icon: categories[index]["icon"],
-            text: categories[index]["text"],
+        children: [
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.label_important_outline,
+            text: "Essential",
             press: () {},
           ),
-        ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.local_offer_outlined,
+            text: "Offer Zone",
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.account_balance_outlined,
+            text: "Add Money",
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.account_balance_wallet_outlined,
+            text: "Wallet",
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.redeem_outlined,
+            text: "Redeem",
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+          CategoryCard(
+            icon: Icons.card_membership_outlined,
+            text: "Gift Cards",
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenWidth(20)),
+        ],
       ),
     );
   }
@@ -39,7 +64,8 @@ class CategoryCard extends StatelessWidget {
     @required this.press,
   }) : super(key: key);
 
-  final String icon, text;
+  final String  text;
+  final IconData icon;
   final GestureTapCallback press;
 
   @override
@@ -55,10 +81,11 @@ class CategoryCard extends StatelessWidget {
               height: getProportionateScreenWidth(55),
               width: getProportionateScreenWidth(55),
               decoration: BoxDecoration(
-                color: Color(0xFFFFECDF),
+                color: Color(0xffE1FDE1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SvgPicture.asset(icon),
+              // child: SvgPicture.asset(icon),
+              child: Icon(icon,color: kPrimaryColor,),
             ),
             SizedBox(height: 5),
             Text(text, textAlign: TextAlign.center)
