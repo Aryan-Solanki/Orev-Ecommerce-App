@@ -16,6 +16,7 @@ import '../../../size_config.dart';
 import 'package:provider/provider.dart';
 
 class SignForm extends StatefulWidget {
+
   @override
   _SignFormState createState() => _SignFormState();
 }
@@ -42,6 +43,8 @@ class _SignFormState extends State<SignForm> {
   }
 
   @override
+
+
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
     UserServices _userServices = UserServices();
