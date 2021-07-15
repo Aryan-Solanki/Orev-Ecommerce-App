@@ -38,7 +38,7 @@ class SpecialOffers extends StatelessWidget {
     }
 
     return FutureBuilder<QuerySnapshot>(
-      future: _services.category.get(),
+      future: _services.category.where('isSpecial', isEqualTo: true).get(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
