@@ -6,12 +6,14 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/routes.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/splash/splash_screen.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await UserSimplePreferences.init();
   runApp(
     MultiProvider(
       providers: [
