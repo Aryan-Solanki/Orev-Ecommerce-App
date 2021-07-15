@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/routes.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       // We use routeName so that we dont need to remember the name
       initialRoute: SplashScreen.routeName,
       routes: routes,
+      builder: EasyLoading.init(),
     );
   }
 }

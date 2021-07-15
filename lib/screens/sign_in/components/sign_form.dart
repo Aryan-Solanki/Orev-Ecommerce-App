@@ -14,6 +14,7 @@ import '../../../constants.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -87,14 +88,17 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState.save();
                 KeyboardUtil.hideKeyboard(context);
                 try {
+                  EasyLoading.show(status: 'loading...', dismissOnTap: false);
                   UserCredential userCredential = await _auth.signIn(
                     email: number + "@orev.user",
                     password: password,
                   );
                   String emailuid = _auth.user.uid;
                   UserSimplePreferences.setAuthKey(emailuid);
+                  EasyLoading.dismiss();
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } on FirebaseAuthException catch (e) {
+                  EasyLoading.dismiss();
                   if (e.code == 'user-not-found') {
                     setState(() {
                       addError(error: kUserNotFoundError);
