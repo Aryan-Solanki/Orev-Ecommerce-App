@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
+import 'package:orev/screens/home/components/threegrid.dart';
 
 import '../../../size_config.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
-import 'popular_product.dart';
+import 'fourgrid.dart';
 import 'special_offers.dart';
 
 class Body extends StatelessWidget {
@@ -25,7 +26,9 @@ class Body extends StatelessWidget {
                   Categories(),
                   SpecialOffers(),
                   SizedBox(height: getProportionateScreenWidth(30)),
-                  PopularProducts(),
+                  FourGrid(),
+                  SizedBox(height: getProportionateScreenWidth(30)),
+                  ThreeGrid(),
                   SizedBox(height: getProportionateScreenWidth(30)),
                 ],
               ),

@@ -5,7 +5,7 @@ import 'package:orev/models/Product.dart';
 import '../../../size_config.dart';
 import 'section_title.dart';
 
-class PopularProducts extends StatelessWidget {
+class FourGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(

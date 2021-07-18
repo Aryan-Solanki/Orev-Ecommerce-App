@@ -10,7 +10,7 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
     this.width = 140,
-    this.aspectRetio = 1.02,
+    this.aspectRetio = 1.5,
     @required this.product,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20),right:getProportionateScreenWidth(20)),
+      padding: EdgeInsets.only(left: getProportionateScreenWidth(15),right:getProportionateScreenWidth(15)),
       child: SizedBox(
         width: getProportionateScreenWidth(width),
         child: GestureDetector(
@@ -33,7 +33,7 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                aspectRatio: 1.5,
+                aspectRatio: aspectRetio,
                 child: Container(
                   padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                   decoration: BoxDecoration(

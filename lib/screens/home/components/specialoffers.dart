@@ -3,6 +3,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/size_config.dart';
 
 class ImageSlider extends StatefulWidget {
   @override
@@ -66,7 +67,7 @@ class _ImageSliderState extends State<ImageSlider> {
                                 viewportFraction: 1,
                                 initialPage: 0,
                                 autoPlay: true,
-                                height: 150,
+                                height: getProportionateScreenHeight(150),
                                 onPageChanged:
                                     (int i, carouselPageChangedReason) {
                                   setState(() {
