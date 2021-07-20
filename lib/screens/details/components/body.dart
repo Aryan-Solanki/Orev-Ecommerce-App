@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/default_button.dart';
+import 'package:orev/components/product_card.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
@@ -26,20 +28,21 @@ class _BodyState extends State<Body> {
   _BodyState({@required this.product});
 
   List<String> _foodVariants = [
-    "Chicken grilled",
+    "Chicken grilled Chicken grilled Chicken grilled",
     "Pork grilled",
     "Vegetables as is",
     "Cheese as is",
     "Bread tasty"
   ];
   int selectedFoodVariants = 0;
-
+  int quantity=1;
+  bool outofstock=true;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
         value: value,
         itemBuilder: (context, value) {
-          return Text(value);
+          return Text(value,style: TextStyle(color: Colors.black,fontSize: getProportionateScreenHeight(18)),);
         });
   }
   getDslDecoration() {
@@ -81,31 +84,44 @@ class _BodyState extends State<Body> {
                             Expanded(
                                 child: DirectSelectList<String>(
                                     values: _foodVariants,
-                                    defaultItemIndex: 3,
+                                    defaultItemIndex: selectedFoodVariants,
                                     itemBuilder: (String value) => getDropDownMenuItem(value),
                                     focusedItemDecoration: getDslDecoration(),
                                     onItemSelectedListener: (item, index, context) {
-
+                                      selectedFoodVariants=index;
                                     })),
+                            // SizedBox(width: getProportionateScreenWidth(100),),
                             Icon(
                               Icons.unfold_more,
                               color: Colors.black,
                             ),
-                            Spacer(),
+                            SizedBox(width: getProportionateScreenWidth(15),),
                             RoundedIconBtn(
                               icon: Icons.remove,
-                              press: () {},
+                              press: () {
+                                if(quantity!=1) {
+                                  setState(() {
+                                    quantity--;
+                                  });
+                                }
+                                },
                             ),
+                            SizedBox(width: getProportionateScreenWidth(20)),
+                            Text("x "+quantity.toString(),style: TextStyle(color: Colors.black,fontSize: getProportionateScreenHeight(20)),),
                             SizedBox(width: getProportionateScreenWidth(20)),
                             RoundedIconBtn(
                               icon: Icons.add,
                               showShadow: true,
-                              press: () {},
+                              press: () {
+                                setState(() {
+                                  quantity++;
+                                });
+                              },
                             ),
                           ],
                         ),
                       ),
-                      TopRoundedContainer(
+                      outofstock==false?TopRoundedContainer(
                         color: Colors.white,
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -129,6 +145,21 @@ class _BodyState extends State<Body> {
                             ],
                           ),
                         ),
+                      ):TopRoundedContainer(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: SizeConfig.screenWidth * 0.1,
+                            right: SizeConfig.screenWidth * 0.1,
+                            bottom: getProportionateScreenWidth(30),
+                            top: getProportionateScreenWidth(10),
+                          ),
+                          child: DefaultButton(
+                            color: kSecondaryColor,
+                            text: "Out of Stock",
+                            press: () {},
+                          )
+                        ),
                       ),
                     ],
                   ),
@@ -136,8 +167,41 @@ class _BodyState extends State<Body> {
               ],
             ),
           ),
+          Container(
+            padding: EdgeInsets.only(bottom: 20),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: getProportionateScreenWidth(15),bottom: getProportionateScreenWidth(5)),
+                  child: Text("You Might Also Like",style: smallerheadingStyle,),
+                ),
+                SizedBox(height: getProportionateScreenHeight(10),),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...List.generate(
+                        demoProducts.length,
+                            (index) {
+                          if (demoProducts[index].isPopular)
+                            return ProductCard(product: demoProducts[index]);
+
+                          return SizedBox
+                              .shrink(); // here by default width and height is 0
+                        },
+                      ),
+                      SizedBox(width: getProportionateScreenWidth(20)),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 }
+

@@ -20,6 +20,18 @@ final headingStyle = TextStyle(
   color: Colors.black,
   height: 1.5,
 );
+final smallerheadingStyle = TextStyle(
+  fontSize: getProportionateScreenWidth(24),
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  height: 1.5,
+);
+final verysmallerheadingStyle = TextStyle(
+  fontSize: getProportionateScreenWidth(11),
+  // fontWeight: FontWeight.bold,
+  color: Colors.black,
+  height: 1.5,
+);
 
 const defaultDuration = Duration(milliseconds: 250);
 
