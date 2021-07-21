@@ -7,6 +7,7 @@ import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
 import 'fourgrid.dart';
+import 'horizontalslider.dart';
 import 'special_offers.dart';
 
 class Body extends StatelessWidget {
@@ -30,6 +31,8 @@ class Body extends StatelessWidget {
                   SizedBox(height: getProportionateScreenWidth(30)),
                   ThreeGrid(),
                   SizedBox(height: getProportionateScreenWidth(30)),
+                  HorizontalSlider(),
+                  SizedBox(height: getProportionateScreenWidth(30)),
                 ],
               ),
             ),
@@ -41,3 +44,4 @@ class Body extends StatelessWidget {
     );
   }
 }
+
