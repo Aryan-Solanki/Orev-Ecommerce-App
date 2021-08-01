@@ -20,7 +20,7 @@ class FullWidthProductCard extends StatelessWidget {
   final Product product;
   final int saleprice=200;
   final bool sale;
-
+  final bool outofstock=true;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -114,7 +114,7 @@ class FullWidthProductCard extends StatelessWidget {
                         Container(
                           width: getProportionateScreenWidth(153),
                           height: getProportionateScreenHeight(36),
-                          child: FlatButton(
+                          child: outofstock==false?FlatButton(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             color: kPrimaryColor,
                             onPressed: (){
@@ -122,6 +122,19 @@ class FullWidthProductCard extends StatelessWidget {
                             },
                             child: Text(
                               "Add to Cart",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ):FlatButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            color: kSecondaryColor,
+                            onPressed: (){
+
+                            },
+                            child: Text(
+                              "Out Of Stock",
                               style: TextStyle(
                                 fontSize: getProportionateScreenWidth(12),
                                 color: Colors.white,

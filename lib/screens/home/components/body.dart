@@ -7,6 +7,7 @@ import 'categories.dart';
 import 'discount_banner.dart';
 import 'home_header.dart';
 import 'fourgrid.dart';
+import 'horizontalslider.dart';
 import 'special_offers.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -85,3 +86,4 @@ class _BodyState extends State<Body> {
     ));
   }
 }
+
