@@ -5,6 +5,7 @@ import 'package:orev/components/product_card.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/screens/address/address.dart';
 import 'package:orev/size_config.dart';
 
 import 'color_dots.dart';
@@ -36,7 +37,7 @@ class _BodyState extends State<Body> {
   ];
   int selectedFoodVariants = 0;
   int quantity=1;
-  bool outofstock=true;
+  bool outofstock=false;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -135,7 +136,9 @@ class _BodyState extends State<Body> {
                               DefaultButton(
                                 color: kPrimaryColor2,
                                 text: "Buy Now",
-                                press: () {},
+                                press: () {
+                                  Navigator.pushNamed(context, Address.routeName);
+                                },
                               ),
                               SizedBox(height:getProportionateScreenHeight(15) ,),
                               DefaultButton(
