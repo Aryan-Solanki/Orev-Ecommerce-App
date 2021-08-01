@@ -6,122 +6,64 @@ import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 import 'section_title.dart';
 
-class SpecialOffers extends StatelessWidget {
-  const SpecialOffers({
-    Key key,
-  }) : super(key: key);
+class SpecialOffers extends StatefulWidget {
+  final List keys;
+  const SpecialOffers({Key key, this.keys}) : super(key: key);
+  @override
+  _SpecialOffersState createState() => _SpecialOffersState(keys: keys);
+}
+
+class _SpecialOffersState extends State<SpecialOffers> {
+  final List keys;
+  _SpecialOffersState({this.keys});
+
+  List<Widget> WidgetList = [];
+
+  Future<List<Widget>> getAllCategories() async {
+    ProductServices _services = ProductServices();
+    List<Widget> finalListWidget = [];
+
+    for (var k in keys) {
+      var document = await _services.category.doc(k).get();
+      print(document.exists);
+      print(document.get("image"));
+      WidgetList.add(new SpecialOfferCard(
+        image: document.get("image"),
+        category: document.get("name"),
+        numOfBrands: document.get("num"),
+        press: () {},
+      ));
+    }
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  @override
+  void initState() {
+    getAllCategories();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ProductServices _services = ProductServices();
-
-    List<Widget> getAllCategories(snapshot) {
-      // snapshot.data.documents.map<Widget>((document) {
-      //   return new ListTile(
-      //     title: new Text(document['name']),
-      //     subtitle: new Text("Class"),
-      //   );
-      // }).toList();
-
-      List<Widget> list =
-          snapshot.data.docs.map<Widget>((DocumentSnapshot document) {
-        return new SpecialOfferCard(
-          image: document.get("image"),
-          category: document.get("name"),
-          numOfBrands: document.get("num"),
-          press: () {},
-        );
-      }).toList();
-      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
-
-      return list;
-    }
-
-    return FutureBuilder<QuerySnapshot>(
-      future: _services.category.where('isSpecial', isEqualTo: true).get(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (snapshot.data.docs.isEmpty) {
-          return Container(); //if no data
-        }
-
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(
-                title: "Special for you",
-                press: () {},
-              ),
-            ),
-            SizedBox(height: getProportionateScreenWidth(20)),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                // SpecialOfferCard(
-                //   image: "assets/images/Image Banner 2.png",
-                //   category: "Smartphone",
-                //   numOfBrands: 18,
-                //   press: () {},
-                // ),
-                // SpecialOfferCard(
-                //   image: "assets/images/Image Banner 3.png",
-                //   category: "Fashion",
-                //   numOfBrands: 24,
-                //   press: () {},
-                // ),
-                children: getAllCategories(snapshot),
-              ),
-            ),
-          ],
-        );
-
-        // return Column(
-        //   children: [
-        //     Container(
-        //       width: MediaQuery.of(context).size.width,
-        //       height: 45,
-        //       decoration: BoxDecoration(
-        //           color: Colors.grey[300],
-        //           borderRadius: BorderRadius.circular(4)),
-        //       child: Row(
-        //         children: [
-        //           Padding(
-        //             padding: const EdgeInsets.only(left: 10),
-        //             child: Text(
-        //               '${snapshot.data.docs.length} Items',
-        //               style: TextStyle(
-        //                   fontWeight: FontWeight.bold, color: Colors.grey[600]),
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     new ListView(
-        //       padding: EdgeInsets.zero,
-        //       shrinkWrap: true,
-        //       physics: NeverScrollableScrollPhysics(),
-        //       children: snapshot.data.docs.map((DocumentSnapshot document) {
-        //         return new SpecialOfferCard(
-        //           image: "assets/images/Image Banner 3.png",
-        //           category: "Fashion",
-        //           numOfBrands: 24,
-        //           press: () {},
-        //         );
-        //       }).toList(),
-        //     ),
-        //   ],
-        // );
-      },
+    return Column(
+      children: [
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: SectionTitle(
+            title: "Special for you",
+            press: () {},
+          ),
+        ),
+        SizedBox(height: getProportionateScreenWidth(20)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: WidgetList,
+          ),
+        ),
+      ],
     );
   }
 }
