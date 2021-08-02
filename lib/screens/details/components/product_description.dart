@@ -9,22 +9,33 @@ class ProductDescription extends StatefulWidget {
   const ProductDescription({
     Key key,
     @required this.product,
+    @required this.currentVarient,
+    this.quantity = 1,
   }) : super(key: key);
+
   final Product product;
+  final int currentVarient;
+  final int quantity;
 
   @override
-  _ProductDescriptionState createState() =>
-      _ProductDescriptionState(product: this.product);
+  _ProductDescriptionState createState() => _ProductDescriptionState(
+      product: this.product,
+      currentVarient: currentVarient,
+      quantity: quantity);
 }
 
 class _ProductDescriptionState extends State<ProductDescription> {
+  final int currentVarient;
+  final int quantity;
   _ProductDescriptionState({
     @required this.product,
+    @required this.currentVarient,
+    this.quantity = 1,
   });
   final Product product;
   bool seemore = false;
   bool sale = true;
-  int saleprice = 200;
+  // int saleprice = 200;
   String brandname = "ORGANIC TATTVA";
   @override
   Widget build(BuildContext context) {
@@ -56,29 +67,20 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   horizontal: getProportionateScreenWidth(20)),
               child: Row(
                 children: [
-                  sale == true
-                      ? Text(
-                          "\₹${saleprice}",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(23),
-                            fontWeight: FontWeight.w600,
-                            color: kPrimaryColor,
-                          ),
-                        )
-                      : Text(
-                          "\₹${product.varients[0].price}",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(23),
-                            fontWeight: FontWeight.w600,
-                            color: kPrimaryColor,
-                          ),
-                        ),
+                  Text(
+                    "\₹${product.varients[currentVarient].price * quantity}",
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(23),
+                      fontWeight: FontWeight.w600,
+                      color: kPrimaryColor,
+                    ),
+                  ),
                   SizedBox(
                     width: getProportionateScreenWidth(20),
                   ),
                   sale == true
                       ? Text(
-                          "\₹${product.varients[0].price}",
+                          "\₹${product.varients[currentVarient].comparedPrice * quantity}",
                           style: TextStyle(
                             decoration: TextDecoration.lineThrough,
                             fontSize: getProportionateScreenWidth(13),

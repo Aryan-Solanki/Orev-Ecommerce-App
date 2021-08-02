@@ -23,11 +23,10 @@ class Body extends StatefulWidget {
   const Body({Key key, @required this.product}) : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(product: this.product);
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  _BodyState({@required this.product});
   List<String> UserAddress = [
     "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
     "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
@@ -39,7 +38,7 @@ class _BodyState extends State<Body> {
   int selectedFoodVariants = 0;
 
   void getVarientList() {
-    for (var title in product.varients) {
+    for (var title in widget.product.varients) {
       foodVariantsTitles.add(title.title);
       foodVariants.add(title);
     }
@@ -47,7 +46,7 @@ class _BodyState extends State<Body> {
 
   void getDefaultVarient() {
     int index = 0;
-    for (var varient in product.varients) {
+    for (var varient in widget.product.varients) {
       if (varient.default_product == true) {
         selectedFoodVariants = index;
         break;
@@ -93,7 +92,6 @@ class _BodyState extends State<Body> {
   //   scaffoldKey.currentState?.showSnackBar(snackBar);
   // }
 
-  final Product product;
   @override
   Widget build(BuildContext context) {
     void _showDialog() {
@@ -223,13 +221,18 @@ class _BodyState extends State<Body> {
           child: ListView(
             children: [
               ProductImages(
-                  product: product, currentVarient: selectedFoodVariants),
+                  key: UniqueKey(),
+                  product: widget.product,
+                  currentVarient: selectedFoodVariants),
               TopRoundedContainer(
                 color: Colors.white,
                 child: Column(
                   children: [
                     ProductDescription(
-                      product: product,
+                      key: UniqueKey(),
+                      product: widget.product,
+                      currentVarient: selectedFoodVariants,
+                      quantity: quantity,
                     ),
                     TopRoundedContainer(
                       color: Color(0xFFF6F7F9),
@@ -252,8 +255,10 @@ class _BodyState extends State<Body> {
                                         onItemSelectedListener:
                                             (item, index, context) {
                                           selectedFoodVariants = index;
+                                          setState(() {
+                                            print(selectedFoodVariants);
+                                          });
                                           print(selectedFoodVariants);
-                                          setState(() {});
                                         })),
                                 // SizedBox(width: getProportionateScreenWidth(100),),
                                 Icon(
@@ -296,7 +301,8 @@ class _BodyState extends State<Body> {
                               ],
                             ),
                           ),
-                          !product.varients[selectedFoodVariants].inStock ==
+                          !widget.product.varients[selectedFoodVariants]
+                                      .inStock ==
                                   false
                               ? TopRoundedContainer(
                                   color: Colors.white,
