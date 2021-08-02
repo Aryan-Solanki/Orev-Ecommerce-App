@@ -9,25 +9,31 @@ class DefaultButton extends StatelessWidget {
     this.text,
     this.press,
     this.color=kPrimaryColor,
+    this.height=56,
+    this.textheight=18,
+    this.colour=Colors.white,
   }) : super(key: key);
   final String text;
   final Function press;
   final Color color;
+  final double height;
+  final double textheight;
+  final Color colour;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: getProportionateScreenHeight(56),
+      height: getProportionateScreenHeight(height),
       child: FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         color: color,
         onPressed: press,
         child: Text(
           text,
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
-            color: Colors.white,
+            fontSize: getProportionateScreenWidth(textheight),
+            color: colour,
           ),
         ),
       ),
