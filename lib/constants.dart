@@ -54,6 +54,7 @@ const String kShortNumberError = "Phone Number Is Too Short";
 const String kLongNumberError = "Phone Number Is Too Long";
 const String kInvalidPhoneError = "Please Enter Valid Phone Number";
 
+
 final otpInputDecoration = InputDecoration(
   contentPadding:
       EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
