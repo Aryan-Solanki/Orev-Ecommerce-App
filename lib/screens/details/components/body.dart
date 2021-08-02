@@ -8,14 +8,15 @@ import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/size_config.dart';
-
-import 'color_dots.dart';
+import 'package:search_choices/search_choices.dart';
+import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 import 'package:direct_select_flutter/direct_select_container.dart';
 import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
+import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
 class Body extends StatefulWidget {
   final Product product;
@@ -27,6 +28,11 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   _BodyState({@required this.product});
+  List<String> UserAddress = [
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
+    "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
+    "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
+  ];
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
@@ -57,7 +63,9 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  int quantity = 1;
+  int quantity=1;
+  String SelectedAddress="";
+  int _radioSelected;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -88,6 +96,126 @@ class _BodyState extends State<Body> {
   final Product product;
   @override
   Widget build(BuildContext context) {
+    void _showDialog() {
+      slideDialog.showSlideDialog(
+          context: context,
+        child: Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: Column(
+                children: [
+                  Text(
+                    "Select Delivery Address",
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(25),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              StatefulBuilder(builder: (context, StateSetter setState){
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: UserAddress.length,
+                  itemBuilder: (context, i) {
+                    return Container(
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 13),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Color(0xff565656),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: i,
+                              groupValue: _radioSelected,
+                              onChanged: (ind) {
+                                _radioSelected = ind;
+                                setState(() {
+                                  SelectedAddress = UserAddress[i];
+                                  print(SelectedAddress);
+                                });
+                              },
+                            ),
+                            Expanded(
+                              child: Text(
+                                UserAddress[i],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        )
+
+                    );
+                  },
+                );
+              },
+              ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      // onTap: () => Navigator.pushNamed(
+                      //     context, ForgotPasswordScreen.routeName),
+                      child: Text(
+                        "Add New Address",
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(10),),
+                  SwipeButton(
+                    thumb: Icon(
+                      Icons.double_arrow_outlined
+                    ),
+                    activeThumbColor: kPrimaryColor4,
+                    borderRadius: BorderRadius.circular(8),
+                    activeTrackColor: kPrimaryColor3,
+                    height: getProportionateScreenHeight(80),
+                    child: Text(
+                      "Swipe to place your order",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(13),
+                      ),
+                    ),
+                    onSwipe: () {
+                        print("Order Placed");
+                    },
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(10),),
+                  DefaultButton(
+                    textheight: 13,
+                    colour: Colors.black,
+                    height: 70,
+                    color: kPrimaryColor2,
+                    text: "Pay Online",
+                    press: () {
+                      if(UserAddress.isEmpty){
+                        Navigator.pushNamed(context, Address.routeName);
+                      }
+                      else{
+                        _showDialog();
+                      }
+                    },
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(10),),
+
+                ],
+              ),
+            ),
+          ),
+        )
+      );
+    }
+
     return DirectSelectContainer(
       child: ListView(
         children: [
@@ -175,9 +303,13 @@ class _BodyState extends State<Body> {
                                       color: kPrimaryColor2,
                                       text: "Buy Now",
                                       press: () {
-                                        Navigator.pushNamed(
-                                            context, Address.routeName);
-                                      },
+                                  if(UserAddress.isEmpty){
+                                    Navigator.pushNamed(context, Address.routeName);
+                                  }
+                                  else{
+                                    _showDialog();
+                                  }
+                                },
                                     ),
                                     SizedBox(
                                       height: getProportionateScreenHeight(15),

@@ -3,6 +3,8 @@ import 'package:orev/size_config.dart';
 
 const kPrimaryColor = Color(0xff59b24d);
 const kPrimaryColor2 = Color(0xff3bd80d);
+const kPrimaryColor3 = Color(0xfff8e1a9);
+const kPrimaryColor4 = Color(0xfff3c13d);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
@@ -53,6 +55,7 @@ const String kAddressNullError = "Please Enter Your Address";
 const String kShortNumberError = "Phone Number Is Too Short";
 const String kLongNumberError = "Phone Number Is Too Long";
 const String kInvalidPhoneError = "Please Enter Valid Phone Number";
+
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

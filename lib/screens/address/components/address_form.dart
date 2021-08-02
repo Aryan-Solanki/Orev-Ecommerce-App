@@ -29,10 +29,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
   bool remember = false;
   String phone;
   String Name;
-  DocumentSnapshot snapshot;
   List<String> errors = [];
-  final TextEditingController _pinPutController = TextEditingController();
-  final FocusNode _pinPutFocusNode = FocusNode();
   final FirebaseAuth auth = FirebaseAuth.instance;
   String selectedValueSingleDialog = "";
   String selected_state="";
@@ -52,123 +49,10 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       });
   }
 
-  _verifyPhone() async {
-    await auth.verifyPhoneNumber(
-        phoneNumber: '+91' + number,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
-              print("nothinggggg");
-            }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-          print(e.message);
-        },
-        codeSent: (String verficationID, int resendToken) {
-          setState(() {
-            _verificationCode = verficationID;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 30));
-  }
-
-  Future<bool> Query(num) async {
-    var bo = false;
-    QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection("users").get();
-    snapshot.docs.forEach((document) {
-      if (document.exists) {
-        if (document['number'] == num) {
-          bo = true;
-          return;
-        }
-      } else {
-        print('document does not exist');
-      }
-    });
-    return bo;
-  }
-
-  String _verificationCode;
   String number;
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<AuthProvider>(context);
-    UserServices _userServices = UserServices();
-    String phone_uid;
 
-    Widget boxedPinPutWithPreFilledSymbol() {
-      final BoxDecoration pinPutDecoration = BoxDecoration(
-        color: kPrimaryColor,
-        borderRadius: BorderRadius.circular(5.0),
-      );
-
-      return PinPut(
-        withCursor: true,
-        fieldsCount: 6,
-        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-        eachFieldWidth: 50.0,
-        eachFieldHeight: 50.0,
-        onSubmit: (String pin) async {
-          try {
-            await auth
-                .signInWithCredential(PhoneAuthProvider.credential(
-                verificationId: _verificationCode, smsCode: pin))
-                .then((value) async {
-              if (value.user != null) {
-
-              }
-            });
-          } catch (e) {
-            print(e);
-          }
-        },
-        focusNode: _pinPutFocusNode,
-        controller: _pinPutController,
-        submittedFieldDecoration: pinPutDecoration,
-        selectedFieldDecoration:
-        pinPutDecoration.copyWith(color: Colors.lightGreen),
-        followingFieldDecoration: pinPutDecoration,
-      );
-    }
-
-    void _showDialog() {
-      slideDialog.showSlideDialog(
-          context: context,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: Column(
-              children: [
-                Text(
-                  "One Time Password",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(28),
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                boxedPinPutWithPreFilledSymbol(),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                Text(
-                  "Please enter the OTP that you have received on \nyour provided phone number $number",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.1),
-              ],
-            ),
-          ));
-    }
 
     return Form(
       key: _formKey,
@@ -187,6 +71,12 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               ),
             ),
             child: SearchChoices.single(
+              onClear: (){
+                setState(() {
+                  selected_state="";
+                  selected_city="Search for your City";
+                });
+              },
               padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
@@ -204,7 +94,6 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
                   setState(() {
                     selected_state = value;
                   });
-                  print(selected_state);
                 }
 
 // selectedValueSingleDialog = value;
@@ -222,6 +111,9 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               ),
             ),
             child: SearchChoices.single(
+              onClear: (){
+                selected_city="Search for your City";
+              },
               padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
@@ -248,18 +140,11 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           DefaultButton(
             text: "Continue",
             press: () async {
+              print(selected_state);
+              print(selected_city);
               errors = [];
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                var bo = await Query("+91" + number);
-                if (bo) {
-                  addError(error: kUserExistsError);
-                } else {
-                  _verifyPhone();
-                  _showDialog();
-                }
-                // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              if (_formKey.currentState.validate() && selected_state!="" && selected_city!="Search for your City"){
+                print("nexxxxxxxxxxt pageeeee");
               }
             },
           ),
@@ -273,13 +158,13 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       onSaved: (newValue) => Name = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: kAddressNullError);
         }
         return null;
       },
       validator: (value) {
         if (value.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: kAddressNullError);
           return "";
         }
         return null;
@@ -294,81 +179,5 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
     );
   }
 
-  TextFormField buildConformPassFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        }
-        if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
-        }
-        conform_password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        }
-        if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
 
-  TextFormField buildPasswordFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        }
-        if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        }
-        if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
-
-}
-
-bool isNumeric(String s) {
-  if (s == null) {
-    return false;
-  }
-  return double.parse(s, (e) => null) != null;
 }
