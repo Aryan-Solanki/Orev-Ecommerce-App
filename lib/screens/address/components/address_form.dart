@@ -71,6 +71,12 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               ),
             ),
             child: SearchChoices.single(
+              onClear: (){
+                setState(() {
+                  selected_state="";
+                  selected_city="Search for your City";
+                });
+              },
               padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
@@ -88,7 +94,6 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
                   setState(() {
                     selected_state = value;
                   });
-                  print(selected_state);
                 }
 
 // selectedValueSingleDialog = value;
@@ -106,6 +111,9 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               ),
             ),
             child: SearchChoices.single(
+              onClear: (){
+                selected_city="Search for your City";
+              },
               padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
@@ -132,8 +140,11 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           DefaultButton(
             text: "Continue",
             press: () async {
+              print(selected_state);
+              print(selected_city);
               errors = [];
-              if (_formKey.currentState.validate()) {
+              if (_formKey.currentState.validate() && selected_state!="" && selected_city!="Search for your City"){
+                print("nexxxxxxxxxxt pageeeee");
               }
             },
           ),

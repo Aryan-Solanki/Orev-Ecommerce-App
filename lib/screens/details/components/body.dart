@@ -7,8 +7,8 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/size_config.dart';
-
-import 'color_dots.dart';
+import 'package:search_choices/search_choices.dart';
+import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
@@ -27,6 +27,17 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   _BodyState({@required this.product});
+  List<String> UserAddress = [
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi,400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+    "400-B,Pocket-N,Sarita Vihar ,New Delhi",
+  ];
 
   List<String> _foodVariants = [
     "Chicken grilled Chicken grilled Chicken grilled",
@@ -38,6 +49,8 @@ class _BodyState extends State<Body> {
   int selectedFoodVariants = 0;
   int quantity=1;
   bool outofstock=false;
+  String SelectedAddress="";
+  int _radioSelected;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -62,6 +75,66 @@ class _BodyState extends State<Body> {
   final Product product;
   @override
   Widget build(BuildContext context) {
+    void _showDialog() {
+      slideDialog.showSlideDialog(
+          context: context,
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Column(
+                  children: [
+                    Text(
+                      "Select Delivery Address",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(25),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: UserAddress.length,
+                      itemBuilder: (context, i) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 13),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Color(0xff565656),
+                            ),
+                          ),
+                          child:RadioListTile(
+                            value: i,
+                            groupValue: _radioSelected,
+                            onChanged: (ind){
+                              setState(() {
+                                _radioSelected = ind;
+                                SelectedAddress=UserAddress[i];
+                                print(SelectedAddress);
+
+                              });
+                            },
+                            title: Text(UserAddress[i],maxLines: 1,overflow: TextOverflow.ellipsis,),
+                          )
+
+                        );
+                      },
+                    ),
+
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    SizedBox(height: SizeConfig.screenHeight * 0.1),
+                  ],
+                ),
+              ),
+            ),
+          ));
+    }
     return DirectSelectContainer(
       child: ListView(
         children: [
@@ -137,7 +210,12 @@ class _BodyState extends State<Body> {
                                 color: kPrimaryColor2,
                                 text: "Buy Now",
                                 press: () {
-                                  Navigator.pushNamed(context, Address.routeName);
+                                  if(UserAddress.isEmpty){
+                                    Navigator.pushNamed(context, Address.routeName);
+                                  }
+                                  else{
+                                    _showDialog();
+                                  }
                                 },
                               ),
                               SizedBox(height:getProportionateScreenHeight(15) ,),
