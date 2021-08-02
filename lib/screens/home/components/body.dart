@@ -47,7 +47,20 @@ class _BodyState extends State<Body> {
         });
         print(ListWidgets);
         print(ListWidgets.length);
-      } else if (type == "3_grid") {}
+      } else if (type == "3_grid") {
+        // var productIdList = [];
+        // var edata = e["data"];
+        // for (var catid in edata) {
+        //   print(catid["productId"]);
+        //   productIdList.add(catid["productId"]);
+        // }
+        // setState(() {
+        //   ListWidgets.add(ThreeGrid(keys: productIdList));
+        //   ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+        // });
+        // print(ListWidgets);
+        // print(ListWidgets.length);
+      }
     }
   }
 
@@ -86,4 +99,3 @@ class _BodyState extends State<Body> {
     ));
   }
 }
-

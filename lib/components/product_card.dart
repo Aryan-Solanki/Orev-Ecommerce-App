@@ -20,7 +20,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(15),right:getProportionateScreenWidth(15)),
+      padding: EdgeInsets.only(
+          left: getProportionateScreenWidth(15),
+          right: getProportionateScreenWidth(15)),
       child: SizedBox(
         width: getProportionateScreenWidth(width),
         child: GestureDetector(
@@ -42,7 +44,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Hero(
                     tag: product.id.toString(),
-                    child: Image.asset(product.images[0]),
+                    child: Image.asset(product.varients[0].images[0]),
                   ),
                 ),
               ),
@@ -56,7 +58,7 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\₹${product.price}",
+                    "\₹${product.varients[0].price}",
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(17),
                       fontWeight: FontWeight.w600,
