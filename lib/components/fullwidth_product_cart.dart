@@ -20,7 +20,7 @@ class FullWidthProductCard extends StatelessWidget {
   final Product product;
   final int saleprice = 200;
   final bool sale;
-  final bool outofstock=false;
+  final bool outofstock = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,15 +60,15 @@ class FullWidthProductCard extends StatelessWidget {
                           height: getProportionateScreenHeight(150),
                           width: getProportionateScreenWidth(160),
                         ),
-                        Container(
-                          width: getProportionateScreenWidth(152),
-                          height: getProportionateScreenHeight(36),
-                          child: outofstock==false?FlatButton(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                            color: kPrimaryColor,
-                            onPressed: (){
-
-                            },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: getProportionateScreenWidth(150),
                             child: Text(
                               product.title,
                               style: TextStyle(color: Colors.black),
@@ -130,7 +130,7 @@ class FullWidthProductCard extends StatelessWidget {
                             ],
                           ),
                           Container(
-                            width: getProportionateScreenWidth(153),
+                            width: getProportionateScreenWidth(152),
                             height: getProportionateScreenHeight(36),
                             child: outofstock == false
                                 ? FlatButton(
