@@ -130,27 +130,29 @@ class _BodyState extends State<Body> {
                                     color: Color(0xff565656),
                                   ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Radio(
-                                      value: i,
-                                      groupValue: _radioSelected,
-                                      onChanged: (ind) {
-                                        _radioSelected = ind;
-                                        setState(() {
-                                          SelectedAddress = UserAddress[i];
-                                          print(SelectedAddress);
-                                        });
-                                      },
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        UserAddress[i],
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                child: FlatButton(
+                                  onPressed: (){
+                                    _radioSelected = i;
+                                    setState(() {
+                                      SelectedAddress = UserAddress[i];
+                                      print(SelectedAddress);
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        value: i,
+                                        groupValue: _radioSelected,
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Text(
+                                          UserAddress[i],
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ));
                           },
                         );
