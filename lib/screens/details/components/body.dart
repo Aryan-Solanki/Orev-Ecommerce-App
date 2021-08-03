@@ -7,6 +7,8 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/address/address.dart';
+import 'package:orev/screens/liked_item/like_screen.dart';
+import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/size_config.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
@@ -17,6 +19,7 @@ import 'package:direct_select_flutter/direct_select_container.dart';
 import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Body extends StatefulWidget {
   final Product product;
@@ -27,6 +30,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  Razorpay _razorpay;
+
+
   List<String> UserAddress = [
     "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
     "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
@@ -57,14 +63,55 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
     getVarientList();
     getDefaultVarient();
-    super.initState();
   }
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
+  void launchPayment() async {
+    var options = {
+      'key': 'rzp_test_2oGDl23Iu0RfYG',
+      'amount': 100,
+      'name': 'flutterdemorazorpay',
+      'description': 'Test payment from Flutter app',
+      'prefill': {'contact': '', 'email': ''},
+      'external': {'wallets': ["paytm"]}
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e);
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Navigator.pushNamed(context, LikedScreen.routeName);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Navigator.pushNamed(context, SeeMore.routeName);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print("external wallet");
+  }
+
+  @override
 
   int quantity = 1;
   String SelectedAddress = "";
-  int _radioSelected;
+  int _radioSelected=0;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -200,11 +247,7 @@ class _BodyState extends State<Body> {
                       color: kPrimaryColor2,
                       text: "Pay Online",
                       press: () {
-                        if (UserAddress.isEmpty) {
-                          Navigator.pushNamed(context, Address.routeName);
-                        } else {
-                          _showDialog();
-                        }
+                        launchPayment();
                       },
                     ),
                     SizedBox(
