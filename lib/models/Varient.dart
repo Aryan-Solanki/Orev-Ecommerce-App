@@ -6,9 +6,9 @@ class Varient {
   final double comparedPrice, discountPercentage;
   final double price;
   final bool inStock;
-  final double qty;
+  final int qty;
   final String title;
-  final List<String> images;
+  final List<dynamic> images;
 
   Varient({
     @required this.default_product,

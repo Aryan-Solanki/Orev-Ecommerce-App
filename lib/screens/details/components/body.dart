@@ -7,6 +7,7 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/address/address.dart';
+import 'package:orev/services/product_services.dart';
 import 'package:orev/size_config.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
@@ -35,6 +36,7 @@ class _BodyState extends State<Body> {
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
+  List<Product> youMayAlsoLikeList = [];
   int selectedFoodVariants = 0;
 
   void getVarientList() {
@@ -55,10 +57,20 @@ class _BodyState extends State<Body> {
     }
   }
 
+  Future<void> getYouMayAlsoLikeProductList() async {
+    ProductServices _services = ProductServices();
+    List<dynamic> ymalp = widget.product.youmayalsolike;
+    for (var pr in ymalp) {
+      youMayAlsoLikeList.add(await _services.getProduct(pr));
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     getVarientList();
     getDefaultVarient();
+    getYouMayAlsoLikeProductList();
     super.initState();
   }
 
@@ -383,14 +395,15 @@ class _BodyState extends State<Body> {
                       child: Row(
                         children: [
                           ...List.generate(
-                            demoProducts.length,
+                            widget.product.youmayalsolike.length,
                             (index) {
-                              if (demoProducts[index].isPopular)
+                              if (youMayAlsoLikeList.length == 0) {
+                                return SizedBox.shrink();
+                              } else {
                                 return ProductCard(
-                                    product: demoProducts[index]);
-
-                              return SizedBox
-                                  .shrink(); // here by default width and height is 0
+                                    product: youMayAlsoLikeList[index]);
+                              }
+                              // here by default width and height is 0
                             },
                           ),
                           SizedBox(width: getProportionateScreenWidth(20)),

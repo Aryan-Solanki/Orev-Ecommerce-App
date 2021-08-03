@@ -6,7 +6,7 @@ class Product {
   final String id;
   final String title, detail;
   final List<Varient> varients;
-  final List<String> youmayalsolike;
+  final List<dynamic> youmayalsolike;
   final double rating;
   final double tax;
   final bool isFavourite, isPopular;
