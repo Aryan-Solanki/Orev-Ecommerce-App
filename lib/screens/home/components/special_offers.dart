@@ -8,7 +8,8 @@ import 'section_title.dart';
 
 class SpecialOffers extends StatefulWidget {
   final List keys;
-  const SpecialOffers({Key key, this.keys}) : super(key: key);
+  final String card_title;
+  const SpecialOffers({Key key, this.keys, this.card_title}) : super(key: key);
   @override
   _SpecialOffersState createState() => _SpecialOffersState(keys: keys);
 }
@@ -52,7 +53,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
-            title: "Special for you",
+            title: widget.card_title,
             press: () {},
           ),
         ),

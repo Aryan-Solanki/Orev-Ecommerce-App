@@ -38,7 +38,7 @@ class _ProductImagesState extends State<ProductImages> {
             child: Hero(
                 tag: widget.product.id.toString(),
                 child: InteractiveViewer(
-                  child: Image.asset(widget
+                  child: Image.network(widget
                       .product.varients[currentVarient].images[selectedImage]),
                 )),
           ),
@@ -75,8 +75,8 @@ class _ProductImagesState extends State<ProductImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child:
-            Image.asset(widget.product.varients[currentVarient].images[index]),
+        child: Image.network(
+            widget.product.varients[currentVarient].images[index]),
       ),
     );
   }

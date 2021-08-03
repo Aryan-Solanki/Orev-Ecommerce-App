@@ -34,6 +34,7 @@ class _BodyState extends State<Body> {
     print(ListComponents);
     for (var e in ListComponents) {
       var type = e["type"];
+      var card_title = e["title"];
       if (type == "slider_category") {
         var categoryIdList = [];
         var edata = e["data"];
@@ -42,24 +43,47 @@ class _BodyState extends State<Body> {
           categoryIdList.add(catid["categoryId"]);
         }
         setState(() {
-          ListWidgets.add(SpecialOffers(keys: categoryIdList));
+          ListWidgets.add(
+            SpecialOffers(
+              keys: categoryIdList,
+              card_title: card_title,
+            ),
+          );
           ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
         print(ListWidgets);
         print(ListWidgets.length);
       } else if (type == "3_grid") {
-        // var productIdList = [];
-        // var edata = e["data"];
-        // for (var catid in edata) {
-        //   print(catid["productId"]);
-        //   productIdList.add(catid["productId"]);
-        // }
-        // setState(() {
-        //   ListWidgets.add(ThreeGrid(keys: productIdList));
-        //   ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
-        // });
-        // print(ListWidgets);
-        // print(ListWidgets.length);
+        var productIdList = [];
+        var edata = e["data"];
+        for (var catid in edata) {
+          print(catid["productId"]);
+          productIdList.add(catid["productId"]);
+        }
+
+        print(productIdList);
+        setState(() {
+          ListWidgets.add(ThreeGrid(
+            keys: productIdList,
+            card_title: card_title,
+          ));
+          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+        });
+      } else if (type == "4_grid") {
+        var productIdList = [];
+        var edata = e["data"];
+        for (var catid in edata) {
+          print(catid["productId"]);
+          productIdList.add(catid["productId"]);
+        }
+
+        setState(() {
+          ListWidgets.add(FourGrid(
+            keys: productIdList,
+            card_title: card_title,
+          ));
+          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+        });
       }
     }
   }
