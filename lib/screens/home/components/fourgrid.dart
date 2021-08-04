@@ -10,7 +10,9 @@ import 'section_title.dart';
 class FourGrid extends StatefulWidget {
   final List keys;
   final String card_title;
-  const FourGrid({Key key, this.keys, this.card_title}) : super(key: key);
+  final String categoryId;
+  const FourGrid({Key key, this.keys, this.card_title, this.categoryId})
+      : super(key: key);
   @override
   _FourGridState createState() => _FourGridState(keys: keys);
 }
@@ -77,7 +79,11 @@ class _FourGridState extends State<FourGrid> {
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: widget.card_title, press: () {}),
+          child: SectionTitle(
+            title: widget.card_title,
+            press: () {},
+            categoryId: widget.categoryId,
+          ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         GridView.count(

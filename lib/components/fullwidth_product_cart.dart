@@ -91,7 +91,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                       child: Hero(
                         tag: widget.product.id.toString(),
-                        child: Image.asset(
+                        child: Image.network(
                           widget.product.varients[defaultVarient].images[0],
                           height: getProportionateScreenHeight(150),
                           width: getProportionateScreenWidth(160),

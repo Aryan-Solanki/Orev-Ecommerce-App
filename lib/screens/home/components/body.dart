@@ -35,6 +35,7 @@ class _BodyState extends State<Body> {
     for (var e in ListComponents) {
       var type = e["type"];
       var card_title = e["title"];
+      var categoryId = e["categoryId"].trim();
       if (type == "slider_category") {
         var categoryIdList = [];
         var edata = e["data"];
@@ -51,21 +52,17 @@ class _BodyState extends State<Body> {
           );
           ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
-        print(ListWidgets);
-        print(ListWidgets.length);
       } else if (type == "3_grid") {
         var productIdList = [];
         var edata = e["data"];
         for (var catid in edata) {
-          print(catid["productId"]);
           productIdList.add(catid["productId"]);
         }
-
-        print(productIdList);
         setState(() {
           ListWidgets.add(ThreeGrid(
             keys: productIdList,
             card_title: card_title,
+            categoryId: categoryId,
           ));
           ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });

@@ -4,12 +4,25 @@ import 'package:orev/enums.dart';
 
 import 'components/body.dart';
 
-class SeeMore extends StatelessWidget {
+class SeeMore extends StatefulWidget {
   static String routeName = "/seemore";
+  final String categoryId;
+  final String title;
+  SeeMore({this.categoryId, this.title});
+  @override
+  _SeeMoreState createState() =>
+      _SeeMoreState(categoryId: categoryId, title: title);
+}
+
+class _SeeMoreState extends State<SeeMore> {
+  static String routeName = "/seemore";
+  final String categoryId;
+  final String title;
+  _SeeMoreState({this.categoryId, this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: Body(categoryId: categoryId, title: title),
     );
   }
 }

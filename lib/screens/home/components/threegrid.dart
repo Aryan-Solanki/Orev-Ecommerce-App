@@ -11,14 +11,18 @@ import 'section_title.dart';
 class ThreeGrid extends StatefulWidget {
   final List keys;
   final String card_title;
-  const ThreeGrid({Key key, this.keys, this.card_title}) : super(key: key);
+  final String categoryId;
+  const ThreeGrid({Key key, this.keys, this.card_title, this.categoryId})
+      : super(key: key);
   @override
-  _ThreeGridState createState() => _ThreeGridState(keys: keys);
+  _ThreeGridState createState() =>
+      _ThreeGridState(keys: keys, categoryId: categoryId);
 }
 
 class _ThreeGridState extends State<ThreeGrid> {
   final List keys;
-  _ThreeGridState({this.keys});
+  final String categoryId;
+  _ThreeGridState({this.keys, this.categoryId});
 
   List<Product> ProductList = [];
 
@@ -78,7 +82,11 @@ class _ThreeGridState extends State<ThreeGrid> {
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: widget.card_title, press: () {}),
+          child: SectionTitle(
+            title: widget.card_title,
+            press: () {},
+            categoryId: widget.categoryId,
+          ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         ProductList.length == 0

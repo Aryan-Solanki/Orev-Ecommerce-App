@@ -55,6 +55,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
           child: SectionTitle(
             title: widget.card_title,
             press: () {},
+            seemore: false,
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
