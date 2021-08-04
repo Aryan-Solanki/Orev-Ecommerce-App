@@ -81,6 +81,21 @@ class _BodyState extends State<Body> {
           ));
           ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
+      } else if (type == "slider_products") {
+        var productIdList = [];
+        var edata = e["data"];
+        for (var catid in edata) {
+          print(catid["productId"]);
+          productIdList.add(catid["productId"]);
+        }
+
+        setState(() {
+          ListWidgets.add(HorizontalSlider(
+            keys: productIdList,
+            card_title: card_title,
+          ));
+          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+        });
       }
     }
   }
