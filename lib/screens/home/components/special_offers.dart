@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:provider/provider.dart';
 
@@ -27,12 +28,19 @@ class _SpecialOffersState extends State<SpecialOffers> {
     for (var k in keys) {
       var document = await _services.category.doc(k).get();
       print(document.exists);
-      print(document.get("image"));
+      print(document.get("id"));
       WidgetList.add(new SpecialOfferCard(
         image: document.get("image"),
         category: document.get("name"),
         numOfBrands: document.get("num"),
-        press: () {},
+        press: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SeeMore(
+                      categoryId: document.get("id"),
+                      title: document.get("name"))));
+        },
       ));
     }
     setState(() {});
