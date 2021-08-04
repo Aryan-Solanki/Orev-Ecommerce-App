@@ -30,12 +30,17 @@ class _BodyState extends State<Body> {
   }
 
   void getList(variable) async {
+    ProductServices _services = ProductServices();
     var ListComponents = await variable["ScreenComponents"];
     print(ListComponents);
     for (var e in ListComponents) {
       var type = e["type"];
-      var card_title = e["title"];
       var categoryId = e["categoryId"].trim();
+      ProductServices _services = ProductServices();
+      DocumentSnapshot nameref = await _services.category.doc(categoryId).get();
+      print(nameref["name"]);
+      String x = nameref["name"].toString();
+      var card_title = x;
       if (type == "slider_category") {
         var categoryIdList = [];
         var edata = e["data"];

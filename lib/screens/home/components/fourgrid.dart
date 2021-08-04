@@ -30,11 +30,8 @@ class _FourGridState extends State<FourGrid> {
       var document = await _services.products.doc(k).get();
       print(document.exists);
       var listVarientraw = document["variant"];
-      print(listVarientraw);
       List<Varient> listVarient = [];
       for (var vari in listVarientraw) {
-        print(vari["variantDetails"]["title"]);
-        print(vari["variantDetails"]["title"]);
         listVarient.add(new Varient(
             default_product: vari["default"],
             isOnSale: vari["onSale"]["isOnSale"],
