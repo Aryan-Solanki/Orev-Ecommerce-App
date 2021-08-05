@@ -11,6 +11,9 @@ class ProductServices {
   CollectionReference products =
       FirebaseFirestore.instance.collection('products');
 
+  CollectionReference favourites =
+      FirebaseFirestore.instance.collection('favourites');
+
   Future<Product> getProduct(productId) async {
     ProductServices _services = ProductServices();
     var document = await _services.products.doc(productId).get();

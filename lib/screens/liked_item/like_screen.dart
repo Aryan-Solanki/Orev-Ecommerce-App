@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/models/Cart.dart';
+import 'package:orev/screens/liked_item/components/scrollview.dart';
 
 import '../../enums.dart';
 import 'components/body.dart';
 
-class LikedScreen extends StatelessWidget {
+class LikedScreen extends StatefulWidget {
   static String routeName = "/liked_screen";
+  @override
+  _LikedScreenState createState() => _LikedScreenState();
+}
+
+class _LikedScreenState extends State<LikedScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite),
+      body: AllItems(),
+      bottomNavigationBar:
+          CustomBottomNavBar(selectedMenu: MenuState.favourite),
     );
   }
 

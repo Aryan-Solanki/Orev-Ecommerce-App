@@ -7,6 +7,7 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/services/user_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
