@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/services/product_services.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -53,8 +55,48 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     }
   }
 
+  String user_key;
+  List<dynamic> keys = [];
+
+  Future<void> getAllProducts() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+
+    if (keys.contains(widget.product.id)) {
+      favor = true;
+    }
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> removeFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.remove(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> addFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.add(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
   @override
   void initState() {
+    user_key = AuthProvider().user.uid;
+    getAllProducts();
     getDefaultVarient();
     outofstockcheck();
     super.initState();
@@ -203,8 +245,18 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                 setState(() {
                   if (favor == true) {
                     favor = false;
+                    removeFavourite();
+                    Scaffold.of(context).showSnackBar(new SnackBar(
+                      content: new Text("Removed from Favourites"),
+                      backgroundColor: kPrimaryColor2,
+                    ));
                   } else {
                     favor = true;
+                    addFavourite();
+                    Scaffold.of(context).showSnackBar(new SnackBar(
+                      content: new Text("Added to Favourites"),
+                      backgroundColor: kPrimaryColor2,
+                    ));
                   }
                 });
               },

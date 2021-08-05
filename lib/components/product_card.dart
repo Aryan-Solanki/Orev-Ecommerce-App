@@ -42,6 +42,28 @@ class _ProductCardState extends State<ProductCard> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  Future<void> removeFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.remove(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> addFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.add(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
@@ -103,8 +125,18 @@ class _ProductCardState extends State<ProductCard> {
                       setState(() {
                         if (favor == true) {
                           favor = false;
+                          removeFavourite();
+                          Scaffold.of(context).showSnackBar(new SnackBar(
+                            content: new Text("Removed from Favourites"),
+                            backgroundColor: kPrimaryColor2,
+                          ));
                         } else {
                           favor = true;
+                          addFavourite();
+                          Scaffold.of(context).showSnackBar(new SnackBar(
+                            content: new Text("Added to Favourites"),
+                            backgroundColor: kPrimaryColor2,
+                          ));
                         }
                       });
                     },
