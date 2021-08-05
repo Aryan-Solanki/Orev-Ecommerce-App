@@ -108,6 +108,7 @@ class _AllItemsState extends State<AllItems> {
                     ),
                     child: FullWidthProductCard(
                       product: ProductList[index],
+                      like: false,
                     ),
                   );
 

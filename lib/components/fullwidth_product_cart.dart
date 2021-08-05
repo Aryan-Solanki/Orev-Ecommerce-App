@@ -9,6 +9,7 @@ import '../size_config.dart';
 
 class FullWidthProductCard extends StatefulWidget {
   final bool sale;
+  final bool like;
   final double width, aspectRetio;
   final Product product;
 
@@ -18,6 +19,7 @@ class FullWidthProductCard extends StatefulWidget {
     this.aspectRetio = 1.02,
     @required this.product,
     this.sale = true,
+    this.like = true,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class FullWidthProductCard extends StatefulWidget {
 class _FullWidthProductCardState extends State<FullWidthProductCard> {
   // final int saleprice = 200;
   bool outofstock = true;
-  bool favor=false;
+  bool favor = false;
 
   void outofstockcheck() {
     for (var varient in widget.product.varients) {
@@ -199,30 +201,33 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
               borderRadius: BorderRadius.circular(50),
               onTap: () {
                 setState(() {
-                  if(favor==true){
-                    favor=false;
-                  }
-                  else{
-                    favor=true;
+                  if (favor == true) {
+                    favor = false;
+                  } else {
+                    favor = true;
                   }
                 });
               },
-              child: Container(
-                padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                height: getProportionateScreenWidth(28),
-                width: getProportionateScreenWidth(28),
-                decoration: BoxDecoration(
-                  color: widget.product.isFavourite
-                      ? kPrimaryColor.withOpacity(0.15)
-                      : kSecondaryColor.withOpacity(0.1),
-                ),
-                child: SvgPicture.asset(
-                  "assets/icons/Heart Icon_2.svg",
-                  color: favor==true
-                      ? Color(0xFFFF4848)
-                      : Color(0xFFDBDEE4),
-                ),
-              ),
+              child: widget.like
+                  ? Container(
+                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+                      height: getProportionateScreenWidth(28),
+                      width: getProportionateScreenWidth(28),
+                      decoration: BoxDecoration(
+                        color: widget.product.isFavourite
+                            ? kPrimaryColor.withOpacity(0.15)
+                            : kSecondaryColor.withOpacity(0.1),
+                      ),
+                      child: SvgPicture.asset(
+                        "assets/icons/Heart Icon_2.svg",
+                        color: favor == true
+                            ? Color(0xFFFF4848)
+                            : Color(0xFFDBDEE4),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 1,
+                    ),
             ),
           ],
         ));
