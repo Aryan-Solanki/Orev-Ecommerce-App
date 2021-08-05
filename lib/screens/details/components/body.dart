@@ -37,13 +37,14 @@ class _BodyState extends State<Body> {
   List<String> UserAddress = [
     "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
     "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
-    "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
+    "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
   ];
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
   List<Product> youMayAlsoLikeList = [];
   int selectedFoodVariants = 0;
+  String soldby="Aryan Tatva Sellers";
 
   void getVarientList() {
     for (var title in widget.product.varients) {
@@ -126,6 +127,8 @@ class _BodyState extends State<Body> {
   int quantity = 1;
   String SelectedAddress = "";
   int _radioSelected=0;
+  String coupon="";
+  int coupon_value=100;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -155,7 +158,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    void _showDialog() {
+    void _showCODDialog() {
       slideDialog.showSlideDialog(
           context: context,
           child: Expanded(
@@ -165,75 +168,75 @@ class _BodyState extends State<Body> {
                     horizontal: getProportionateScreenWidth(20)),
                 child: Column(
                   children: [
-                    Text(
-                      "Select Delivery Address",
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(25),
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    StatefulBuilder(
-                      builder: (context, StateSetter setState) {
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: UserAddress.length,
-                          itemBuilder: (context, i) {
-                            return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 13),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Color(0xff565656),
-                                  ),
-                                ),
-                                child: FlatButton(
-                                  onPressed: (){
-                                    _radioSelected = i;
-                                    setState(() {
-                                      SelectedAddress = UserAddress[i];
-                                      print(SelectedAddress);
-                                    });
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Radio(
-                                        value: i,
-                                        groupValue: _radioSelected,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          UserAddress[i],
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ));
-                          },
-                        );
-                      },
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        // onTap: () => Navigator.pushNamed(
-                        //     context, ForgotPasswordScreen.routeName),
-                        child: Text(
-                          "Add New Address",
-                          style:
-                              TextStyle(decoration: TextDecoration.underline),
+                    Row(
+                      children: [
+                        Container(
+                          height: getProportionateScreenHeight(100),
+                          width: getProportionateScreenWidth(100),
+                          child: Image.network(widget
+                              .product.varients[selectedFoodVariants].images[0]),
                         ),
-                      ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(widget.product.title,style: TextStyle(color: Colors.black,fontSize: getProportionateScreenHeight(18)),),
+                              Text("Sold by $soldby",style: TextStyle(fontSize: getProportionateScreenHeight(15)),)
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(10),
+                    SizedBox(height: getProportionateScreenHeight(10)),
+                    Divider(
+                      color: Colors.black,
                     ),
+                    Row(
+                      children: [
+                        Container(width: getProportionateScreenWidth(90),child: Text("Deliver to",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenHeight(23)),)),
+                        SizedBox(width: getProportionateScreenWidth(20),),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("UserName Rastogi",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: getProportionateScreenHeight(20)),),
+                              Text(SelectedAddress,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: getProportionateScreenHeight(18)),),
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    Row(
+                      children: [
+                        Container(width:getProportionateScreenWidth(90),child: Text("Pay with",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenHeight(23)),)),
+                        SizedBox(width: getProportionateScreenWidth(20),),
+                        Text("Cash on Delivery (COD)",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: getProportionateScreenHeight(20)),),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    Row(
+                      children: [ 
+                        Container(width: getProportionateScreenWidth(90),child: Text("Total",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenHeight(23)),)),
+                        SizedBox(width: getProportionateScreenWidth(20),),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("\₹${widget.product.varients[selectedFoodVariants].price * quantity}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: getProportionateScreenHeight(20)),),
+                              Text("(includes tax + Delivery: \₹50)",overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: getProportionateScreenHeight(18)),),
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(35)),
                     SwipeButton(
                       thumb: Icon(Icons.double_arrow_outlined),
                       activeThumbColor: kPrimaryColor4,
@@ -251,27 +254,241 @@ class _BodyState extends State<Body> {
                         print("Order Placed");
                       },
                     ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(10),
-                    ),
-                    DefaultButton(
-                      textheight: 13,
-                      colour: Colors.black,
-                      height: 70,
-                      color: kPrimaryColor2,
-                      text: "Pay Online",
-                      press: () {
-                        launchPayment();
-                      },
-                    ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(10),
-                    ),
+                    SizedBox(height: getProportionateScreenHeight(10)),
+                    Text("By placing your order, you agree to Orev's privacy notice and conditions of use.",style: TextStyle(fontSize: getProportionateScreenHeight(16)),),
+                    SizedBox(height: getProportionateScreenHeight(10)),
                   ],
                 ),
               ),
             ),
           ));
+    }
+    void _showDialog() {
+      slideDialog.showSlideDialog(
+          context: context,
+          child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState){
+                return Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Choose your location",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenWidth(23),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(5)),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Choose a delivery address for your product..",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12),
+                                color: Color(0xff565656),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          Container(
+                            height: getProportionateScreenHeight(180),
+                            child: StatefulBuilder(
+                              builder: (context, StateSetter setState) {
+                                return  ListView.builder(
+                                  // physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: UserAddress.length,
+                                  itemBuilder: (context, i) {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        _radioSelected = i;
+                                        setState(() {
+                                          SelectedAddress = UserAddress[i];
+                                          print(SelectedAddress);
+                                        });
+                                      },
+                                      child: Container(
+                                          width: 200,
+                                          margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 3, horizontal: 13),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: _radioSelected==i?kPrimaryColor2:Color(0xff565656),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                flex:3,
+                                                child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    "UserName",
+                                                    maxLines: 1,
+                                                    style: TextStyle(color: Colors.black,fontSize: getProportionateScreenHeight(23),fontWeight: FontWeight.bold),
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  UserAddress[i],
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  UserAddress[i],
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  UserAddress[i],
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          StatefulBuilder(
+                              builder: (BuildContext context,setState){
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: getProportionateScreenWidth(120),
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  print(value);
+                                                  coupon=value;
+                                                },
+                                                decoration: InputDecoration(
+                                                  hintText: 'Enter code',
+                                                  contentPadding:
+                                                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderSide:
+                                                    BorderSide(color: Colors.lightGreen, width: 1.0),
+                                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderSide:
+                                                    BorderSide(color: Colors.lightGreen, width: 2.0),
+                                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                            ),
+                                            SizedBox(width: getProportionateScreenWidth(10),),
+                                            Container(
+                                              width: getProportionateScreenWidth(50),
+                                              child: FlatButton(
+                                                  color: Colors.lightGreen,
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      print(coupon);
+                                                    });
+                                                  },
+                                                  child: Text("Add",style: TextStyle(color: Colors.white,fontSize: getProportionateScreenWidth(10)),)
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          // onTap: () => Navigator.pushNamed(
+                                          //     context, ForgotPasswordScreen.routeName),
+                                          child: Text(
+                                            "Add New Address",
+                                            style:
+                                            TextStyle(decoration: TextDecoration.underline),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    coupon=="aryan"?Text("  You saved \₹$coupon_value"):coupon==""?Text(""):Text("Invalid Coupon"),
+
+                                  ],
+                                );
+                              }
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          DefaultButton(
+                            textheight: 15,
+                            colour: Colors.white,
+                            height: 70,
+                            color: kPrimaryColor2,
+                            text: "Cash on Delivery (COD)",
+                            press: () {
+                              Navigator.pop(context);
+                              _showCODDialog();
+                            },
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          DefaultButton(
+                            textheight: 15,
+                            colour: Colors.white,
+                            height: 70,
+                            color: kPrimaryColor,
+                            text: "Pay Online",
+                            press: () {
+                              launchPayment();
+                            },
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }
+          )
+      );
+
+
+
     }
 
     return StatefulBuilder(
