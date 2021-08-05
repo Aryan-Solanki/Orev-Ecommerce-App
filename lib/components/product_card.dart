@@ -6,17 +6,22 @@ import 'package:orev/screens/details/details_screen.dart';
 import '../constants.dart';
 import '../size_config.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     Key key,
     this.width = 140,
     this.aspectRetio = 1.5,
     @required this.product,
   }) : super(key: key);
-
   final double width, aspectRetio;
   final Product product;
 
+
+  @override
+  _ProductCardState createState() => _ProductCardState();
+}
+bool favor=true;
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,18 +29,18 @@ class ProductCard extends StatelessWidget {
           left: getProportionateScreenWidth(15),
           right: getProportionateScreenWidth(15)),
       child: SizedBox(
-        width: getProportionateScreenWidth(width),
+        width: getProportionateScreenWidth(widget.width),
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(product: product),
+            arguments: ProductDetailsArguments(product: widget.product),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                aspectRatio: aspectRetio,
+                aspectRatio: widget.aspectRetio,
                 child: Container(
                   padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                   decoration: BoxDecoration(
@@ -43,13 +48,13 @@ class ProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Hero(
-                    tag: product.id.toString(),
-                    child: Image.network(product.varients[0].images[0]),
+                    tag: widget.product.id.toString(),
+                    child: Image.network(widget.product.varients[0].images[0]),
                   ),
                 ),
               ),
               Text(
-                product.title,
+                widget.product.title,
                 style: TextStyle(color: Colors.black),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -58,7 +63,7 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\₹${product.varients[0].price}",
+                    "\₹${widget.product.varients[0].price}",
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(17),
                       fontWeight: FontWeight.w600,
@@ -67,20 +72,30 @@ class ProductCard extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        if(favor==true){
+                          favor=false;
+                        }
+                        else{
+                          favor=true;
+                        }
+                      });
+
+                    },
                     child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
                       decoration: BoxDecoration(
-                        color: product.isFavourite
+                        color: widget.product.isFavourite
                             ? kPrimaryColor.withOpacity(0.15)
                             : kSecondaryColor.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color: product.isFavourite
+                        color: favor==true
                             ? Color(0xFFFF4848)
                             : Color(0xFFDBDEE4),
                       ),
@@ -95,3 +110,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+

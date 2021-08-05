@@ -27,6 +27,7 @@ class FullWidthProductCard extends StatefulWidget {
 class _FullWidthProductCardState extends State<FullWidthProductCard> {
   // final int saleprice = 200;
   bool outofstock = true;
+  bool favor=false;
 
   void outofstockcheck() {
     for (var varient in widget.product.varients) {
@@ -197,7 +198,14 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
             InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () {
-                print("Cart function");
+                setState(() {
+                  if(favor==true){
+                    favor=false;
+                  }
+                  else{
+                    favor=true;
+                  }
+                });
               },
               child: Container(
                 padding: EdgeInsets.all(getProportionateScreenWidth(8)),
@@ -210,7 +218,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                 ),
                 child: SvgPicture.asset(
                   "assets/icons/Heart Icon_2.svg",
-                  color: widget.product.isFavourite
+                  color: favor==true
                       ? Color(0xFFFF4848)
                       : Color(0xFFDBDEE4),
                 ),
