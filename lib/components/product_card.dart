@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/services/product_services.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -16,12 +18,37 @@ class ProductCard extends StatefulWidget {
   final double width, aspectRetio;
   final Product product;
 
-
   @override
   _ProductCardState createState() => _ProductCardState();
 }
-bool favor=true;
+
 class _ProductCardState extends State<ProductCard> {
+  bool favor = false;
+  List<Product> ProductList = [];
+  List<dynamic> keys = [];
+
+  String user_key;
+
+  Future<void> getAllProducts() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+
+    if (keys.contains(widget.product.id)) {
+      favor = true;
+    }
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  @override
+  void initState() {
+    user_key = AuthProvider().user.uid;
+    getAllProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,14 +101,12 @@ class _ProductCardState extends State<ProductCard> {
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
                       setState(() {
-                        if(favor==true){
-                          favor=false;
-                        }
-                        else{
-                          favor=true;
+                        if (favor == true) {
+                          favor = false;
+                        } else {
+                          favor = true;
                         }
                       });
-
                     },
                     child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
@@ -95,7 +120,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color: favor==true
+                        color: favor == true
                             ? Color(0xFFFF4848)
                             : Color(0xFFDBDEE4),
                       ),
@@ -110,4 +135,3 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
-
