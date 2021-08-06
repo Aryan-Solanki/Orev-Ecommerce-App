@@ -8,17 +8,23 @@ class RoundedIconBtn extends StatelessWidget {
     @required this.icon,
     @required this.press,
     this.showShadow = false,
+    this.colour=Colors.white,
+    this.width=40.0,
+    this.height=40.0,
   }) : super(key: key);
 
   final IconData icon;
   final GestureTapCancelCallback press;
   final bool showShadow;
+  final colour;
+  final width;
+  final height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getProportionateScreenWidth(40),
-      width: getProportionateScreenWidth(40),
+      height: getProportionateScreenWidth(height),
+      width: getProportionateScreenWidth(width),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         boxShadow: [
@@ -32,7 +38,7 @@ class RoundedIconBtn extends StatelessWidget {
       ),
       child: FlatButton(
         padding: EdgeInsets.zero,
-        color: Colors.white,
+        color: colour,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         onPressed: press,
         child: Icon(icon),
