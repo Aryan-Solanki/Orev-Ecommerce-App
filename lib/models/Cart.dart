@@ -13,4 +13,6 @@ class Cart {
 
 List<Cart> demoCarts = [
   Cart(product: demoProducts[0], numOfItem: 2),
+  Cart(product: demoProducts[0], numOfItem: 2),
+  Cart(product: demoProducts[0], numOfItem: 2),
 ];

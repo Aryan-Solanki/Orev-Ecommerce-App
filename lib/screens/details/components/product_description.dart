@@ -122,24 +122,26 @@ class _ProductDescriptionState extends State<ProductDescription> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
-              child: Row(
-                children: [
-                  Text(
-                    "\₹${product.varients[currentVarient].price * quantity}",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(23),
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    width: getProportionateScreenWidth(20),
-                  ),
-                  sale == true
-                      ? Text(
+            StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState){
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: Row(
+                      children: [
+                        Text(
+                          "\₹${product.varients[currentVarient].price * quantity}",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(23),
+                            fontWeight: FontWeight.w600,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          width: getProportionateScreenWidth(20),
+                        ),
+                        sale == true
+                            ? Text(
                           "\₹${product.varients[currentVarient].comparedPrice * quantity}",
                           style: TextStyle(
                             decoration: TextDecoration.lineThrough,
@@ -148,12 +150,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             color: Color(0xFF6B6B6B),
                           ),
                         )
-                      : Text(""),
-                  SizedBox(
-                    width: getProportionateScreenWidth(5),
-                  ),
-                  sale == true
-                      ? Text(
+                            : Text(""),
+                        SizedBox(
+                          width: getProportionateScreenWidth(5),
+                        ),
+                        sale == true
+                            ? Text(
                           "Sale",
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(14),
@@ -161,9 +163,11 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             // fontWeight: FontWeight.w600,
                           ),
                         )
-                      : Text(""),
-                ],
-              ),
+                            : Text(""),
+                      ],
+                    ),
+                  );
+                }
             ),
             Align(
               alignment: Alignment.centerRight,
