@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/services/product_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -35,9 +37,57 @@ class _ProductDescriptionState extends State<ProductDescription> {
   final Product product;
   bool seemore = false;
   bool sale = true;
-  bool favor=false;
+  bool favor = false;
   // int saleprice = 200;
   String brandname = "ORGANIC TATTVA";
+  String soldby = "Aryan TATTVA Limited";
+
+  List<dynamic> keys = [];
+
+  String user_key;
+
+  Future<void> getAllProducts() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+
+    if (keys.contains(widget.product.id)) {
+      favor = true;
+    }
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> removeFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.remove(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> addFavourite() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.add(widget.product.id);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+    setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  @override
+  void initState() {
+    user_key = AuthProvider().user.uid;
+    getAllProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,6 +108,15 @@ class _ProductDescriptionState extends State<ProductDescription> {
           child: Text(
             product.brandname,
             style: verysmallerheadingStyle,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(20),
+              vertical: getProportionateScreenHeight(0)),
+          child: Text(
+            "Sold by $soldby",
+            style: TextStyle(fontSize: getProportionateScreenHeight(15)),
           ),
         ),
         Row(
@@ -109,13 +168,22 @@ class _ProductDescriptionState extends State<ProductDescription> {
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    if(favor==true){
-                      favor=false;
-                    }
-                    else{
-                      favor=true;
+                    if (favor == true) {
+                      favor = false;
+                      removeFavourite();
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                        content: new Text("Removed from Favourites"),
+                        backgroundColor: kPrimaryColor2,
+                      ));
+                    } else {
+                      favor = true;
+                      addFavourite();
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                        content: new Text("Added to Favourites"),
+                        backgroundColor: kPrimaryColor2,
+                      ));
                     }
                   });
                 },
@@ -133,9 +201,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   ),
                   child: SvgPicture.asset(
                     "assets/icons/Heart Icon_2.svg",
-                    color: favor==true
-                        ? Color(0xFFFF4848)
-                        : Color(0xFFDBDEE4),
+                    color:
+                        favor == true ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
                     height: getProportionateScreenWidth(16),
                   ),
                 ),
