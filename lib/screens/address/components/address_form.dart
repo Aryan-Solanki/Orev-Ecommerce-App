@@ -79,11 +79,11 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       print(user_key);
       var finalmap = {"address": addressmap};
       await _services.updateAddress(finalmap, user_key);
-      // Navigator.pop(context);
-      // Scaffold.of(context).showSnackBar(new SnackBar(
-      //   content: new Text("Address Successfully Added"),
-      //   backgroundColor: kPrimaryColor2,
-      // ));
+
+      Scaffold.of(context).showSnackBar(new SnackBar(
+        content: new Text("Address Added Successfully"),
+        backgroundColor: kPrimaryColor2,
+      ));
       Navigator.pop(context, true);
     }
 
