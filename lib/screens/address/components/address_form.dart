@@ -107,7 +107,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: Color(0xff565656),
+                color: Color(0xff565656), 
               ),
             ),
             child: SearchChoices.single(
