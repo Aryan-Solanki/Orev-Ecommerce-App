@@ -53,12 +53,12 @@ const String kNamelNullError = "Please Enter Your Name";
 const String kPhoneNumberNullError = "Please Enter Your Phone Number";
 const String kPincodeNullError = "Please Enter Your PIN Code";
 const String kAddressNullError = "Please Enter Your Address";
+const String kAddressNameNullError = "Name is empty";
 const String kShortNumberError = "Phone Number Is Too Short";
 const String kShortPincodeError = "PIN Code Is Too Short";
 const String kLongNumberError = "Phone Number Is Too Long";
 const String kLongPincodeError = "PIN Code Is Too Long";
 const String kInvalidPhoneError = "Please Enter Valid Phone Number";
-
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

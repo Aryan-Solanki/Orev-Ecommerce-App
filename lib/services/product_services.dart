@@ -16,6 +16,10 @@ class ProductServices {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
+  Future<void> updateAddress(Map<String, dynamic> values, id) async {
+    await FirebaseFirestore.instance.collection("users").doc(id).update(values);
+  }
+
   Future<Product> getProduct(productId) async {
     ProductServices _services = ProductServices();
     var document = await _services.products.doc(productId).get();

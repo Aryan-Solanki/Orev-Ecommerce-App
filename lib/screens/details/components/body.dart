@@ -33,13 +33,11 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
-  List<String> UserAddress = [
-    "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
-    "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
-    "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
-  ];
-
+  // List<String> UserAddress = [
+  //   "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
+  //   "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
+  //   "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
+  // ];
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
@@ -74,15 +72,15 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  List<dynamic> addressmap = [];
+  // List<dynamic> addressmap = [];
   String user_key;
 
-  Future<void> getAllAddress() async {
-    ProductServices _services = ProductServices();
-    print(user_key);
-    var userref = await _services.users.doc(user_key).get();
-    addressmap = userref["address"];
-  }
+  // Future<void> getAllAddress() async {
+  //   ProductServices _services = ProductServices();
+  //   print(user_key);
+  //   var userref = await _services.users.doc(user_key).get();
+  //   addressmap = userref["address"];
+  // }
 
   @override
   void initState() {
@@ -91,7 +89,7 @@ class _BodyState extends State<Body> {
     getDefaultVarient();
     user_key = AuthProvider().user.uid;
     getYouMayAlsoLikeProductList();
-    getAllAddress();
+    // getAllAddress();
     super.initState();
   }
 
@@ -302,6 +300,15 @@ class _BodyState extends State<Body> {
           ));
     }
 
+    List<dynamic> addressmap = [];
+    Future<void> getAllAddress() async {
+      ProductServices _services = ProductServices();
+      print(user_key);
+      var userref = await _services.users.doc(user_key).get();
+      addressmap = userref["address"];
+    }
+
+    getAllAddress();
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
@@ -498,8 +505,16 @@ class _BodyState extends State<Body> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  onTap: () => Navigator.pushNamed(
-                                      context, Address.routeName),
+                                  onTap: () async {
+                                    Navigator.pushNamed(
+                                            context, Address.routeName)
+                                        .then((value) => setState(() {}));
+                                    // if (received == "setstate") {
+                                    //   setState(() {
+                                    //     print("New Address added");
+                                    //   });
+                                    // }
+                                  },
                                   child: Text(
                                     "Add New Address",
                                     style: TextStyle(
@@ -662,7 +677,6 @@ class _BodyState extends State<Body> {
                                             //     context, PaytmIntegeration.routeName);
                                             setState(() {});
                                             if (addressmap.isEmpty) {
-
                                               Navigator.pushNamed(
                                                   context, Address.routeName);
                                             } else {

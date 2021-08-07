@@ -7,6 +7,7 @@ import 'package:orev/components/form_error.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:search_choices/search_choices.dart';
 import '../../../constants.dart';
@@ -34,8 +35,18 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
   String selectedValueSingleDialog = "";
   String selected_state = "";
   String selected_city = "Search for your City";
-  String AddressLine1="";
-  String AddressLine2="";
+  String AddressLine1 = "";
+  String AddressLine2 = "";
+  String Addressname = "";
+  List<dynamic> addressmap = [];
+  String user_key;
+
+  Future<void> getAllAddress() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var userref = await _services.users.doc(user_key).get();
+    addressmap = userref["address"];
+  }
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -51,19 +62,45 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    user_key = AuthProvider().user.uid;
+    getAllAddress();
+    super.initState();
+  }
+
   String pincode;
   @override
   Widget build(BuildContext context) {
+    Future<void> setAddress(addressDict) async {
+      addressmap.add(addressDict);
+      ProductServices _services = ProductServices();
+      print(user_key);
+      var finalmap = {"address": addressmap};
+      await _services.updateAddress(finalmap, user_key);
+      // Navigator.pop(context);
+      // Scaffold.of(context).showSnackBar(new SnackBar(
+      //   content: new Text("Address Successfully Added"),
+      //   backgroundColor: kPrimaryColor2,
+      // ));
+      Navigator.pop(context, "setstate");
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          buildAddressNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildAddressFormField1(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildAddressFormField2(),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20), horizontal: getProportionateScreenWidth(13)),
+            padding: EdgeInsets.symmetric(
+                vertical: getProportionateScreenHeight(20),
+                horizontal: getProportionateScreenWidth(13)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
@@ -147,12 +184,22 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               if (_formKey.currentState.validate() &&
                   selected_state != "" &&
                   selected_city != "Search for your City") {
+                print(Addressname);
                 print(AddressLine1);
                 print(AddressLine2);
                 print(selected_state);
                 print(selected_city);
                 print(pincode);
                 print("nexxxxxxxxxxt pageeeee");
+                var Adddict = {
+                  "name": Addressname,
+                  "adline1": AddressLine1,
+                  "adline2": AddressLine2,
+                  "pincode": int.parse(pincode),
+                  "state": selected_state,
+                  "city": selected_city
+                };
+                setAddress(Adddict);
               }
             },
           ),
@@ -251,6 +298,33 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       decoration: InputDecoration(
         labelText: "Address Line 2",
         hintText: "Street Address ,P.O.Box ,Company Name",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+    );
+  }
+
+  TextFormField buildAddressNameFormField() {
+    return TextFormField(
+      onSaved: (newValue) => Addressname = newValue,
+      onChanged: (value) {
+        Addressname = value;
+        if (value.isNotEmpty) {
+          removeError(error: kAddressNameNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kAddressNameNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Name",
+        hintText: "Enter your name",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
