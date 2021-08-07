@@ -398,6 +398,10 @@ class _BodyState extends State<Body> {
       if (result) {
         setState(() {
           Navigator.pop(context);
+          Scaffold.of(context).showSnackBar(new SnackBar(
+            content: new Text("Address Added Successfully"),
+            backgroundColor: kPrimaryColor2,
+          ));
         });
       }
     }
