@@ -8,6 +8,7 @@ import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
+import 'package:orev/screens/paytm_integeration/paytm_integeration.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/size_config.dart';
@@ -683,12 +684,14 @@ class _BodyState extends State<Body> {
                                           color: kPrimaryColor2,
                                           text: "Buy Now",
                                           press: () {
-                                            if (UserAddress.isEmpty) {
-                                              Navigator.pushNamed(
-                                                  context, Address.routeName);
-                                            } else {
-                                              _showDialog();
-                                            }
+                                            Navigator.pushNamed(
+                                                context, PaytmIntegeration.routeName);
+                                            // if (UserAddress.isEmpty) {
+                                            //   Navigator.pushNamed(
+                                            //       context, Address.routeName);
+                                            // } else {
+                                            //   _showDialog();
+                                            // }
                                           },
                                         ),
                                         SizedBox(
