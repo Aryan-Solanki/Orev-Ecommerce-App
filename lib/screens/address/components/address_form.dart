@@ -84,7 +84,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       //   content: new Text("Address Successfully Added"),
       //   backgroundColor: kPrimaryColor2,
       // ));
-      Navigator.pop(context, "setstate");
+      Navigator.pop(context, true);
     }
 
     return Form(

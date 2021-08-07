@@ -9,7 +9,6 @@ import 'package:orev/screens/forgot_password/update_password_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
-import 'package:orev/screens/paytm_integeration/paytm_integeration.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';

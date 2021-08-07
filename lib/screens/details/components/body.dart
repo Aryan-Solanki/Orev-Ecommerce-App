@@ -11,7 +11,6 @@ import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
-import 'package:orev/screens/paytm_integeration/paytm_integeration.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
@@ -36,9 +35,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   String payment_response;
-
 
   String mid = "LsrZNj54827134067770";
   String PAYTM_MERCHANT_KEY = "eMQRe_MdiSf0cuih";
@@ -53,8 +50,8 @@ class _BodyState extends State<Body> {
     String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
     String callBackUrl = (testing
-        ? 'https://securegw-stage.paytm.in'
-        : 'https://securegw.paytm.in') +
+            ? 'https://securegw-stage.paytm.in'
+            : 'https://securegw.paytm.in') +
         '/theia/paytmCallback?ORDER_ID=' +
         orderId;
 
@@ -67,7 +64,8 @@ class _BodyState extends State<Body> {
       "key_secret": PAYTM_MERCHANT_KEY,
       "website": website,
       "orderId": orderId,
-      "amount": (widget.product.varients[selectedFoodVariants].price * quantity).toString(),
+      "amount": (widget.product.varients[selectedFoodVariants].price * quantity)
+          .toString(),
       "callbackUrl": callBackUrl,
       "custId": "122",
       "testing": testing ? 0 : 1
@@ -87,7 +85,13 @@ class _BodyState extends State<Body> {
       });
 
       var paytmResponse = Paytm.payWithPaytm(
-          mid, orderId, txnToken, (widget.product.varients[selectedFoodVariants].price * quantity).toString(), callBackUrl, testing);
+          mid,
+          orderId,
+          txnToken,
+          (widget.product.varients[selectedFoodVariants].price * quantity)
+              .toString(),
+          callBackUrl,
+          testing);
 
       paytmResponse.then((value) {
         print(value);
@@ -166,7 +170,7 @@ class _BodyState extends State<Body> {
 
   @override
   int quantity = 1;
-  Map<String,dynamic> SelectedAddress;
+  Map<String, dynamic> SelectedAddress;
   int _radioSelected = 0;
   String coupon = "";
   int coupon_value = 100;
@@ -266,7 +270,13 @@ class _BodyState extends State<Body> {
                                     fontSize: getProportionateScreenHeight(20)),
                               ),
                               Text(
-                                SelectedAddress["adline1"]+" "+SelectedAddress["adline2"]+" "+SelectedAddress["city"]+" "+SelectedAddress["state"],
+                                SelectedAddress["adline1"] +
+                                    " " +
+                                    SelectedAddress["adline2"] +
+                                    " " +
+                                    SelectedAddress["city"] +
+                                    " " +
+                                    SelectedAddress["state"],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: getProportionateScreenHeight(18)),
@@ -379,6 +389,17 @@ class _BodyState extends State<Body> {
       addressmap = userref["address"];
     }
 
+    _navigateAndDisplaySelection(BuildContext context) async {
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Address()),
+      );
+
+      if (result) {
+        setState(() {});
+      }
+    }
+
     getAllAddress();
     void _showDialog() {
       slideDialog.showSlideDialog(
@@ -418,7 +439,8 @@ class _BodyState extends State<Body> {
                       Container(
                         height: getProportionateScreenHeight(180),
                         child: StatefulBuilder(
-                          builder: (BuildContext context, StateSetter setState) {
+                          builder:
+                              (BuildContext context, StateSetter setState) {
                             return ListView.builder(
                               // physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -578,14 +600,15 @@ class _BodyState extends State<Body> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    Navigator.pushNamed(
-                                            context, Address.routeName)
-                                        .then((value) => setState(() {}));
+                                    // Navigator.pushNamed(
+                                    //         context, Address.routeName)
+                                    //     .then((value) => setState(() {}));
                                     // if (received == "setstate") {
                                     //   setState(() {
                                     //     print("New Address added");
                                     //   });
                                     // }
+                                    _navigateAndDisplaySelection(context);
                                   },
                                   child: Text(
                                     "Add New Address",
