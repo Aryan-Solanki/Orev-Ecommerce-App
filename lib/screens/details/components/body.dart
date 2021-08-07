@@ -396,7 +396,9 @@ class _BodyState extends State<Body> {
       );
 
       if (result) {
-        setState(() {});
+        setState(() {
+          Navigator.pop(context);
+        });
       }
     }
 
@@ -600,14 +602,6 @@ class _BodyState extends State<Body> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    // Navigator.pushNamed(
-                                    //         context, Address.routeName)
-                                    //     .then((value) => setState(() {}));
-                                    // if (received == "setstate") {
-                                    //   setState(() {
-                                    //     print("New Address added");
-                                    //   });
-                                    // }
                                     _navigateAndDisplaySelection(context);
                                   },
                                   child: Text(
