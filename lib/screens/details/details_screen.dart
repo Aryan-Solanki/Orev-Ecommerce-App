@@ -4,7 +4,23 @@ import '../../models/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
-class DetailsScreen extends StatelessWidget {
+
+class ProductDetailsArguments {
+  final Product product;
+
+  ProductDetailsArguments({@required this.product});
+}
+
+class DetailsScreen extends StatefulWidget {
+  static String routeName = "/details";
+
+  @override
+  _DetailsScreenState createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+
+  @override
   static String routeName = "/details";
 
   @override
@@ -17,10 +33,4 @@ class DetailsScreen extends StatelessWidget {
       body: Body(product: agrs.product),
     );
   }
-}
-
-class ProductDetailsArguments {
-  final Product product;
-
-  ProductDetailsArguments({@required this.product});
 }
