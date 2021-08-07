@@ -157,6 +157,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
+      maxLength: 10,
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => number = newValue,
       onChanged: (value) {
@@ -197,9 +198,4 @@ class _SignFormState extends State<SignForm> {
   }
 }
 
-bool isNumeric(String s) {
-  if (s == null) {
-    return false;
-  }
-  return double.parse(s, (e) => null) != null;
-}
+
