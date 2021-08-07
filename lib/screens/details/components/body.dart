@@ -6,6 +6,7 @@ import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/paytm_integeration/paytm_integeration.dart';
@@ -22,7 +23,6 @@ import 'package:direct_select_flutter/direct_select_container.dart';
 import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Body extends StatefulWidget {
   final Product product;
@@ -33,13 +33,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Razorpay _razorpay;
 
   List<String> UserAddress = [
     "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
     "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
     "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
   ];
+
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
@@ -74,56 +74,25 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
+  List<dynamic> addressmap = [];
+  String user_key;
+
+  Future<void> getAllAddress() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var userref = await _services.users.doc(user_key).get();
+    addressmap = userref["address"];
+  }
+
   @override
   void initState() {
     super.initState();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-
     getVarientList();
     getDefaultVarient();
-
+    user_key = AuthProvider().user.uid;
     getYouMayAlsoLikeProductList();
+    getAllAddress();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _razorpay.clear();
-  }
-
-  void launchPayment() async {
-    var options = {
-      'key': 'rzp_test_2oGDl23Iu0RfYG',
-      'amount': 100,
-      'name': 'flutterdemorazorpay',
-      'description': 'Test payment from Flutter app',
-      'prefill': {'contact': '', 'email': ''},
-      'external': {
-        'wallets': ["paytm"]
-      }
-    };
-
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint(e);
-    }
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Navigator.pushNamed(context, LikedScreen.routeName);
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    Navigator.pushNamed(context, SeeMore.routeName);
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    print("external wallet");
   }
 
   @override
@@ -376,14 +345,14 @@ class _BodyState extends State<Body> {
                               // physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: UserAddress.length,
+                              itemCount: addressmap.length,
                               itemBuilder: (context, i) {
                                 return GestureDetector(
                                   onTap: () {
                                     _radioSelected = i;
                                     setState(() {
-                                      SelectedAddress = UserAddress[i];
-                                      print(SelectedAddress);
+                                      SelectedAddress = addressmap[i];
+                                      // print(SelectedAddress);
                                     });
                                   },
                                   child: Container(
@@ -401,13 +370,15 @@ class _BodyState extends State<Body> {
                                         ),
                                       ),
                                       child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             flex: 3,
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                "UserName",
+                                                addressmap[i]["name"],
                                                 maxLines: 1,
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -423,7 +394,7 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["adline1"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -433,7 +404,7 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["adline2"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -443,7 +414,9 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["city"] +
+                                                  " ," +
+                                                  addressmap[i]["state"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -525,8 +498,8 @@ class _BodyState extends State<Body> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  // onTap: () => Navigator.pushNamed(
-                                  //     context, ForgotPasswordScreen.routeName),
+                                  onTap: () => Navigator.pushNamed(
+                                      context, Address.routeName),
                                   child: Text(
                                     "Add New Address",
                                     style: TextStyle(
@@ -567,7 +540,7 @@ class _BodyState extends State<Body> {
                         color: kPrimaryColor,
                         text: "Pay Online",
                         press: () {
-                          launchPayment();
+                          print("Payment Gateway");
                         },
                       ),
                       SizedBox(
@@ -687,9 +660,9 @@ class _BodyState extends State<Body> {
                                           press: () {
                                             // Navigator.pushNamed(
                                             //     context, PaytmIntegeration.routeName);
+                                            setState(() {});
+                                            if (addressmap.isEmpty) {
 
-
-                                            if (UserAddress.isEmpty) {
                                               Navigator.pushNamed(
                                                   context, Address.routeName);
                                             } else {
