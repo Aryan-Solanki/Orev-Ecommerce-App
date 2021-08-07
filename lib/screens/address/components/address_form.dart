@@ -32,8 +32,8 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
   List<String> errors = [];
   final FirebaseAuth auth = FirebaseAuth.instance;
   String selectedValueSingleDialog = "";
-  String selected_state="";
-  String selected_city="Search for your City";
+  String selected_state = "";
+  String selected_city = "Search for your City";
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -52,18 +52,18 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
   String number;
   @override
   Widget build(BuildContext context) {
-
-
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          buildAddressFormField("Address Line 1","House Number ,Floor ,Building"),
+          buildAddressFormField(
+              "Address Line 1", "House Number ,Floor ,Building"),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField("Address Line 2","Street Address ,P.O.Box ,Company Name"),
+          buildAddressFormField(
+              "Address Line 2", "Street Address ,P.O.Box ,Company Name"),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20,horizontal: 13),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 13),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
@@ -71,17 +71,16 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               ),
             ),
             child: SearchChoices.single(
-              onClear: (){
+              onClear: () {
                 setState(() {
-                  selected_state="";
-                  selected_city="Search for your City";
+                  selected_state = "";
+                  selected_city = "Search for your City";
                 });
               },
-              padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
                 return Container(
-                    transform: Matrix4.translationValues(-10,0,0),
+                    transform: Matrix4.translationValues(-10, 0, 0),
                     alignment: Alignment.centerLeft,
                     child: (Text(item.toString())));
               },
@@ -89,7 +88,6 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               value: selected_state,
               hint: "Search for your State",
               onChanged: (value) {
-
                 if (value != null) {
                   setState(() {
                     selected_state = value;
@@ -103,22 +101,24 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20),horizontal: getProportionateScreenWidth(13)),
+            padding: EdgeInsets.symmetric(
+                vertical: getProportionateScreenHeight(20),
+                horizontal: getProportionateScreenWidth(13)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: Color(0xff565656), 
+                color: Color(0xff565656),
               ),
             ),
             child: SearchChoices.single(
-              onClear: (){
-                selected_city="Search for your City";
+              onClear: () {
+                selected_city = "Search for your City";
               },
               padding: 30,
               underline: NotGiven(),
               selectedValueWidgetFn: (item) {
                 return Container(
-                    transform: Matrix4.translationValues(-10,0,0),
+                    transform: Matrix4.translationValues(-10, 0, 0),
                     alignment: Alignment.centerLeft,
                     child: (Text(item.toString())));
               },
@@ -143,7 +143,9 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               print(selected_state);
               print(selected_city);
               errors = [];
-              if (_formKey.currentState.validate() && selected_state!="" && selected_city!="Search for your City"){
+              if (_formKey.currentState.validate() &&
+                  selected_state != "" &&
+                  selected_city != "Search for your City") {
                 print("nexxxxxxxxxxt pageeeee");
               }
             },
@@ -153,7 +155,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
     );
   }
 
-  TextFormField buildAddressFormField(String Address,String Hint) {
+  TextFormField buildAddressFormField(String Address, String Hint) {
     return TextFormField(
       onSaved: (newValue) => Name = newValue,
       onChanged: (value) {
@@ -178,6 +180,4 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
       ),
     );
   }
-
-
 }
