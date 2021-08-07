@@ -34,9 +34,9 @@ class _BodyState extends State<Body> {
   Razorpay _razorpay;
 
   List<String> UserAddress = [
-    "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
-    "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
-    "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
+    // "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
+    // "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
+    // "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
   ];
 
   List<String> foodVariantsTitles = [];
