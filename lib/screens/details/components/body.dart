@@ -33,11 +33,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // List<String> UserAddress = [
-  //   "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
-  //   "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
-  //   "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
-  // ];
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
@@ -95,7 +90,7 @@ class _BodyState extends State<Body> {
 
   @override
   int quantity = 1;
-  String SelectedAddress = "";
+  Map<String,dynamic> SelectedAddress;
   int _radioSelected = 0;
   String coupon = "";
   int coupon_value = 100;
@@ -195,7 +190,7 @@ class _BodyState extends State<Body> {
                                     fontSize: getProportionateScreenHeight(20)),
                               ),
                               Text(
-                                SelectedAddress,
+                                SelectedAddress["adline1"]+" "+SelectedAddress["adline2"]+" "+SelectedAddress["city"]+" "+SelectedAddress["state"],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: getProportionateScreenHeight(18)),
@@ -347,7 +342,7 @@ class _BodyState extends State<Body> {
                       Container(
                         height: getProportionateScreenHeight(180),
                         child: StatefulBuilder(
-                          builder: (context, StateSetter setState) {
+                          builder: (BuildContext context, StateSetter setState) {
                             return ListView.builder(
                               // physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -356,10 +351,11 @@ class _BodyState extends State<Body> {
                               itemBuilder: (context, i) {
                                 return GestureDetector(
                                   onTap: () {
+                                    print(i);
                                     _radioSelected = i;
                                     setState(() {
                                       SelectedAddress = addressmap[i];
-                                      // print(SelectedAddress);
+                                      print(SelectedAddress);
                                     });
                                   },
                                   child: Container(
