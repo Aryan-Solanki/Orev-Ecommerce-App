@@ -22,7 +22,6 @@ import 'package:direct_select_flutter/direct_select_container.dart';
 import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Body extends StatefulWidget {
   final Product product;
@@ -33,8 +32,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Razorpay _razorpay;
-
   // List<String> UserAddress = [
   //   // "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
   //   // "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
@@ -82,60 +79,17 @@ class _BodyState extends State<Body> {
     print(user_key);
     var userref = await _services.users.doc(user_key).get();
     addressmap = userref["address"];
-    setState(() {});
   }
 
   @override
   void initState() {
-    user_key = AuthProvider().user.uid;
-    getAllAddress();
     super.initState();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getVarientList();
     getDefaultVarient();
-
+    user_key = AuthProvider().user.uid;
     getYouMayAlsoLikeProductList();
+    getAllAddress();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _razorpay.clear();
-  }
-
-  void launchPayment() async {
-    var options = {
-      'key': 'rzp_test_2oGDl23Iu0RfYG',
-      'amount': 100,
-      'name': 'flutterdemorazorpay',
-      'description': 'Test payment from Flutter app',
-      'prefill': {'contact': '', 'email': ''},
-      'external': {
-        'wallets': ["paytm"]
-      }
-    };
-
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint(e);
-    }
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Navigator.pushNamed(context, LikedScreen.routeName);
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    Navigator.pushNamed(context, SeeMore.routeName);
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    print("external wallet");
   }
 
   @override
@@ -541,8 +495,8 @@ class _BodyState extends State<Body> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  // onTap: () => Navigator.pushNamed(
-                                  //     context, ForgotPasswordScreen.routeName),
+                                  onTap: () => Navigator.pushNamed(
+                                      context, Address.routeName),
                                   child: Text(
                                     "Add New Address",
                                     style: TextStyle(
@@ -583,7 +537,7 @@ class _BodyState extends State<Body> {
                         color: kPrimaryColor,
                         text: "Pay Online",
                         press: () {
-                          launchPayment();
+                          print("Payment Gateway");
                         },
                       ),
                       SizedBox(
@@ -703,6 +657,7 @@ class _BodyState extends State<Body> {
                                           press: () {
                                             // Navigator.pushNamed(
                                             //     context, PaytmIntegeration.routeName);
+                                            setState(() {});
                                             if (addressmap.isEmpty) {
                                               Navigator.pushNamed(
                                                   context, Address.routeName);
