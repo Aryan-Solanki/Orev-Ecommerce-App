@@ -6,6 +6,7 @@ import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
+import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/paytm_integeration/paytm_integeration.dart';
@@ -34,11 +35,11 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   Razorpay _razorpay;
 
-  List<String> UserAddress = [
-    // "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
-    // "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
-    // "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
-  ];
+  // List<String> UserAddress = [
+  //   // "400-B,Pocket-N,Sarita Vihar ,New Delhi,110076",
+  //   // "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006",
+  //   // "Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006 Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006Netaji Subhash Marg, Lal Qila, Chandni Chowk, New Delhi, Delhi 110006"
+  // ];
 
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
@@ -73,14 +74,26 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
+  List<dynamic> addressmap = [];
+  String user_key;
+
+  Future<void> getAllAddress() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var userref = await _services.users.doc(user_key).get();
+    addressmap = userref["address"];
+    setState(() {});
+  }
+
   @override
   void initState() {
+    user_key = AuthProvider().user.uid;
+    getAllAddress();
     super.initState();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-
     getVarientList();
     getDefaultVarient();
 
@@ -375,14 +388,14 @@ class _BodyState extends State<Body> {
                               // physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: UserAddress.length,
+                              itemCount: addressmap.length,
                               itemBuilder: (context, i) {
                                 return GestureDetector(
                                   onTap: () {
                                     _radioSelected = i;
                                     setState(() {
-                                      SelectedAddress = UserAddress[i];
-                                      print(SelectedAddress);
+                                      SelectedAddress = addressmap[i];
+                                      // print(SelectedAddress);
                                     });
                                   },
                                   child: Container(
@@ -400,13 +413,15 @@ class _BodyState extends State<Body> {
                                         ),
                                       ),
                                       child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             flex: 3,
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                "UserName",
+                                                addressmap[i]["name"],
                                                 maxLines: 1,
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -422,7 +437,7 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["adline1"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -432,7 +447,7 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["adline2"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -442,7 +457,9 @@ class _BodyState extends State<Body> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              UserAddress[i],
+                                              addressmap[i]["city"] +
+                                                  " ," +
+                                                  addressmap[i]["state"],
                                               maxLines: 1,
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -686,7 +703,7 @@ class _BodyState extends State<Body> {
                                           press: () {
                                             // Navigator.pushNamed(
                                             //     context, PaytmIntegeration.routeName);
-                                            if (UserAddress.isEmpty) {
+                                            if (addressmap.isEmpty) {
                                               Navigator.pushNamed(
                                                   context, Address.routeName);
                                             } else {
