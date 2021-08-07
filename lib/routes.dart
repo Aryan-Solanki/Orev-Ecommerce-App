@@ -35,5 +35,4 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   SeeMore.routeName: (context) => SeeMore(),
   Address.routeName: (context) => Address(),
-  PaytmIntegeration.routeName: (context) => PaytmIntegeration(),
 };

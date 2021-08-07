@@ -31,6 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
     }
+
     // Shows the SnackBar as soon as this page is opened.
 
   }
