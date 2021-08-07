@@ -103,7 +103,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20,horizontal: 13),
+            padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20),horizontal: getProportionateScreenWidth(13)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(

@@ -684,14 +684,14 @@ class _BodyState extends State<Body> {
                                           color: kPrimaryColor2,
                                           text: "Buy Now",
                                           press: () {
-                                            Navigator.pushNamed(
-                                                context, PaytmIntegeration.routeName);
-                                            // if (UserAddress.isEmpty) {
-                                            //   Navigator.pushNamed(
-                                            //       context, Address.routeName);
-                                            // } else {
-                                            //   _showDialog();
-                                            // }
+                                            // Navigator.pushNamed(
+                                            //     context, PaytmIntegeration.routeName);
+                                            if (UserAddress.isEmpty) {
+                                              Navigator.pushNamed(
+                                                  context, Address.routeName);
+                                            } else {
+                                              _showDialog();
+                                            }
                                           },
                                         ),
                                         SizedBox(
