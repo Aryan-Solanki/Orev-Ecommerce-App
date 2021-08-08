@@ -14,6 +14,7 @@ class FullWidthProductCard extends StatefulWidget {
   final bool like;
   final double width, aspectRetio;
   final Product product;
+  final Function() notifyParent;
 
   const FullWidthProductCard({
     Key key,
@@ -22,6 +23,7 @@ class FullWidthProductCard extends StatefulWidget {
     @required this.product,
     this.sale = true,
     this.like = true,
+    @required this.notifyParent,
   }) : super(key: key);
 
   @override
@@ -90,6 +92,28 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     keys.add(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  Future<void> addToCart() async {
+    widget.notifyParent();
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    keys = favref["cartItems"];
+    keys.add({
+      "productId": widget.product.id,
+      "qty": 1,
+      "varientNumber": defaultVarient
+    });
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    setState(() {
+      final snackBar = SnackBar(
+        content: Text('Item added to Cart'),
+        backgroundColor: kPrimaryColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
@@ -207,7 +231,9 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     color: kPrimaryColor,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      addToCart();
+                                    },
                                     child: Text(
                                       "Add to Cart",
                                       style: TextStyle(

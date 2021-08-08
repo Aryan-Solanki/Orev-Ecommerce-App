@@ -14,6 +14,8 @@ class ProductServices {
   CollectionReference favourites =
       FirebaseFirestore.instance.collection('favourites');
 
+  CollectionReference cart = FirebaseFirestore.instance.collection('cart');
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future<void> updateAddress(Map<String, dynamic> values, id) async {

@@ -4,22 +4,20 @@ import '../../models/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
-
 class ProductDetailsArguments {
   final Product product;
-
-  ProductDetailsArguments({@required this.product});
+  final Function() notifyParent;
+  ProductDetailsArguments(
+      {@required this.product, @required this.notifyParent});
 }
 
 class DetailsScreen extends StatefulWidget {
   static String routeName = "/details";
-
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-
   @override
   static String routeName = "/details";
 
@@ -27,6 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final ProductDetailsArguments agrs =
         ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
       appBar: CustomAppBar(rating: agrs.product.rating),

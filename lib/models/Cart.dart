@@ -6,7 +6,11 @@ import 'Product.dart';
 class Cart {
   final Product product;
   final int numOfItem;
-  Cart({@required this.product, @required this.numOfItem});
+  final int varientNumber;
+  Cart(
+      {@required this.product,
+      @required this.numOfItem,
+      @required this.varientNumber});
 }
 
 // Demo data for our cart
