@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/services/product_services.dart';
@@ -43,32 +44,39 @@ class _BodyState extends State<Body> {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: ListView.builder(
-        itemCount: CartList.length,
-        itemBuilder: (context, index) => Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Dismissible(
-            key: Key(CartList[index].product.id.toString()),
-            direction: DismissDirection.endToStart,
-            onDismissed: (direction) {
-              setState(() {
-                demoCarts.removeAt(index);
-              });
-            },
-            background: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Color(0xFFFFE6E6),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  Spacer(),
-                  SvgPicture.asset("assets/icons/Trash.svg"),
-                ],
+      child: ScrollConfiguration(
+        behavior: ScrollBehavior(),
+        child: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: kPrimaryColor2,
+          child: ListView.builder(
+            itemCount: CartList.length,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Dismissible(
+                key: Key(CartList[index].product.id.toString()),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  setState(() {
+                    demoCarts.removeAt(index);
+                  });
+                },
+                background: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFFE6E6),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/Trash.svg"),
+                    ],
+                  ),
+                ),
+                child: CartCard(cart: CartList[index]),
               ),
             ),
-            child: CartCard(cart: CartList[index]),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/constants.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
 import 'package:orev/screens/home/components/threegrid.dart';
 
@@ -120,19 +121,26 @@ class _BodyState extends State<Body> {
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              // children: [
-              //   ImageSlider(),
-              //   Categories(),
-              //   SpecialOffers(),
-              //   SizedBox(height: getProportionateScreenWidth(30)),
-              //   FourGrid(),
-              //   SizedBox(height: getProportionateScreenWidth(30)),
-              //   ThreeGrid(),
-              //   SizedBox(height: getProportionateScreenWidth(30)),
-              // ],
-              children: ListWidgets,
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: SingleChildScrollView(
+                child: Column(
+                  // children: [
+                  //   ImageSlider(),
+                  //   Categories(),
+                  //   SpecialOffers(),
+                  //   SizedBox(height: getProportionateScreenWidth(30)),
+                  //   FourGrid(),
+                  //   SizedBox(height: getProportionateScreenWidth(30)),
+                  //   ThreeGrid(),
+                  //   SizedBox(height: getProportionateScreenWidth(30)),
+                  // ],
+                  children: ListWidgets,
+                ),
+              ),
             ),
           ),
         ),

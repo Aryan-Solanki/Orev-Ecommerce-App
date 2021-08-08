@@ -690,193 +690,213 @@ class _BodyState extends State<Body> {
     return StatefulBuilder(
       builder: (context, StateSetter setState) {
         return DirectSelectContainer(
-          child: ListView(
-            children: [
-              ProductImages(
-                  key: UniqueKey(),
-                  product: widget.product,
-                  currentVarient: selectedFoodVariants),
-              TopRoundedContainer(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    ProductDescription(
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: ListView(
+                children: [
+                  ProductImages(
                       key: UniqueKey(),
                       product: widget.product,
-                      currentVarient: selectedFoodVariants,
-                      quantity: quantity,
-                    ),
-                    TopRoundedContainer(
-                      color: Color(0xFFF6F7F9),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              // mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Expanded(
-                                    child: DirectSelectList<String>(
-                                        values: foodVariantsTitles,
-                                        defaultItemIndex: selectedFoodVariants,
-                                        itemBuilder: (String value) =>
-                                            getDropDownMenuItem(value),
-                                        focusedItemDecoration:
-                                            getDslDecoration(),
-                                        onItemSelectedListener:
-                                            (item, index, context) {
-                                          selectedFoodVariants = index;
-                                          setState(() {
-                                            print(selectedFoodVariants);
-                                          });
-                                          print(selectedFoodVariants);
-                                        })),
-                                // SizedBox(width: getProportionateScreenWidth(100),),
-                                Icon(
-                                  Icons.unfold_more,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: getProportionateScreenWidth(15),
-                                ),
-                                RoundedIconBtn(
-                                  icon: Icons.remove,
-                                  press: () {
-                                    if (quantity != 1) {
-                                      setState(() {
-                                        quantity--;
-                                      });
-                                    }
-                                  },
-                                ),
-                                SizedBox(
-                                    width: getProportionateScreenWidth(20)),
-                                Text(
-                                  "x " + quantity.toString(),
-                                  style: TextStyle(
+                      currentVarient: selectedFoodVariants),
+                  TopRoundedContainer(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        ProductDescription(
+                          key: UniqueKey(),
+                          product: widget.product,
+                          currentVarient: selectedFoodVariants,
+                          quantity: quantity,
+                        ),
+                        TopRoundedContainer(
+                          color: Color(0xFFF6F7F9),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Row(
+                                  // mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: DirectSelectList<String>(
+                                            values: foodVariantsTitles,
+                                            defaultItemIndex:
+                                                selectedFoodVariants,
+                                            itemBuilder: (String value) =>
+                                                getDropDownMenuItem(value),
+                                            focusedItemDecoration:
+                                                getDslDecoration(),
+                                            onItemSelectedListener:
+                                                (item, index, context) {
+                                              selectedFoodVariants = index;
+                                              setState(() {
+                                                print(selectedFoodVariants);
+                                              });
+                                              print(selectedFoodVariants);
+                                            })),
+                                    // SizedBox(width: getProportionateScreenWidth(100),),
+                                    Icon(
+                                      Icons.unfold_more,
                                       color: Colors.black,
-                                      fontSize:
-                                          getProportionateScreenHeight(20)),
+                                    ),
+                                    SizedBox(
+                                      width: getProportionateScreenWidth(15),
+                                    ),
+                                    RoundedIconBtn(
+                                      icon: Icons.remove,
+                                      press: () {
+                                        if (quantity != 1) {
+                                          setState(() {
+                                            quantity--;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                        width: getProportionateScreenWidth(20)),
+                                    Text(
+                                      "x " + quantity.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenHeight(20)),
+                                    ),
+                                    SizedBox(
+                                        width: getProportionateScreenWidth(20)),
+                                    RoundedIconBtn(
+                                      icon: Icons.add,
+                                      showShadow: true,
+                                      press: () {
+                                        setState(() {
+                                          quantity++;
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                    width: getProportionateScreenWidth(20)),
-                                RoundedIconBtn(
-                                  icon: Icons.add,
-                                  showShadow: true,
-                                  press: () {
-                                    setState(() {
-                                      quantity++;
-                                    });
-                                  },
-                                ),
-                              ],
+                              ),
+                              !widget.product.varients[selectedFoodVariants]
+                                          .inStock ==
+                                      false
+                                  ? TopRoundedContainer(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: SizeConfig.screenWidth * 0.1,
+                                          right: SizeConfig.screenWidth * 0.1,
+                                          bottom:
+                                              getProportionateScreenWidth(30),
+                                          top: getProportionateScreenWidth(10),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            DefaultButton(
+                                              color: kPrimaryColor2,
+                                              text: "Buy Now",
+                                              press: () {
+                                                setState(() {});
+                                                if (addressmap.isEmpty) {
+                                                  Navigator.pushNamed(context,
+                                                      Address.routeName);
+                                                } else {
+                                                  _showDialog();
+                                                }
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  getProportionateScreenHeight(
+                                                      15),
+                                            ),
+                                            DefaultButton(
+                                              text: "Add To Cart",
+                                              press: () {
+                                                addToCart();
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : TopRoundedContainer(
+                                      color: Colors.white,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: SizeConfig.screenWidth * 0.1,
+                                            right: SizeConfig.screenWidth * 0.1,
+                                            bottom:
+                                                getProportionateScreenWidth(30),
+                                            top:
+                                                getProportionateScreenWidth(10),
+                                          ),
+                                          child: DefaultButton(
+                                            color: kSecondaryColor,
+                                            text: "Out of Stock",
+                                            press: () {},
+                                          )),
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 20),
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: getProportionateScreenWidth(15),
+                              bottom: getProportionateScreenWidth(5)),
+                          child: Text(
+                            "You Might Also Like",
+                            style: smallerheadingStyle,
+                          ),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        ScrollConfiguration(
+                          behavior: ScrollBehavior(),
+                          child: GlowingOverscrollIndicator(
+                            axisDirection: AxisDirection.right,
+                            color: kPrimaryColor2,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  ...List.generate(
+                                    widget.product.youmayalsolike.length,
+                                    (index) {
+                                      if (youMayAlsoLikeList.length == 0) {
+                                        return SizedBox.shrink();
+                                      } else {
+                                        return ProductCard(
+                                            product: youMayAlsoLikeList[index]);
+                                      }
+                                      // here by default width and height is 0
+                                    },
+                                  ),
+                                  SizedBox(
+                                      width: getProportionateScreenWidth(20)),
+                                ],
+                              ),
                             ),
                           ),
-                          !widget.product.varients[selectedFoodVariants]
-                                      .inStock ==
-                                  false
-                              ? TopRoundedContainer(
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: SizeConfig.screenWidth * 0.1,
-                                      right: SizeConfig.screenWidth * 0.1,
-                                      bottom: getProportionateScreenWidth(30),
-                                      top: getProportionateScreenWidth(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        DefaultButton(
-                                          color: kPrimaryColor2,
-                                          text: "Buy Now",
-                                          press: () {
-                                            setState(() {});
-                                            if (addressmap.isEmpty) {
-                                              Navigator.pushNamed(
-                                                  context, Address.routeName);
-                                            } else {
-                                              _showDialog();
-                                            }
-                                          },
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              getProportionateScreenHeight(15),
-                                        ),
-                                        DefaultButton(
-                                          text: "Add To Cart",
-                                          press: () {
-                                            addToCart();
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : TopRoundedContainer(
-                                  color: Colors.white,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: SizeConfig.screenWidth * 0.1,
-                                        right: SizeConfig.screenWidth * 0.1,
-                                        bottom: getProportionateScreenWidth(30),
-                                        top: getProportionateScreenWidth(10),
-                                      ),
-                                      child: DefaultButton(
-                                        color: kSecondaryColor,
-                                        text: "Out of Stock",
-                                        press: () {},
-                                      )),
-                                ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
-              Container(
-                padding: EdgeInsets.only(bottom: 20),
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: getProportionateScreenWidth(15),
-                          bottom: getProportionateScreenWidth(5)),
-                      child: Text(
-                        "You Might Also Like",
-                        style: smallerheadingStyle,
-                      ),
-                    ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(10),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ...List.generate(
-                            widget.product.youmayalsolike.length,
-                            (index) {
-                              if (youMayAlsoLikeList.length == 0) {
-                                return SizedBox.shrink();
-                              } else {
-                                return ProductCard(
-                                    product: youMayAlsoLikeList[index]);
-                              }
-                              // here by default width and height is 0
-                            },
-                          ),
-                          SizedBox(width: getProportionateScreenWidth(20)),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
         );
       },
