@@ -68,7 +68,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: CartCard(cart: CartList[0]),
+            child: CartCard(cart: CartList[index]),
           ),
         ),
       ),
