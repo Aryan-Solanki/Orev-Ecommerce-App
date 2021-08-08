@@ -18,7 +18,7 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
-  int quantity=1;
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,7 +35,8 @@ class _CartCardState extends State<CartCard> {
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Image.asset(widget.cart.product.varients[0].images[0]),
+                  child:
+                      Image.network(widget.cart.product.varients[0].images[0]),
                 ),
               ),
             ),
@@ -45,18 +46,23 @@ class _CartCardState extends State<CartCard> {
               children: [
                 Text(
                   widget.cart.product.title,
-                  style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(20)),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenHeight(20)),
                   maxLines: 2,
                 ),
                 SizedBox(height: 3),
-                Text("Variant",style: TextStyle(fontSize: getProportionateScreenHeight(15)),),
+                Text(
+                  "Variant",
+                  style: TextStyle(fontSize: getProportionateScreenHeight(15)),
+                ),
                 Text.rich(
                   TextSpan(
                     text: "\₹${widget.cart.product.varients[0].price}",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.black,
-                        fontSize: getProportionateScreenHeight(20)
-                    ),
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontSize: getProportionateScreenHeight(20)),
                     children: [
                       TextSpan(
                           text: " x${quantity}",
@@ -64,13 +70,11 @@ class _CartCardState extends State<CartCard> {
                     ],
                   ),
                 ),
-
               ],
             )
           ],
         ),
-        SizedBox(
-            height: getProportionateScreenWidth(5)),
+        SizedBox(height: getProportionateScreenWidth(5)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -89,17 +93,14 @@ class _CartCardState extends State<CartCard> {
                     }
                   },
                 ),
-                SizedBox(
-                    width: getProportionateScreenWidth(7)),
+                SizedBox(width: getProportionateScreenWidth(7)),
                 Text(
                   "x" + quantity.toString(),
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize:
-                      getProportionateScreenHeight(20)),
+                      fontSize: getProportionateScreenHeight(20)),
                 ),
-                SizedBox(
-                    width: getProportionateScreenWidth(7)),
+                SizedBox(width: getProportionateScreenWidth(7)),
                 RoundedIconBtn(
                   width: 23.0,
                   height: 23.0,
@@ -116,20 +117,16 @@ class _CartCardState extends State<CartCard> {
             ),
             Text.rich(
               TextSpan(
-                text: "\₹${widget.cart.product.varients[0].price*quantity}",
+                text: "\₹${widget.cart.product.varients[0].price * quantity}",
                 style: TextStyle(
-                    fontWeight: FontWeight.w600, color: kPrimaryColor,
-                  fontSize: getProportionateScreenHeight(20)
-                ),
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryColor,
+                    fontSize: getProportionateScreenHeight(20)),
               ),
             ),
-
           ],
         ),
-
       ],
     );
   }
 }
-
-
