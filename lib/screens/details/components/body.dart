@@ -664,6 +664,29 @@ class _BodyState extends State<Body> {
           }));
     }
 
+    List<dynamic> keys = [];
+
+    Future<void> addToCart() async {
+      ProductServices _services = ProductServices();
+      print(user_key);
+      var favref = await _services.cart.doc(user_key).get();
+      keys = favref["cartItems"];
+      keys.add({
+        "productId": widget.product.id,
+        "qty": quantity,
+        "varientNumber": selectedFoodVariants
+      });
+      await _services.cart.doc(user_key).update({'cartItems': keys});
+      setState(() {
+        final snackBar = SnackBar(
+          content: Text('Item added to Cart'),
+          backgroundColor: kPrimaryColor,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    }
+
     return StatefulBuilder(
       builder: (context, StateSetter setState) {
         return DirectSelectContainer(
@@ -783,7 +806,9 @@ class _BodyState extends State<Body> {
                                         ),
                                         DefaultButton(
                                           text: "Add To Cart",
-                                          press: () {},
+                                          press: () {
+                                            addToCart();
+                                          },
                                         )
                                       ],
                                     ),

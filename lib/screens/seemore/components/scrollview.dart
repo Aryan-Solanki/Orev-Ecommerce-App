@@ -10,7 +10,8 @@ import '../../../size_config.dart';
 class AllItems extends StatefulWidget {
   final String categoryId;
   final String title;
-  AllItems({this.categoryId, this.title});
+  final Function() notifyParent;
+  AllItems({this.categoryId, this.title, @required this.notifyParent});
 
   @override
   _AllItemsState createState() => _AllItemsState();
@@ -86,12 +87,23 @@ class _AllItemsState extends State<AllItems> {
 
   @override
   Widget build(BuildContext context) {
+    refresh() {
+      setState(() {
+        // print("Set state ho gyaaAAAA");
+        widget.notifyParent();
+      });
+    }
+
     return Column(
       children: [
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: widget.title, press: () {}),
+          child: SectionTitle(
+            title: widget.title,
+            press: () {},
+            seemore: false,
+          ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
@@ -103,6 +115,7 @@ class _AllItemsState extends State<AllItems> {
                 (index) {
                   return FullWidthProductCard(
                     product: ProductList[index],
+                    notifyParent: refresh,
                   );
 
                   return SizedBox

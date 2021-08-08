@@ -14,6 +14,7 @@ class FullWidthProductCard extends StatefulWidget {
   final bool like;
   final double width, aspectRetio;
   final Product product;
+  final Function() notifyParent;
 
   const FullWidthProductCard({
     Key key,
@@ -22,6 +23,7 @@ class FullWidthProductCard extends StatefulWidget {
     @required this.product,
     this.sale = true,
     this.like = true,
+    @required this.notifyParent,
   }) : super(key: key);
 
   @override
@@ -94,6 +96,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
   }
 
   Future<void> addToCart() async {
+    widget.notifyParent();
     ProductServices _services = ProductServices();
     print(user_key);
     var favref = await _services.cart.doc(user_key).get();

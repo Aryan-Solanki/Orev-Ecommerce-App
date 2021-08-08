@@ -17,17 +17,32 @@ class _BodyState extends State<Body> {
   _BodyState({this.categoryId});
   @override
   Widget build(BuildContext context) {
+    refresh() {
+      setState(() {
+        print("Final Set State");
+      });
+    }
+
     return SafeArea(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: getProportionateScreenHeight(20)),
-            HomeHeader(),
-            SizedBox(height: getProportionateScreenWidth(10)),
-            AllItems(categoryId: categoryId, title: widget.title),
-            SizedBox(height: getProportionateScreenWidth(30)),
-          ],
-        ),
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            children: [
+              SizedBox(height: getProportionateScreenHeight(20)),
+              HomeHeader(
+                key: UniqueKey(),
+              ),
+              SizedBox(height: getProportionateScreenWidth(10)),
+              AllItems(
+                categoryId: categoryId,
+                title: widget.title,
+                notifyParent: refresh,
+              ),
+              SizedBox(height: getProportionateScreenWidth(30)),
+            ],
+          );
+        }),
       ),
     );
   }
