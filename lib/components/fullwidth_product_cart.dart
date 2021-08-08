@@ -93,6 +93,27 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  Future<void> addToCart() async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    keys = favref["cartItems"];
+    keys.add({
+      "productId": widget.product.id,
+      "qty": 1,
+      "varientNumber": defaultVarient
+    });
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    setState(() {
+      final snackBar = SnackBar(
+        content: Text('Item added to Cart'),
+        backgroundColor: kPrimaryColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
@@ -207,7 +228,9 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     color: kPrimaryColor,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      addToCart();
+                                    },
                                     child: Text(
                                       "Add to Cart",
                                       style: TextStyle(

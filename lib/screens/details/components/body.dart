@@ -382,6 +382,7 @@ class _BodyState extends State<Body> {
     }
 
     List<dynamic> addressmap = [];
+
     Future<void> getAllAddress() async {
       ProductServices _services = ProductServices();
       print(user_key);
@@ -398,11 +399,11 @@ class _BodyState extends State<Body> {
       if (result) {
         setState(() {
           Navigator.pop(context);
-            final snackBar = SnackBar(content: Text('Address Added Successfully'),backgroundColor: kPrimaryColor,);
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-
-
+          final snackBar = SnackBar(
+            content: Text('Address Added Successfully'),
+            backgroundColor: kPrimaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         });
       }
     }
