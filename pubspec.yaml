@@ -49,6 +49,7 @@ dependencies:
   paytm: ^3.0.0
   http: ^0.13.3
   getwidget: ^2.0.3
+  geocoding: ^2.0.0
 
 dev_dependencies:
   flutter_test:

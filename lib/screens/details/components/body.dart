@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/default_button.dart';
@@ -731,7 +730,7 @@ class _BodyState extends State<Body> {
                                             DefaultButton(
                                               color: kPrimaryColor2,
                                               text: "Buy Now",
-                                              press: () {
+                                              press: (){
                                                 setState(() {});
                                                 if (addressmap.isEmpty) {
                                                   Navigator.pushNamed(context,
