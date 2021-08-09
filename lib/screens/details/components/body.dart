@@ -311,6 +311,7 @@ class _BodyState extends State<Body> {
       print(user_key);
       var userref = await _services.users.doc(user_key).get();
       addressmap = userref["address"];
+      SelectedAddress = addressmap[0];
     }
 
     _navigateAndDisplaySelection(BuildContext context) async {
