@@ -9,6 +9,7 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
@@ -651,7 +652,17 @@ class _BodyState extends State<Body> {
                         color: kPrimaryColor,
                         text: "Pay Online",
                         press: () {
-                          generateTxnToken();
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OrderDetails(
+                              key: UniqueKey(),
+                              product: widget.product,
+                              currentVarient: selectedFoodVariants,
+                            quantity: quantity,
+                              selectedaddress: SelectedAddress,
+                          )),
+                          );
+                          // generateTxnToken();
                         },
                       ),
                       SizedBox(

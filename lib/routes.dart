@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
@@ -34,4 +35,5 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   SeeMore.routeName: (context) => SeeMore(),
   Address.routeName: (context) => Address(),
+  OrderDetails.routeName: (context) => OrderDetails(),
 };
