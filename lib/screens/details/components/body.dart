@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/product_card.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
@@ -97,6 +99,8 @@ class _BodyState extends State<Body> {
   int _radioSelected = 0;
   String coupon = "";
   int coupon_value = 100;
+  bool deliverable=true;
+  double sellingdistance=20;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -368,223 +372,274 @@ class _BodyState extends State<Body> {
                         ),
                       ),
                       SizedBox(height: getProportionateScreenHeight(10)),
-                      Container(
-                        height: getProportionateScreenHeight(180),
-                        child: StatefulBuilder(
-                          builder:
-                              (BuildContext context, StateSetter setState) {
-                            return ListView.builder(
-                              // physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: addressmap.length,
-                              itemBuilder: (context, i) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    print(i);
-                                    _radioSelected = i;
-                                    setState(() {
-                                      SelectedAddress = addressmap[i];
-                                      print(SelectedAddress);
-                                    });
-                                  },
-                                  child: Container(
-                                      width: 200,
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 5),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3, horizontal: 13),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: _radioSelected == i
-                                              ? kPrimaryColor2
-                                              : Color(0xff565656),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
+                      StatefulBuilder(
+                        builder:
+                            (BuildContext context, StateSetter setState) {
+                          return Column(
+                            children: [
+                              Container(
+                                height: getProportionateScreenHeight(180),
+                                child: ListView.builder(
+                                  // physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: addressmap.length,
+                                  itemBuilder: (context, i) {
+                                    return GestureDetector(
+                                      onTap: () async{
+                                        List<Location> locations = await locationFromAddress(addressmap[i]["pincode"].toString());
+                                        var distanceInMeters = await Geolocator.distanceBetween(
+                                          locations[0].latitude,
+                                          locations[0].longitude,
+                                          28.5320,
+                                          77.2959,
+                                        );
+                                        print(distanceInMeters);
+                                        if((distanceInMeters/1000)<sellingdistance){
+                                          deliverable=true;
+                                        }
+                                        else{
+                                          deliverable=false;
+                                        }
+                                        _radioSelected = i;
+                                        setState(() {
+                                          SelectedAddress = addressmap[i];
+                                          // print(SelectedAddress);
+                                        });
+                                      },
+                                      child: Container(
+                                          width: 200,
+                                          margin: EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 5),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 3, horizontal: 13),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: _radioSelected == i
+                                                  ? kPrimaryColor2
+                                                  : Color(0xff565656),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                addressmap[i]["name"],
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize:
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    addressmap[i]["name"],
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize:
                                                         getProportionateScreenHeight(
                                                             23),
-                                                    fontWeight:
+                                                        fontWeight:
                                                         FontWeight.bold),
-                                                overflow: TextOverflow.ellipsis,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  addressmap[i]["adline1"],
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  addressmap[i]["adline2"],
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  addressmap[i]["city"] +
+                                                      " ," +
+                                                      addressmap[i]["state"],
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: getProportionateScreenHeight(10)),
+                              StatefulBuilder(
+                                  builder: (BuildContext context, setState) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: getProportionateScreenWidth(120),
+                                                  child: TextField(
+                                                    onChanged: (value) {
+                                                      print(value);
+                                                      coupon = value;
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Enter code',
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                          vertical: 10.0, horizontal: 20.0),
+                                                      border: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(10.0)),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.lightGreen,
+                                                            width: 1.0),
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(10.0)),
+                                                      ),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.lightGreen,
+                                                            width: 2.0),
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(10.0)),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: getProportionateScreenWidth(10),
+                                                ),
+                                                Container(
+                                                  width: getProportionateScreenWidth(50),
+                                                  child: FlatButton(
+                                                      color: Colors.lightGreen,
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          print(coupon);
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        "Add",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize:
+                                                            getProportionateScreenWidth(
+                                                                10)),
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                _navigateAndDisplaySelection(context);
+                                              },
+                                              child: Text(
+                                                "Add New Address",
+                                                style: TextStyle(
+                                                    decoration: TextDecoration.underline),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              addressmap[i]["adline1"],
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              addressmap[i]["adline2"],
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              addressmap[i]["city"] +
-                                                  " ," +
-                                                  addressmap[i]["state"],
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      StatefulBuilder(
-                          builder: (BuildContext context, setState) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: getProportionateScreenWidth(120),
-                                      child: TextField(
-                                        onChanged: (value) {
-                                          print(value);
-                                          coupon = value;
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: 'Enter code',
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 10.0, horizontal: 20.0),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.lightGreen,
-                                                width: 1.0),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.lightGreen,
-                                                width: 2.0),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                          ),
+                                          ],
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: getProportionateScreenWidth(10),
-                                    ),
-                                    Container(
-                                      width: getProportionateScreenWidth(50),
-                                      child: FlatButton(
-                                          color: Colors.lightGreen,
-                                          onPressed: () {
-                                            setState(() {
-                                              print(coupon);
-                                            });
-                                          },
-                                          child: Text(
-                                            "Add",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        10)),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    _navigateAndDisplaySelection(context);
-                                  },
-                                  child: Text(
-                                    "Add New Address",
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline),
+                                        coupon == "aryan"
+                                            ? Text("  You saved \₹$coupon_value")
+                                            : coupon == ""
+                                            ? Text("")
+                                            : Text("Invalid Coupon"),
+                                      ],
+                                    );
+                                  }),
+                              deliverable==true?Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "",
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(12),
+                                    color: Colors.red,
                                   ),
                                 ),
-                              ],
-                            ),
-                            coupon == "aryan"
-                                ? Text("  You saved \₹$coupon_value")
-                                : coupon == ""
-                                    ? Text("")
-                                    : Text("Invalid Coupon"),
-                          ],
-                        );
-                      }),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
-                      ),
-                      DefaultButton(
-                        textheight: 15,
-                        colour: Colors.white,
-                        height: 70,
-                        color: kPrimaryColor2,
-                        text: "Cash on Delivery (COD)",
-                        press: () {
-                          Navigator.pop(context);
-                          _showCODDialog();
-                        },
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
-                      ),
-                      DefaultButton(
-                        textheight: 15,
-                        colour: Colors.white,
-                        height: 70,
-                        color: kPrimaryColor,
-                        text: "Pay Online",
-                        press: () {
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OrderDetails(
-                              key: UniqueKey(),
-                              product: widget.product,
-                              currentVarient: selectedFoodVariants,
-                            quantity: quantity,
-                              selectedaddress: SelectedAddress,
-                          )),
-                          );
+                              ):Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "  No available seller in your location\n",
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(12),
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                              deliverable==true?DefaultButton(
+                                textheight: 15,
+                                colour: Colors.white,
+                                height: 70,
+                                color: kPrimaryColor2,
+                                text: "Cash on Delivery (COD)",
+                                press: () {
+                                  Navigator.pop(context);
+                                  _showCODDialog();
+                                },
+                              ):DefaultButton(
+                                textheight: 15,
+                                colour: Colors.white,
+                                height: 70,
+                                color: kSecondaryColor,
+                                text: "Cash on Delivery (COD)",
+                                press: () {
+                                },
+                              ),
 
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              deliverable==true?DefaultButton(
+                                textheight: 15,
+                                colour: Colors.white,
+                                height: 70,
+                                color: kPrimaryColor,
+                                text: "Pay Online",
+                                press: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => OrderDetails(
+                                      key: UniqueKey(),
+                                      product: widget.product,
+                                      currentVarient: selectedFoodVariants,
+                                      quantity: quantity,
+                                      selectedaddress: SelectedAddress,
+                                    )),
+                                  );
+
+                                },
+                              ):DefaultButton(
+                                textheight: 15,
+                                // colour: Colors.white,
+                                height: 70,
+                                color: kSecondaryColor,
+                                text: "Pay Online",
+                                press: (){
+                                },
+                              ),
+
+                            ],
+                          );
                         },
                       ),
                       SizedBox(
