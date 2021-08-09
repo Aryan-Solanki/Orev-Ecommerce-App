@@ -44,7 +44,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               selectedaddress: widget.selectedaddress,
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
       ),
     );
   }
