@@ -40,7 +40,10 @@ class _CartScreenState extends State<CartScreen> {
         keys: keys,
         key: UniqueKey(),
       ),
-      bottomNavigationBar: CheckoutCard(),
+      bottomNavigationBar: CheckoutCard(
+        keys: keys,
+        key: UniqueKey(),
+      ),
     );
   }
 }
@@ -53,10 +56,10 @@ AppBar buildAppBar(BuildContext context, int numberOfItems) {
           "Your Cart",
           style: TextStyle(color: Colors.black),
         ),
-        Text(
-          "$numberOfItems items",
-          style: Theme.of(context).textTheme.caption,
-        ),
+        // Text(
+        //   "$numberOfItems items",
+        //   style: Theme.of(context).textTheme.caption,
+        // ),
       ],
     ),
   );

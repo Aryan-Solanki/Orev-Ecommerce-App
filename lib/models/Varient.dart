@@ -8,6 +8,7 @@ class Varient {
   final bool inStock;
   final int qty;
   final String title;
+  final String id;
   final List<dynamic> images;
 
   Varient({
@@ -20,5 +21,6 @@ class Varient {
     @required this.qty,
     @required this.title,
     @required this.images,
+    @required this.id,
   });
 }

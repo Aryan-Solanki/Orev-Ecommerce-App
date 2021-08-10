@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/models/Cart.dart';
+import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/services/product_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -9,15 +11,42 @@ class CartCard extends StatefulWidget {
   const CartCard({
     Key key,
     @required this.cart,
+    @required this.notifyParent,
   }) : super(key: key);
 
   final Cart cart;
+  final Function() notifyParent;
 
   @override
   _CartCardState createState() => _CartCardState();
 }
 
 class _CartCardState extends State<CartCard> {
+  String user_key;
+
+  Future<void> changeCartQty(quantity) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    var keys = favref["cartItems"];
+    keys.add({
+      "productId": widget.cart.product.id,
+      "qty": quantity,
+      "varientNumber": widget.cart.varientNumber
+    });
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    setState(() {
+      widget.notifyParent();
+    });
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
+  @override
+  void initState() {
+    user_key = AuthProvider().user.uid;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     int quantity = widget.cart.numOfItem;
@@ -94,6 +123,7 @@ class _CartCardState extends State<CartCard> {
                     if (quantity != 1) {
                       setState(() {
                         quantity--;
+                        changeCartQty(quantity);
                       });
                     }
                   },
@@ -114,7 +144,8 @@ class _CartCardState extends State<CartCard> {
                   showShadow: true,
                   press: () {
                     setState(() {
-                      quantity++;
+                      ++quantity;
+                      changeCartQty(quantity);
                     });
                   },
                 ),

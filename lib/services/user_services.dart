@@ -41,4 +41,8 @@ class UserServices {
     String id = values['id'];
     await _firestore.collection("keypass").doc(id).update(values);
   }
+
+  bool isAvailableOnUserLocation() {
+    return true;
+  }
 }

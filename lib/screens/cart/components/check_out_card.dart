@@ -1,18 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/components/default_button.dart';
+import 'package:orev/models/Cart.dart';
+import 'package:orev/models/Product.dart';
+import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-String coupon="";
-class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
-    Key key,
-  }) : super(key: key);
+class CheckoutCard extends StatefulWidget {
+  final List<dynamic> keys;
+  const CheckoutCard({Key key, this.keys}) : super(key: key);
+  @override
+  _CheckoutCardState createState() => _CheckoutCardState();
+}
+
+class _CheckoutCardState extends State<CheckoutCard> {
+  String coupon = "";
+  List<Cart> CartList = [];
+  double totalamt = 0.0;
+
+  Future<List> getVarientNumber(id, productId) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var product = await _services.getProduct(productId);
+    var varlist = product.varients;
+    int ind = 0;
+    bool foundit = false;
+    for (var varient in varlist) {
+      if (varient.id == id) {
+        foundit = true;
+        break;
+      }
+      ind += 1;
+    }
+    return [ind, foundit];
+  }
+
+  String user_key;
+
+  Future<void> getAllCartProducts() async {
+    for (var k in widget.keys) {
+      ProductServices _services = new ProductServices();
+      UserServices _user_services = new UserServices();
+      Product product = await _services.getProduct(k["productId"]);
+      var checklist =
+          await getVarientNumber(k["varientNumber"], k["productId"]);
+      var xx = checklist[0];
+      var y = checklist[1];
+      if (!y) {
+        continue;
+      }
+      CartList.add(
+          new Cart(product: product, varientNumber: xx, numOfItem: k["qty"]));
+      if (_user_services.isAvailableOnUserLocation()) {
+        totalamt += product.varients[xx].price * k["qty"];
+      }
+    }
+    setState(() {
+      print(totalamt);
+    });
+  }
+
+  @override
+  void initState() {
+    user_key = AuthProvider().user.uid;
+    getAllCartProducts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // getAllCartProducts();
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -57,28 +118,27 @@ class CheckoutCard extends StatelessWidget {
                     child: TextField(
                       onChanged: (value) {
                         print(value);
-                        coupon=value;
+                        coupon = value;
                       },
                       decoration: InputDecoration(
                         hintText: 'Enter code',
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.lightGreen, width: 1.0),
+                              BorderSide(color: Colors.lightGreen, width: 1.0),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.lightGreen, width: 2.0),
+                              BorderSide(color: Colors.lightGreen, width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                       ),
                     ),
-
                   ),
                   const SizedBox(width: 10),
                   Icon(
@@ -97,7 +157,7 @@ class CheckoutCard extends StatelessWidget {
                       text: "Total:\n",
                       children: [
                         TextSpan(
-                          text: "\$337.15",
+                          text: "\₹$totalamt",
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       ],

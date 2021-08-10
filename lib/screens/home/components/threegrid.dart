@@ -47,6 +47,7 @@ class _ThreeGridState extends State<ThreeGrid> {
             inStock: vari["stock"]["inStock"],
             qty: vari["stock"]["qty"],
             title: vari["variantDetails"]["title"],
+            id: vari["id"],
             images: vari["variantDetails"]["images"]));
       }
 

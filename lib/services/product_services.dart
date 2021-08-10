@@ -41,6 +41,7 @@ class ProductServices {
           inStock: vari["stock"]["inStock"],
           qty: vari["stock"]["qty"],
           title: vari["variantDetails"]["title"],
+          id: vari["id"],
           images: vari["variantDetails"]["images"]));
     }
     return Product(
