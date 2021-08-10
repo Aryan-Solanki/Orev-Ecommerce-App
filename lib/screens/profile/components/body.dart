@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/your_order/your_order.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -18,9 +19,12 @@ class Body extends StatelessWidget {
             press: () => {},
           ),
           ProfileMenu(
-            text: "Notifications",
+            text: "Your Orders",
             icon: "assets/icons/Bell.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context,
+                  YourOrder.routeName);
+            },
           ),
           ProfileMenu(
             text: "Settings",

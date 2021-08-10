@@ -14,6 +14,7 @@ import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/screens/splash/splash_screen.dart';
+import 'package:orev/screens/your_order/your_order.dart';
 
 import 'screens/sign_up/sign_up_screen.dart';
 
@@ -36,4 +37,5 @@ final Map<String, WidgetBuilder> routes = {
   SeeMore.routeName: (context) => SeeMore(),
   Address.routeName: (context) => Address(),
   OrderDetails.routeName: (context) => OrderDetails(),
+  YourOrder.routeName: (context) => YourOrder(),
 };

@@ -23,13 +23,16 @@ class Body extends StatelessWidget {
                   "Welcome Back",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: getProportionateScreenWidth(28),
+                    fontSize: getProportionateScreenWidth(27),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   "Sign in with your phone number",
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(15),
+                  ),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),

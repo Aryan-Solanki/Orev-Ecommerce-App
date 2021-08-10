@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
 
+import '../../size_config.dart';
 import 'components/body.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -39,7 +40,9 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign In"),
+        title: Text("Sign In",style: TextStyle(
+          fontSize: getProportionateScreenWidth(18),
+        ),),
       ),
       body: Body(),
     );
