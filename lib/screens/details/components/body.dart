@@ -100,7 +100,7 @@ class _BodyState extends State<Body> {
   int coupon_value = 100;
   bool deliverable=true;
   double sellingdistance=20;
-  double walletbalance=11.0;
+  double walletbalance=0.0;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -584,7 +584,7 @@ class _BodyState extends State<Body> {
                                                     ),
                                                   ],
                                                 ),
-                                                orevwallet==false?Text("Balance: ₹$walletbalance",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),):Text((widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance?"Balance: ₹0":"Balance: ₹${walletbalance-(widget.product.varients[selectedFoodVariants].price * quantity)}",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),),
+                                                orevwallet==false?Text("Balance: ₹$walletbalance",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),):Text((widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance?"Balance: ₹0.0":"Balance: ₹${walletbalance-(widget.product.varients[selectedFoodVariants].price * quantity)}",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),),
                                               ],
                                             ),
                                             Column(
@@ -608,7 +608,7 @@ class _BodyState extends State<Body> {
                                                           fontWeight: FontWeight.bold,
                                                           fontSize: getProportionateScreenHeight(20)),
                                                     ):Text(
-                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>walletbalance?"\₹${(widget.product.varients[selectedFoodVariants].price * quantity)-walletbalance}":"\₹0",
+                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>walletbalance?"\₹${(widget.product.varients[selectedFoodVariants].price * quantity)-walletbalance}":"\₹0.0",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight: FontWeight.bold,
