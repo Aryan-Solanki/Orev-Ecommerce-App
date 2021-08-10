@@ -53,8 +53,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
       if (!y) {
         continue;
       }
-      CartList.add(
-          new Cart(product: product, varientNumber: xx, numOfItem: k["qty"]));
+      CartList.add(new Cart(
+          product: product,
+          varientNumber: product.varients[xx].id,
+          numOfItem: k["qty"]));
       if (_user_services.isAvailableOnUserLocation()) {
         totalamt += product.varients[xx].price * k["qty"];
       }

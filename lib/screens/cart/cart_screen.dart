@@ -3,6 +3,7 @@ import 'package:orev/models/Cart.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/services/product_services.dart';
 
+import '../../constants.dart';
 import 'components/body.dart';
 import 'components/check_out_card.dart';
 
@@ -32,6 +33,19 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
   }
 
+  refresh() async {
+    ProductServices _services = ProductServices();
+    var favref = await _services.cart.doc(user_key).get();
+    keys = favref["cartItems"];
+    setState(() {
+      final snackBar = SnackBar(
+        content: Text('Cart Updated'),
+        backgroundColor: kPrimaryColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +53,7 @@ class _CartScreenState extends State<CartScreen> {
       body: Body(
         keys: keys,
         key: UniqueKey(),
+        notifyParent: refresh,
       ),
       bottomNavigationBar: CheckoutCard(
         keys: keys,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/models/Cart.dart';
+import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/services/product_services.dart';
 
@@ -23,17 +24,38 @@ class CartCard extends StatefulWidget {
 
 class _CartCardState extends State<CartCard> {
   String user_key;
+  int selectedVarient = 0;
+
+  Future<int> getVarientNumber(id, productId) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    Product product = await _services.getProduct(productId);
+    var varlist = product.varients;
+    int ind = 0;
+    bool foundit = false;
+    for (var varient in varlist) {
+      if (varient.id == id) {
+        foundit = true;
+        break;
+      }
+      ind += 1;
+    }
+    selectedVarient = ind;
+    setState(() {});
+  }
 
   Future<void> changeCartQty(quantity) async {
     ProductServices _services = ProductServices();
     print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     var keys = favref["cartItems"];
-    keys.add({
-      "productId": widget.cart.product.id,
-      "qty": quantity,
-      "varientNumber": widget.cart.varientNumber
-    });
+
+    for (var k in keys) {
+      if (k["varientNumber"] == widget.cart.varientNumber) {
+        k["qty"] = quantity;
+        break;
+      }
+    }
     await _services.cart.doc(user_key).update({'cartItems': keys});
     setState(() {
       widget.notifyParent();
@@ -41,9 +63,34 @@ class _CartCardState extends State<CartCard> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  Future<void> removeFromCart(varientid) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    var keys = favref["cartItems"];
+
+    var ind = 0;
+    for (var cartItem in keys) {
+      if (cartItem["varientNumber"] == varientid) {
+        break;
+      }
+      ind += 1;
+    }
+    keys.removeAt(ind);
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    widget.notifyParent();
+    // final snackBar = SnackBar(
+    //   content: Text('Item removed from Cart'),
+    //   backgroundColor: kPrimaryColor,
+    // );
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
+    getVarientNumber(widget.cart.varientNumber, widget.cart.product.id);
     super.initState();
   }
 
@@ -64,8 +111,8 @@ class _CartCardState extends State<CartCard> {
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Image.network(widget.cart.product
-                      .varients[widget.cart.varientNumber].images[0]),
+                  child: Image.network(
+                      widget.cart.product.varients[selectedVarient].images[0]),
                 ),
               ),
             ),
@@ -84,14 +131,14 @@ class _CartCardState extends State<CartCard> {
                   ),
                   SizedBox(height: 3),
                   Text(
-                    "${widget.cart.product.varients[widget.cart.varientNumber].title}",
+                    "${widget.cart.product.varients[selectedVarient].title}",
                     style:
                         TextStyle(fontSize: getProportionateScreenHeight(15)),
                   ),
                   Text.rich(
                     TextSpan(
                       text:
-                          "\₹${widget.cart.product.varients[widget.cart.varientNumber].price}",
+                          "\₹${widget.cart.product.varients[selectedVarient].price}",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
@@ -122,9 +169,11 @@ class _CartCardState extends State<CartCard> {
                   press: () {
                     if (quantity != 1) {
                       setState(() {
-                        quantity--;
+                        --quantity;
                         changeCartQty(quantity);
                       });
+                    } else if (quantity == 1) {
+                      removeFromCart(widget.cart.varientNumber);
                     }
                   },
                 ),
@@ -154,7 +203,7 @@ class _CartCardState extends State<CartCard> {
             Text.rich(
               TextSpan(
                 text:
-                    "\₹${widget.cart.product.varients[widget.cart.varientNumber].price * quantity}",
+                    "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,

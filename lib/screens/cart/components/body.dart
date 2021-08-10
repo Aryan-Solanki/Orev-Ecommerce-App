@@ -12,7 +12,12 @@ import 'cart_card.dart';
 
 class Body extends StatefulWidget {
   final List<dynamic> keys;
-  const Body({Key key, this.keys}) : super(key: key);
+  final Function() notifyParent;
+  const Body({
+    Key key,
+    this.keys,
+    @required this.notifyParent,
+  }) : super(key: key);
   @override
   _BodyState createState() => _BodyState(keys: keys);
 }
@@ -23,6 +28,30 @@ class _BodyState extends State<Body> {
 
   List<Cart> CartList = [];
   double totalamt = 0.0;
+
+  Future<void> removeFromCart(varientid) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    keys = favref["cartItems"];
+
+    var ind = 0;
+    for (var cartItem in keys) {
+      if (cartItem["varientNumber"] == varientid) {
+        break;
+      }
+      ind += 1;
+    }
+    keys.removeAt(ind);
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    widget.notifyParent();
+    // final snackBar = SnackBar(
+    //   content: Text('Item removed from Cart'),
+    //   backgroundColor: kPrimaryColor,
+    // );
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -53,10 +82,13 @@ class _BodyState extends State<Body> {
       var xx = checklist[0];
       var y = checklist[1];
       if (!y) {
+        removeFromCart(k["varientNumber"]);
         continue;
       }
-      CartList.add(
-          new Cart(product: product, varientNumber: xx, numOfItem: k["qty"]));
+      CartList.add(new Cart(
+          product: product,
+          varientNumber: product.varients[xx].id,
+          numOfItem: k["qty"]));
       if (_user_services.isAvailableOnUserLocation()) {
         totalamt += product.varients[xx].price * k["qty"];
       }
@@ -76,7 +108,9 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     refresh() {
-      setState(() {});
+      setState(() {
+        widget.notifyParent();
+      });
     }
 
     return Padding(
@@ -96,7 +130,9 @@ class _BodyState extends State<Body> {
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
                   setState(() {
-                    demoCarts.removeAt(index);
+                    removeFromCart(CartList[index].varientNumber);
+                    CartList.removeAt(index);
+                    widget.notifyParent();
                   });
                 },
                 background: Container(
@@ -112,7 +148,10 @@ class _BodyState extends State<Body> {
                     ],
                   ),
                 ),
-                child: CartCard(cart: CartList[index], notifyParent: refresh),
+                child: CartCard(
+                    cart: CartList[index],
+                    notifyParent: refresh,
+                    key: UniqueKey()),
               ),
             ),
           ),

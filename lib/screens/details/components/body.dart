@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
   List<Varient> foodVariants = [];
   List<Product> youMayAlsoLikeList = [];
   int selectedFoodVariants = 0;
-  bool orevwallet=false;
+  bool orevwallet = false;
   String soldby = "Aryan Tatva Sellers";
 
   void getVarientList() {
@@ -98,9 +98,9 @@ class _BodyState extends State<Body> {
   int _radioSelected = 0;
   String coupon = "";
   int coupon_value = 100;
-  bool deliverable=true;
-  double sellingdistance=20;
-  double walletbalance=0.0;
+  bool deliverable = true;
+  double sellingdistance = 20;
+  double walletbalance = 0.0;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -373,8 +373,7 @@ class _BodyState extends State<Body> {
                       ),
                       SizedBox(height: getProportionateScreenHeight(10)),
                       StatefulBuilder(
-                        builder:
-                            (BuildContext context, StateSetter setState) {
+                        builder: (BuildContext context, StateSetter setState) {
                           return Column(
                             children: [
                               Container(
@@ -386,20 +385,24 @@ class _BodyState extends State<Body> {
                                   itemCount: addressmap.length,
                                   itemBuilder: (context, i) {
                                     return GestureDetector(
-                                      onTap: () async{
-                                        List<Location> locations = await locationFromAddress(addressmap[i]["pincode"].toString());
-                                        var distanceInMeters = await Geolocator.distanceBetween(
+                                      onTap: () async {
+                                        List<Location> locations =
+                                            await locationFromAddress(
+                                                addressmap[i]["pincode"]
+                                                    .toString());
+                                        var distanceInMeters =
+                                            await Geolocator.distanceBetween(
                                           locations[0].latitude,
                                           locations[0].longitude,
                                           28.5320,
                                           77.2959,
                                         );
                                         print(distanceInMeters);
-                                        if((distanceInMeters/1000)<sellingdistance){
-                                          deliverable=true;
-                                        }
-                                        else{
-                                          deliverable=false;
+                                        if ((distanceInMeters / 1000) <
+                                            sellingdistance) {
+                                          deliverable = true;
+                                        } else {
+                                          deliverable = false;
                                         }
                                         _radioSelected = i;
                                         setState(() {
@@ -414,7 +417,8 @@ class _BodyState extends State<Body> {
                                           padding: EdgeInsets.symmetric(
                                               vertical: 3, horizontal: 13),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                             border: Border.all(
                                               color: _radioSelected == i
                                                   ? kPrimaryColor2
@@ -423,23 +427,25 @@ class _BodyState extends State<Body> {
                                           ),
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Expanded(
                                                 flex: 3,
                                                 child: Align(
-                                                  alignment: Alignment.centerLeft,
+                                                  alignment:
+                                                      Alignment.centerLeft,
                                                   child: Text(
                                                     addressmap[i]["name"],
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontSize:
-                                                        getProportionateScreenHeight(
-                                                            23),
+                                                            getProportionateScreenHeight(
+                                                                23),
                                                         fontWeight:
-                                                        FontWeight.bold),
-                                                    overflow: TextOverflow.ellipsis,
+                                                            FontWeight.bold),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ),
@@ -450,7 +456,8 @@ class _BodyState extends State<Body> {
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                       color: Colors.black),
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               Expanded(
@@ -460,7 +467,8 @@ class _BodyState extends State<Body> {
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                       color: Colors.black),
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               Expanded(
@@ -472,7 +480,8 @@ class _BodyState extends State<Body> {
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                       color: Colors.black),
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               )
                                             ],
@@ -481,268 +490,397 @@ class _BodyState extends State<Body> {
                                   },
                                 ),
                               ),
-                              SizedBox(height: getProportionateScreenHeight(10)),
+                              SizedBox(
+                                  height: getProportionateScreenHeight(10)),
                               StatefulBuilder(
                                   builder: (BuildContext context, setState) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      120),
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  print(value);
+                                                  coupon = value;
+                                                },
+                                                decoration: InputDecoration(
+                                                  hintText: 'Enter code',
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 10.0,
+                                                          horizontal: 20.0),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.lightGreen,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.lightGreen,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      10),
+                                            ),
+                                            Container(
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      50),
+                                              child: FlatButton(
+                                                  color: Colors.lightGreen,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      print(coupon);
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                    "Add",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                10)),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            _navigateAndDisplaySelection(
+                                                context);
+                                          },
+                                          child: Text(
+                                            "Add New Address",
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    coupon == "aryan"
+                                        ? Text("  You saved \₹$coupon_value")
+                                        : coupon == ""
+                                            ? Text("")
+                                            : Text("Invalid Coupon"),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
-                                                Container(
-                                                  width: getProportionateScreenWidth(120),
-                                                  child: TextField(
-                                                    onChanged: (value) {
-                                                      print(value);
-                                                      coupon = value;
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Enter code',
-                                                      contentPadding: EdgeInsets.symmetric(
-                                                          vertical: 10.0, horizontal: 20.0),
-                                                      border: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(10.0)),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.lightGreen,
-                                                            width: 1.0),
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(10.0)),
-                                                      ),
-                                                      focusedBorder: OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.lightGreen,
-                                                            width: 2.0),
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(10.0)),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                Text(
+                                                  "Use Orev Wallet",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              13)),
                                                 ),
-                                                SizedBox(
-                                                  width: getProportionateScreenWidth(10),
-                                                ),
-                                                Container(
-                                                  width: getProportionateScreenWidth(50),
-                                                  child: FlatButton(
-                                                      color: Colors.lightGreen,
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          print(coupon);
-                                                        });
-                                                      },
-                                                      child: Text(
-                                                        "Add",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize:
-                                                            getProportionateScreenWidth(
-                                                                10)),
-                                                      )),
+                                                Checkbox(
+                                                  value: orevwallet,
+                                                  onChanged: (bool newValue) {
+                                                    setState(() {
+                                                      orevwallet = newValue;
+                                                    });
+                                                  },
                                                 ),
                                               ],
                                             ),
-                                            GestureDetector(
-                                              onTap: () async {
-                                                _navigateAndDisplaySelection(context);
-                                              },
-                                              child: Text(
-                                                "Add New Address",
-                                                style: TextStyle(
-                                                    decoration: TextDecoration.underline),
+                                            orevwallet == false
+                                                ? Text(
+                                                    "Balance: ₹$walletbalance",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                12),
+                                                        color: kPrimaryColor),
+                                                  )
+                                                : Text(
+                                                    (widget
+                                                                    .product
+                                                                    .varients[
+                                                                        selectedFoodVariants]
+                                                                    .price *
+                                                                quantity) >=
+                                                            walletbalance
+                                                        ? "Balance: ₹0.0"
+                                                        : "Balance: ₹${walletbalance - (widget.product.varients[selectedFoodVariants].price * quantity)}",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                12),
+                                                        color: kPrimaryColor),
+                                                  ),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                    width:
+                                                        getProportionateScreenWidth(
+                                                            90),
+                                                    child: Text(
+                                                      "Total",
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontSize:
+                                                              getProportionateScreenHeight(
+                                                                  23)),
+                                                    )),
+                                                orevwallet == false
+                                                    ? Text(
+                                                        "\₹${widget.product.varients[selectedFoodVariants].price * quantity}",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    20)),
+                                                      )
+                                                    : Text(
+                                                        (widget
+                                                                        .product
+                                                                        .varients[
+                                                                            selectedFoodVariants]
+                                                                        .price *
+                                                                    quantity) >
+                                                                walletbalance
+                                                            ? "\₹${(widget.product.varients[selectedFoodVariants].price * quantity) - walletbalance}"
+                                                            : "\₹0.0",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    20)),
+                                                      ),
+                                              ],
+                                            ),
+                                            orevwallet == false
+                                                ? Column(
+                                                    children: [
+                                                      Text(
+                                                        "(includes tax + Delivery: \₹50)",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    14)),
+                                                      )
+                                                    ],
+                                                  )
+                                                : Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        "(includes tax + Delivery: \₹50)",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    14)),
+                                                      ),
+                                                      Text(
+                                                        (widget
+                                                                        .product
+                                                                        .varients[
+                                                                            selectedFoodVariants]
+                                                                        .price *
+                                                                    quantity) >=
+                                                                walletbalance
+                                                            ? "( - Orev Wallet: $walletbalance)"
+                                                            : "( - Orev Wallet: ${widget.product.varients[selectedFoodVariants].price * quantity})",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    14)),
+                                                      )
+                                                    ],
+                                                  ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    deliverable == true
+                                        ? Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        12),
+                                                color: Colors.red,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        coupon == "aryan"
-                                            ? Text("  You saved \₹$coupon_value")
-                                            : coupon == ""
-                                            ? Text("")
-                                            : Text("Invalid Coupon"),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text("Use Orev Wallet",style: TextStyle(fontSize: getProportionateScreenWidth(13)),),
-                                                    Checkbox(
-                                                      value: orevwallet,
-                                                      onChanged: (bool newValue) {
-                                                        setState(() {
-                                                          orevwallet = newValue;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                                orevwallet==false?Text("Balance: ₹$walletbalance",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),):Text((widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance?"Balance: ₹0.0":"Balance: ₹${walletbalance-(widget.product.varients[selectedFoodVariants].price * quantity)}",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),),
-                                              ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                        width: getProportionateScreenWidth(90),
-                                                        child: Text(
-                                                          "Total",
-                                                          style: TextStyle(
-                                                              color: Colors.blue,
-                                                              fontSize: getProportionateScreenHeight(23)),
-                                                        )),
-                                                    orevwallet==false?Text(
-                                                      "\₹${widget.product.varients[selectedFoodVariants].price * quantity}",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: getProportionateScreenHeight(20)),
-                                                    ):Text(
-                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>walletbalance?"\₹${(widget.product.varients[selectedFoodVariants].price * quantity)-walletbalance}":"\₹0.0",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: getProportionateScreenHeight(20)),
-                                                    ),
-                                                  ],
-                                                ),
-
-                                                orevwallet==false?Column(
-                                                  children: [
-                                                    Text(
-                                                      "(includes tax + Delivery: \₹50)",
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          fontSize: getProportionateScreenHeight(14)),
-                                                    )
-                                                  ],
-                                                ):Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      "(includes tax + Delivery: \₹50)",
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          fontSize: getProportionateScreenHeight(14)),
-                                                    ),
-                                                    Text(
-                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance? "( - Orev Wallet: $walletbalance)":"( - Orev Wallet: ${widget.product.varients[selectedFoodVariants].price * quantity})",
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          fontSize: getProportionateScreenHeight(14)),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        deliverable==true?Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "",
-                                            style: TextStyle(
-                                              fontSize: getProportionateScreenWidth(12),
-                                              color: Colors.red,
+                                          )
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "No available seller in your location\n",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        12),
+                                                color: Colors.red,
+                                              ),
                                             ),
                                           ),
-                                        ):Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "No available seller in your location\n",
-                                            style: TextStyle(
-                                              fontSize: getProportionateScreenWidth(12),
-                                              color: Colors.red,
-                                            ),
+                                    deliverable == true
+                                        ? DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kPrimaryColor2,
+                                            text: orevwallet == true
+                                                ? (widget
+                                                                .product
+                                                                .varients[
+                                                                    selectedFoodVariants]
+                                                                .price *
+                                                            quantity) <=
+                                                        walletbalance
+                                                    ? "Place Order"
+                                                    : "Cash on Delivery (COD)"
+                                                : "Cash on Delivery (COD)",
+                                            press: () {
+                                              Navigator.pop(context);
+                                              _showCODDialog();
+                                            },
+                                          )
+                                        : DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kSecondaryColor,
+                                            text: "Cash on Delivery (COD)",
+                                            press: () {},
                                           ),
-                                        ),
-                                        deliverable==true?DefaultButton(
-                                          textheight: 15,
-                                          colour: Colors.white,
-                                          height: 70,
-                                          color: kPrimaryColor2,
-                                          text: orevwallet==true?(widget.product.varients[selectedFoodVariants].price * quantity)<=walletbalance?"Place Order":"Cash on Delivery (COD)":"Cash on Delivery (COD)",
-                                          press: () {
-                                            Navigator.pop(context);
-                                            _showCODDialog();
-                                          },
-                                        ):DefaultButton(
-                                          textheight: 15,
-                                          colour: Colors.white,
-                                          height: 70,
-                                          color: kSecondaryColor,
-                                          text: "Cash on Delivery (COD)",
-                                          press: () {
-                                          },
-                                        ),
-
-                                        SizedBox(
-                                          height: getProportionateScreenHeight(10),
-                                        ),
-                                        deliverable==true?orevwallet==true?(widget.product.varients[selectedFoodVariants].price * quantity)<=walletbalance?Center():DefaultButton(
-                                          textheight: 15,
-                                          colour: Colors.white,
-                                          height: 70,
-                                          color: kPrimaryColor,
-                                          text: "Pay Online",
-                                          press: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => OrderDetails(
-                                                key: UniqueKey(),
-                                                product: widget.product,
-                                                currentVarient: selectedFoodVariants,
-                                                quantity: quantity,
-                                                selectedaddress: SelectedAddress,
-                                              )),
-                                            );
-
-                                          },
-                                        ):DefaultButton(
-                                          textheight: 15,
-                                          colour: Colors.white,
-                                          height: 70,
-                                          color: kPrimaryColor,
-                                          text: "Pay Online",
-                                          press: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => OrderDetails(
-                                                key: UniqueKey(),
-                                                product: widget.product,
-                                                currentVarient: selectedFoodVariants,
-                                                quantity: quantity,
-                                                selectedaddress: SelectedAddress,
-                                              )),
-                                            );
-
-                                          }
-                                          ):DefaultButton(
-                                          textheight: 15,
-                                          // colour: Colors.white,
-                                          height: 70,
-                                          color: kSecondaryColor,
-                                          text: "Pay Online",
-                                          press: (){
-                                          },
-                                        ),
-
-
-                                      ],
-                                    );
-                                  }),
-
-
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(10),
+                                    ),
+                                    deliverable == true
+                                        ? orevwallet == true
+                                            ? (widget
+                                                            .product
+                                                            .varients[
+                                                                selectedFoodVariants]
+                                                            .price *
+                                                        quantity) <=
+                                                    walletbalance
+                                                ? Center()
+                                                : DefaultButton(
+                                                    textheight: 15,
+                                                    colour: Colors.white,
+                                                    height: 70,
+                                                    color: kPrimaryColor,
+                                                    text: "Pay Online",
+                                                    press: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                OrderDetails(
+                                                                  key:
+                                                                      UniqueKey(),
+                                                                  product: widget
+                                                                      .product,
+                                                                  currentVarient:
+                                                                      selectedFoodVariants,
+                                                                  quantity:
+                                                                      quantity,
+                                                                  selectedaddress:
+                                                                      SelectedAddress,
+                                                                )),
+                                                      );
+                                                    },
+                                                  )
+                                            : DefaultButton(
+                                                textheight: 15,
+                                                colour: Colors.white,
+                                                height: 70,
+                                                color: kPrimaryColor,
+                                                text: "Pay Online",
+                                                press: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderDetails(
+                                                              key: UniqueKey(),
+                                                              product: widget
+                                                                  .product,
+                                                              currentVarient:
+                                                                  selectedFoodVariants,
+                                                              quantity:
+                                                                  quantity,
+                                                              selectedaddress:
+                                                                  SelectedAddress,
+                                                            )),
+                                                  );
+                                                })
+                                        : DefaultButton(
+                                            textheight: 15,
+                                            // colour: Colors.white,
+                                            height: 70,
+                                            color: kSecondaryColor,
+                                            text: "Pay Online",
+                                            press: () {},
+                                          ),
+                                  ],
+                                );
+                              }),
                             ],
                           );
                         },
@@ -769,11 +907,24 @@ class _BodyState extends State<Body> {
       var x = widget.product.varients[selectedFoodVariants].id;
       print(x);
 
-      keys.add({
-        "productId": widget.product.id,
-        "qty": quantity,
-        "varientNumber": x,
-      });
+      bool alreadyexixts = false;
+
+      for (var k in keys) {
+        if (k["varientNumber"] == x && k["productId"] == widget.product.id) {
+          var currentqty = k["qty"];
+          var newqty = currentqty + quantity;
+          k["qty"] = newqty;
+          alreadyexixts = true;
+        }
+      }
+      if (!alreadyexixts) {
+        keys.add({
+          "productId": widget.product.id,
+          "qty": quantity,
+          "varientNumber": x,
+        });
+      }
+
       await _services.cart.doc(user_key).update({'cartItems': keys});
       setState(() {
         final snackBar = SnackBar(
