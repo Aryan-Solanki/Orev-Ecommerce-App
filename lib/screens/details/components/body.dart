@@ -41,6 +41,7 @@ class _BodyState extends State<Body> {
   List<Varient> foodVariants = [];
   List<Product> youMayAlsoLikeList = [];
   int selectedFoodVariants = 0;
+  bool orevwallet=false;
   String soldby = "Aryan Tatva Sellers";
 
   void getVarientList() {
@@ -99,6 +100,7 @@ class _BodyState extends State<Body> {
   int coupon_value = 100;
   bool deliverable=true;
   double sellingdistance=20;
+  double walletbalance=0.0;
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
@@ -562,79 +564,184 @@ class _BodyState extends State<Body> {
                                             : coupon == ""
                                             ? Text("")
                                             : Text("Invalid Coupon"),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text("Use Orev Wallet",style: TextStyle(fontSize: getProportionateScreenWidth(13)),),
+                                                    Checkbox(
+                                                      value: orevwallet,
+                                                      onChanged: (bool newValue) {
+                                                        setState(() {
+                                                          orevwallet = newValue;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                orevwallet==false?Text("Balance: ₹$walletbalance",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),):Text((widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance?"Balance: ₹0.0":"Balance: ₹${walletbalance-(widget.product.varients[selectedFoodVariants].price * quantity)}",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor),),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Container(
+                                                        width: getProportionateScreenWidth(90),
+                                                        child: Text(
+                                                          "Total",
+                                                          style: TextStyle(
+                                                              color: Colors.blue,
+                                                              fontSize: getProportionateScreenHeight(23)),
+                                                        )),
+                                                    orevwallet==false?Text(
+                                                      "\₹${widget.product.varients[selectedFoodVariants].price * quantity}",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: getProportionateScreenHeight(20)),
+                                                    ):Text(
+                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>walletbalance?"\₹${(widget.product.varients[selectedFoodVariants].price * quantity)-walletbalance}":"\₹0.0",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: getProportionateScreenHeight(20)),
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                orevwallet==false?Column(
+                                                  children: [
+                                                    Text(
+                                                      "(includes tax + Delivery: \₹50)",
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: getProportionateScreenHeight(14)),
+                                                    )
+                                                  ],
+                                                ):Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "(includes tax + Delivery: \₹50)",
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: getProportionateScreenHeight(14)),
+                                                    ),
+                                                    Text(
+                                                      (widget.product.varients[selectedFoodVariants].price * quantity)>=walletbalance? "( - Orev Wallet: $walletbalance)":"( - Orev Wallet: ${widget.product.varients[selectedFoodVariants].price * quantity})",
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: getProportionateScreenHeight(14)),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        deliverable==true?Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "",
+                                            style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(12),
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ):Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "No available seller in your location\n",
+                                            style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(12),
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                        deliverable==true?DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kPrimaryColor2,
+                                          text: orevwallet==true?(widget.product.varients[selectedFoodVariants].price * quantity)<=walletbalance?"Place Order":"Cash on Delivery (COD)":"Cash on Delivery (COD)",
+                                          press: () {
+                                            Navigator.pop(context);
+                                            _showCODDialog();
+                                          },
+                                        ):DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kSecondaryColor,
+                                          text: "Cash on Delivery (COD)",
+                                          press: () {
+                                          },
+                                        ),
+
+                                        SizedBox(
+                                          height: getProportionateScreenHeight(10),
+                                        ),
+                                        deliverable==true?orevwallet==true?(widget.product.varients[selectedFoodVariants].price * quantity)<=walletbalance?Center():DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kPrimaryColor,
+                                          text: "Pay Online",
+                                          press: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => OrderDetails(
+                                                key: UniqueKey(),
+                                                product: widget.product,
+                                                currentVarient: selectedFoodVariants,
+                                                quantity: quantity,
+                                                selectedaddress: SelectedAddress,
+                                              )),
+                                            );
+
+                                          },
+                                        ):DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kPrimaryColor,
+                                          text: "Pay Online",
+                                          press: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => OrderDetails(
+                                                key: UniqueKey(),
+                                                product: widget.product,
+                                                currentVarient: selectedFoodVariants,
+                                                quantity: quantity,
+                                                selectedaddress: SelectedAddress,
+                                              )),
+                                            );
+
+                                          }
+                                          ):DefaultButton(
+                                          textheight: 15,
+                                          // colour: Colors.white,
+                                          height: 70,
+                                          color: kSecondaryColor,
+                                          text: "Pay Online",
+                                          press: (){
+                                          },
+                                        ),
+
+
                                       ],
                                     );
                                   }),
-                              deliverable==true?Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "",
-                                  style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ):Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "  No available seller in your location\n",
-                                  style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                              deliverable==true?DefaultButton(
-                                textheight: 15,
-                                colour: Colors.white,
-                                height: 70,
-                                color: kPrimaryColor2,
-                                text: "Cash on Delivery (COD)",
-                                press: () {
-                                  Navigator.pop(context);
-                                  _showCODDialog();
-                                },
-                              ):DefaultButton(
-                                textheight: 15,
-                                colour: Colors.white,
-                                height: 70,
-                                color: kSecondaryColor,
-                                text: "Cash on Delivery (COD)",
-                                press: () {
-                                },
-                              ),
 
-                              SizedBox(
-                                height: getProportionateScreenHeight(10),
-                              ),
-                              deliverable==true?DefaultButton(
-                                textheight: 15,
-                                colour: Colors.white,
-                                height: 70,
-                                color: kPrimaryColor,
-                                text: "Pay Online",
-                                press: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => OrderDetails(
-                                      key: UniqueKey(),
-                                      product: widget.product,
-                                      currentVarient: selectedFoodVariants,
-                                      quantity: quantity,
-                                      selectedaddress: SelectedAddress,
-                                    )),
-                                  );
-
-                                },
-                              ):DefaultButton(
-                                textheight: 15,
-                                // colour: Colors.white,
-                                height: 70,
-                                color: kSecondaryColor,
-                                text: "Pay Online",
-                                press: (){
-                                },
-                              ),
 
                             ],
                           );
