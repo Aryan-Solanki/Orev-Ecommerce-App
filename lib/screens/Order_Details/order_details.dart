@@ -19,7 +19,7 @@ class OrderDetails extends StatefulWidget {
   final int quantity;
   final Map<String, dynamic> selectedaddress;
 
-  static String routeName = "/home";
+  static String routeName = "/order_details";
   @override
   _OrderDetailsState createState() => _OrderDetailsState();
 }
