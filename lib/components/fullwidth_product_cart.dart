@@ -96,23 +96,32 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
   }
 
   Future<void> addToCart() async {
-    widget.notifyParent();
     ProductServices _services = ProductServices();
     print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
 
-    var deaf = defaultVarient;
-    print(deaf);
-
     var x = widget.product.varients[defaultVarient].id;
     print(x);
 
-    keys.add({
-      "productId": widget.product.id,
-      "qty": 1,
-      "varientNumber": x,
-    });
+    bool alreadyexixts = false;
+
+    for (var k in keys) {
+      if (k["varientNumber"] == x && k["productId"] == widget.product.id) {
+        var currentqty = k["qty"];
+        var newqty = currentqty + 1;
+        k["qty"] = newqty;
+        alreadyexixts = true;
+      }
+    }
+    if (!alreadyexixts) {
+      keys.add({
+        "productId": widget.product.id,
+        "qty": 1,
+        "varientNumber": x,
+      });
+    }
+
     await _services.cart.doc(user_key).update({'cartItems': keys});
     setState(() {
       final snackBar = SnackBar(

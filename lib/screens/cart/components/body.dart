@@ -53,6 +53,35 @@ class _BodyState extends State<Body> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  // Future<void> checkforCartDuplicates() async {
+  //   ProductServices _services = ProductServices();
+  //   print(user_key);
+  //   var favref = await _services.cart.doc(user_key).get();
+  //   keys = favref["cartItems"];
+  //
+  //   var ind = 0;
+  //   for (var cartItem in keys) {
+  //     var currentqty = cartItem["qty"];
+  //     var currentid = cartItem["productId"];
+  //     var currentvar = cartItem["varientNumber"];
+  //     for (int i = ind; i <= keys.length - 1; i++) {
+  //       var newqty = keys[i]["qty"];
+  //       var newid = keys[i]["productId"];
+  //       var newvar = keys[i]["varientNumber"];
+  //     }
+  //     ind += 1;
+  //   }
+  //   keys.removeAt(ind);
+  //   await _services.cart.doc(user_key).update({'cartItems': keys});
+  //   widget.notifyParent();
+  //   // final snackBar = SnackBar(
+  //   //   content: Text('Item removed from Cart'),
+  //   //   backgroundColor: kPrimaryColor,
+  //   // );
+  //   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  // }
+
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
     print(user_key);
