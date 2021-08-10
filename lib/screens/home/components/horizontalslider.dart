@@ -44,6 +44,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
             inStock: vari["stock"]["inStock"],
             qty: vari["stock"]["qty"],
             title: vari["variantDetails"]["title"],
+            id: vari["id"],
             images: vari["variantDetails"]["images"]));
       }
 

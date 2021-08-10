@@ -37,8 +37,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
-
   List<String> foodVariantsTitles = [];
   List<Varient> foodVariants = [];
   List<Product> youMayAlsoLikeList = [];
@@ -767,10 +765,14 @@ class _BodyState extends State<Body> {
       print(user_key);
       var favref = await _services.cart.doc(user_key).get();
       keys = favref["cartItems"];
+
+      var x = widget.product.varients[selectedFoodVariants].id;
+      print(x);
+
       keys.add({
         "productId": widget.product.id,
         "qty": quantity,
-        "varientNumber": selectedFoodVariants
+        "varientNumber": x,
       });
       await _services.cart.doc(user_key).update({'cartItems': keys});
       setState(() {
@@ -893,7 +895,7 @@ class _BodyState extends State<Body> {
                                             DefaultButton(
                                               color: kPrimaryColor2,
                                               text: "Buy Now",
-                                              press: (){
+                                              press: () {
                                                 setState(() {});
                                                 if (addressmap.isEmpty) {
                                                   Navigator.pushNamed(context,

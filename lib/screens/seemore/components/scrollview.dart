@@ -56,6 +56,7 @@ class _AllItemsState extends State<AllItems> {
             price: vari["price"].toDouble(),
             inStock: vari["stock"]["inStock"],
             qty: vari["stock"]["qty"],
+            id: vari["id"],
             title: vari["variantDetails"]["title"],
             images: vari["variantDetails"]["images"]));
       }
