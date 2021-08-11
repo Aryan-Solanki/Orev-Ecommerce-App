@@ -16,6 +16,7 @@ import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_services.dart';
 import 'package:orev/size_config.dart';
 import 'package:paytm/paytm.dart';
 import 'package:search_choices/search_choices.dart';
@@ -68,6 +69,18 @@ class _BodyState extends State<Body> {
     for (var pr in ymalp) {
       youMayAlsoLikeList.add(await _services.getProduct(pr));
     }
+    UserServices _services2 = UserServices();
+    var result = await _services2.getUserById(user_key);
+    walletbalance = result["walletAmt"].toDouble();
+    setState(() {});
+  }
+
+  Future<void> getWalletBalance() async {
+    print("sdklfgsdjkfgakjsdgfjksdgbfkjsdgfjksdgfjksdgfkjsdhgfkjs,dfsd");
+    print(user_key);
+    UserServices _services = UserServices();
+    var result = await _services.getUserById(user_key);
+    walletbalance = result["walletAmt"].toDouble();
     setState(() {});
   }
 
@@ -90,7 +103,6 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  @override
   int quantity = 1;
   Map<String, dynamic> SelectedAddress;
   int _radioSelected = 0;
@@ -99,6 +111,8 @@ class _BodyState extends State<Body> {
   bool deliverable = true;
   double sellingdistance = 20;
   double walletbalance = 0.0;
+
+  @override
   DirectSelectItem<String> getDropDownMenuItem(String value) {
     return DirectSelectItem<String>(
         itemHeight: 56,
