@@ -39,8 +39,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
   bool sale = true;
   bool favor = false;
   // int saleprice = 200;
-  String brandname = "ORGANIC TATTVA";
-  String soldby = "Aryan TATTVA Limited";
+  String brandname = "";
+  String soldby = "";
 
   List<dynamic> keys = [];
 
@@ -70,6 +70,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  Future<void> getSellerName() async {
+    ProductServices _services = new ProductServices();
+    soldby = await _services.getSellerInfo(widget.product.sellerId);
+    setState(() {});
+  }
+
   Future<void> addFavourite() async {
     ProductServices _services = ProductServices();
     print(user_key);
@@ -84,6 +90,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
+    getSellerName();
     getAllProducts();
     super.initState();
   }
@@ -123,52 +130,51 @@ class _ProductDescriptionState extends State<ProductDescription> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState){
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
-                    child: Row(
-                      children: [
-                        Text(
-                          "\₹${product.varients[currentVarient].price * quantity}",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(23),
-                            fontWeight: FontWeight.w600,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          width: getProportionateScreenWidth(20),
-                        ),
-                        sale == true
-                            ? Text(
-                          "\₹${product.varients[currentVarient].comparedPrice * quantity}",
-                          style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: getProportionateScreenWidth(13),
-                            // fontWeight: FontWeight.w600,
-                            color: Color(0xFF6B6B6B),
-                          ),
-                        )
-                            : Text(""),
-                        SizedBox(
-                          width: getProportionateScreenWidth(5),
-                        ),
-                        sale == true
-                            ? Text(
-                          "Sale",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(14),
-                            color: Colors.black,
-                            // fontWeight: FontWeight.w600,
-                          ),
-                        )
-                            : Text(""),
-                      ],
+                builder: (BuildContext context, StateSetter setState) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Row(
+                  children: [
+                    Text(
+                      "\₹${product.varients[currentVarient].price * quantity}",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(23),
+                        fontWeight: FontWeight.w600,
+                        color: kPrimaryColor,
+                      ),
                     ),
-                  );
-                }
-            ),
+                    SizedBox(
+                      width: getProportionateScreenWidth(20),
+                    ),
+                    sale == true
+                        ? Text(
+                            "\₹${product.varients[currentVarient].comparedPrice * quantity}",
+                            style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: getProportionateScreenWidth(13),
+                              // fontWeight: FontWeight.w600,
+                              color: Color(0xFF6B6B6B),
+                            ),
+                          )
+                        : Text(""),
+                    SizedBox(
+                      width: getProportionateScreenWidth(5),
+                    ),
+                    sale == true
+                        ? Text(
+                            "Sale",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenWidth(14),
+                              color: Colors.black,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : Text(""),
+                  ],
+                ),
+              );
+            }),
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(

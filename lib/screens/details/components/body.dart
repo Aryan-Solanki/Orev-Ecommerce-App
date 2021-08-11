@@ -71,15 +71,6 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  // Future<void> getSellerName() async {
-  //   ProductServices _services = ProductServices();
-  //   List<dynamic> ymalp = widget.product.;
-  //   for (var pr in ymalp) {
-  //     youMayAlsoLikeList.add(await _services.getProduct(pr));
-  //   }
-  //   setState(() {});
-  // }
-
   // List<dynamic> addressmap = [];
   String user_key;
 
@@ -92,12 +83,10 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    super.initState();
     getVarientList();
     getDefaultVarient();
     user_key = AuthProvider().user.uid;
     getYouMayAlsoLikeProductList();
-    // getAllAddress();
     super.initState();
   }
 
