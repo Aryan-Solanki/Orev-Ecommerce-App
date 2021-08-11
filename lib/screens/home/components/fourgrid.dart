@@ -52,6 +52,7 @@ class _FourGridState extends State<FourGrid> {
           title: document["title"],
           detail: document["detail"],
           rating: document["rating"],
+          sellerId: document["sellerId"],
           isFavourite: false,
           isPopular: true,
           tax: document["tax"].toDouble(),
@@ -80,6 +81,7 @@ class _FourGridState extends State<FourGrid> {
           child: SectionTitle(
             title: widget.card_title,
             press: () {},
+            seemore: true,
             categoryId: widget.categoryId,
           ),
         ),

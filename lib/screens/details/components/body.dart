@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
   List<Product> youMayAlsoLikeList = [];
   int selectedFoodVariants = 0;
   bool orevwallet = false;
-  String soldby = "Aryan Tatva Sellers";
+  String soldby = "";
 
   void getVarientList() {
     for (var title in widget.product.varients) {
@@ -70,6 +70,15 @@ class _BodyState extends State<Body> {
     }
     setState(() {});
   }
+
+  // Future<void> getSellerName() async {
+  //   ProductServices _services = ProductServices();
+  //   List<dynamic> ymalp = widget.product.;
+  //   for (var pr in ymalp) {
+  //     youMayAlsoLikeList.add(await _services.getProduct(pr));
+  //   }
+  //   setState(() {});
+  // }
 
   // List<dynamic> addressmap = [];
   String user_key;

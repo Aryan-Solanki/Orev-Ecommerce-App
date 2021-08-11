@@ -51,6 +51,7 @@ class ProductServices {
         title: document["title"],
         detail: document["detail"],
         rating: document["rating"],
+        sellerId: document["sellerId"],
         isFavourite: true,
         isPopular: true,
         tax: document["tax"].toDouble(),

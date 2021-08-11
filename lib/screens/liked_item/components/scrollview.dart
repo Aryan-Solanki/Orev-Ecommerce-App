@@ -36,6 +36,7 @@ class _AllItemsState extends State<AllItems> {
         print(vari["variantDetails"]["title"]);
         print(vari["variantDetails"]["title"]);
         listVarient.add(new Varient(
+            id: vari["id"],
             default_product: vari["default"],
             isOnSale: vari["onSale"]["isOnSale"],
             comparedPrice: vari["onSale"]["comparedPrice"].toDouble(),
@@ -55,6 +56,7 @@ class _AllItemsState extends State<AllItems> {
           detail: document["detail"],
           rating: document["rating"],
           isFavourite: false,
+          sellerId: document["sellerId"],
           isPopular: true,
           tax: document["tax"].toDouble(),
           youmayalsolike: document["youMayAlsoLike"]));

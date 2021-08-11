@@ -68,6 +68,7 @@ class _AllItemsState extends State<AllItems> {
           title: document["title"],
           detail: document["detail"],
           rating: document["rating"],
+          sellerId: document["sellerId"],
           isFavourite: false,
           isPopular: true,
           tax: document["tax"].toDouble(),
@@ -102,6 +103,7 @@ class _AllItemsState extends State<AllItems> {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
             title: widget.title,
+            categoryId: widget.categoryId,
             press: () {},
             seemore: false,
           ),

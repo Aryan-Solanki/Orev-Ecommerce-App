@@ -4,6 +4,7 @@ import 'package:orev/models/Varient.dart';
 class Product {
   final String brandname;
   final String id;
+  final String sellerId;
   final String title, detail;
   final List<Varient> varients;
   final List<dynamic> youmayalsolike;
@@ -14,6 +15,7 @@ class Product {
   Product({
     @required this.brandname,
     @required this.id,
+    @required this.sellerId,
     @required this.title,
     @required this.detail,
     this.rating = 0.0,
@@ -47,6 +49,7 @@ List<Product> demoProducts = [
           ],
         ),
         Varient(
+          id: "aaaaa",
           default_product: true,
           isOnSale: true,
           comparedPrice: 5000,
@@ -62,6 +65,7 @@ List<Product> demoProducts = [
           ],
         ),
         Varient(
+          id: "aaaaa",
           default_product: false,
           isOnSale: true,
           comparedPrice: 10000,
