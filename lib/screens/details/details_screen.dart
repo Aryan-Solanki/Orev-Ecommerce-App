@@ -7,8 +7,11 @@ import 'components/custom_app_bar.dart';
 class ProductDetailsArguments {
   final Product product;
   final Function() notifyParent;
+  final int varientCartNum;
   ProductDetailsArguments(
-      {@required this.product, @required this.notifyParent});
+      {@required this.product,
+      @required this.notifyParent,
+      this.varientCartNum});
 }
 
 class DetailsScreen extends StatefulWidget {
@@ -29,7 +32,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
       appBar: CustomAppBar(rating: agrs.product.rating),
-      body: Body(product: agrs.product),
+      body: Body(product: agrs.product, varientNumberCart: agrs.varientCartNum),
     );
   }
 }

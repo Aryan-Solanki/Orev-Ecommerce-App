@@ -64,7 +64,7 @@ class CategoryCard extends StatelessWidget {
     @required this.press,
   }) : super(key: key);
 
-  final String  text;
+  final String text;
   final IconData icon;
   final GestureTapCallback press;
 
@@ -85,7 +85,10 @@ class CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               // child: SvgPicture.asset(icon),
-              child: Icon(icon,color: kPrimaryColor,),
+              child: Icon(
+                icon,
+                color: kPrimaryColor,
+              ),
             ),
             SizedBox(height: 5),
             Text(text, textAlign: TextAlign.center),

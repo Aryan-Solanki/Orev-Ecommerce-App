@@ -31,7 +31,9 @@ import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
 class Body extends StatefulWidget {
   final Product product;
-  const Body({Key key, @required this.product}) : super(key: key);
+  final int varientNumberCart;
+  const Body({Key key, @required this.product, this.varientNumberCart})
+      : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -53,13 +55,17 @@ class _BodyState extends State<Body> {
   }
 
   void getDefaultVarient() {
-    int index = 0;
-    for (var varient in widget.product.varients) {
-      if (varient.default_product == true) {
-        selectedFoodVariants = index;
-        break;
+    if (widget.varientNumberCart != null) {
+      selectedFoodVariants = widget.varientNumberCart;
+    } else {
+      int index = 0;
+      for (var varient in widget.product.varients) {
+        if (varient.default_product == true) {
+          selectedFoodVariants = index;
+          break;
+        }
+        index += 1;
       }
-      index += 1;
     }
   }
 

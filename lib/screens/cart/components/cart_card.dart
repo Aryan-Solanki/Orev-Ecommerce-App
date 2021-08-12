@@ -102,7 +102,8 @@ class _CartCardState extends State<CartCard> {
       onTap: () => Navigator.pushNamed(
         context,
         DetailsScreen.routeName,
-        arguments: ProductDetailsArguments(product: widget.cart.product),
+        arguments: ProductDetailsArguments(
+            product: widget.cart.product, varientCartNum: selectedVarient),
       ),
       child: Column(
         children: [
