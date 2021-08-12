@@ -22,6 +22,12 @@ class ProductServices {
     await FirebaseFirestore.instance.collection("users").doc(id).update(values);
   }
 
+  Future<String> getSellerInfo(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["shopName"];
+  }
+
   Future<Product> getProduct(productId) async {
     ProductServices _services = ProductServices();
     var document = await _services.products.doc(productId).get();
@@ -51,6 +57,7 @@ class ProductServices {
         title: document["title"],
         detail: document["detail"],
         rating: document["rating"],
+        sellerId: document["sellerId"],
         isFavourite: true,
         isPopular: true,
         tax: document["tax"].toDouble(),

@@ -55,6 +55,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
           title: document["title"],
           detail: document["detail"],
           rating: document["rating"],
+          sellerId: document["sellerId"],
           isFavourite: false,
           isPopular: true,
           tax: document["tax"].toDouble(),
@@ -83,6 +84,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
           child: SectionTitle(
             title: widget.card_title,
             press: () {},
+            seemore: true,
             categoryId: widget.categoryId,
           ),
         ),
