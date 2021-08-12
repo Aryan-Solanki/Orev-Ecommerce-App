@@ -1,55 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/screens/add_money/add_money.dart';
 
 import '../../../size_config.dart';
 
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: getProportionateScreenWidth(20)),
           CategoryCard(
             icon: Icons.label_important_outline,
             text: "Essential",
             press: () {},
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
           CategoryCard(
             icon: Icons.local_offer_outlined,
             text: "Offer Zone",
             press: () {},
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
           CategoryCard(
             icon: Icons.account_balance_outlined,
             text: "Add Money",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, AddMoney.routeName);
+            },
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
           CategoryCard(
             icon: Icons.account_balance_wallet_outlined,
             text: "Wallet",
             press: () {},
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
-          CategoryCard(
-            icon: Icons.redeem_outlined,
-            text: "Redeem",
-            press: () {},
-          ),
-          SizedBox(width: getProportionateScreenWidth(20)),
-          CategoryCard(
-            icon: Icons.card_membership_outlined,
-            text: "Gift Cards",
-            press: () {},
-          ),
-          SizedBox(width: getProportionateScreenWidth(20)),
         ],
       ),
     );
@@ -87,6 +73,7 @@ class CategoryCard extends StatelessWidget {
               // child: SvgPicture.asset(icon),
               child: Icon(
                 icon,
+                size: getProportionateScreenWidth(23),
                 color: kPrimaryColor,
               ),
             ),
