@@ -3,6 +3,7 @@ import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/your_order/components/your_order_detail.dart';
 import 'package:orev/services/product_services.dart';
 
 import '../../../constants.dart';
@@ -114,7 +115,7 @@ class _YouOrderCardState extends State<YouOrderCard> {
             ),
           ),
         ),
-        SizedBox(width: 20),
+        SizedBox(width: getProportionateScreenWidth(15)),
         // Expanded(
         //   child: Text(
         //     widget.cart.product.title,
@@ -130,12 +131,12 @@ class _YouOrderCardState extends State<YouOrderCard> {
           children: [
             Container(
               // height: getProportionateScreenHeight(50),
-              width: getProportionateScreenWidth(235),
+              width: getProportionateScreenWidth(210),
               child: Text(
                 widget.cart.product.title,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: getProportionateScreenHeight(20)),
+                    fontSize: getProportionateScreenWidth(15)),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
@@ -149,7 +150,18 @@ class _YouOrderCardState extends State<YouOrderCard> {
             ),
 
           ],
+        ),
+        SizedBox(width: getProportionateScreenWidth(5)),
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context,
+                YourOrderDetail.routeName);
+            },
+          child:Icon(Icons.arrow_forward_ios,
+              size: getProportionateScreenHeight(25),
+          ),
         )
+
       ],
     );
   }

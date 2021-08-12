@@ -45,12 +45,6 @@ class _BodyState extends State<Body> {
     keys.removeAt(ind);
     await _services.cart.doc(user_key).update({'cartItems': keys});
     widget.notifyParent();
-    // final snackBar = SnackBar(
-    //   content: Text('Item removed from Cart'),
-    //   backgroundColor: kPrimaryColor,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
   Future<List> getVarientNumber(id, productId) async {
