@@ -66,10 +66,6 @@ AppBar buildAppBar(BuildContext context, int numberOfItems) {
           "Your Orders",
           style: TextStyle(color: Colors.black),
         ),
-        // Text(
-        //   "$numberOfItems items",
-        //   style: Theme.of(context).textTheme.caption,
-        // ),
       ],
     ),
   );
