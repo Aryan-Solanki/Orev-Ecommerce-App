@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
+import 'package:orev/screens/add_money/add_money.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
@@ -40,4 +41,5 @@ final Map<String, WidgetBuilder> routes = {
   OrderDetails.routeName: (context) => OrderDetails(),
   YourOrder.routeName: (context) => YourOrder(),
   YourOrderDetail.routeName: (context) => YourOrderDetail(),
+  AddMoney.routeName: (context) => AddMoney(),
 };
