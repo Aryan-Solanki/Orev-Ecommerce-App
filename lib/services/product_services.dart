@@ -28,6 +28,12 @@ class ProductServices {
     return document["shopName"];
   }
 
+  Future<double> getSellerSellingDistance(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["deliveryRadius"];
+  }
+
   Future<Product> getProduct(productId) async {
     ProductServices _services = ProductServices();
     var document = await _services.products.doc(productId).get();

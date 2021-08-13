@@ -75,6 +75,8 @@ class _BodyState extends State<Body> {
     for (var pr in ymalp) {
       youMayAlsoLikeList.add(await _services.getProduct(pr));
     }
+    sellingdistance =
+        await _services.getSellerSellingDistance(widget.product.sellerId);
     UserServices _services2 = UserServices();
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
@@ -115,7 +117,7 @@ class _BodyState extends State<Body> {
   String coupon = "";
   int coupon_value = 100;
   bool deliverable = true;
-  double sellingdistance = 20;
+  double sellingdistance = 0.0;
   double walletbalance = 0.0;
 
   @override
