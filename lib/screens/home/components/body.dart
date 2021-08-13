@@ -22,6 +22,20 @@ class _BodyState extends State<Body> {
   List<Widget> ListWidgets = [
     ImageSlider(),
     Categories(),
+    GestureDetector(
+      onTap: (){
+
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(15)),
+        child: Image.network(
+          "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+        ),
+      ),
+    ),
+
   ];
 
   Future<void> doSomeAsyncStuff() async {
@@ -128,16 +142,6 @@ class _BodyState extends State<Body> {
               color: kPrimaryColor2,
               child: SingleChildScrollView(
                 child: Column(
-                  // children: [
-                  //   ImageSlider(),
-                  //   Categories(),
-                  //   SpecialOffers(),
-                  //   SizedBox(height: getProportionateScreenWidth(30)),
-                  //   FourGrid(),
-                  //   SizedBox(height: getProportionateScreenWidth(30)),
-                  //   ThreeGrid(),
-                  //   SizedBox(height: getProportionateScreenWidth(30)),
-                  // ],
                   children: ListWidgets,
                 ),
               ),

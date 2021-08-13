@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../size_config.dart';
 import 'components/body.dart';
 
-class AddMoney extends StatefulWidget {
-  static String routeName = "/add_money";
+class Wallet extends StatefulWidget {
+  static String routeName = "/Wallet";
 
   @override
-  _AddMoneyState createState() => _AddMoneyState();
+  _WalletState createState() => _WalletState();
 }
 
-class _AddMoneyState extends State<AddMoney> {
+class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _AddMoneyState extends State<AddMoney> {
   }
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text("Add Money",style: TextStyle(
+      title: Text("Wallet",style: TextStyle(
         fontSize: getProportionateScreenWidth(18),
       ),),
     );

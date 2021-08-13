@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
-import 'package:orev/screens/add_money/add_money.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
@@ -15,9 +14,11 @@ import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/screens/splash/splash_screen.dart';
+import 'package:orev/screens/wallet/wallet.dart';
 import 'package:orev/screens/your_order/components/your_order_detail.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 
+import 'screens/category_page/category_page.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
 // We use name route
@@ -41,5 +42,6 @@ final Map<String, WidgetBuilder> routes = {
   OrderDetails.routeName: (context) => OrderDetails(),
   YourOrder.routeName: (context) => YourOrder(),
   YourOrderDetail.routeName: (context) => YourOrderDetail(),
-  AddMoney.routeName: (context) => AddMoney(),
+  Wallet.routeName: (context) => Wallet(),
+  CategoryPage.routeName: (context) => CategoryPage(),
 };

@@ -100,7 +100,7 @@ class _AllItemsState extends State<AllItems> {
       children: [
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
             title: widget.title,
             categoryId: widget.categoryId,
@@ -115,7 +115,7 @@ class _AllItemsState extends State<AllItems> {
             children: [
               ...List.generate(
                 ProductList.length,
-                (index) {
+                    (index) {
                   return FullWidthProductCard(
                     product: ProductList[index],
                     notifyParent: refresh,
@@ -124,19 +124,6 @@ class _AllItemsState extends State<AllItems> {
                   return SizedBox
                       .shrink(); // here by default width and height is 0
                 },
-              ),
-              GestureDetector(
-                onTap: (){
-
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(15)),
-                  child: Image.network(
-                    "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
-                ),
               ),
             ],
           ),

@@ -27,11 +27,6 @@ class Body extends StatelessWidget {
             },
           ),
           ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
-          ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
             press: () {},

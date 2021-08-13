@@ -174,11 +174,11 @@ class _BodyState extends State<Body> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
                   )
               ),
-                child: TextField(
-                  style: TextStyle(fontSize: getProportionateScreenWidth(30),fontWeight: FontWeight.bold),
-                  keyboardType: TextInputType.number,
+              child: TextField(
+                style: TextStyle(fontSize: getProportionateScreenWidth(30),fontWeight: FontWeight.bold),
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
-                    amount=value;
+                  amount=value;
                   if(value==""){
                     setState(() {
                       ruppeecolor=Colors.black45;
@@ -192,22 +192,22 @@ class _BodyState extends State<Body> {
                   print(value);
                 },
                 decoration: InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: (){
-                      print("halua");
-                      _showDialog();
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(top: getProportionateScreenHeight(13)),
-                      child: Text("Apply Coupon Code",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor2,),
-                      ),
-                    )
-                  ),
-                  prefixIcon: Text('₹',style: TextStyle(fontSize: getProportionateScreenWidth(40),color: ruppeecolor),),
-                  // prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(45)),
-                  hintText: 'Amount',
-                  hintStyle: TextStyle(fontSize: getProportionateScreenWidth(30),fontWeight: FontWeight.bold,color: ruppeecolor),
-                  contentPadding:EdgeInsets.only(bottom: getProportionateScreenHeight(13))
+                    suffixIcon: GestureDetector(
+                        onTap: (){
+                          print("halua");
+                          _showDialog();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: getProportionateScreenHeight(13)),
+                          child: Text("Apply Coupon Code",style: TextStyle(fontSize: getProportionateScreenWidth(12),color: kPrimaryColor2,),
+                          ),
+                        )
+                    ),
+                    prefixIcon: Text('₹',style: TextStyle(fontSize: getProportionateScreenWidth(40),color: ruppeecolor),),
+                    // prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(45)),
+                    hintText: 'Amount',
+                    hintStyle: TextStyle(fontSize: getProportionateScreenWidth(30),fontWeight: FontWeight.bold,color: ruppeecolor),
+                    contentPadding:EdgeInsets.only(bottom: getProportionateScreenHeight(13))
                 ),
               ),
             ),
