@@ -79,6 +79,10 @@ class _BodyState extends State<Body> {
     sellingdistance =
         await _services.getSellerSellingDistance(widget.product.sellerId);
     vendorlocation = await _services.getSellerLocation(widget.product.sellerId);
+    deliveryCost =
+        await _services.getSellerDeliveryCharge(widget.product.sellerId);
+    deliveryCharge = deliveryCost["charge"].toDouble();
+    freekms = deliveryCost["freeRadius"].toDouble();
     UserServices _services2 = UserServices();
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
@@ -122,6 +126,9 @@ class _BodyState extends State<Body> {
   double sellingdistance = 0.0;
   double walletbalance = 0.0;
   GeoPoint vendorlocation;
+  Map deliveryCost;
+  double freekms = 0.0;
+  double deliveryCharge = 0.0;
 
   @override
   DirectSelectItem<String> getDropDownMenuItem(String value) {
@@ -289,7 +296,7 @@ class _BodyState extends State<Body> {
                                     fontSize: getProportionateScreenHeight(20)),
                               ),
                               Text(
-                                "(includes tax + Delivery: \₹50)",
+                                "(includes tax + Delivery: \₹$deliveryCharge)",
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: getProportionateScreenHeight(18)),
@@ -333,6 +340,32 @@ class _BodyState extends State<Body> {
 
     List<dynamic> addressmap = [];
 
+    double totalCost = 0.0;
+    double finalDeliveryCost = 0.0;
+
+    Future<double> getFinalCost(SelectedAddress) async {
+      List<Location> locations =
+          await locationFromAddress(SelectedAddress["pincode"].toString());
+      var distanceInMeters = await Geolocator.distanceBetween(
+        locations[0].latitude,
+        locations[0].longitude,
+        vendorlocation.latitude,
+        vendorlocation.longitude,
+      );
+      print(distanceInMeters);
+      if (distanceInMeters / 1000 > freekms) {
+        totalCost =
+            widget.product.varients[selectedFoodVariants].price * quantity +
+                deliveryCharge;
+        finalDeliveryCost = deliveryCharge;
+      } else {
+        totalCost =
+            widget.product.varients[selectedFoodVariants].price * quantity;
+        finalDeliveryCost = 0.0;
+      }
+      // setState(() {});
+    }
+
     Future<void> getAllAddress() async {
       ProductServices _services = ProductServices();
       print(user_key);
@@ -354,6 +387,7 @@ class _BodyState extends State<Body> {
       } else {
         deliverable = false;
       }
+      getFinalCost(SelectedAddress);
       // setState(() {
       //
       // });
@@ -378,6 +412,8 @@ class _BodyState extends State<Body> {
     }
 
     getAllAddress();
+
+    getFinalCost(SelectedAddress);
 
     void _showDialog() {
       slideDialog.showSlideDialog(
@@ -449,6 +485,7 @@ class _BodyState extends State<Body> {
                                         _radioSelected = i;
                                         setState(() {
                                           SelectedAddress = addressmap[i];
+                                          getFinalCost(SelectedAddress);
                                           // print(SelectedAddress);
                                         });
                                       },
@@ -676,15 +713,9 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor),
                                                   )
                                                 : Text(
-                                                    (widget
-                                                                    .product
-                                                                    .varients[
-                                                                        selectedFoodVariants]
-                                                                    .price *
-                                                                quantity) >=
-                                                            walletbalance
+                                                    totalCost >= walletbalance
                                                         ? "Balance: ₹0.0"
-                                                        : "Balance: ₹${walletbalance - (widget.product.varients[selectedFoodVariants].price * quantity)}",
+                                                        : "Balance: ₹${walletbalance - (totalCost)}",
                                                     style: TextStyle(
                                                         fontSize:
                                                             getProportionateScreenWidth(
@@ -715,7 +746,7 @@ class _BodyState extends State<Body> {
                                                     )),
                                                 orevwallet == false
                                                     ? Text(
-                                                        "\₹${widget.product.varients[selectedFoodVariants].price * quantity}",
+                                                        "\₹${totalCost}",
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight:
@@ -725,14 +756,9 @@ class _BodyState extends State<Body> {
                                                                     20)),
                                                       )
                                                     : Text(
-                                                        (widget
-                                                                        .product
-                                                                        .varients[
-                                                                            selectedFoodVariants]
-                                                                        .price *
-                                                                    quantity) >
+                                                        totalCost >
                                                                 walletbalance
-                                                            ? "\₹${(widget.product.varients[selectedFoodVariants].price * quantity) - walletbalance}"
+                                                            ? "\₹${(totalCost) - walletbalance}"
                                                             : "\₹0.0",
                                                         style: TextStyle(
                                                             color: Colors.black,
@@ -748,7 +774,7 @@ class _BodyState extends State<Body> {
                                                 ? Column(
                                                     children: [
                                                       Text(
-                                                        "(includes tax + Delivery: \₹50)",
+                                                        "(includes tax + Delivery: \₹$finalDeliveryCost)",
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: TextStyle(
@@ -763,7 +789,7 @@ class _BodyState extends State<Body> {
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        "(includes tax + Delivery: \₹50)",
+                                                        "(includes tax + Delivery: \₹$finalDeliveryCost)",
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: TextStyle(
@@ -772,15 +798,10 @@ class _BodyState extends State<Body> {
                                                                     14)),
                                                       ),
                                                       Text(
-                                                        (widget
-                                                                        .product
-                                                                        .varients[
-                                                                            selectedFoodVariants]
-                                                                        .price *
-                                                                    quantity) >=
+                                                        totalCost >=
                                                                 walletbalance
                                                             ? "( - Orev Wallet: $walletbalance)"
-                                                            : "( - Orev Wallet: ${widget.product.varients[selectedFoodVariants].price * quantity})",
+                                                            : "( - Orev Wallet: ${totalCost})",
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: TextStyle(
@@ -826,13 +847,7 @@ class _BodyState extends State<Body> {
                                             height: 70,
                                             color: kPrimaryColor2,
                                             text: orevwallet == true
-                                                ? (widget
-                                                                .product
-                                                                .varients[
-                                                                    selectedFoodVariants]
-                                                                .price *
-                                                            quantity) <=
-                                                        walletbalance
+                                                ? totalCost <= walletbalance
                                                     ? "Place Order"
                                                     : "Cash on Delivery (COD)"
                                                 : "Cash on Delivery (COD)",
@@ -854,13 +869,7 @@ class _BodyState extends State<Body> {
                                     ),
                                     deliverable == true
                                         ? orevwallet == true
-                                            ? (widget
-                                                            .product
-                                                            .varients[
-                                                                selectedFoodVariants]
-                                                            .price *
-                                                        quantity) <=
-                                                    walletbalance
+                                            ? totalCost <= walletbalance
                                                 ? Center()
                                                 : DefaultButton(
                                                     textheight: 15,

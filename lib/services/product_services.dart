@@ -35,6 +35,12 @@ class ProductServices {
     return document["deliveryRadius"].toDouble();
   }
 
+  Future<Map> getSellerDeliveryCharge(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["deliveryCharge"];
+  }
+
   Future<GeoPoint> getSellerLocation(id) async {
     var document =
         await FirebaseFirestore.instance.collection("vendors").doc(id).get();
