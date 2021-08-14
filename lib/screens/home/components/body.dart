@@ -99,7 +99,7 @@ class _BodyState extends State<Body> {
             keys: productIdList,
             card_title: card_title,
           ));
-          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
       } else if (type == "slider_products") {
         var productIdList = [];

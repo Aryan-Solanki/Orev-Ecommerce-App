@@ -626,6 +626,7 @@ class _BodyState extends State<Body> {
                                           child: Text(
                                             "Add New Address",
                                             style: TextStyle(
+                                              color: Colors.blue,
                                                 decoration:
                                                     TextDecoration.underline),
                                           ),

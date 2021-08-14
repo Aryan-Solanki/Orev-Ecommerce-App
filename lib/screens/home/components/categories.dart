@@ -59,7 +59,7 @@ class Categories extends StatelessWidget {
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
             CategoryCard(
-              icon: Icons.shopping_basket,
+              icon: Icons.shopping_basket_outlined,
               text: "Fresh",
               press: () {
                 Navigator.push(

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePic extends StatelessWidget {
+  final bool camera;
   const ProfilePic({
     Key key,
+    this.camera=false,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class ProfilePic extends StatelessWidget {
           CircleAvatar(
             backgroundImage: AssetImage("assets/images/Profile Image.png"),
           ),
-          Positioned(
+          camera==true?Positioned(
             right: -16,
             bottom: 0,
             child: SizedBox(
@@ -34,7 +36,7 @@ class ProfilePic extends StatelessWidget {
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
               ),
             ),
-          )
+          ):Center(),
         ],
       ),
     );

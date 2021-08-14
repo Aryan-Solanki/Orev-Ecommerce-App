@@ -87,6 +87,7 @@ class _FourGridState extends State<FourGrid> {
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         GridView.count(
+          padding: EdgeInsets.all(0),
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           shrinkWrap: true,

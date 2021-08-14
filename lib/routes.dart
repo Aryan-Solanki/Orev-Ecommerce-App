@@ -9,6 +9,7 @@ import 'package:orev/screens/forgot_password/forgot_password_screen.dart';
 import 'package:orev/screens/forgot_password/update_password_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
+import 'package:orev/screens/my_account/my_account.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
@@ -44,4 +45,5 @@ final Map<String, WidgetBuilder> routes = {
   YourOrderDetail.routeName: (context) => YourOrderDetail(),
   Wallet.routeName: (context) => Wallet(),
   CategoryPage.routeName: (context) => CategoryPage(),
+  MyAccount.routeName: (context) => MyAccount(),
 };
