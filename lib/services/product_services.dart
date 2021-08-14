@@ -31,7 +31,7 @@ class ProductServices {
   Future<double> getSellerSellingDistance(id) async {
     var document =
         await FirebaseFirestore.instance.collection("vendors").doc(id).get();
-    return document["deliveryRadius"];
+    return document["deliveryRadius"].toDouble();
   }
 
   Future<Product> getProduct(productId) async {

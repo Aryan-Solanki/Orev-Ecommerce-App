@@ -12,7 +12,8 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -21,11 +22,15 @@ class Categories extends StatelessWidget {
           children: [
             CategoryCard(
               icon: Icons.label_important_outline,
-              text: "Essential", 
+              text: "Essential",
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoryPage(categoryId: "JAgrZhNaIa3ryRug2wrn",title: "Essentials",)),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                            title: "Essentials",
+                          )),
                 );
               },
             ),
@@ -36,7 +41,11 @@ class Categories extends StatelessWidget {
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoryPage(categoryId: "JAgrZhNaIa3ryRug2wrn",title: "Offer Zone",)),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                            title: "Offer Zone",
+                          )),
                 );
               },
             ),
@@ -50,14 +59,17 @@ class Categories extends StatelessWidget {
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
             CategoryCard(
-              icon: Icons.new_label_outlined,
+              icon: Icons.shopping_basket,
               text: "Fresh",
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoryPage(categoryId: "JAgrZhNaIa3ryRug2wrn",title: "Fresh",)),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                            title: "Fresh",
+                          )),
                 );
-
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
@@ -67,7 +79,11 @@ class Categories extends StatelessWidget {
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoryPage(categoryId: "JAgrZhNaIa3ryRug2wrn",title: "Category",)),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                            title: "Category",
+                          )),
                 );
               },
             ),
@@ -78,7 +94,11 @@ class Categories extends StatelessWidget {
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CategoryPage(categoryId: "JAgrZhNaIa3ryRug2wrn",title: "Best Sellers",)),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                            title: "Best Sellers",
+                          )),
                 );
               },
             ),
@@ -125,7 +145,9 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 5),
-            Text(text,style: TextStyle(fontSize: getProportionateScreenWidth(12)), textAlign: TextAlign.center),
+            Text(text,
+                style: TextStyle(fontSize: getProportionateScreenWidth(12)),
+                textAlign: TextAlign.center),
             SizedBox(height: 15),
           ],
         ),
