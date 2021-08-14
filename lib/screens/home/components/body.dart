@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/models/Product.dart';
+import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
 import 'package:orev/screens/home/components/threegrid.dart';
 
@@ -19,23 +21,30 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<Widget> ListWidgets = [
-    ImageSlider(),
-    Categories(),
-    GestureDetector(
-      onTap: (){
-
+  AdView(imagelink, productId) {
+    return GestureDetector(
+      onTap: () async {
+        ProductServices _services = new ProductServices();
+        Product product = await _services.getProduct(productId);
+        Navigator.pushNamed(context, DetailsScreen.routeName,
+            arguments: ProductDetailsArguments(product: product));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(15)),
+        margin: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(20),
+            vertical: getProportionateScreenHeight(15)),
         child: Image.network(
-          "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
+          imagelink,
           fit: BoxFit.cover,
           alignment: Alignment.center,
         ),
       ),
-    ),
+    );
+  }
 
+  List<Widget> ListWidgets = [
+    ImageSlider(),
+    Categories(),
   ];
 
   Future<void> doSomeAsyncStuff() async {
@@ -45,17 +54,35 @@ class _BodyState extends State<Body> {
   }
 
   void getList(variable) async {
-    ProductServices _services = ProductServices();
     var ListComponents = await variable["ScreenComponents"];
-    print(ListComponents);
+    for (int i = 0; i < ListComponents.length; i++) {
+      for (int j = i + 1; j < ListComponents.length; j++) {
+        int tempI = ListComponents[i]["position"];
+        int tempJ = ListComponents[j]["position"];
+
+        var temp1 = ListComponents[j];
+        var temp2 = ListComponents[i];
+
+        if (tempI > tempJ) {
+          ListComponents[i] = temp1;
+          ListComponents[j] = temp2;
+        }
+      }
+    }
     for (var e in ListComponents) {
       var type = e["type"];
-      var categoryId = e["categoryId"].trim();
-      ProductServices _services = ProductServices();
-      DocumentSnapshot nameref = await _services.category.doc(categoryId).get();
-      print(nameref["name"]);
-      String x = nameref["name"].toString();
-      var card_title = x;
+      var card_title;
+      var categoryId;
+      String x;
+      if (type != "ads") {
+        categoryId = e["categoryId"].trim();
+        ProductServices _services = ProductServices();
+        DocumentSnapshot nameref =
+            await _services.category.doc(categoryId).get();
+        print(nameref["name"]);
+        x = nameref["name"].toString();
+        card_title = x;
+      }
       if (type == "slider_category") {
         var categoryIdList = [];
         var edata = e["data"];
@@ -115,6 +142,13 @@ class _BodyState extends State<Body> {
             card_title: card_title,
           ));
           ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+        });
+      } else if (type == "ads") {
+        var productId = e["data"]["productId"];
+        var imageLink = e["data"]["image"];
+
+        setState(() {
+          ListWidgets.add(AdView(imageLink, productId));
         });
       }
     }
