@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -77,6 +78,7 @@ class _BodyState extends State<Body> {
     }
     sellingdistance =
         await _services.getSellerSellingDistance(widget.product.sellerId);
+    vendorlocation = await _services.getSellerLocation(widget.product.sellerId);
     UserServices _services2 = UserServices();
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
@@ -119,6 +121,7 @@ class _BodyState extends State<Body> {
   bool deliverable = true;
   double sellingdistance = 0.0;
   double walletbalance = 0.0;
+  GeoPoint vendorlocation;
 
   @override
   DirectSelectItem<String> getDropDownMenuItem(String value) {
@@ -336,6 +339,24 @@ class _BodyState extends State<Body> {
       var userref = await _services.users.doc(user_key).get();
       addressmap = userref["address"];
       SelectedAddress = addressmap[0];
+
+      List<Location> locations =
+          await locationFromAddress(addressmap[0]["pincode"].toString());
+      var distanceInMeters = await Geolocator.distanceBetween(
+        locations[0].latitude,
+        locations[0].longitude,
+        vendorlocation.latitude,
+        vendorlocation.longitude,
+      );
+      print(distanceInMeters);
+      if ((distanceInMeters / 1000) < sellingdistance) {
+        deliverable = true;
+      } else {
+        deliverable = false;
+      }
+      // setState(() {
+      //
+      // });
     }
 
     _navigateAndDisplaySelection(BuildContext context) async {
@@ -357,6 +378,7 @@ class _BodyState extends State<Body> {
     }
 
     getAllAddress();
+
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
@@ -414,8 +436,8 @@ class _BodyState extends State<Body> {
                                             await Geolocator.distanceBetween(
                                           locations[0].latitude,
                                           locations[0].longitude,
-                                          28.5320,
-                                          77.2959,
+                                          vendorlocation.latitude,
+                                          vendorlocation.longitude,
                                         );
                                         print(distanceInMeters);
                                         if ((distanceInMeters / 1000) <
@@ -788,7 +810,7 @@ class _BodyState extends State<Body> {
                                         : Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              "No available seller in your location\n",
+                                              "This product is not availabe in the selected location\n",
                                               style: TextStyle(
                                                 fontSize:
                                                     getProportionateScreenWidth(

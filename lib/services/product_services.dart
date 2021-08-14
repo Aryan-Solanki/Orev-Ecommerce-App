@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 
@@ -32,6 +33,12 @@ class ProductServices {
     var document =
         await FirebaseFirestore.instance.collection("vendors").doc(id).get();
     return document["deliveryRadius"].toDouble();
+  }
+
+  Future<GeoPoint> getSellerLocation(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["location"];
   }
 
   Future<Product> getProduct(productId) async {
