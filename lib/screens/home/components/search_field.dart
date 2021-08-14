@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/address/address.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -17,6 +18,10 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
+        onTap: (){
+          // Navigator.pushNamed(context,
+          //     Address.routeName);
+        },
         onChanged: (value) => print(value),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(

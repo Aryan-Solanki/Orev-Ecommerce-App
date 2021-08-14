@@ -44,6 +44,7 @@ class _BodyState extends State<Body> {
 
   List<Widget> ListWidgets = [
     ImageSlider(),
+    SizedBox(height: getProportionateScreenWidth(10)),
     Categories(),
   ];
 
@@ -152,6 +153,7 @@ class _BodyState extends State<Body> {
         });
       }
     }
+    ListWidgets.add(SizedBox(height: getProportionateScreenWidth(20)));
   }
 
   @override
