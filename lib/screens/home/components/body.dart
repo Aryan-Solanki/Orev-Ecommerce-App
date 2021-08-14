@@ -111,7 +111,7 @@ class _BodyState extends State<Body> {
             card_title: card_title,
             categoryId: categoryId,
           ));
-          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
       } else if (type == "4_grid") {
         var productIdList = [];
@@ -141,7 +141,7 @@ class _BodyState extends State<Body> {
             keys: productIdList,
             card_title: card_title,
           ));
-          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
       } else if (type == "ads") {
         var productId = e["data"]["productId"];
