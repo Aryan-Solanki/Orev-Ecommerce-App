@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
+import 'package:orev/screens/help_center/help_center.dart';
+import 'package:orev/screens/help_form/help_form.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/details/details_screen.dart';
@@ -46,4 +48,6 @@ final Map<String, WidgetBuilder> routes = {
   Wallet.routeName: (context) => Wallet(),
   CategoryPage.routeName: (context) => CategoryPage(),
   MyAccount.routeName: (context) => MyAccount(),
+  HelpCenter.routeName: (context) => HelpCenter(),
+  HelpForm.routeName: (context) => HelpForm(),
 };

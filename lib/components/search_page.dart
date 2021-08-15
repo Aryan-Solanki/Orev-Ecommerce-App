@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
                                 SizedBox(width: getProportionateScreenWidth(20),),
                                 GestureDetector(
                                   onTap: (){
-                                    
+
                                   },
                                     child: Text("Laptop",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: getProportionateScreenWidth(18)),)
                                 ),
