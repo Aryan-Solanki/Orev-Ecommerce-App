@@ -8,7 +8,9 @@ import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 
 class HomeHeader extends StatefulWidget {
+  final bool simplebutton;
   const HomeHeader({
+    bool this.simplebutton=true,
     Key key,
   }) : super(key: key);
 
@@ -46,7 +48,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SearchField(),
+          SearchField(simplebutton: widget.simplebutton,),
           numberOfItems == 0
               ? IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
