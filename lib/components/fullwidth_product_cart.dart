@@ -10,7 +10,6 @@ import '../constants.dart';
 import '../size_config.dart';
 
 class FullWidthProductCard extends StatefulWidget {
-  final bool sale;
   final bool like;
   final double width, aspectRetio;
   final Product product;
@@ -21,7 +20,6 @@ class FullWidthProductCard extends StatefulWidget {
     this.width = 140,
     this.aspectRetio = 1.02,
     @required this.product,
-    this.sale = true,
     this.like = true,
     @required this.notifyParent,
   }) : super(key: key);
@@ -34,6 +32,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
   // final int saleprice = 200;
   bool outofstock = true;
   bool favor = false;
+  bool sale = false;
 
   void outofstockcheck() {
     for (var varient in widget.product.varients) {
@@ -55,6 +54,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
       }
       index += 1;
     }
+    sale = widget.product.varients[defaultVarient].isOnSale;
   }
 
   String user_key;
@@ -211,7 +211,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                               SizedBox(
                                 width: getProportionateScreenWidth(20),
                               ),
-                              widget.sale == true
+                              sale == true
                                   ? Text(
                                       "\₹${widget.product.varients[defaultVarient].comparedPrice}",
                                       style: TextStyle(
@@ -226,7 +226,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                               SizedBox(
                                 width: getProportionateScreenWidth(5),
                               ),
-                              widget.sale == true
+                              sale == true
                                   ? Text(
                                       "Sale",
                                       style: TextStyle(

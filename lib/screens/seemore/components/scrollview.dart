@@ -67,7 +67,7 @@ class _AllItemsState extends State<AllItems> {
           varients: listVarient,
           title: document["title"],
           detail: document["detail"],
-          rating: document["rating"],
+          rating: document["rating"].toDouble(),
           sellerId: document["sellerId"],
           isFavourite: false,
           isPopular: true,
@@ -126,11 +126,11 @@ class _AllItemsState extends State<AllItems> {
                 },
               ),
               GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(15)),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenHeight(15)),
                   child: Image.network(
                     "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
                     fit: BoxFit.cover,
