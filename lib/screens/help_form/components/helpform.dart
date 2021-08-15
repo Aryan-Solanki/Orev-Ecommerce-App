@@ -24,7 +24,7 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
   String selectedKey="Please Select";
 
   List<String> keys = <String>[
-    'Low',
+    'Lowdjdj0f0qgffhj9qrwhupfjwqpajuf1huqahfup1hq9u',
     'Medium',
     'High',
   ];
@@ -77,9 +77,9 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
             child: normalChildButton,
             items: keys,
             itemBuilder: (String value) => Container(
-              height: 40,
+              height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16),
+              padding:  EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20), horizontal: getProportionateScreenWidth(40)),
               child: Text(value,style: TextStyle(fontSize: getProportionateScreenWidth(13)), overflow: TextOverflow.ellipsis),
             ),
             toggledChild: Container(
@@ -96,14 +96,10 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           MessageFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          SizedBox(height: getProportionateScreenHeight(30)),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
-            press: () async {
+            press: ()  {
 
             },
           ),
@@ -115,6 +111,7 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
 
   TextFormField MessageFormField() {
     return TextFormField(
+      maxLines: 5,
       onChanged: (value) {
         message = value;
       },
