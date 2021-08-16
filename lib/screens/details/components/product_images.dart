@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/models/Product.dart';
 
@@ -38,8 +39,15 @@ class _ProductImagesState extends State<ProductImages> {
             child: Hero(
                 tag: widget.product.id.toString(),
                 child: InteractiveViewer(
-                  child: Image.network(widget
-                      .product.varients[currentVarient].images[selectedImage]),
+                  child: CachedNetworkImage(
+                    imageUrl: widget
+                        .product.varients[currentVarient].images[selectedImage],
+                    placeholder: (context, url) =>
+                        new CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(kPrimaryColor2)),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  ),
                 )),
           ),
         ),
