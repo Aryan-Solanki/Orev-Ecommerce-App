@@ -128,6 +128,9 @@ class _SignFormState extends State<SignForm> {
     return Container(
       height: getProportionateScreenHeight(80),
       child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
         obscureText: true,
         onSaved: (newValue) => password = newValue,
         onChanged: (value) {
@@ -151,7 +154,7 @@ class _SignFormState extends State<SignForm> {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenWidth(15),
           ),
           hintStyle: TextStyle(
             fontSize: getProportionateScreenWidth(16),
@@ -171,6 +174,9 @@ class _SignFormState extends State<SignForm> {
     return Container(
       height: getProportionateScreenHeight(116),
       child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
         maxLength: 10,
         keyboardType: TextInputType.phone,
         onSaved: (newValue) => number = newValue,
@@ -202,7 +208,7 @@ class _SignFormState extends State<SignForm> {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenWidth(15),
           ),
           hintStyle: TextStyle(
             fontSize: getProportionateScreenWidth(16),

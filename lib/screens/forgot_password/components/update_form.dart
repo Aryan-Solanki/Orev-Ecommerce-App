@@ -135,6 +135,7 @@ class _UpdateFormState extends State<UpdateForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {

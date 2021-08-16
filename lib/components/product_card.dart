@@ -114,7 +114,9 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Text(
                 widget.product.title,
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(12),
+                    color: Colors.black),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

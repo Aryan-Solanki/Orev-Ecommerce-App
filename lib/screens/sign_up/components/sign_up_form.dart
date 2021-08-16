@@ -118,73 +118,87 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       _userServices.setKeyPass(keypass);
       Navigator.pushNamed(context, HomeScreen.routeName);
     }
-
+    final BoxDecoration pinPutDecoration = BoxDecoration(
+      color: kPrimaryColor,
+      borderRadius: BorderRadius.circular(5.0),
+    );
     Widget boxedPinPutWithPreFilledSymbol() {
-      final BoxDecoration pinPutDecoration = BoxDecoration(
-        color: kPrimaryColor,
-        borderRadius: BorderRadius.circular(5.0),
-      );
-
-      return PinPut(
-        withCursor: true,
-        fieldsCount: 6,
-        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-        eachFieldWidth: 50.0,
-        eachFieldHeight: 50.0,
-        onSubmit: (String pin) async {
-          try {
-            await auth
-                .signInWithCredential(PhoneAuthProvider.credential(
+      return Theme(
+        data: Theme.of(context).copyWith(
+            inputDecorationTheme: InputDecorationTheme(
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+            )
+        ),
+        child: PinPut(
+          withCursor: true,
+          fieldsCount: 6,
+          textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+          eachFieldWidth: getProportionateScreenWidth(50),
+          eachFieldHeight: getProportionateScreenHeight(50),
+          onSubmit: (String pin) async{
+              try {
+                await auth
+                    .signInWithCredential(PhoneAuthProvider.credential(
                     verificationId: _verificationCode, smsCode: pin))
-                .then((value) async {
-              if (value.user != null) {
-                phone_uid = auth.currentUser.uid;
-                auth.signOut();
-                createNewUser(number, Name, password);
+                    .then((value) async {
+                  if (value.user != null) {
+                    phone_uid = auth.currentUser.uid;
+                    auth.signOut();
+                    createNewUser(number, Name, password);
+                  }
+                });
+              } catch (e) {
+                print(e);
               }
-            });
-          } catch (e) {
-            print(e);
-          }
-        },
-        focusNode: _pinPutFocusNode,
-        controller: _pinPutController,
-        submittedFieldDecoration: pinPutDecoration,
-        selectedFieldDecoration:
-            pinPutDecoration.copyWith(color: Colors.lightGreen),
-        followingFieldDecoration: pinPutDecoration,
+
+          },
+          focusNode: _pinPutFocusNode,
+          controller: _pinPutController,
+          submittedFieldDecoration: pinPutDecoration,
+          selectedFieldDecoration:
+          pinPutDecoration.copyWith(color: Colors.lightGreen),
+          followingFieldDecoration: pinPutDecoration,
+        ),
       );
     }
+
 
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: Column(
-              children: [
-                Text(
-                  "One Time Password",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(28),
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Column(
+                  children: [
+                    Text(
+                      "One Time Password",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(27),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    boxedPinPutWithPreFilledSymbol(),
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    Text(
+                      "Please enter the OTP that you have received on your provided phone number $number",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.1),
+                  ],
                 ),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                boxedPinPutWithPreFilledSymbol(),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                Text(
-                  "Please enter the OTP that you have received on \nyour provided phone number $number",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.1),
-              ],
+              ),
             ),
           ));
     }
-
     return Form(
       key: _formKey,
       child: Column(
@@ -221,142 +235,189 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
     );
   }
 
-  TextFormField buildFirstNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => Name = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kNamelNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Full Name",
-        hintText: "Enter your full name",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+  Container buildFirstNameFormField() {
+    return Container(
+      height: getProportionateScreenHeight(116),
+      child: TextFormField(
+          style: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+        onSaved: (newValue) => Name = newValue,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kNamelNullError);
+          }
+          return null;
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kNamelNullError);
+            return "";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(15),
+          ),
+          hintStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+          labelText: "Full Name",
+          hintText: "Enter your full name",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+        ),
       ),
     );
   }
 
-  TextFormField buildConformPassFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        }
-        if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
-        }
-        conform_password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        }
-        if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+  Container buildConformPassFormField() {
+    return Container(
+      height: getProportionateScreenHeight(116),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
+        obscureText: true,
+        onSaved: (newValue) => conform_password = newValue,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kPassNullError);
+          }
+          if (value.isNotEmpty && password == conform_password) {
+            removeError(error: kMatchPassError);
+          }
+          conform_password = value;
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kPassNullError);
+            return "";
+          }
+          if ((password != value)) {
+            addError(error: kMatchPassError);
+            return "";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(15),
+          ),
+          hintStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+          labelText: "Confirm Password",
+          hintText: "Re-enter your password",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        ),
       ),
     );
   }
 
-  TextFormField buildPasswordFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        }
-        if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        }
-        if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+  Container buildPasswordFormField() {
+    return Container(
+      height: getProportionateScreenHeight(116),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
+        obscureText: true,
+        onSaved: (newValue) => password = newValue,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kPassNullError);
+          }
+          if (value.length >= 8) {
+            removeError(error: kShortPassError);
+          }
+          password = value;
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kPassNullError);
+            return "";
+          }
+          if (value.length < 8) {
+            addError(error: kShortPassError);
+            return "";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(15),
+          ),
+          hintStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+          labelText: "Password",
+          hintText: "Enter your password",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        ),
       ),
     );
   }
 
-  TextFormField buildPhoneFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => number = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        }
-        if (value.length == 10) {
-          removeError(error: kShortNumberError);
-          removeError(error: kLongNumberError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        }
-        if (value.length < 10) {
-          addError(error: kShortNumberError);
+  Container buildPhoneFormField() {
+    return Container(
+      height: getProportionateScreenHeight(116),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
+        maxLength: 10,
+        keyboardType: TextInputType.phone,
+        onSaved: (newValue) => number = newValue,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kPhoneNumberNullError);
+          }
+          if (value.length == 10) {
+            removeError(error: kShortNumberError);
+            removeError(error: kLongNumberError);
+          }
+          return null;
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kPassNullError);
+            return "";
+          } else if (value.length < 10) {
+            addError(error: kShortNumberError);
 
-          return "";
-        }
-        if (value.length > 10) {
-          addError(error: kLongNumberError);
+            return "";
+          } else if (value.length > 10) {
+            addError(error: kLongNumberError);
 
-          return "";
-        }
+            return "";
+          }
 
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Number",
-        hintText: "Enter your number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+          return null;
+        },
+        decoration: InputDecoration(
+          labelStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(15),
+          ),
+          hintStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+          labelText: "Number",
+          hintText: "Enter your number",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+        ),
       ),
     );
   }
