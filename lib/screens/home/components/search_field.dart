@@ -55,7 +55,6 @@ class _SearchFieldState extends State<SearchField> {
         ),
       ),
     ):Container(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
       width: SizeConfig.screenWidth * 0.6,
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.1),
@@ -68,8 +67,6 @@ class _SearchFieldState extends State<SearchField> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical:getProportionateScreenWidth(13)),
                 // horizontal: getProportionateScreenWidth(20),
-            prefixText: " ",
-            prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(10)),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
