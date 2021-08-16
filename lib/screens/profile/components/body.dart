@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/help_center/help_center.dart';
 import 'package:orev/screens/my_account/my_account.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 
@@ -33,7 +34,10 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context,
+                  HelpCenter.routeName);
+            },
           ),
           ProfileMenu(
             text: "Log Out",
