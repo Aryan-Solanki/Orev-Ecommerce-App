@@ -41,29 +41,84 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   String user_key;
 
+  // Future<void> getAllCartProducts() async {
+  //   for (var k in widget.keys) {
+  //     ProductServices _services = new ProductServices();
+  //     UserServices _user_services = new UserServices();
+  //     Product product = await _services.getProduct(k["productId"]);
+  //     var checklist =
+  //         await getVarientNumber(k["varientNumber"], k["productId"]);
+  //     var xx = checklist[0];
+  //     var y = checklist[1];
+  //     if (!y) {
+  //       continue;
+  //     }
+  //     CartList.add(new Cart(
+  //         product: product,
+  //         varientNumber: product.varients[xx].id,
+  //         numOfItem: k["qty"]));
+  //     if (_user_services.isAvailableOnUserLocation()) {
+  //       totalamt += product.varients[xx].price * k["qty"];
+  //     }
+  //   }
+  //   setState(() {
+  //     print(totalamt);
+  //   });
+  // }
+
+  Future<void> removeFromCart(varientid, productId) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.cart.doc(user_key).get();
+    var keys = favref["cartItems"];
+    bool found = false;
+    var ind = 0;
+    for (var cartItem in keys) {
+      if (cartItem["varientNumber"] == varientid &&
+          cartItem["productId"] == productId) {
+        found = true;
+        break;
+      }
+      ind += 1;
+    }
+    keys.removeAt(ind);
+    await _services.cart.doc(user_key).update({'cartItems': keys});
+    // final snackBar = SnackBar(
+    //   content: Text('Item removed from Cart'),
+    //   backgroundColor: kPrimaryColor,
+    // );
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  }
+
   Future<void> getAllCartProducts() async {
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
       Product product = await _services.getProduct(k["productId"]);
-      var checklist =
-          await getVarientNumber(k["varientNumber"], k["productId"]);
-      var xx = checklist[0];
-      var y = checklist[1];
-      if (!y) {
-        continue;
+      if (product == null) {
+        removeFromCart(k["varientNumber"], k["productId"]);
+      } else {
+        var checklist =
+            await getVarientNumber(k["varientNumber"], k["productId"]);
+        var xx = checklist[0];
+        var y = checklist[1];
+        if (!y) {
+          removeFromCart(k["varientNumber"], k["productId"]);
+          continue;
+        }
+        CartList.add(new Cart(
+            product: product,
+            varientNumber: product.varients[xx].id,
+            numOfItem: k["qty"]));
+        if (_user_services.isAvailableOnUserLocation()) {
+          totalamt += product.varients[xx].price * k["qty"];
+        }
       }
-      CartList.add(new Cart(
-          product: product,
-          varientNumber: product.varients[xx].id,
-          numOfItem: k["qty"]));
-      if (_user_services.isAvailableOnUserLocation()) {
-        totalamt += product.varients[xx].price * k["qty"];
-      }
+      setState(() {
+        print(totalamt);
+      });
     }
-    setState(() {
-      print(totalamt);
-    });
   }
 
   @override

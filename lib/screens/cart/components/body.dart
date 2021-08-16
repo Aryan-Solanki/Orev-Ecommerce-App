@@ -29,15 +29,17 @@ class _BodyState extends State<Body> {
   List<Cart> CartList = [];
   double totalamt = 0.0;
 
-  Future<void> removeFromCart(varientid) async {
+  Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
     print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
-
+    bool found = false;
     var ind = 0;
     for (var cartItem in keys) {
-      if (cartItem["varientNumber"] == varientid) {
+      if (cartItem["varientNumber"] == varientid &&
+          cartItem["productId"] == productId) {
+        found = true;
         break;
       }
       ind += 1;
@@ -106,25 +108,29 @@ class _BodyState extends State<Body> {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
       Product product = await _services.getProduct(k["productId"]);
-      var checklist =
-          await getVarientNumber(k["varientNumber"], k["productId"]);
-      var xx = checklist[0];
-      var y = checklist[1];
-      if (!y) {
-        removeFromCart(k["varientNumber"]);
-        continue;
+      if (product == null) {
+        removeFromCart(k["varientNumber"], k["productId"]);
+      } else {
+        var checklist =
+            await getVarientNumber(k["varientNumber"], k["productId"]);
+        var xx = checklist[0];
+        var y = checklist[1];
+        if (!y) {
+          removeFromCart(k["varientNumber"], k["productId"]);
+          continue;
+        }
+        CartList.add(new Cart(
+            product: product,
+            varientNumber: product.varients[xx].id,
+            numOfItem: k["qty"]));
+        if (_user_services.isAvailableOnUserLocation()) {
+          totalamt += product.varients[xx].price * k["qty"];
+        }
       }
-      CartList.add(new Cart(
-          product: product,
-          varientNumber: product.varients[xx].id,
-          numOfItem: k["qty"]));
-      if (_user_services.isAvailableOnUserLocation()) {
-        totalamt += product.varients[xx].price * k["qty"];
-      }
+      setState(() {
+        print(totalamt);
+      });
     }
-    setState(() {
-      print(totalamt);
-    });
   }
 
   @override
@@ -159,7 +165,8 @@ class _BodyState extends State<Body> {
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
                   setState(() {
-                    removeFromCart(CartList[index].varientNumber);
+                    removeFromCart(CartList[index].varientNumber,
+                        CartList[index].product.id);
                     CartList.removeAt(index);
                     widget.notifyParent();
                   });
