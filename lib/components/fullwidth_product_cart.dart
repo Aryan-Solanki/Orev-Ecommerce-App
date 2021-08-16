@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
@@ -177,10 +178,10 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                           width: getProportionateScreenWidth(160),
                           imageUrl:
                               widget.product.varients[defaultVarient].images[0],
-                          placeholder: (context, url) =>
-                              new CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      kPrimaryColor2)),
+                          placeholder: (context, url) => new LoadingSkeleton(
+                            width: getProportionateScreenWidth(160),
+                            height: getProportionateScreenWidth(150),
+                          ),
                           errorWidget: (context, url, error) =>
                               new Icon(Icons.error),
                         ),
