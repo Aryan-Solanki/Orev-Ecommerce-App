@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/details/details_screen.dart';
@@ -92,7 +93,6 @@ class _ProductCardState extends State<ProductCard> {
               AspectRatio(
                 aspectRatio: widget.aspectRetio,
                 child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                   decoration: BoxDecoration(
                     color: kSecondaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
@@ -102,9 +102,10 @@ class _ProductCardState extends State<ProductCard> {
                     child: CachedNetworkImage(
                       imageUrl: widget.product.varients[0].images[0],
                       placeholder: (context, url) =>
-                          new CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  kPrimaryColor2)),
+                          new LoadingSkeleton(
+                            width: getProportionateScreenWidth(500),
+                            height: getProportionateScreenHeight(500),
+                          ),
                       errorWidget: (context, url, error) =>
                           new Icon(Icons.error),
                     ),

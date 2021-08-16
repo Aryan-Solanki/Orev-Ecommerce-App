@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/size_config.dart';
 
@@ -43,9 +45,9 @@ class _ImageSliderState extends State<ImageSlider> {
               builder: (_, snapShot) {
                 return snapShot.data == null
                     ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                        child: LoadingSkeleton(
+                          width: MediaQuery.of(context).size.width,
+                          height: getProportionateScreenHeight(150),
                         ),
                       )
                     : Padding(
@@ -58,10 +60,17 @@ class _ImageSliderState extends State<ImageSlider> {
                               Map getImage = sliderImage.data();
                               return SizedBox(
                                   width: MediaQuery.of(context).size.width,
-                                  child: Image.network(
-                                    getImage['image'],
+                                  child: CachedNetworkImage(
                                     fit: BoxFit.fill,
-                                  ));
+                                    imageUrl: getImage["image"],
+                                    placeholder: (context, url) =>
+                                    new LoadingSkeleton(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: getProportionateScreenHeight(150),
+                                    ),
+                                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                                  )
+                              );
                             },
                             options: CarouselOptions(
                                 viewportFraction: 1,

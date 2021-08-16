@@ -77,12 +77,11 @@ class _AllItemsState extends State<AllItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: getProportionateScreenWidth(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: getProportionateScreenWidth(10)),
+          Column(
             children: [
               ...List.generate(
                 ProductList.length,
@@ -120,8 +119,9 @@ class _AllItemsState extends State<AllItems> {
               ),
             ],
           ),
-        )
-      ],
+          SizedBox(height: getProportionateScreenWidth(10)),
+        ],
+      ),
     );
   }
 }
