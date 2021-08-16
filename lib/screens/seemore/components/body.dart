@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/screens/home/components/home_header.dart';
-
-import '../../../size_config.dart';
 import 'scrollview.dart';
+import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
   final String categoryId;
@@ -15,16 +14,34 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final String categoryId;
   _BodyState({this.categoryId});
+
+  ScrollController _scrollController = ScrollController();
+  final GlobalKey<AllItemsState> _myWidgetState = GlobalKey<AllItemsState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(() {
+      double maxScroll = _scrollController.position.maxScrollExtent;
+      double currentScroll = _scrollController.position.pixels;
+      double delta = getProportionateScreenWidth(25);
+
+      if (maxScroll - currentScroll < delta) {
+        _myWidgetState.currentState.getMoreProducts();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     refresh() {
-      setState(() {
-        print("Final Set State");
-      });
+      setState(() {});
     }
 
     return SafeArea(
       child: SingleChildScrollView(
+        controller: _scrollController,
         child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
           return Column(
@@ -38,6 +55,8 @@ class _BodyState extends State<Body> {
                 categoryId: categoryId,
                 title: widget.title,
                 notifyParent: refresh,
+                key: _myWidgetState,
+                scrollController: _scrollController,
               ),
               SizedBox(height: getProportionateScreenWidth(30)),
             ],

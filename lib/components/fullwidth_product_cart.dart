@@ -62,7 +62,6 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
 
   Future<void> getAllProducts() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.favourites.doc(user_key).get();
     keys = favref["favourites"];
 
@@ -75,7 +74,6 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
 
   Future<void> removeFavourite() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.favourites.doc(user_key).get();
     keys = favref["favourites"];
     keys.remove(widget.product.id);
@@ -86,7 +84,6 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
 
   Future<void> addFavourite() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.favourites.doc(user_key).get();
     keys = favref["favourites"];
     keys.add(widget.product.id);
@@ -97,12 +94,10 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
 
   Future<void> addToCart() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
 
     var x = widget.product.varients[defaultVarient].id;
-    print(x);
 
     bool alreadyexixts = false;
 

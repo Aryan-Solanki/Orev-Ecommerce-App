@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/fullwidth_product_cart.dart';
 import 'package:orev/models/Product.dart';
@@ -11,15 +12,78 @@ class AllItems extends StatefulWidget {
   final String categoryId;
   final String title;
   final Function() notifyParent;
-  AllItems({this.categoryId, this.title, @required this.notifyParent});
+  final ScrollController scrollController;
+  AllItems(
+      {this.categoryId,
+      this.title,
+      @required this.notifyParent,
+      @required this.scrollController,
+      Key key})
+      : super(key: key);
 
   @override
-  _AllItemsState createState() => _AllItemsState();
+  AllItemsState createState() => AllItemsState();
 }
 
-class _AllItemsState extends State<AllItems> {
+class AllItemsState extends State<AllItems> {
   List<Product> ProductList = [];
   List<dynamic> keys = [];
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<DocumentSnapshot> _products = [];
+  bool _loadingProducts = true;
+  int _perpage = 5;
+  DocumentSnapshot _lastDocument;
+  bool _gettingMoreProducts = false;
+  bool _moreProductsAvailable = true;
+  ProductServices _services = ProductServices();
+
+  _getProducts() async {
+    Query q =
+        _firestore.collection("products").orderBy("title").limit(_perpage);
+    setState(() {
+      _loadingProducts = true;
+    });
+    QuerySnapshot querySnapshot = await q.get();
+    _products = querySnapshot.docs;
+    for (var product in _products) {
+      ProductList.add(_services.getProductSeeMore(product));
+    }
+    _lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setState(() {
+      _loadingProducts = false;
+    });
+  }
+
+  getMoreProducts() async {
+    if (_moreProductsAvailable == false) {
+      return;
+    }
+
+    if (_gettingMoreProducts == true) {
+      return;
+    }
+
+    _gettingMoreProducts = true;
+
+    Query q = _firestore
+        .collection("products")
+        .orderBy("title")
+        .startAfter([_lastDocument.data()["title"]]).limit(_perpage);
+    QuerySnapshot querySnapshot = await q.get();
+
+    if (querySnapshot.docs.length < _perpage) {
+      _moreProductsAvailable = false;
+    }
+
+    _lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
+    _products.addAll(querySnapshot.docs);
+    for (var product in _products) {
+      ProductList.add(_services.getProductSeeMore(product));
+    }
+    setState(() {});
+    _gettingMoreProducts = false;
+  }
 
   Future<void> getAllProducts() async {
     ProductServices _services = ProductServices();
@@ -40,39 +104,7 @@ class _AllItemsState extends State<AllItems> {
     });
 
     for (var k in keys) {
-      var document = await _services.products.doc(k).get();
-      print(document.exists);
-      var listVarientraw = document["variant"];
-      print(listVarientraw);
-      List<Varient> listVarient = [];
-      for (var vari in listVarientraw) {
-        print(vari["variantDetails"]["title"]);
-        print(vari["variantDetails"]["title"]);
-        listVarient.add(new Varient(
-            default_product: vari["default"],
-            isOnSale: vari["onSale"]["isOnSale"],
-            comparedPrice: vari["onSale"]["comparedPrice"].toDouble(),
-            discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
-            price: vari["price"].toDouble(),
-            inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
-            id: vari["id"],
-            title: vari["variantDetails"]["title"],
-            images: vari["variantDetails"]["images"]));
-      }
-
-      ProductList.add(new Product(
-          id: document["productId"],
-          brandname: document["brand"],
-          varients: listVarient,
-          title: document["title"],
-          detail: document["detail"],
-          rating: document["rating"].toDouble(),
-          sellerId: document["sellerId"],
-          isFavourite: false,
-          isPopular: true,
-          tax: document["tax"].toDouble(),
-          youmayalsolike: document["youMayAlsoLike"]));
+      ProductList.add(await _services.getProduct(k));
     }
 
     print(ProductList.length);
@@ -83,8 +115,18 @@ class _AllItemsState extends State<AllItems> {
 
   @override
   void initState() {
-    getAllProducts();
+    // getAllProducts();
     super.initState();
+    _getProducts();
+    // widget.scrollController.addListener(() {
+    //   double maxScroll = widget.scrollController.position.maxScrollExtent;
+    //   double currentScroll = widget.scrollController.position.pixels;
+    //   double delta = getProportionateScreenWidth(25);
+    //
+    //   if (maxScroll - currentScroll < delta) {
+    //     getMoreProducts();
+    //   }
+    // });
   }
 
   @override
@@ -96,52 +138,101 @@ class _AllItemsState extends State<AllItems> {
       });
     }
 
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(
-            title: widget.title,
-            categoryId: widget.categoryId,
-            press: () {},
-            seemore: false,
-          ),
-        ),
-        SizedBox(height: getProportionateScreenWidth(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              ...List.generate(
-                ProductList.length,
-                (index) {
-                  return FullWidthProductCard(
-                    product: ProductList[index],
-                    notifyParent: refresh,
-                  );
+    // widget.scrollController.addListener(() {
+    //   double maxScroll =  widget.scrollController.position.maxScrollExtent;
+    //   double currentScroll =  widget.scrollController.position.pixels;
+    //   double delta = getProportionateScreenWidth(25);
+    //
+    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     MAX SCROLL $maxScroll");
+    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     CURRENT SCROLL $currentScroll");
+    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     DELTA $delta");
+    //
+    //   if (maxScroll - currentScroll < delta) {
+    //     _getMoreProducts();
+    //   }
+    // });
 
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20),
-                      vertical: getProportionateScreenHeight(15)),
-                  child: Image.network(
-                    "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
+    return Column(children: [
+      Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        child: SectionTitle(
+          title: widget.title,
+          categoryId: widget.categoryId,
+          press: () {},
+          seemore: false,
+        ),
+      ),
+      SizedBox(height: getProportionateScreenWidth(20)),
+      _loadingProducts == true
+          ? Container(
+              child: Text("Loading..."),
+              // REPLACE THIS WITH LOADING
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: _products.length == 0
+                  ? Center(
+                      child: Text("No products to display"),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: _products.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return FullWidthProductCard(
+                          product: ProductList[index],
+                          notifyParent: refresh,
+                        );
+                      }),
+            ),
+    ]);
   }
 }
+// Column(
+// children: [
+// Padding(
+// padding:
+// EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+// child: SectionTitle(
+// title: widget.title,
+// categoryId: widget.categoryId,
+// press: () {},
+// seemore: false,
+// ),
+// ),
+// SizedBox(height: getProportionateScreenWidth(20)),
+// SingleChildScrollView(
+// scrollDirection: Axis.vertical,
+// child: Column(
+// children: [
+// ...List.generate(
+// ProductList.length,
+// (index) {
+// return FullWidthProductCard(
+// product: ProductList[index],
+// notifyParent: refresh,
+// );
+//
+// return SizedBox
+//     .shrink(); // here by default width and height is 0
+// },
+// ),
+// GestureDetector(
+// onTap: () {},
+// child: Container(
+// margin: EdgeInsets.symmetric(
+// horizontal: getProportionateScreenWidth(20),
+// vertical: getProportionateScreenHeight(15)),
+// child: Image.network(
+// "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",
+// fit: BoxFit.cover,
+// alignment: Alignment.center,
+// ),
+// ),
+// ),
+// ],
+// ),
+// )
+// ],
+// );
