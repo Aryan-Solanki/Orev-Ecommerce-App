@@ -55,6 +55,7 @@ dependencies:
   flutter_awesome_alert_box: ^2.1.0
   menu_button: ^1.4.2+1
   paginate_firestore:
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:

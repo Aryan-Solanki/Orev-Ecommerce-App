@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/components/default_button.dart';
@@ -171,10 +172,17 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                       child: Hero(
                         tag: widget.product.id.toString(),
-                        child: Image.network(
-                          widget.product.varients[defaultVarient].images[0],
+                        child: CachedNetworkImage(
                           height: getProportionateScreenHeight(150),
                           width: getProportionateScreenWidth(160),
+                          imageUrl:
+                              widget.product.varients[defaultVarient].images[0],
+                          placeholder: (context, url) =>
+                              new CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      kPrimaryColor2)),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
                         ),
                       ),
                     ),

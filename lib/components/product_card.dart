@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/models/Product.dart';
@@ -98,7 +99,15 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                   child: Hero(
                     tag: widget.product.id.toString(),
-                    child: Image.network(widget.product.varients[0].images[0]),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.product.varients[0].images[0],
+                      placeholder: (context, url) =>
+                          new CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  kPrimaryColor2)),
+                      errorWidget: (context, url, error) =>
+                          new Icon(Icons.error),
+                    ),
                   ),
                 ),
               ),
