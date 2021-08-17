@@ -3,6 +3,7 @@ import 'package:orev/components/fullwidth_product_cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,51 +78,55 @@ class _AllItemsState extends State<AllItems> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: getProportionateScreenWidth(10)),
-          Column(
-            children: [
-              ...List.generate(
-                ProductList.length,
-                (index) {
-                  return Dismissible(
-                    key: Key(ProductList[index].id.toString()),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      setState(() {
-                        ProductList.removeAt(index);
-                      });
-                    },
-                    background: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFE6E6),
-                        borderRadius: BorderRadius.circular(15),
+    return Column(
+      children: [
+        SizedBox(height: getProportionateScreenHeight(10)),
+        HomeHeader(),
+        SizedBox(height: getProportionateScreenHeight(10)),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ...List.generate(
+                  ProductList.length,
+                  (index) {
+                    return Dismissible(
+                      key: Key(ProductList[index].id.toString()),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        setState(() {
+                          ProductList.removeAt(index);
+                        });
+                      },
+                      background: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFFE6E6),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            SvgPicture.asset("assets/icons/Trash.svg"),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          SvgPicture.asset("assets/icons/Trash.svg"),
-                        ],
+                      child: FullWidthProductCard(
+                        product: ProductList[index],
+                        like: false,
                       ),
-                    ),
-                    child: FullWidthProductCard(
-                      product: ProductList[index],
-                      like: false,
-                    ),
-                  );
+                    );
 
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
-              ),
-            ],
+                    return SizedBox
+                        .shrink(); // here by default width and height is 0
+                  },
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: getProportionateScreenWidth(10)),
-        ],
-      ),
+        ),
+        SizedBox(height: getProportionateScreenWidth(10)),
+      ],
     );
   }
 }

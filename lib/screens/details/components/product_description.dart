@@ -38,7 +38,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
   bool seemore = false;
   bool sale = true;
   bool favor = false;
-  // int saleprice = 200;
   String brandname = "";
   String soldby = "";
 
@@ -105,7 +104,11 @@ class _ProductDescriptionState extends State<ProductDescription> {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Text(
             product.title,
-            style: Theme.of(context).textTheme.headline6,
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(20),
+                color: Colors.black,
+                height: 1.5,
+              )
           ),
         ),
         Padding(
@@ -114,7 +117,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
               vertical: getProportionateScreenHeight(7)),
           child: Text(
             product.brandname,
-            style: verysmallerheadingStyle,
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(11),
+              // fontWeight: FontWeight.bold,
+              color: Colors.black,
+              height: 1.5,
+            ),
           ),
         ),
         Padding(
@@ -228,9 +236,17 @@ class _ProductDescriptionState extends State<ProductDescription> {
           child: seemore == true
               ? Text(
                   product.detail,
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(15),
+              height: 1.5,
+            ),
                 )
               : Text(
                   product.detail,
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(15),
+              height: 1.5,
+            ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -252,6 +268,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Text(
                           "See Less Detail",
                           style: TextStyle(
+                            fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),
@@ -275,6 +292,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Text(
                           "See More Detail",
                           style: TextStyle(
+                              fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),

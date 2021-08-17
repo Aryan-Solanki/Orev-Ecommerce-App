@@ -4,11 +4,13 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 
 import '../../../size_config.dart';
 import 'cart_card.dart';
+import 'check_out_card.dart';
 
 class Body extends StatefulWidget {
   final List<dynamic> keys;
@@ -47,42 +49,8 @@ class _BodyState extends State<Body> {
     keys.removeAt(ind);
     await _services.cart.doc(user_key).update({'cartItems': keys});
     widget.notifyParent();
-    // final snackBar = SnackBar(
-    //   content: Text('Item removed from Cart'),
-    //   backgroundColor: kPrimaryColor,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
-  // Future<void> checkforCartDuplicates() async {
-  //   ProductServices _services = ProductServices();
-  //   print(user_key);
-  //   var favref = await _services.cart.doc(user_key).get();
-  //   keys = favref["cartItems"];
-  //
-  //   var ind = 0;
-  //   for (var cartItem in keys) {
-  //     var currentqty = cartItem["qty"];
-  //     var currentid = cartItem["productId"];
-  //     var currentvar = cartItem["varientNumber"];
-  //     for (int i = ind; i <= keys.length - 1; i++) {
-  //       var newqty = keys[i]["qty"];
-  //       var newid = keys[i]["productId"];
-  //       var newvar = keys[i]["varientNumber"];
-  //     }
-  //     ind += 1;
-  //   }
-  //   keys.removeAt(ind);
-  //   await _services.cart.doc(user_key).update({'cartItems': keys});
-  //   widget.notifyParent();
-  //   // final snackBar = SnackBar(
-  //   //   content: Text('Item removed from Cart'),
-  //   //   backgroundColor: kPrimaryColor,
-  //   // );
-  //   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //   // list.add(SizedBox(width: getProportionateScreenWidth(20)));
-  // }
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -148,51 +116,64 @@ class _BodyState extends State<Body> {
       });
     }
 
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: ScrollConfiguration(
-        behavior: ScrollBehavior(),
-        child: GlowingOverscrollIndicator(
-          axisDirection: AxisDirection.down,
-          color: kPrimaryColor2,
-          child: ListView.builder(
-            itemCount: CartList.length,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Dismissible(
-                key: Key(CartList[index].product.id.toString()),
-                direction: DismissDirection.endToStart,
-                onDismissed: (direction) {
-                  setState(() {
-                    removeFromCart(CartList[index].varientNumber,
-                        CartList[index].product.id);
-                    CartList.removeAt(index);
-                    widget.notifyParent();
-                  });
-                },
-                background: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFE6E6),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset("assets/icons/Trash.svg"),
-                    ],
+
+    return Column(
+      children: [
+        SizedBox(height: getProportionateScreenHeight(10)),
+        HomeHeader(),
+        SizedBox(height: getProportionateScreenHeight(10)),
+        Expanded(
+          child: Padding(
+            padding:EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: ListView.builder(
+                  itemCount: CartList.length,
+                  itemBuilder: (context, index) => Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Dismissible(
+                      key: Key(CartList[index].product.id.toString()),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        setState(() {
+                          removeFromCart(CartList[index].varientNumber,
+                              CartList[index].product.id);
+                          CartList.removeAt(index);
+                          widget.notifyParent();
+                        });
+                      },
+                      background: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFFE6E6),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            SvgPicture.asset("assets/icons/Trash.svg"),
+                          ],
+                        ),
+                      ),
+                      child: CartCard(
+                          cart: CartList[index],
+                          notifyParent: refresh,
+                          key: UniqueKey()),
+                    ),
                   ),
                 ),
-                child: CartCard(
-                    cart: CartList[index],
-                    notifyParent: refresh,
-                    key: UniqueKey()),
               ),
             ),
           ),
         ),
-      ),
+        CheckoutCard(
+          keys: keys,
+          key: UniqueKey(),
+        )
+      ],
     );
   }
 }

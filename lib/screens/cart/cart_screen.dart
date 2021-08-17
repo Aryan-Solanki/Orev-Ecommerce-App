@@ -48,34 +48,15 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context, numberOfItems),
-      body: Body(
-        keys: keys,
-        key: UniqueKey(),
-        notifyParent: refresh,
-      ),
-      bottomNavigationBar: CheckoutCard(
-        keys: keys,
-        key: UniqueKey(),
+    return SafeArea(
+      child: Scaffold(
+        body: Body(
+          keys: keys,
+          key: UniqueKey(),
+          notifyParent: refresh,
+        ),
       ),
     );
   }
 }
 
-AppBar buildAppBar(BuildContext context, int numberOfItems) {
-  return AppBar(
-    title: Column(
-      children: [
-        Text(
-          "Your Cart",
-          style: TextStyle(color: Colors.black),
-        ),
-        // Text(
-        //   "$numberOfItems items",
-        //   style: Theme.of(context).textTheme.caption,
-        // ),
-      ],
-    ),
-  );
-}

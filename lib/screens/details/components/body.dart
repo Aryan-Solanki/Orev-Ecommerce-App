@@ -13,6 +13,7 @@ import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
+import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
@@ -98,15 +99,8 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  // List<dynamic> addressmap = [];
   String user_key;
 
-  // Future<void> getAllAddress() async {
-  //   ProductServices _services = ProductServices();
-  //   print(user_key);
-  //   var userref = await _services.users.doc(user_key).get();
-  //   addressmap = userref["address"];
-  // }
 
   @override
   void initState() {
@@ -153,10 +147,6 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-  // void _showScaffold() {
-  //   final snackBar = SnackBar(content: Text('Hold and drag instead of tap'));
-  //   scaffoldKey.currentState?.showSnackBar(snackBar);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -173,8 +163,8 @@ class _BodyState extends State<Body> {
                     Row(
                       children: [
                         Container(
-                          height: getProportionateScreenHeight(100),
-                          width: getProportionateScreenWidth(100),
+                          height: getProportionateScreenHeight(80),
+                          width: getProportionateScreenWidth(80),
                           child: Image.network(widget.product
                               .varients[selectedFoodVariants].images[0]),
                         ),
@@ -186,12 +176,12 @@ class _BodyState extends State<Body> {
                                 widget.product.title,
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: getProportionateScreenHeight(18)),
+                                    fontSize: getProportionateScreenWidth(15)),
                               ),
                               Text(
                                 "Sold by $soldby",
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenHeight(15)),
+                                    fontSize: getProportionateScreenWidth(13)),
                               )
                             ],
                           ),
@@ -210,7 +200,7 @@ class _BodyState extends State<Body> {
                               "Deliver to",
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: getProportionateScreenHeight(23)),
+                                  fontSize: getProportionateScreenWidth(16)),
                             )),
                         SizedBox(
                           width: getProportionateScreenWidth(20),
@@ -224,7 +214,7 @@ class _BodyState extends State<Body> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenHeight(20)),
+                                    fontSize: getProportionateScreenWidth(16)),
                               ),
                               Text(
                                 SelectedAddress["adline1"] +
@@ -236,7 +226,7 @@ class _BodyState extends State<Body> {
                                     SelectedAddress["state"],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenHeight(18)),
+                                    fontSize: getProportionateScreenWidth(14)),
                               ),
                             ],
                           ),
@@ -254,7 +244,7 @@ class _BodyState extends State<Body> {
                               "Pay with",
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: getProportionateScreenHeight(23)),
+                                  fontSize: getProportionateScreenWidth(16)),
                             )),
                         SizedBox(
                           width: getProportionateScreenWidth(20),
@@ -264,7 +254,7 @@ class _BodyState extends State<Body> {
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: getProportionateScreenHeight(20)),
+                              fontSize: getProportionateScreenWidth(16)),
                         ),
                       ],
                     ),
@@ -279,7 +269,7 @@ class _BodyState extends State<Body> {
                               "Total",
                               style: TextStyle(
                                   color: Colors.blue,
-                                  fontSize: getProportionateScreenHeight(23)),
+                                  fontSize: getProportionateScreenWidth(16)),
                             )),
                         SizedBox(
                           width: getProportionateScreenWidth(20),
@@ -293,13 +283,13 @@ class _BodyState extends State<Body> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenHeight(20)),
+                                    fontSize: getProportionateScreenWidth(16)),
                               ),
                               Text(
                                 "(includes tax + Delivery: \₹$deliveryCharge)",
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenHeight(18)),
+                                    fontSize: getProportionateScreenWidth(14)),
                               ),
                             ],
                           ),
@@ -312,12 +302,12 @@ class _BodyState extends State<Body> {
                       activeThumbColor: kPrimaryColor4,
                       borderRadius: BorderRadius.circular(8),
                       activeTrackColor: kPrimaryColor3,
-                      height: getProportionateScreenHeight(80),
+                      height: getProportionateScreenHeight(70),
                       child: Text(
                         "Swipe to place your order",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(13),
+                          fontSize: getProportionateScreenWidth(12),
                         ),
                       ),
                       onSwipe: () {
@@ -328,7 +318,7 @@ class _BodyState extends State<Body> {
                     Text(
                       "By placing your order, you agree to Orev's privacy notice and conditions of use.",
                       style:
-                          TextStyle(fontSize: getProportionateScreenHeight(16)),
+                          TextStyle(fontSize: getProportionateScreenWidth(12)),
                     ),
                     SizedBox(height: getProportionateScreenHeight(10)),
                   ],
@@ -363,7 +353,6 @@ class _BodyState extends State<Body> {
             widget.product.varients[selectedFoodVariants].price * quantity;
         finalDeliveryCost = 0.0;
       }
-      // setState(() {});
     }
 
     Future<void> getAllAddress() async {
@@ -388,9 +377,6 @@ class _BodyState extends State<Body> {
         deliverable = false;
       }
       getFinalCost(SelectedAddress);
-      // setState(() {
-      //
-      // });
     }
 
     _navigateAndDisplaySelection(BuildContext context) async {
@@ -490,7 +476,7 @@ class _BodyState extends State<Body> {
                                         });
                                       },
                                       child: Container(
-                                          width: 200,
+                                          width: getProportionateScreenWidth(200),
                                           margin: EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 5),
                                           padding: EdgeInsets.symmetric(
@@ -508,59 +494,62 @@ class _BodyState extends State<Body> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Expanded(
-                                                flex: 3,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    addressmap[i]["name"],
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize:
-                                                            getProportionateScreenHeight(
-                                                                23),
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
+                                              Align(
+                                                alignment:
+                                                    Alignment.topLeft,
                                                 child: Text(
-                                                  addressmap[i]["adline1"],
+                                                  addressmap[i]["name"],
                                                   maxLines: 1,
                                                   style: TextStyle(
-                                                      color: Colors.black),
+                                                      color: Colors.black,
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              18),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  addressmap[i]["adline2"],
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                      color: Colors.black),
-                                                  overflow:
+                                              SizedBox(height: getProportionateScreenHeight(15),),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      addressmap[i]["adline1"],
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                        fontSize: getProportionateScreenWidth(14),
+                                                          color: Colors.black),
+                                                      overflow:
                                                       TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  addressmap[i]["city"] +
-                                                      " ," +
-                                                      addressmap[i]["state"],
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                      color: Colors.black),
-                                                  overflow:
+                                                    ),
+                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                    Text(
+                                                      addressmap[i]["adline2"],
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: getProportionateScreenWidth(14),
+                                                          color: Colors.black),
+                                                      overflow:
                                                       TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                    Text(
+                                                      addressmap[i]["city"] +
+                                                          " ," +
+                                                          addressmap[i]["state"],
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: getProportionateScreenWidth(14),
+                                                          color: Colors.black),
+                                                      overflow:
+                                                      TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                  ],
                                                 ),
                                               )
                                             ],
@@ -587,12 +576,18 @@ class _BodyState extends State<Body> {
                                                   getProportionateScreenWidth(
                                                       120),
                                               child: TextField(
+                                                style: TextStyle(
+                                                  fontSize: getProportionateScreenWidth(15)
+                                                ),
                                                 onChanged: (value) {
                                                   print(value);
                                                   coupon = value;
                                                 },
                                                 decoration: InputDecoration(
                                                   hintText: 'Enter code',
+                                                  hintStyle: TextStyle(
+                                                      fontSize: getProportionateScreenWidth(15)
+                                                  ),
                                                   contentPadding:
                                                       EdgeInsets.symmetric(
                                                           vertical: 10.0,
@@ -634,47 +629,61 @@ class _BodyState extends State<Body> {
                                                       10),
                                             ),
                                             Container(
+                                              height: getProportionateScreenHeight(40),
                                               width:
                                                   getProportionateScreenWidth(
                                                       50),
                                               child: FlatButton(
+                                                padding: EdgeInsets.all(0),
                                                   color: Colors.lightGreen,
                                                   onPressed: () {
                                                     setState(() {
                                                       print(coupon);
                                                     });
                                                   },
-                                                  child: Text(
-                                                    "Add",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize:
-                                                            getProportionateScreenWidth(
-                                                                10)),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      "Add",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  10)),
+                                                    ),
                                                   )),
                                             ),
                                           ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            _navigateAndDisplaySelection(
-                                                context);
-                                          },
-                                          child: Text(
-                                            "Add New Address",
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                                decoration:
-                                                    TextDecoration.underline),
+                                        SizedBox(width: getProportionateScreenWidth(30),),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                _navigateAndDisplaySelection(
+                                                    context);
+                                              },
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  "Add New Address",
+                                                  style: TextStyle(
+                                                    fontSize: getProportionateScreenWidth(13),
+                                                    color: Colors.blue,
+                                                      decoration:
+                                                          TextDecoration.underline),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                     coupon == "aryan"
-                                        ? Text("  You saved \₹$coupon_value")
+                                        ? Text("You saved \₹$coupon_value",style: TextStyle(fontSize: getProportionateScreenWidth(13),),)
                                         : coupon == ""
-                                            ? Text("")
-                                            : Text("Invalid Coupon"),
+                                            ? Text("",style: TextStyle(fontSize: getProportionateScreenWidth(13),))
+                                            : Text("Invalid Coupon",style: TextStyle(fontSize: getProportionateScreenWidth(13),)),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -694,13 +703,17 @@ class _BodyState extends State<Body> {
                                                           getProportionateScreenWidth(
                                                               13)),
                                                 ),
-                                                Checkbox(
-                                                  value: orevwallet,
-                                                  onChanged: (bool newValue) {
-                                                    setState(() {
-                                                      orevwallet = newValue;
-                                                    });
-                                                  },
+                                                Transform.scale(
+                                                  scale: getProportionateScreenHeight(1),
+                                                  child: Checkbox(
+                                                    activeColor: kPrimaryColor,
+                                                    value: orevwallet,
+                                                    onChanged: (bool newValue) {
+                                                      setState(() {
+                                                        orevwallet = newValue;
+                                                      });
+                                                    },
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -725,118 +738,126 @@ class _BodyState extends State<Body> {
                                                   ),
                                           ],
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                    width:
-                                                        getProportionateScreenWidth(
-                                                            90),
-                                                    child: Text(
-                                                      "Total",
-                                                      style: TextStyle(
-                                                          color: Colors.blue,
-                                                          fontSize:
-                                                              getProportionateScreenHeight(
-                                                                  23)),
-                                                    )),
-                                                orevwallet == false
-                                                    ? Text(
-                                                        "\₹${totalCost}",
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    20)),
-                                                      )
-                                                    : Text(
-                                                        totalCost >
-                                                                walletbalance
-                                                            ? "\₹${(totalCost) - walletbalance}"
-                                                            : "\₹0.0",
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    20)),
-                                                      ),
-                                              ],
-                                            ),
-                                            orevwallet == false
-                                                ? Column(
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
                                                     children: [
-                                                      Text(
-                                                        "(includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    14)),
-                                                      )
-                                                    ],
-                                                  )
-                                                : Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        "(includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    14)),
-                                                      ),
-                                                      Text(
-                                                        totalCost >=
-                                                                walletbalance
-                                                            ? "( - Orev Wallet: $walletbalance)"
-                                                            : "( - Orev Wallet: ${totalCost})",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    14)),
-                                                      )
+                                                      SizedBox(width: getProportionateScreenWidth(30),),
+                                                      Container(
+                                                          child: Text(
+                                                            "Total",
+                                                            style: TextStyle(
+                                                                color: Colors.blue,
+                                                                fontSize:
+                                                                    getProportionateScreenHeight(
+                                                                        23)),
+                                                          )),
+                                                      SizedBox(width: getProportionateScreenWidth(20),),
+                                                      orevwallet == false
+                                                          ? Text(
+                                                              "\₹${totalCost}",
+                                                              style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontWeight:
+                                                                      FontWeight.bold,
+                                                                  fontSize:
+                                                                      getProportionateScreenHeight(
+                                                                          20)),
+                                                            )
+                                                          : Text(
+                                                              totalCost >
+                                                                      walletbalance
+                                                                  ? "\₹${(totalCost) - walletbalance}"
+                                                                  : "\₹0.0",
+                                                              style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontWeight:
+                                                                      FontWeight.bold,
+                                                                  fontSize:
+                                                                      getProportionateScreenHeight(
+                                                                          20)),
+                                                            ),
                                                     ],
                                                   ),
-                                          ],
+                                                  orevwallet == false
+                                                      ? Column(
+                                                          children: [
+                                                            Text(
+                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      getProportionateScreenWidth(
+                                                                          13)),
+                                                            )
+                                                          ],
+                                                        )
+                                                      : Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment.end,
+                                                          children: [
+                                                            Text(
+                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      getProportionateScreenWidth(
+                                                                          13)),
+                                                            ),
+                                                            Text(
+                                                              totalCost >=
+                                                                      walletbalance
+                                                                  ? "( - Orev Wallet: $walletbalance)"
+                                                                  : "( - Orev Wallet: ${totalCost})",
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      getProportionateScreenWidth(
+                                                                          13)),
+                                                            )
+                                                          ],
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
+                                    SizedBox(height: getProportionateScreenHeight(20),),
                                     deliverable == true
                                         ? Align(
-                                            alignment: Alignment.centerLeft,
+                                            alignment: Alignment.center,
                                             child: Text(
                                               "",
                                               style: TextStyle(
                                                 fontSize:
                                                     getProportionateScreenWidth(
-                                                        12),
+                                                        13),
                                                 color: Colors.red,
                                               ),
                                             ),
                                           )
                                         : Align(
-                                            alignment: Alignment.centerLeft,
+                                            alignment: Alignment.center,
                                             child: Text(
                                               "This product is not availabe in the selected location\n",
                                               style: TextStyle(
                                                 fontSize:
                                                     getProportionateScreenWidth(
-                                                        12),
+                                                        13),
                                                 color: Colors.red,
                                               ),
                                             ),
@@ -988,217 +1009,227 @@ class _BodyState extends State<Body> {
       // list.add(SizedBox(width: getProportionateScreenWidth(20)));
     }
 
+
     return StatefulBuilder(
       builder: (context, StateSetter setState) {
-        return DirectSelectContainer(
-          child: ScrollConfiguration(
-            behavior: ScrollBehavior(),
-            child: GlowingOverscrollIndicator(
-              axisDirection: AxisDirection.down,
-              color: kPrimaryColor2,
-              child: ListView(
-                children: [
-                  ProductImages(
-                      key: UniqueKey(),
-                      product: widget.product,
-                      currentVarient: selectedFoodVariants),
-                  TopRoundedContainer(
-                    color: Colors.white,
-                    child: Column(
+        return Column(
+          children: [
+            SizedBox(height: getProportionateScreenHeight(10)),
+            HomeHeader(),
+            SizedBox(height: getProportionateScreenHeight(10)),
+            Expanded(
+              child: DirectSelectContainer(
+                child: ScrollConfiguration(
+                  behavior: ScrollBehavior(),
+                  child: GlowingOverscrollIndicator(
+                    axisDirection: AxisDirection.down,
+                    color: kPrimaryColor2,
+                    child: ListView(
                       children: [
-                        ProductDescription(
-                          key: UniqueKey(),
-                          product: widget.product,
-                          currentVarient: selectedFoodVariants,
-                          quantity: quantity,
-                        ),
+                        ProductImages(
+                            key: UniqueKey(),
+                            product: widget.product,
+                            currentVarient: selectedFoodVariants),
                         TopRoundedContainer(
-                          color: Color(0xFFF6F7F9),
+                          color: Colors.white,
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
-                                child: Row(
-                                  // mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    Expanded(
-                                        child: DirectSelectList<String>(
-                                            values: foodVariantsTitles,
-                                            defaultItemIndex:
-                                                selectedFoodVariants,
-                                            itemBuilder: (String value) =>
-                                                getDropDownMenuItem(value),
-                                            focusedItemDecoration:
-                                                getDslDecoration(),
-                                            onItemSelectedListener:
-                                                (item, index, context) {
-                                              selectedFoodVariants = index;
+                              ProductDescription(
+                                key: UniqueKey(),
+                                product: widget.product,
+                                currentVarient: selectedFoodVariants,
+                                quantity: quantity,
+                              ),
+                              TopRoundedContainer(
+                                color: Color(0xFFF6F7F9),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: Row(
+                                        // mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          Expanded(
+                                              child: DirectSelectList<String>(
+                                                  values: foodVariantsTitles,
+                                                  defaultItemIndex:
+                                                      selectedFoodVariants,
+                                                  itemBuilder: (String value) =>
+                                                      getDropDownMenuItem(value),
+                                                  focusedItemDecoration:
+                                                      getDslDecoration(),
+                                                  onItemSelectedListener:
+                                                      (item, index, context) {
+                                                    selectedFoodVariants = index;
+                                                    setState(() {
+                                                      print(selectedFoodVariants);
+                                                    });
+                                                    print(selectedFoodVariants);
+                                                  })),
+                                          // SizedBox(width: getProportionateScreenWidth(100),),
+                                          Icon(
+                                            Icons.unfold_more,
+                                            color: Colors.black,
+                                          ),
+                                          SizedBox(
+                                            width: getProportionateScreenWidth(15),
+                                          ),
+                                          RoundedIconBtn(
+                                            icon: Icons.remove,
+                                            press: () {
+                                              if (quantity != 1) {
+                                                setState(() {
+                                                  quantity--;
+                                                });
+                                              }
+                                            },
+                                          ),
+                                          SizedBox(
+                                              width: getProportionateScreenWidth(20)),
+                                          Text(
+                                            "x " + quantity.toString(),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize:
+                                                    getProportionateScreenHeight(20)),
+                                          ),
+                                          SizedBox(
+                                              width: getProportionateScreenWidth(20)),
+                                          RoundedIconBtn(
+                                            icon: Icons.add,
+                                            showShadow: true,
+                                            press: () {
                                               setState(() {
-                                                print(selectedFoodVariants);
+                                                quantity++;
                                               });
-                                              print(selectedFoodVariants);
-                                            })),
-                                    // SizedBox(width: getProportionateScreenWidth(100),),
-                                    Icon(
-                                      Icons.unfold_more,
-                                      color: Colors.black,
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: getProportionateScreenWidth(15),
-                                    ),
-                                    RoundedIconBtn(
-                                      icon: Icons.remove,
-                                      press: () {
-                                        if (quantity != 1) {
-                                          setState(() {
-                                            quantity--;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                    SizedBox(
-                                        width: getProportionateScreenWidth(20)),
-                                    Text(
-                                      "x " + quantity.toString(),
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenHeight(20)),
-                                    ),
-                                    SizedBox(
-                                        width: getProportionateScreenWidth(20)),
-                                    RoundedIconBtn(
-                                      icon: Icons.add,
-                                      showShadow: true,
-                                      press: () {
-                                        setState(() {
-                                          quantity++;
-                                        });
-                                      },
-                                    ),
+                                    !widget.product.varients[selectedFoodVariants]
+                                                .inStock ==
+                                            false
+                                        ? TopRoundedContainer(
+                                            color: Colors.white,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                left: SizeConfig.screenWidth * 0.1,
+                                                right: SizeConfig.screenWidth * 0.1,
+                                                bottom:
+                                                    getProportionateScreenWidth(30),
+                                                top: getProportionateScreenWidth(10),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  DefaultButton(
+                                                    color: kPrimaryColor2,
+                                                    text: "Buy Now",
+                                                    press: () {
+                                                      setState(() {});
+                                                      if (addressmap.isEmpty) {
+                                                        Navigator.pushNamed(context,
+                                                            Address.routeName);
+                                                      } else {
+                                                        _showDialog();
+                                                      }
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        getProportionateScreenHeight(
+                                                            15),
+                                                  ),
+                                                  DefaultButton(
+                                                    text: "Add To Cart",
+                                                    press: () {
+                                                      addToCart();
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : TopRoundedContainer(
+                                            color: Colors.white,
+                                            child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  left: SizeConfig.screenWidth * 0.1,
+                                                  right: SizeConfig.screenWidth * 0.1,
+                                                  bottom:
+                                                      getProportionateScreenWidth(30),
+                                                  top:
+                                                      getProportionateScreenWidth(10),
+                                                ),
+                                                child: DefaultButton(
+                                                  color: kSecondaryColor,
+                                                  text: "Out of Stock",
+                                                  press: () {},
+                                                )),
+                                          ),
                                   ],
                                 ),
                               ),
-                              !widget.product.varients[selectedFoodVariants]
-                                          .inStock ==
-                                      false
-                                  ? TopRoundedContainer(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: SizeConfig.screenWidth * 0.1,
-                                          right: SizeConfig.screenWidth * 0.1,
-                                          bottom:
-                                              getProportionateScreenWidth(30),
-                                          top: getProportionateScreenWidth(10),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            DefaultButton(
-                                              color: kPrimaryColor2,
-                                              text: "Buy Now",
-                                              press: () {
-                                                setState(() {});
-                                                if (addressmap.isEmpty) {
-                                                  Navigator.pushNamed(context,
-                                                      Address.routeName);
-                                                } else {
-                                                  _showDialog();
-                                                }
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height:
-                                                  getProportionateScreenHeight(
-                                                      15),
-                                            ),
-                                            DefaultButton(
-                                              text: "Add To Cart",
-                                              press: () {
-                                                addToCart();
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : TopRoundedContainer(
-                                      color: Colors.white,
-                                      child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: SizeConfig.screenWidth * 0.1,
-                                            right: SizeConfig.screenWidth * 0.1,
-                                            bottom:
-                                                getProportionateScreenWidth(30),
-                                            top:
-                                                getProportionateScreenWidth(10),
-                                          ),
-                                          child: DefaultButton(
-                                            color: kSecondaryColor,
-                                            text: "Out of Stock",
-                                            press: () {},
-                                          )),
-                                    ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 20),
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: getProportionateScreenWidth(15),
-                              bottom: getProportionateScreenWidth(5)),
-                          child: Text(
-                            "You Might Also Like",
-                            style: smallerheadingStyle,
-                          ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        ScrollConfiguration(
-                          behavior: ScrollBehavior(),
-                          child: GlowingOverscrollIndicator(
-                            axisDirection: AxisDirection.right,
-                            color: kPrimaryColor2,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  ...List.generate(
-                                    widget.product.youmayalsolike.length,
-                                    (index) {
-                                      if (youMayAlsoLikeList.length == 0) {
-                                        return SizedBox.shrink();
-                                      } else {
-                                        return ProductCard(
-                                            product: youMayAlsoLikeList[index]);
-                                      }
-                                      // here by default width and height is 0
-                                    },
-                                  ),
-                                  SizedBox(
-                                      width: getProportionateScreenWidth(20)),
-                                ],
+                        Container(
+                          padding: EdgeInsets.only(bottom: 20),
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: getProportionateScreenWidth(15),
+                                    bottom: getProportionateScreenWidth(5)),
+                                child: Text(
+                                  "You Might Also Like",
+                                  style: smallerheadingStyle,
+                                ),
                               ),
-                            ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              ScrollConfiguration(
+                                behavior: ScrollBehavior(),
+                                child: GlowingOverscrollIndicator(
+                                  axisDirection: AxisDirection.right,
+                                  color: kPrimaryColor2,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        ...List.generate(
+                                          widget.product.youmayalsolike.length,
+                                          (index) {
+                                            if (youMayAlsoLikeList.length == 0) {
+                                              return SizedBox.shrink();
+                                            } else {
+                                              return ProductCard(
+                                                  product: youMayAlsoLikeList[index]);
+                                            }
+                                            // here by default width and height is 0
+                                          },
+                                        ),
+                                        SizedBox(
+                                            width: getProportionateScreenWidth(20)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         );
       },
     );
