@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orev/screens/home/components/home_header.dart';
+import '../../../constants.dart';
 import 'scrollview.dart';
 import '../../../size_config.dart';
 
@@ -40,29 +41,42 @@ class _BodyState extends State<Body> {
     }
 
     return SafeArea(
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            children: [
-              SizedBox(height: getProportionateScreenHeight(20)),
-              HomeHeader(
-                key: UniqueKey(),
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return Column(
+          children: [
+            SizedBox(height: getProportionateScreenHeight(20)),
+            HomeHeader(
+              key: UniqueKey(),
+            ),
+            SizedBox(height: getProportionateScreenWidth(10)),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      children: [
+                        AllItems(
+                          categoryId: categoryId,
+                          title: widget.title,
+                          notifyParent: refresh,
+                          key: _myWidgetState,
+                          scrollController: _scrollController,
+                        ),
+                        SizedBox(height: getProportionateScreenWidth(30)),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              SizedBox(height: getProportionateScreenWidth(10)),
-              AllItems(
-                categoryId: categoryId,
-                title: widget.title,
-                notifyParent: refresh,
-                key: _myWidgetState,
-                scrollController: _scrollController,
-              ),
-              SizedBox(height: getProportionateScreenWidth(30)),
-            ],
-          );
-        }),
-      ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }
