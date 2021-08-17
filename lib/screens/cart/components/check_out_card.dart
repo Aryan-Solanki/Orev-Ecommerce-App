@@ -41,31 +41,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   String user_key;
 
-  // Future<void> getAllCartProducts() async {
-  //   for (var k in widget.keys) {
-  //     ProductServices _services = new ProductServices();
-  //     UserServices _user_services = new UserServices();
-  //     Product product = await _services.getProduct(k["productId"]);
-  //     var checklist =
-  //         await getVarientNumber(k["varientNumber"], k["productId"]);
-  //     var xx = checklist[0];
-  //     var y = checklist[1];
-  //     if (!y) {
-  //       continue;
-  //     }
-  //     CartList.add(new Cart(
-  //         product: product,
-  //         varientNumber: product.varients[xx].id,
-  //         numOfItem: k["qty"]));
-  //     if (_user_services.isAvailableOnUserLocation()) {
-  //       totalamt += product.varients[xx].price * k["qty"];
-  //     }
-  //   }
-  //   setState(() {
-  //     print(totalamt);
-  //   });
-  // }
-
   Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
     print(user_key);
@@ -83,12 +58,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
     }
     keys.removeAt(ind);
     await _services.cart.doc(user_key).update({'cartItems': keys});
-    // final snackBar = SnackBar(
-    //   content: Text('Item removed from Cart'),
-    //   backgroundColor: kPrimaryColor,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
   Future<void> getAllCartProducts() async {
@@ -171,14 +140,21 @@ class _CheckoutCardState extends State<CheckoutCard> {
                   ),
                   Spacer(),
                   Container(
+                    height: getProportionateScreenHeight(50),
                     width: getProportionateScreenWidth(120),
                     child: TextField(
+                      style: TextStyle(
+                          fontSize: getProportionateScreenWidth(12)
+                      ),
                       onChanged: (value) {
                         print(value);
                         coupon = value;
                       },
                       decoration: InputDecoration(
                         hintText: 'Enter code',
+                        hintStyle: TextStyle(
+                          fontSize: getProportionateScreenWidth(12)
+                        ),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         border: OutlineInputBorder(
@@ -212,10 +188,11 @@ class _CheckoutCardState extends State<CheckoutCard> {
                   Text.rich(
                     TextSpan(
                       text: "Total:\n",
+                      style: TextStyle(fontSize: getProportionateScreenWidth(15)),
                       children: [
                         TextSpan(
                           text: "\₹$totalamt",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          style: TextStyle(fontSize: getProportionateScreenWidth(18), color: Colors.black),
                         ),
                       ],
                     ),

@@ -80,12 +80,6 @@ class _CartCardState extends State<CartCard> {
     keys.removeAt(ind);
     await _services.cart.doc(user_key).update({'cartItems': keys});
     widget.notifyParent();
-    // final snackBar = SnackBar(
-    //   content: Text('Item removed from Cart'),
-    //   backgroundColor: kPrimaryColor,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
   @override
@@ -110,11 +104,10 @@ class _CartCardState extends State<CartCard> {
           Row(
             children: [
               SizedBox(
-                width: 88,
+                width: getProportionateScreenWidth(88),
                 child: AspectRatio(
                   aspectRatio: 0.88,
                   child: Container(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(10)),
                     decoration: BoxDecoration(
                       color: Color(0xFFF5F6F9),
                       borderRadius: BorderRadius.circular(15),
@@ -133,7 +126,7 @@ class _CartCardState extends State<CartCard> {
                       widget.cart.product.title,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenHeight(20)),
+                          fontSize: getProportionateScreenWidth(15)),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -141,7 +134,7 @@ class _CartCardState extends State<CartCard> {
                     Text(
                       "${widget.cart.product.varients[selectedVarient].title}",
                       style:
-                          TextStyle(fontSize: getProportionateScreenHeight(15)),
+                          TextStyle(fontSize: getProportionateScreenWidth(13)),
                     ),
                     Text.rich(
                       TextSpan(
@@ -150,11 +143,15 @@ class _CartCardState extends State<CartCard> {
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            fontSize: getProportionateScreenHeight(20)),
+                            fontSize: getProportionateScreenWidth(18)),
                         children: [
                           TextSpan(
                               text: " x${quantity}",
-                              style: Theme.of(context).textTheme.bodyText1),
+                              style: TextStyle(
+                                color: kTextColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: getProportionateScreenWidth(14))
+                          ),
                         ],
                       ),
                     ),
@@ -215,7 +212,7 @@ class _CartCardState extends State<CartCard> {
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kPrimaryColor,
-                      fontSize: getProportionateScreenHeight(20)),
+                      fontSize: getProportionateScreenWidth(18)),
                 ),
               ),
             ],

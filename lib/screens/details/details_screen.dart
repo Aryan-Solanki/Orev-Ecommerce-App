@@ -29,10 +29,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     final ProductDetailsArguments agrs =
         ModalRoute.of(context).settings.arguments;
 
-    return Scaffold(
-      backgroundColor: Color(0xFFF5F6F9),
-      appBar: CustomAppBar(rating: agrs.product.rating),
-      body: Body(product: agrs.product, varientNumberCart: agrs.varientCartNum),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xFFF5F6F9),
+        body: Body(product: agrs.product, varientNumberCart: agrs.varientCartNum),
+      ),
     );
   }
 }

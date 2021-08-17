@@ -195,8 +195,10 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                             width: getProportionateScreenWidth(150),
                             child: Text(
                               widget.product.title,
-                              style: TextStyle(color: Colors.black),
-                              maxLines: 2,
+                              style: TextStyle(color: Colors.black,
+                                fontSize: getProportionateScreenWidth(14),
+                              ),
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -206,7 +208,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                               Text(
                                 "\₹${widget.product.varients[defaultVarient].price}",
                                 style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(17),
+                                  fontSize: getProportionateScreenWidth(15),
                                   fontWeight: FontWeight.w600,
                                   color: kPrimaryColor,
                                 ),
@@ -284,7 +286,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                 ),
               ),
             ),
-            InkWell(
+            widget.like?InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () {
                 setState(() {
@@ -305,8 +307,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                   }
                 });
               },
-              child: widget.like
-                  ? Container(
+              child:Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
@@ -322,10 +323,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                             : Color(0xFFDBDEE4),
                       ),
                     )
-                  : SizedBox(
-                      height: 1,
-                    ),
-            ),
+            ):Center(),
           ],
         ));
   }
