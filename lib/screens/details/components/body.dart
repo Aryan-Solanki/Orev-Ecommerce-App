@@ -154,16 +154,13 @@ class _BodyState extends State<Body> {
       slideDialog.showSlideDialog(
           context: context,
           child: Expanded(
-            child: ScrollConfiguration(
-              behavior: ScrollBehavior(),
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color: kPrimaryColor2,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
-                    child: Column(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
                         Container(
                           height: getProportionateScreenHeight(80),
@@ -258,24 +255,18 @@ class _BodyState extends State<Body> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: getProportionateScreenWidth(16)),
-
                         ),
-                        Row(
-                          children: [
-                            Container(
-                                width: getProportionateScreenWidth(90),
-                                child: Text(
-                                  "Pay with",
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize:
-                                          getProportionateScreenHeight(23)),
-                                )),
-                            SizedBox(
-                              width: getProportionateScreenWidth(20),
-                            ),
-                            Text(
-                              "Cash on Delivery (COD)",
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            width: getProportionateScreenWidth(90),
+                            child: Text(
+                              "Total",
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: getProportionateScreenWidth(16)),
@@ -300,26 +291,8 @@ class _BodyState extends State<Body> {
                                 style: TextStyle(
                                     fontSize: getProportionateScreenWidth(14)),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: getProportionateScreenHeight(35)),
-                        SwipeButton(
-                          thumb: Icon(Icons.double_arrow_outlined),
-                          activeThumbColor: kPrimaryColor4,
-                          borderRadius: BorderRadius.circular(8),
-                          activeTrackColor: kPrimaryColor3,
-                          height: getProportionateScreenHeight(80),
-                          child: Text(
-                            "Swipe to place your order",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: getProportionateScreenWidth(13),
-                            ),
+                            ],
                           ),
-                          onSwipe: () {
-                            print("Order Placed");
-                          },
                         ),
                       ],
                     ),
@@ -347,7 +320,8 @@ class _BodyState extends State<Body> {
                       style:
                           TextStyle(fontSize: getProportionateScreenWidth(12)),
                     ),
-                  ),
+                    SizedBox(height: getProportionateScreenHeight(10)),
+                  ],
                 ),
               ),
             ),
@@ -433,38 +407,31 @@ class _BodyState extends State<Body> {
           child: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollBehavior(),
-                child: GlowingOverscrollIndicator(
-                  axisDirection: AxisDirection.down,
-                  color: kPrimaryColor2,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Choose your location",
-                              style: TextStyle(
-                                fontSize: getProportionateScreenWidth(23),
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Choose your location",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(23),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(height: getProportionateScreenHeight(5)),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Choose a delivery address for your product..",
-                              style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12),
-                                color: Color(0xff565656),
-                              ),
-                            ),
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(5)),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Choose a delivery address for your product..",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(12),
+                            color: Color(0xff565656),
                           ),
                         ),
                       ),
@@ -631,27 +598,27 @@ class _BodyState extends State<Body> {
                                                             Radius.circular(
                                                                 10.0)),
                                                   ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Text(
-                                                      addressmap[i]["adline1"],
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.lightGreen,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
                                                   ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Text(
-                                                      addressmap[i]["adline2"],
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.lightGreen,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
                                                   ),
                                                 ),
                                               ),
@@ -723,58 +690,18 @@ class _BodyState extends State<Body> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
-                                                Container(
-                                                  width:
-                                                      getProportionateScreenWidth(
-                                                          120),
-                                                  child: TextField(
-                                                    onChanged: (value) {
-                                                      print(value);
-                                                      coupon = value;
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Enter code',
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.0,
-                                                              horizontal: 20.0),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors
-                                                                .lightGreen,
-                                                            width: 1.0),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors
-                                                                .lightGreen,
-                                                            width: 2.0),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                Text(
+                                                  "Use Orev Wallet",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              13)),
                                                 ),
                                                 Transform.scale(
                                                   scale: getProportionateScreenHeight(1),
@@ -790,19 +717,25 @@ class _BodyState extends State<Body> {
                                                 ),
                                               ],
                                             ),
-                                            GestureDetector(
-                                              onTap: () async {
-                                                _navigateAndDisplaySelection(
-                                                    context);
-                                              },
-                                              child: Text(
-                                                "Add New Address",
-                                                style: TextStyle(
-                                                    color: Colors.blue,
-                                                    decoration: TextDecoration
-                                                        .underline),
-                                              ),
-                                            ),
+                                            orevwallet == false
+                                                ? Text(
+                                                    "Balance: ₹$walletbalance",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                12),
+                                                        color: kPrimaryColor),
+                                                  )
+                                                : Text(
+                                                    totalCost >= walletbalance
+                                                        ? "Balance: ₹0.0"
+                                                        : "Balance: ₹${walletbalance - (totalCost)}",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                12),
+                                                        color: kPrimaryColor),
+                                                  ),
                                           ],
                                         ),
                                         Expanded(
@@ -927,41 +860,39 @@ class _BodyState extends State<Body> {
                                                         13),
                                                 color: Colors.red,
                                               ),
-                                        SizedBox(
-                                          height:
-                                              getProportionateScreenHeight(10),
-                                        ),
-                                        deliverable == true
-                                            ? orevwallet == true
+                                            ),
+                                          ),
+                                    deliverable == true
+                                        ? DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kPrimaryColor2,
+                                            text: orevwallet == true
                                                 ? totalCost <= walletbalance
-                                                    ? Center()
-                                                    : DefaultButton(
-                                                        textheight: 15,
-                                                        colour: Colors.white,
-                                                        height: 70,
-                                                        color: kPrimaryColor,
-                                                        text: "Pay Online",
-                                                        press: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        OrderDetails(
-                                                                          key:
-                                                                              UniqueKey(),
-                                                                          product:
-                                                                              widget.product,
-                                                                          currentVarient:
-                                                                              selectedFoodVariants,
-                                                                          quantity:
-                                                                              quantity,
-                                                                          selectedaddress:
-                                                                              SelectedAddress,
-                                                                        )),
-                                                          );
-                                                        },
-                                                      )
+                                                    ? "Place Order"
+                                                    : "Cash on Delivery (COD)"
+                                                : "Cash on Delivery (COD)",
+                                            press: () {
+                                              Navigator.pop(context);
+                                              _showCODDialog();
+                                            },
+                                          )
+                                        : DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kSecondaryColor,
+                                            text: "Cash on Delivery (COD)",
+                                            press: () {},
+                                          ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(10),
+                                    ),
+                                    deliverable == true
+                                        ? orevwallet == true
+                                            ? totalCost <= walletbalance
+                                                ? Center()
                                                 : DefaultButton(
                                                     textheight: 15,
                                                     colour: Colors.white,
@@ -986,28 +917,51 @@ class _BodyState extends State<Body> {
                                                                       SelectedAddress,
                                                                 )),
                                                       );
-                                                    })
+                                                    },
+                                                  )
                                             : DefaultButton(
                                                 textheight: 15,
-                                                // colour: Colors.white,
+                                                colour: Colors.white,
                                                 height: 70,
-                                                color: kSecondaryColor,
+                                                color: kPrimaryColor,
                                                 text: "Pay Online",
-                                                press: () {},
-                                              ),
-                                      ],
-                                    );
-                                  }),
-                                ],
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(10),
-                          ),
-                        ],
+                                                press: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderDetails(
+                                                              key: UniqueKey(),
+                                                              product: widget
+                                                                  .product,
+                                                              currentVarient:
+                                                                  selectedFoodVariants,
+                                                              quantity:
+                                                                  quantity,
+                                                              selectedaddress:
+                                                                  SelectedAddress,
+                                                            )),
+                                                  );
+                                                })
+                                        : DefaultButton(
+                                            textheight: 15,
+                                            // colour: Colors.white,
+                                            height: 70,
+                                            color: kSecondaryColor,
+                                            text: "Pay Online",
+                                            press: () {},
+                                          ),
+                                  ],
+                                );
+                              }),
+                            ],
+                          );
+                        },
                       ),
-                    ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                    ],
                   ),
                 ),
               ),
