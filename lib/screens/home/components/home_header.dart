@@ -9,8 +9,10 @@ import 'search_field.dart';
 
 class HomeHeader extends StatefulWidget {
   final bool simplebutton;
+  final Function func;
   const HomeHeader({
-    bool this.simplebutton=true,
+    bool this.simplebutton = true,
+    @required this.func,
     Key key,
   }) : super(key: key);
 
@@ -42,13 +44,20 @@ class _HomeHeaderState extends State<HomeHeader> {
   @override
   Widget build(BuildContext context) {
     getCartNumber();
+    function(value, boo) {
+      widget.func(value, boo);
+    }
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SearchField(simplebutton: widget.simplebutton,),
+          SearchField(
+            simplebutton: widget.simplebutton,
+            func: function,
+          ),
           numberOfItems == 0
               ? IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
