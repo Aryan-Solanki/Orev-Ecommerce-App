@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:orev/models/Product.dart';
+import 'package:orev/screens/home/components/home_header.dart';
+import '../../../constants.dart';
+import 'scrollview.dart';
+import '../../../size_config.dart';
+
+class Body extends StatefulWidget {
+  final List<Product> productList;
+  final String title;
+  Body({this.productList, this.title});
+  @override
+  _BodyState createState() => _BodyState(productList: productList);
+}
+
+class _BodyState extends State<Body> {
+  final List<Product> productList;
+  _BodyState({this.productList});
+
+  @override
+  Widget build(BuildContext context) {
+    refresh() {
+      setState(() {});
+    }
+
+    return SafeArea(
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return Column(
+          children: [
+            SizedBox(height: getProportionateScreenHeight(20)),
+            HomeHeader(
+              key: UniqueKey(),
+            ),
+            SizedBox(height: getProportionateScreenWidth(10)),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        AllItems(
+                          productList: productList,
+                          title: widget.title,
+                          notifyParent: refresh,
+                        ),
+                        SizedBox(height: getProportionateScreenWidth(30)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
+    );
+  }
+}

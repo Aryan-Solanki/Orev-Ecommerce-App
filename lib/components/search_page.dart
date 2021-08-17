@@ -5,6 +5,7 @@ import 'package:orev/components/AlgoliaApplication.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/home/components/home_header.dart';
+import 'package:orev/screens/searchpage/searchpage.dart';
 import 'package:orev/services/product_services.dart';
 
 import '../size_config.dart';
@@ -19,6 +20,8 @@ class _SearchPageState extends State<SearchPage> {
   final Algolia _algoliaApp = AlgoliaApplication.algolia;
   String _searchTerm = "";
 
+  List<Product> productList = [];
+
   Future<List<AlgoliaObjectSnapshot>> _operation(String input) async {
     AlgoliaQuery query = _algoliaApp.instance.index("products").search(input);
     AlgoliaQuerySnapshot querySnap = await query.getObjects();
@@ -28,8 +31,17 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    function(value) {
+    function(value, boo) {
       setState(() => _searchTerm = value);
+      if (boo) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SearchResultsPage(
+                      productList: productList,
+                      title: value,
+                    )));
+      }
     }
 
     return SafeArea(
@@ -58,14 +70,18 @@ class _SearchPageState extends State<SearchPage> {
                       else {
                         List<AlgoliaObjectSnapshot> currSearchStuff =
                             snapshot.data;
-
+                        ProductServices _services = ProductServices();
+                        for (var pr in currSearchStuff) {
+                          productList
+                              .add(_services.getProductSearchPage(pr.data));
+                        }
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
                             return Container();
                           default:
                             if (snapshot.hasError)
                               return new Text('Error: ${snapshot.error}');
-                            else
+                            else {
                               return CustomScrollView(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
@@ -77,9 +93,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ? DisplaySearchResult(
                                                 title: currSearchStuff[index]
                                                     .data["title"],
-                                                productId:
-                                                    currSearchStuff[index]
-                                                        .data["productId"],
+                                                product: productList[index],
                                               )
                                             : Container();
                                       },
@@ -88,6 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                                   ),
                                 ],
                               );
+                            }
                         }
                       }
                     },
@@ -104,27 +119,14 @@ class _SearchPageState extends State<SearchPage> {
 
 class DisplaySearchResult extends StatefulWidget {
   final String title;
-  final String productId;
+  final Product product;
 
-  DisplaySearchResult({Key key, this.title, this.productId}) : super(key: key);
+  DisplaySearchResult({Key key, this.title, this.product}) : super(key: key);
   @override
   _DisplaySearchResultState createState() => _DisplaySearchResultState();
 }
 
 class _DisplaySearchResultState extends State<DisplaySearchResult> {
-  Product product;
-
-  getProduct(productId) async {
-    ProductServices _services = ProductServices();
-    product = await _services.getProduct(productId);
-  }
-
-  @override
-  void initState() {
-    getProduct(widget.productId);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -146,7 +148,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                   Navigator.pushNamed(
                     context,
                     DetailsScreen.routeName,
-                    arguments: ProductDetailsArguments(product: product),
+                    arguments: ProductDetailsArguments(product: widget.product),
                   );
                 },
                 child: Text(

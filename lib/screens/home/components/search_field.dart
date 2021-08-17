@@ -34,6 +34,8 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
+    String title = "";
+
     return widget.simplebutton == true
         ? GestureDetector(
             onTap: () {
@@ -74,7 +76,13 @@ class _SearchFieldState extends State<SearchField> {
             child: TextField(
               style: TextStyle(fontSize: getProportionateScreenWidth(15)),
               focusNode: focusNode,
-              onChanged: (value) => widget.func(value),
+              onChanged: (value) {
+                widget.func(value, false);
+                title = value;
+              },
+              onSubmitted: (value) {
+                widget.func(value, true);
+              },
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenWidth(13)),

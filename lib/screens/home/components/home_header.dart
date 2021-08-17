@@ -44,8 +44,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   @override
   Widget build(BuildContext context) {
     getCartNumber();
-    function(value) {
-      widget.func(value);
+    function(value, boo) {
+      widget.func(value, boo);
     }
 
     return Padding(
