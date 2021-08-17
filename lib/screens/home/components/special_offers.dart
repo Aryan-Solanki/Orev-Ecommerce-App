@@ -136,7 +136,10 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Products")
+                        TextSpan(text: "$numOfBrands Products",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(10),
+                          ),)
                       ],
                     ),
                   ),

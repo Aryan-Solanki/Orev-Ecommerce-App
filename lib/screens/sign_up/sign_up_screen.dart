@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../size_config.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -8,7 +9,9 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        title: Text("Sign Up",style: TextStyle(
+          fontSize: getProportionateScreenWidth(18),
+        ),),
       ),
       body: Body(),
     );

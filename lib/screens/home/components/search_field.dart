@@ -48,7 +48,7 @@ class _SearchFieldState extends State<SearchField> {
         ),
         child: Row(
           children: [
-            Icon(Icons.search),
+            Icon(Icons.search,size: getProportionateScreenWidth(18),color: kTextColor,),
             SizedBox(width: getProportionateScreenWidth(10),),
             Text("Search product",style: TextStyle(fontSize: getProportionateScreenWidth(15)),)
           ],
@@ -61,17 +61,18 @@ class _SearchFieldState extends State<SearchField> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
+        style: TextStyle(fontSize: getProportionateScreenWidth(15)),
         focusNode: focusNode,
         onChanged: (value) => print(value),
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20),
-                vertical: getProportionateScreenWidth(9)),
+            contentPadding: EdgeInsets.symmetric(vertical:getProportionateScreenWidth(13)),
+                // horizontal: getProportionateScreenWidth(20),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
             hintText: "Search product",
-            prefixIcon: Icon(Icons.search)),
+            hintStyle:TextStyle(fontSize: getProportionateScreenWidth(15)),
+            prefixIcon: Icon(Icons.search,size: getProportionateScreenWidth(18))),
       ),
     );
 

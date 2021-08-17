@@ -47,7 +47,7 @@ class _SectionTitleState extends State<SectionTitle> {
                 },
                 child: Text(
                   "See More",
-                  style: TextStyle(color: Color(0xFFBBBBBB)),
+                  style: TextStyle(color: Color(0xFFBBBBBB),fontSize: getProportionateScreenWidth(12)),
                 ),
               )
             : Text(""),

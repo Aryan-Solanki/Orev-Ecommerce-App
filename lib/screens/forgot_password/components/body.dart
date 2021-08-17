@@ -171,31 +171,35 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: Column(
-              children: [
-                Text(
-                  "One Time Password",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: getProportionateScreenWidth(27),
-                      fontWeight: FontWeight.bold,
+          child: Expanded( 
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Column(
+                  children: [
+                    Text(
+                      "One Time Password",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenWidth(27),
+                          fontWeight: FontWeight.bold,
+                        ),
                     ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    boxedPinPutWithPreFilledSymbol(),
+                    SizedBox(height: SizeConfig.screenHeight * 0.05),
+                    Text(
+                      "Please enter the OTP that you have received on your provided phone number $number",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.1),
+                  ],
                 ),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                boxedPinPutWithPreFilledSymbol(),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                Text(
-                  "Please enter the OTP that you have received on your provided phone number $number",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.1),
-              ],
+              ),
             ),
           ));
     }
@@ -231,6 +235,9 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     return Container(
       height: getProportionateScreenHeight(116),
       child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
         maxLength: 10,
         keyboardType: TextInputType.phone,
         onSaved: (newValue) => number = newValue,
@@ -262,7 +269,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenWidth(15),
           ),
           hintStyle: TextStyle(
             fontSize: getProportionateScreenWidth(16),

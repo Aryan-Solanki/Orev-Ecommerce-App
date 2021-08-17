@@ -30,6 +30,7 @@ class _BodyState extends State<Body> {
             arguments: ProductDetailsArguments(product: product));
       },
       child: Container(
+        width: double.maxFinite,
         margin: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(20),
             vertical: getProportionateScreenHeight(15)),

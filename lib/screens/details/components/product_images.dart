@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/models/Product.dart';
 
 import '../../../constants.dart';
@@ -43,9 +44,10 @@ class _ProductImagesState extends State<ProductImages> {
                     imageUrl: widget
                         .product.varients[currentVarient].images[selectedImage],
                     placeholder: (context, url) =>
-                        new CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor2),
-                    ),
+                        new LoadingSkeleton(
+                          width: getProportionateScreenWidth(1000),
+                          height: getProportionateScreenHeight(1000),
+                        ),
                     errorWidget: (context, url, error) => new Icon(Icons.error),
                   ),
                 )),

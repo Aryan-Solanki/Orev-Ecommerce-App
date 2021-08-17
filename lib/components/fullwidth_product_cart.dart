@@ -170,7 +170,6 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                         color: kSecondaryColor.withOpacity(0.1),
                       ),
                       width: getProportionateScreenWidth(160),
-                      padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                       child: Hero(
                         tag: widget.product.id.toString(),
                         child: CachedNetworkImage(
@@ -179,8 +178,8 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                           imageUrl:
                               widget.product.varients[defaultVarient].images[0],
                           placeholder: (context, url) => new LoadingSkeleton(
-                            width: getProportionateScreenWidth(160),
-                            height: getProportionateScreenWidth(150),
+                            width: getProportionateScreenWidth(500),
+                            height: getProportionateScreenHeight(500),
                           ),
                           errorWidget: (context, url, error) =>
                               new Icon(Icons.error),

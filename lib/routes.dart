@@ -27,15 +27,15 @@ import 'screens/sign_up/sign_up_screen.dart';
 // We use name route
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
-  SplashScreen.routeName: (context) => SplashScreen(),
-  SignInScreen.routeName: (context) => SignInScreen(),
-  ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
-  UpdatePasswordScreen.routeName: (context) => UpdatePasswordScreen(),
-  LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
-  SignUpScreen.routeName: (context) => SignUpScreen(),
-  CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
-  OtpScreen.routeName: (context) => OtpScreen(),
-  HomeScreen.routeName: (context) => HomeScreen(),
+  SplashScreen.routeName: (context) => SplashScreen(),//done ui
+  SignInScreen.routeName: (context) => SignInScreen(),//done ui
+  ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),//done ui
+  UpdatePasswordScreen.routeName: (context) => UpdatePasswordScreen(),//not done
+  LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),//done ui
+  SignUpScreen.routeName: (context) => SignUpScreen(),//done ui
+  CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),//not done
+  // OtpScreen.routeName: (context) => OtpScreen(), no idea where used??
+  HomeScreen.routeName: (context) => HomeScreen(),//
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   LikedScreen.routeName: (context) => LikedScreen(),
