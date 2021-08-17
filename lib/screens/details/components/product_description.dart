@@ -209,9 +209,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   padding: EdgeInsets.all(getProportionateScreenWidth(15)),
                   width: getProportionateScreenWidth(64),
                   decoration: BoxDecoration(
-                    color: product.isFavourite
-                        ? Color(0xFFFFE6E6)
-                        : Color(0xFFF5F6F9),
+                    color:Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
