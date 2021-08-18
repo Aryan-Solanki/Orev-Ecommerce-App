@@ -41,8 +41,8 @@ class _HomeHeaderState extends State<HomeHeader> {
     authkey = UserSimplePreferences.getAuthKey() ?? '';
     if (authkey != "") {
       user_key = AuthProvider().user.uid;
+      getCartNumber();
     }
-    getCartNumber();
     super.initState();
   }
 

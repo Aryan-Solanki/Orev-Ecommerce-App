@@ -76,6 +76,7 @@ class _SearchFieldState extends State<SearchField> {
             child: TextField(
               style: TextStyle(fontSize: getProportionateScreenWidth(15)),
               focusNode: focusNode,
+              textInputAction: TextInputAction.search,
               onChanged: (value) {
                 widget.func(value, false);
                 title = value;

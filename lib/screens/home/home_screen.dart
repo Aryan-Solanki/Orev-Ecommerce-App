@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
 
+import '../../constants.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,8 +14,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool firsttime = false;
+
   @override
   void initState() {
+    firsttime = true;
     super.initState();
   }
 
