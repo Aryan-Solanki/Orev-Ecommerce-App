@@ -44,7 +44,9 @@ class _SignFormState extends State<SignForm> {
         errors.remove(error);
       });
   }
-  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +99,12 @@ class _SignFormState extends State<SignForm> {
             width: getProportionateScreenWidth(500),
             height: getProportionateScreenHeight(56),
             color: kPrimaryColor,
-            child: Text(" Continue ", style: TextStyle(fontSize: getProportionateScreenWidth(18),color: Colors.white)),
+            child: Text(" Continue ",
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(18),
+                    color: Colors.white)),
             controller: _btnController,
-            onPressed: ()async{
+            onPressed: () async {
               print(errors);
               errors = [];
               if (_formKey.currentState.validate()) {
@@ -119,7 +124,6 @@ class _SignFormState extends State<SignForm> {
                   Timer(Duration(milliseconds: 1300), () {
                     Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                   });
-
                 } catch (e) {
                   _btnController.error();
                   if (e.code == 'user-not-found') {
@@ -143,16 +147,13 @@ class _SignFormState extends State<SignForm> {
                   Timer(Duration(milliseconds: 1300), () {
                     _btnController.reset();
                   });
-
                 }
-              }
-              else{
+              } else {
                 _btnController.error();
                 Timer(Duration(milliseconds: 1300), () {
                   _btnController.reset();
                 });
               }
-
             },
           ),
         ],
