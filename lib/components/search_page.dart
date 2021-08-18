@@ -8,6 +8,7 @@ import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/searchpage/searchpage.dart';
 import 'package:orev/services/product_services.dart';
 
+import '../constants.dart';
 import '../size_config.dart';
 
 class SearchPage extends StatefulWidget {
@@ -134,11 +135,13 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
         Row(
           children: [
             GestureDetector(
-                onTap: () {},
-                child: Text(
-                  "✕",
-                  style: TextStyle(fontSize: getProportionateScreenWidth(15)),
-                )),
+              onTap: () {},
+              child: Icon(
+                Icons.search,
+                size: getProportionateScreenWidth(15),
+                color: kTextColor,
+              ),
+            ),
             SizedBox(
               width: getProportionateScreenWidth(20),
             ),
@@ -157,10 +160,18 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: kPrimaryColor,
                       fontSize: getProportionateScreenWidth(18)),
                 ),
               ),
+            ),
+            SizedBox(
+              width: getProportionateScreenWidth(10),
+            ),
+            Icon(
+              Icons.north_west,
+              size: getProportionateScreenWidth(15),
+              color: kTextColor,
             ),
           ],
         ),

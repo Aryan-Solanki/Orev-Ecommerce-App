@@ -12,7 +12,13 @@ class AllItems extends StatefulWidget {
   final List<Product> productList;
   final String title;
   final Function() notifyParent;
-  AllItems({this.productList, this.title, @required this.notifyParent, Key key})
+  final ScrollController scrollController;
+  AllItems(
+      {this.productList,
+      this.title,
+      @required this.notifyParent,
+      @required this.scrollController,
+      Key key})
       : super(key: key);
 
   @override
@@ -22,8 +28,58 @@ class AllItems extends StatefulWidget {
 class AllItemsState extends State<AllItems> {
   List<Product> ProductList = [];
 
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<DocumentSnapshot> _products = [];
+  bool _loadingProducts = true;
+  int _perpage = 5;
+  DocumentSnapshot _lastDocument;
+  bool _gettingMoreProducts = false;
+  bool _moreProductsAvailable = true;
+  ProductServices _services = ProductServices();
+
+  int i = 0;
+
+  _getProducts() async {
+    setState(() {
+      _loadingProducts = true;
+    });
+
+    for (i; i < _perpage; i++) {
+      ProductList.add(widget.productList[i]);
+    }
+
+    setState(() {
+      _loadingProducts = false;
+    });
+  }
+
+  getMoreProducts() async {
+    if (_moreProductsAvailable == false) {
+      return;
+    }
+
+    if (_gettingMoreProducts == true) {
+      return;
+    }
+
+    _gettingMoreProducts = true;
+
+    int j = i;
+
+    for (i; i < j + _perpage; i++) {
+      ProductList.add(widget.productList[i]);
+    }
+
+    if (widget.productList.length < _perpage) {
+      _moreProductsAvailable = false;
+    }
+    setState(() {});
+    _gettingMoreProducts = false;
+  }
+
   @override
   void initState() {
+    _getProducts();
     super.initState();
   }
 
@@ -49,23 +105,28 @@ class AllItemsState extends State<AllItems> {
         ),
       ),
       SizedBox(height: getProportionateScreenWidth(20)),
-      SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: widget.productList.length == 0
-            ? Center(
-                child: Text("No products to display"),
-              )
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: widget.productList.length,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return FullWidthProductCard(
-                    product: widget.productList[index],
-                    notifyParent: refresh,
-                  );
-                }),
-      ),
+      _loadingProducts == true
+          ? Container(
+              child: Text("Loading..."),
+              // REPLACE THIS WITH LOADING
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: widget.productList.length == 0
+                  ? Center(
+                      child: Text("No products to display"),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: ProductList.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return FullWidthProductCard(
+                          product: ProductList[index],
+                          notifyParent: refresh,
+                        );
+                      }),
+            ),
     ]);
   }
 }

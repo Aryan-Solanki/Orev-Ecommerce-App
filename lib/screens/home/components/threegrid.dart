@@ -30,43 +30,10 @@ class _ThreeGridState extends State<ThreeGrid> {
     ProductServices _services = ProductServices();
 
     for (var k in keys) {
-      var document = await _services.products.doc(k).get();
-      print(document.exists);
-      var listVarientraw = document["variant"];
-      print(listVarientraw);
-      List<Varient> listVarient = [];
-      for (var vari in listVarientraw) {
-        print(vari["variantDetails"]["title"]);
-        print(vari["variantDetails"]["title"]);
-        listVarient.add(new Varient(
-            default_product: vari["default"],
-            isOnSale: vari["onSale"]["isOnSale"],
-            comparedPrice: vari["onSale"]["comparedPrice"].toDouble(),
-            discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
-            price: vari["price"].toDouble(),
-            inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
-            title: vari["variantDetails"]["title"],
-            id: vari["id"],
-            images: vari["variantDetails"]["images"]));
-      }
-
-      ProductList.add(new Product(
-          id: document["productId"],
-          brandname: document["brand"],
-          varients: listVarient,
-          title: document["title"],
-          detail: document["detail"],
-          rating: document["rating"],
-          sellerId: document["sellerId"],
-          isFavourite: false,
-          isPopular: true,
-          tax: document["tax"].toDouble(),
-          youmayalsolike: document["youMayAlsoLike"]));
+      Product product = await _services.getProduct(k);
+      ProductList.add(product);
     }
 
-    print(ProductList.length);
-    print(ProductList.length);
     setState(() {});
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }

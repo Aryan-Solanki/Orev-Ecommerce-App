@@ -30,7 +30,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   Future<void> getCartNumber() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     numberOfItems = keys.length;
@@ -42,14 +41,16 @@ class _HomeHeaderState extends State<HomeHeader> {
     authkey = UserSimplePreferences.getAuthKey() ?? '';
     if (authkey != "") {
       user_key = AuthProvider().user.uid;
+      getCartNumber();
     }
-    getCartNumber();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getCartNumber();
+    if (authkey != "") {
+      getCartNumber();
+    }
     function(value, boo) {
       widget.func(value, boo);
     }

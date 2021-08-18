@@ -27,8 +27,6 @@ class _SpecialOffersState extends State<SpecialOffers> {
 
     for (var k in keys) {
       var document = await _services.category.doc(k).get();
-      print(document.exists);
-      print(document.get("id"));
       WidgetList.add(new SpecialOfferCard(
         image: document.get("image"),
         category: document.get("name"),
@@ -136,10 +134,12 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Products",
+                        TextSpan(
+                          text: "$numOfBrands Products",
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(10),
-                          ),)
+                          ),
+                        )
                       ],
                     ),
                   ),

@@ -81,7 +81,6 @@ class _BodyState extends State<Body> {
         ProductServices _services = ProductServices();
         DocumentSnapshot nameref =
             await _services.category.doc(categoryId).get();
-        print(nameref["name"]);
         x = nameref["name"].toString();
         card_title = x;
       }
@@ -89,7 +88,6 @@ class _BodyState extends State<Body> {
         var categoryIdList = [];
         var edata = e["data"];
         for (var catid in edata) {
-          print(catid["categoryId"]);
           categoryIdList.add(catid["categoryId"]);
         }
         setState(() {
@@ -119,7 +117,6 @@ class _BodyState extends State<Body> {
         var productIdList = [];
         var edata = e["data"];
         for (var catid in edata) {
-          print(catid["productId"]);
           productIdList.add(catid["productId"]);
         }
 
@@ -134,7 +131,6 @@ class _BodyState extends State<Body> {
         var productIdList = [];
         var edata = e["data"];
         for (var catid in edata) {
-          print(catid["productId"]);
           productIdList.add(catid["productId"]);
         }
 
