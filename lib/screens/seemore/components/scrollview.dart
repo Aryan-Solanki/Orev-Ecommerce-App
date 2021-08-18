@@ -107,8 +107,6 @@ class AllItemsState extends State<AllItems> {
       ProductList.add(await _services.getProduct(k));
     }
 
-    print(ProductList.length);
-    print(ProductList.length);
     setState(() {});
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }

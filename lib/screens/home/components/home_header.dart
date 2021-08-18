@@ -48,7 +48,9 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
-    getCartNumber();
+    if (authkey != "") {
+      getCartNumber();
+    }
     function(value, boo) {
       widget.func(value, boo);
     }

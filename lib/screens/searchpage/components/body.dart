@@ -17,6 +17,24 @@ class _BodyState extends State<Body> {
   final List<Product> productList;
   _BodyState({this.productList});
 
+  ScrollController _scrollController1 = ScrollController();
+  final GlobalKey<AllItemsState> _myWidgetState = GlobalKey<AllItemsState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController1.addListener(() {
+      double maxScroll = _scrollController1.position.maxScrollExtent;
+      double currentScroll = _scrollController1.position.pixels;
+      double delta = getProportionateScreenWidth(25);
+
+      if (maxScroll - currentScroll < delta) {
+        _myWidgetState.currentState.getMoreProducts();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     refresh() {
@@ -40,12 +58,15 @@ class _BodyState extends State<Body> {
                   axisDirection: AxisDirection.down,
                   color: kPrimaryColor2,
                   child: SingleChildScrollView(
+                    controller: _scrollController1,
                     child: Column(
                       children: [
                         AllItems(
+                          scrollController: _scrollController1,
                           productList: productList,
                           title: widget.title,
                           notifyParent: refresh,
+                          key: _myWidgetState,
                         ),
                         SizedBox(height: getProportionateScreenWidth(30)),
                       ],
