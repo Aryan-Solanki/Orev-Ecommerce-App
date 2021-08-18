@@ -93,7 +93,6 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           RoundedLoadingButton(
             successColor: kPrimaryColor,
-            borderRadius: 8,
             duration: Duration(milliseconds: 1300),
             width: getProportionateScreenWidth(500),
             height: getProportionateScreenHeight(56),
@@ -120,6 +119,7 @@ class _SignFormState extends State<SignForm> {
                   Timer(Duration(milliseconds: 1300), () {
                     Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                   });
+
                 } catch (e) {
                   _btnController.error();
                   if (e.code == 'user-not-found') {
@@ -155,52 +155,6 @@ class _SignFormState extends State<SignForm> {
 
             },
           ),
-
-          // DefaultButton(
-          //   text: "Continue",
-          //   press: () async {
-          //     print(errors);
-          //     errors = [];
-          //     if (_formKey.currentState.validate()) {
-          //       _formKey.currentState.save();
-          //       KeyboardUtil.hideKeyboard(context);
-          //       try {
-          //         EasyLoading.show(status: 'loading...', dismissOnTap: false);
-          //         await _auth.signIn(
-          //           email: number + "@orev.user",
-          //           password: password,
-          //         );
-          //         if (_auth.firebaseAuthException != null) {
-          //           throw (_auth.firebaseAuthException);
-          //         }
-          //         String emailuid = _auth.user.uid;
-          //         UserSimplePreferences.setAuthKey(emailuid);
-          //         EasyLoading.dismiss();
-          //         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-          //       } catch (e) {
-          //         EasyLoading.dismiss();
-          //         if (e.code == 'user-not-found') {
-          //           setState(() {
-          //             addError(error: kUserNotFoundError);
-          //           });
-          //         } else if (e.code == 'wrong-password') {
-          //           setState(() {
-          //             addError(error: kPassWrongError);
-          //           });
-          //         } else if (e.code == 'network-request-failed') {
-          //           setState(() {
-          //             addError(error: kFirebaseNetworkError);
-          //           });
-          //         } else {
-          //           setState(() {
-          //             addError(error: ksomethingerror);
-          //           });
-          //         }
-          //         _auth.firebaseAuthException = null;
-          //       }
-          //     }
-          //   },
-          // ),
         ],
       ),
     );
