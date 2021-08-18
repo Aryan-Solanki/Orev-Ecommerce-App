@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:orev/components/custom_surfix_icon.dart';
 import 'package:orev/components/form_error.dart';
@@ -15,6 +17,7 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -41,6 +44,7 @@ class _SignFormState extends State<SignForm> {
         errors.remove(error);
       });
   }
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +91,21 @@ class _SignFormState extends State<SignForm> {
           ),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
-          DefaultButton(
-            text: "Continue",
-            press: () async {
+          RoundedLoadingButton(
+            borderRadius: 8,
+            duration: Duration(milliseconds: 1300),
+            width: getProportionateScreenWidth(500),
+            height: getProportionateScreenHeight(56),
+            color: kPrimaryColor,
+            child: Text(" Continue ", style: TextStyle(fontSize: getProportionateScreenWidth(18),color: Colors.white)),
+            controller: _btnController,
+            onPressed: ()async{
               print(errors);
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 KeyboardUtil.hideKeyboard(context);
                 try {
-                  EasyLoading.show(status: 'loading...', dismissOnTap: false);
                   await _auth.signIn(
                     email: number + "@orev.user",
                     password: password,
@@ -106,10 +115,12 @@ class _SignFormState extends State<SignForm> {
                   }
                   String emailuid = _auth.user.uid;
                   UserSimplePreferences.setAuthKey(emailuid);
-                  EasyLoading.dismiss();
+                  _btnController.success();
+                  Timer(Duration(milliseconds: 1300), () {
+                  });
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } catch (e) {
-                  EasyLoading.dismiss();
+                  _btnController.error();
                   if (e.code == 'user-not-found') {
                     setState(() {
                       addError(error: kUserNotFoundError);
@@ -128,10 +139,67 @@ class _SignFormState extends State<SignForm> {
                     });
                   }
                   _auth.firebaseAuthException = null;
+                  Timer(Duration(milliseconds: 1300), () {
+                    _btnController.reset();
+                  });
+
                 }
               }
+              else{
+                _btnController.error();
+                Timer(Duration(milliseconds: 1300), () {
+                  _btnController.reset();
+                });
+              }
+
             },
           ),
+
+          // DefaultButton(
+          //   text: "Continue",
+          //   press: () async {
+          //     print(errors);
+          //     errors = [];
+          //     if (_formKey.currentState.validate()) {
+          //       _formKey.currentState.save();
+          //       KeyboardUtil.hideKeyboard(context);
+          //       try {
+          //         EasyLoading.show(status: 'loading...', dismissOnTap: false);
+          //         await _auth.signIn(
+          //           email: number + "@orev.user",
+          //           password: password,
+          //         );
+          //         if (_auth.firebaseAuthException != null) {
+          //           throw (_auth.firebaseAuthException);
+          //         }
+          //         String emailuid = _auth.user.uid;
+          //         UserSimplePreferences.setAuthKey(emailuid);
+          //         EasyLoading.dismiss();
+          //         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+          //       } catch (e) {
+          //         EasyLoading.dismiss();
+          //         if (e.code == 'user-not-found') {
+          //           setState(() {
+          //             addError(error: kUserNotFoundError);
+          //           });
+          //         } else if (e.code == 'wrong-password') {
+          //           setState(() {
+          //             addError(error: kPassWrongError);
+          //           });
+          //         } else if (e.code == 'network-request-failed') {
+          //           setState(() {
+          //             addError(error: kFirebaseNetworkError);
+          //           });
+          //         } else {
+          //           setState(() {
+          //             addError(error: ksomethingerror);
+          //           });
+          //         }
+          //         _auth.firebaseAuthException = null;
+          //       }
+          //     }
+          //   },
+          // ),
         ],
       ),
     );
