@@ -5,7 +5,9 @@ import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -66,10 +68,15 @@ class _ProductCardState extends State<ProductCard> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  String authkey = "";
+
   @override
   void initState() {
-    user_key = AuthProvider().user.uid;
-    getAllProducts();
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    if (authkey != "") {
+      user_key = AuthProvider().user.uid;
+      getAllProducts();
+    }
     super.initState();
   }
 
@@ -101,11 +108,10 @@ class _ProductCardState extends State<ProductCard> {
                     tag: widget.product.id.toString(),
                     child: CachedNetworkImage(
                       imageUrl: widget.product.varients[0].images[0],
-                      placeholder: (context, url) =>
-                          new LoadingSkeleton(
-                            width: getProportionateScreenWidth(500),
-                            height: getProportionateScreenHeight(500),
-                          ),
+                      placeholder: (context, url) => new LoadingSkeleton(
+                        width: getProportionateScreenWidth(500),
+                        height: getProportionateScreenHeight(500),
+                      ),
                       errorWidget: (context, url, error) =>
                           new Icon(Icons.error),
                     ),
@@ -135,20 +141,24 @@ class _ProductCardState extends State<ProductCard> {
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
                       setState(() {
-                        if (favor == true) {
-                          favor = false;
-                          removeFavourite();
-                          Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: new Text("Removed from Favourites"),
-                            backgroundColor: kPrimaryColor2,
-                          ));
+                        if (authkey == '') {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
                         } else {
-                          favor = true;
-                          addFavourite();
-                          Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: new Text("Added to Favourites"),
-                            backgroundColor: kPrimaryColor2,
-                          ));
+                          if (favor == true) {
+                            favor = false;
+                            removeFavourite();
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text("Removed from Favourites"),
+                              backgroundColor: kPrimaryColor2,
+                            ));
+                          } else {
+                            favor = true;
+                            addFavourite();
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text("Added to Favourites"),
+                              backgroundColor: kPrimaryColor2,
+                            ));
+                          }
                         }
                       });
                     },

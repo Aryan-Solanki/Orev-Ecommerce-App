@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/size_config.dart';
 
 // This is the best practice
@@ -33,6 +34,7 @@ class _BodyState extends State<Body> {
       "anim": "assets/animation/splash_3.json"
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,9 +75,9 @@ class _BodyState extends State<Body> {
                     ),
                     Spacer(flex: 3),
                     DefaultButton(
-                      text: "Continue",
+                      text: "Ready to Explore",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        Navigator.pushNamed(context, HomeScreen.routeName);
                       },
                     ),
                     Spacer(),

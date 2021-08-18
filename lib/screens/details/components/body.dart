@@ -19,6 +19,7 @@ import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/size_config.dart';
 import 'package:paytm/paytm.dart';
 import 'package:search_choices/search_choices.dart';
@@ -91,8 +92,6 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> getWalletBalance() async {
-    print("sdklfgsdjkfgakjsdgfjksdgbfkjsdgfjksdgfjksdgfkjsdhgfkjs,dfsd");
-    print(user_key);
     UserServices _services = UserServices();
     var result = await _services.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
@@ -101,12 +100,16 @@ class _BodyState extends State<Body> {
 
   String user_key;
 
+  String authkey = '';
 
   @override
   void initState() {
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
     getVarientList();
     getDefaultVarient();
-    user_key = AuthProvider().user.uid;
+    if (authkey != "") {
+      user_key = AuthProvider().user.uid;
+    }
     getYouMayAlsoLikeProductList();
     super.initState();
   }
@@ -342,7 +345,6 @@ class _BodyState extends State<Body> {
         vendorlocation.latitude,
         vendorlocation.longitude,
       );
-      print(distanceInMeters);
       if (distanceInMeters / 1000 > freekms) {
         totalCost =
             widget.product.varients[selectedFoodVariants].price * quantity +
@@ -357,7 +359,6 @@ class _BodyState extends State<Body> {
 
     Future<void> getAllAddress() async {
       ProductServices _services = ProductServices();
-      print(user_key);
       var userref = await _services.users.doc(user_key).get();
       addressmap = userref["address"];
       SelectedAddress = addressmap[0];
@@ -370,7 +371,6 @@ class _BodyState extends State<Body> {
         vendorlocation.latitude,
         vendorlocation.longitude,
       );
-      print(distanceInMeters);
       if ((distanceInMeters / 1000) < sellingdistance) {
         deliverable = true;
       } else {
@@ -461,7 +461,6 @@ class _BodyState extends State<Body> {
                                           vendorlocation.latitude,
                                           vendorlocation.longitude,
                                         );
-                                        print(distanceInMeters);
                                         if ((distanceInMeters / 1000) <
                                             sellingdistance) {
                                           deliverable = true;
@@ -472,11 +471,11 @@ class _BodyState extends State<Body> {
                                         setState(() {
                                           SelectedAddress = addressmap[i];
                                           getFinalCost(SelectedAddress);
-                                          // print(SelectedAddress);
                                         });
                                       },
                                       child: Container(
-                                          width: getProportionateScreenWidth(200),
+                                          width:
+                                              getProportionateScreenWidth(200),
                                           margin: EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 5),
                                           padding: EdgeInsets.symmetric(
@@ -495,8 +494,7 @@ class _BodyState extends State<Body> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Align(
-                                                alignment:
-                                                    Alignment.topLeft,
+                                                alignment: Alignment.topLeft,
                                                 child: Text(
                                                   addressmap[i]["name"],
                                                   maxLines: 1,
@@ -511,44 +509,68 @@ class _BodyState extends State<Body> {
                                                       TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                              SizedBox(height: getProportionateScreenHeight(15),),
+                                              SizedBox(
+                                                height:
+                                                    getProportionateScreenHeight(
+                                                        15),
+                                              ),
                                               Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       addressmap[i]["adline1"],
                                                       maxLines: 1,
                                                       style: TextStyle(
-                                                        fontSize: getProportionateScreenWidth(14),
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14),
                                                           color: Colors.black),
                                                       overflow:
-                                                      TextOverflow.ellipsis,
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                    SizedBox(
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              3),
+                                                    ),
                                                     Text(
                                                       addressmap[i]["adline2"],
                                                       maxLines: 1,
                                                       style: TextStyle(
-                                                          fontSize: getProportionateScreenWidth(14),
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14),
                                                           color: Colors.black),
                                                       overflow:
-                                                      TextOverflow.ellipsis,
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                    SizedBox(
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              3),
+                                                    ),
                                                     Text(
                                                       addressmap[i]["city"] +
                                                           " ," +
-                                                          addressmap[i]["state"],
+                                                          addressmap[i]
+                                                              ["state"],
                                                       maxLines: 1,
                                                       style: TextStyle(
-                                                          fontSize: getProportionateScreenWidth(14),
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14),
                                                           color: Colors.black),
                                                       overflow:
-                                                      TextOverflow.ellipsis,
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    SizedBox(height: getProportionateScreenHeight(3),),
+                                                    SizedBox(
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              3),
+                                                    ),
                                                   ],
                                                 ),
                                               )
@@ -577,17 +599,18 @@ class _BodyState extends State<Body> {
                                                       120),
                                               child: TextField(
                                                 style: TextStyle(
-                                                  fontSize: getProportionateScreenWidth(15)
-                                                ),
+                                                    fontSize:
+                                                        getProportionateScreenWidth(
+                                                            15)),
                                                 onChanged: (value) {
-                                                  print(value);
                                                   coupon = value;
                                                 },
                                                 decoration: InputDecoration(
                                                   hintText: 'Enter code',
                                                   hintStyle: TextStyle(
-                                                      fontSize: getProportionateScreenWidth(15)
-                                                  ),
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              15)),
                                                   contentPadding:
                                                       EdgeInsets.symmetric(
                                                           vertical: 10.0,
@@ -629,17 +652,17 @@ class _BodyState extends State<Body> {
                                                       10),
                                             ),
                                             Container(
-                                              height: getProportionateScreenHeight(40),
+                                              height:
+                                                  getProportionateScreenHeight(
+                                                      40),
                                               width:
                                                   getProportionateScreenWidth(
                                                       50),
                                               child: FlatButton(
-                                                padding: EdgeInsets.all(0),
+                                                  padding: EdgeInsets.all(0),
                                                   color: Colors.lightGreen,
                                                   onPressed: () {
-                                                    setState(() {
-                                                      print(coupon);
-                                                    });
+                                                    setState(() {});
                                                   },
                                                   child: FittedBox(
                                                     child: Text(
@@ -654,7 +677,10 @@ class _BodyState extends State<Body> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(width: getProportionateScreenWidth(30),),
+                                        SizedBox(
+                                          width:
+                                              getProportionateScreenWidth(30),
+                                        ),
                                         Expanded(
                                           child: Align(
                                             alignment: Alignment.centerRight,
@@ -668,10 +694,12 @@ class _BodyState extends State<Body> {
                                                 child: Text(
                                                   "Add New Address",
                                                   style: TextStyle(
-                                                    fontSize: getProportionateScreenWidth(13),
-                                                    color: Colors.blue,
-                                                      decoration:
-                                                          TextDecoration.underline),
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              13),
+                                                      color: Colors.blue,
+                                                      decoration: TextDecoration
+                                                          .underline),
                                                 ),
                                               ),
                                             ),
@@ -680,10 +708,27 @@ class _BodyState extends State<Body> {
                                       ],
                                     ),
                                     coupon == "aryan"
-                                        ? Text("You saved \₹$coupon_value",style: TextStyle(fontSize: getProportionateScreenWidth(13),),)
+                                        ? Text(
+                                            "You saved \₹$coupon_value",
+                                            style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      13),
+                                            ),
+                                          )
                                         : coupon == ""
-                                            ? Text("",style: TextStyle(fontSize: getProportionateScreenWidth(13),))
-                                            : Text("Invalid Coupon",style: TextStyle(fontSize: getProportionateScreenWidth(13),)),
+                                            ? Text("",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          13),
+                                                ))
+                                            : Text("Invalid Coupon",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          13),
+                                                )),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -704,7 +749,9 @@ class _BodyState extends State<Body> {
                                                               13)),
                                                 ),
                                                 Transform.scale(
-                                                  scale: getProportionateScreenHeight(1),
+                                                  scale:
+                                                      getProportionateScreenHeight(
+                                                          1),
                                                   child: Checkbox(
                                                     activeColor: kPrimaryColor,
                                                     value: orevwallet,
@@ -751,24 +798,34 @@ class _BodyState extends State<Body> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     children: [
-                                                      SizedBox(width: getProportionateScreenWidth(30),),
+                                                      SizedBox(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                30),
+                                                      ),
                                                       Container(
                                                           child: Text(
-                                                            "Total",
-                                                            style: TextStyle(
-                                                                color: Colors.blue,
-                                                                fontSize:
-                                                                    getProportionateScreenHeight(
-                                                                        23)),
-                                                          )),
-                                                      SizedBox(width: getProportionateScreenWidth(20),),
+                                                        "Total",
+                                                        style: TextStyle(
+                                                            color: Colors.blue,
+                                                            fontSize:
+                                                                getProportionateScreenHeight(
+                                                                    23)),
+                                                      )),
+                                                      SizedBox(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                20),
+                                                      ),
                                                       orevwallet == false
                                                           ? Text(
                                                               "\₹${totalCost}",
                                                               style: TextStyle(
-                                                                  color: Colors.black,
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
-                                                                      FontWeight.bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                   fontSize:
                                                                       getProportionateScreenHeight(
                                                                           20)),
@@ -779,9 +836,11 @@ class _BodyState extends State<Body> {
                                                                   ? "\₹${(totalCost) - walletbalance}"
                                                                   : "\₹0.0",
                                                               style: TextStyle(
-                                                                  color: Colors.black,
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
-                                                                      FontWeight.bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                   fontSize:
                                                                       getProportionateScreenHeight(
                                                                           20)),
@@ -793,8 +852,9 @@ class _BodyState extends State<Body> {
                                                           children: [
                                                             Text(
                                                               "       (includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                              overflow: TextOverflow
-                                                                  .ellipsis,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       getProportionateScreenWidth(
@@ -804,12 +864,14 @@ class _BodyState extends State<Body> {
                                                         )
                                                       : Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment.end,
+                                                              CrossAxisAlignment
+                                                                  .end,
                                                           children: [
                                                             Text(
                                                               "       (includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                              overflow: TextOverflow
-                                                                  .ellipsis,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       getProportionateScreenWidth(
@@ -820,8 +882,9 @@ class _BodyState extends State<Body> {
                                                                       walletbalance
                                                                   ? "( - Orev Wallet: $walletbalance)"
                                                                   : "( - Orev Wallet: ${totalCost})",
-                                                              overflow: TextOverflow
-                                                                  .ellipsis,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       getProportionateScreenWidth(
@@ -836,7 +899,9 @@ class _BodyState extends State<Body> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: getProportionateScreenHeight(20),),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(20),
+                                    ),
                                     deliverable == true
                                         ? Align(
                                             alignment: Alignment.center,
@@ -973,12 +1038,10 @@ class _BodyState extends State<Body> {
 
     Future<void> addToCart() async {
       ProductServices _services = ProductServices();
-      print(user_key);
       var favref = await _services.cart.doc(user_key).get();
       keys = favref["cartItems"];
 
       var x = widget.product.varients[selectedFoodVariants].id;
-      print(x);
 
       bool alreadyexixts = false;
 
@@ -1008,7 +1071,6 @@ class _BodyState extends State<Body> {
       });
       // list.add(SizedBox(width: getProportionateScreenWidth(20)));
     }
-
 
     return StatefulBuilder(
       builder: (context, StateSetter setState) {
@@ -1056,16 +1118,15 @@ class _BodyState extends State<Body> {
                                                   defaultItemIndex:
                                                       selectedFoodVariants,
                                                   itemBuilder: (String value) =>
-                                                      getDropDownMenuItem(value),
+                                                      getDropDownMenuItem(
+                                                          value),
                                                   focusedItemDecoration:
                                                       getDslDecoration(),
                                                   onItemSelectedListener:
                                                       (item, index, context) {
-                                                    selectedFoodVariants = index;
-                                                    setState(() {
-                                                      print(selectedFoodVariants);
-                                                    });
-                                                    print(selectedFoodVariants);
+                                                    selectedFoodVariants =
+                                                        index;
+                                                    setState(() {});
                                                   })),
                                           // SizedBox(width: getProportionateScreenWidth(100),),
                                           Icon(
@@ -1073,7 +1134,8 @@ class _BodyState extends State<Body> {
                                             color: Colors.black,
                                           ),
                                           SizedBox(
-                                            width: getProportionateScreenWidth(15),
+                                            width:
+                                                getProportionateScreenWidth(15),
                                           ),
                                           RoundedIconBtn(
                                             icon: Icons.remove,
@@ -1086,16 +1148,21 @@ class _BodyState extends State<Body> {
                                             },
                                           ),
                                           SizedBox(
-                                              width: getProportionateScreenWidth(20)),
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      20)),
                                           Text(
                                             "x " + quantity.toString(),
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenHeight(20)),
+                                                    getProportionateScreenHeight(
+                                                        20)),
                                           ),
                                           SizedBox(
-                                              width: getProportionateScreenWidth(20)),
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      20)),
                                           RoundedIconBtn(
                                             icon: Icons.add,
                                             showShadow: true,
@@ -1108,18 +1175,25 @@ class _BodyState extends State<Body> {
                                         ],
                                       ),
                                     ),
-                                    !widget.product.varients[selectedFoodVariants]
+                                    !widget
+                                                .product
+                                                .varients[selectedFoodVariants]
                                                 .inStock ==
                                             false
                                         ? TopRoundedContainer(
                                             color: Colors.white,
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                left: SizeConfig.screenWidth * 0.1,
-                                                right: SizeConfig.screenWidth * 0.1,
+                                                left: SizeConfig.screenWidth *
+                                                    0.1,
+                                                right: SizeConfig.screenWidth *
+                                                    0.1,
                                                 bottom:
-                                                    getProportionateScreenWidth(30),
-                                                top: getProportionateScreenWidth(10),
+                                                    getProportionateScreenWidth(
+                                                        30),
+                                                top:
+                                                    getProportionateScreenWidth(
+                                                        10),
                                               ),
                                               child: Column(
                                                 children: [
@@ -1128,11 +1202,21 @@ class _BodyState extends State<Body> {
                                                     text: "Buy Now",
                                                     press: () {
                                                       setState(() {});
-                                                      if (addressmap.isEmpty) {
-                                                        Navigator.pushNamed(context,
-                                                            Address.routeName);
+                                                      if (authkey == '') {
+                                                        Navigator.pushNamed(
+                                                            context,
+                                                            SignInScreen
+                                                                .routeName);
                                                       } else {
-                                                        _showDialog();
+                                                        if (addressmap
+                                                            .isEmpty) {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              Address
+                                                                  .routeName);
+                                                        } else {
+                                                          _showDialog();
+                                                        }
                                                       }
                                                     },
                                                   ),
@@ -1144,7 +1228,14 @@ class _BodyState extends State<Body> {
                                                   DefaultButton(
                                                     text: "Add To Cart",
                                                     press: () {
-                                                      addToCart();
+                                                      if (authkey == '') {
+                                                        Navigator.pushNamed(
+                                                            context,
+                                                            SignInScreen
+                                                                .routeName);
+                                                      } else {
+                                                        addToCart();
+                                                      }
                                                     },
                                                   )
                                                 ],
@@ -1155,12 +1246,17 @@ class _BodyState extends State<Body> {
                                             color: Colors.white,
                                             child: Padding(
                                                 padding: EdgeInsets.only(
-                                                  left: SizeConfig.screenWidth * 0.1,
-                                                  right: SizeConfig.screenWidth * 0.1,
+                                                  left: SizeConfig.screenWidth *
+                                                      0.1,
+                                                  right:
+                                                      SizeConfig.screenWidth *
+                                                          0.1,
                                                   bottom:
-                                                      getProportionateScreenWidth(30),
+                                                      getProportionateScreenWidth(
+                                                          30),
                                                   top:
-                                                      getProportionateScreenWidth(10),
+                                                      getProportionateScreenWidth(
+                                                          10),
                                                 ),
                                                 child: DefaultButton(
                                                   color: kSecondaryColor,
@@ -1204,17 +1300,20 @@ class _BodyState extends State<Body> {
                                         ...List.generate(
                                           widget.product.youmayalsolike.length,
                                           (index) {
-                                            if (youMayAlsoLikeList.length == 0) {
+                                            if (youMayAlsoLikeList.length ==
+                                                0) {
                                               return SizedBox.shrink();
                                             } else {
                                               return ProductCard(
-                                                  product: youMayAlsoLikeList[index]);
+                                                  product: youMayAlsoLikeList[
+                                                      index]);
                                             }
                                             // here by default width and height is 0
                                           },
                                         ),
                                         SizedBox(
-                                            width: getProportionateScreenWidth(20)),
+                                            width: getProportionateScreenWidth(
+                                                20)),
                                       ],
                                     ),
                                   ),

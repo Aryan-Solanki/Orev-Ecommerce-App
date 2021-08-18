@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../../../size_config.dart';
 import 'icon_btn_with_counter.dart';
@@ -24,6 +26,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   int numberOfItems = 0;
   String user_key;
   List<dynamic> keys = [];
+  String authkey = '';
 
   Future<void> getCartNumber() async {
     ProductServices _services = ProductServices();
@@ -36,7 +39,10 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   void initState() {
-    user_key = AuthProvider().user.uid;
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    if (authkey != "") {
+      user_key = AuthProvider().user.uid;
+    }
     getCartNumber();
     super.initState();
   }
@@ -61,14 +67,24 @@ class _HomeHeaderState extends State<HomeHeader> {
           numberOfItems == 0
               ? IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
-                  press: () =>
-                      Navigator.pushNamed(context, CartScreen.routeName),
+                  press: () {
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    } else {
+                      Navigator.pushNamed(context, CartScreen.routeName);
+                    }
+                  },
                 )
               : IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
                   numOfitem: numberOfItems,
-                  press: () =>
-                      Navigator.pushNamed(context, CartScreen.routeName),
+                  press: () {
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    } else {
+                      Navigator.pushNamed(context, CartScreen.routeName);
+                    }
+                  },
                 ),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Bell.svg",

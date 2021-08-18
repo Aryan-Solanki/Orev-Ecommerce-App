@@ -6,7 +6,9 @@ import 'package:orev/components/default_button.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -130,10 +132,15 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
+  String authkey = "";
+
   @override
   void initState() {
-    user_key = AuthProvider().user.uid;
-    getAllProducts();
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    if (authkey != "") {
+      user_key = AuthProvider().user.uid;
+      getAllProducts();
+    }
     getDefaultVarient();
     outofstockcheck();
     super.initState();
@@ -195,7 +202,8 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                             width: getProportionateScreenWidth(150),
                             child: Text(
                               widget.product.title,
-                              style: TextStyle(color: Colors.black,
+                              style: TextStyle(
+                                color: Colors.black,
                                 fontSize: getProportionateScreenWidth(14),
                               ),
                               maxLines: 1,
@@ -253,7 +261,12 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                         borderRadius: BorderRadius.circular(5)),
                                     color: kPrimaryColor,
                                     onPressed: () {
-                                      addToCart();
+                                      if (authkey == '') {
+                                        Navigator.pushNamed(
+                                            context, SignInScreen.routeName);
+                                      } else {
+                                        addToCart();
+                                      }
                                     },
                                     child: Text(
                                       "Add to Cart",
@@ -286,28 +299,33 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                 ),
               ),
             ),
-            widget.like?InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () {
-                setState(() {
-                  if (favor == true) {
-                    favor = false;
-                    removeFavourite();
-                    Scaffold.of(context).showSnackBar(new SnackBar(
-                      content: new Text("Removed from Favourites"),
-                      backgroundColor: kPrimaryColor2,
-                    ));
-                  } else {
-                    favor = true;
-                    addFavourite();
-                    Scaffold.of(context).showSnackBar(new SnackBar(
-                      content: new Text("Added to Favourites"),
-                      backgroundColor: kPrimaryColor2,
-                    ));
-                  }
-                });
-              },
-              child:Container(
+            widget.like
+                ? InkWell(
+                    borderRadius: BorderRadius.circular(50),
+                    onTap: () {
+                      setState(() {
+                        if (authkey == '') {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        } else {
+                          if (favor == true) {
+                            favor = false;
+                            removeFavourite();
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text("Removed from Favourites"),
+                              backgroundColor: kPrimaryColor2,
+                            ));
+                          } else {
+                            favor = true;
+                            addFavourite();
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text("Added to Favourites"),
+                              backgroundColor: kPrimaryColor2,
+                            ));
+                          }
+                        }
+                      });
+                    },
+                    child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
@@ -322,8 +340,8 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                             ? Color(0xFFFF4848)
                             : Color(0xFFDBDEE4),
                       ),
-                    )
-            ):Center(),
+                    ))
+                : Center(),
           ],
         ));
   }

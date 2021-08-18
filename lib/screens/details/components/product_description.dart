@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -44,10 +46,10 @@ class _ProductDescriptionState extends State<ProductDescription> {
   List<dynamic> keys = [];
 
   String user_key;
+  String authkey = '';
 
   Future<void> getAllProducts() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.favourites.doc(user_key).get();
     keys = favref["favourites"];
 
@@ -88,9 +90,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
 
   @override
   void initState() {
-    user_key = AuthProvider().user.uid;
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    if (authkey != "") {
+      user_key = AuthProvider().user.uid;
+      getAllProducts();
+    }
     getSellerName();
-    getAllProducts();
     super.initState();
   }
 
@@ -102,14 +107,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Text(
-            product.title,
+          child: Text(product.title,
               style: TextStyle(
                 fontSize: getProportionateScreenWidth(20),
                 color: Colors.black,
                 height: 1.5,
-              )
-          ),
+              )),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -188,20 +191,24 @@ class _ProductDescriptionState extends State<ProductDescription> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (favor == true) {
-                      favor = false;
-                      removeFavourite();
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                        content: new Text("Removed from Favourites"),
-                        backgroundColor: kPrimaryColor2,
-                      ));
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
                     } else {
-                      favor = true;
-                      addFavourite();
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                        content: new Text("Added to Favourites"),
-                        backgroundColor: kPrimaryColor2,
-                      ));
+                      if (favor == true) {
+                        favor = false;
+                        removeFavourite();
+                        Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text("Removed from Favourites"),
+                          backgroundColor: kPrimaryColor2,
+                        ));
+                      } else {
+                        favor = true;
+                        addFavourite();
+                        Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text("Added to Favourites"),
+                          backgroundColor: kPrimaryColor2,
+                        ));
+                      }
                     }
                   });
                 },
@@ -209,7 +216,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   padding: EdgeInsets.all(getProportionateScreenWidth(15)),
                   width: getProportionateScreenWidth(64),
                   decoration: BoxDecoration(
-                    color:Color(0xFFF5F6F9),
+                    color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
@@ -234,17 +241,17 @@ class _ProductDescriptionState extends State<ProductDescription> {
           child: seemore == true
               ? Text(
                   product.detail,
-            style: TextStyle(
-              fontSize: getProportionateScreenWidth(15),
-              height: 1.5,
-            ),
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(15),
+                    height: 1.5,
+                  ),
                 )
               : Text(
                   product.detail,
-            style: TextStyle(
-              fontSize: getProportionateScreenWidth(15),
-              height: 1.5,
-            ),
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(15),
+                    height: 1.5,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -266,7 +273,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Text(
                           "See Less Detail",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(14),
+                              fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),

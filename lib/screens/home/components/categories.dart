@@ -3,12 +3,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Category.dart';
 import 'package:orev/screens/category_page/category_page.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 
 import 'package:orev/screens/wallet/wallet.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../../../size_config.dart';
 
-class Categories extends StatelessWidget {
+class Categories extends StatefulWidget {
+  @override
+  _CategoriesState createState() => _CategoriesState();
+}
+
+class _CategoriesState extends State<Categories> {
+  String authkey = '';
+
+  @override
+  void initState() {
+    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +69,11 @@ class Categories extends StatelessWidget {
               icon: Icons.account_balance_outlined,
               text: "Wallet",
               press: () {
-                Navigator.pushNamed(context, Wallet.routeName);
+                if (authkey == '') {
+                  Navigator.pushNamed(context, SignInScreen.routeName);
+                } else {
+                  Navigator.pushNamed(context, Wallet.routeName);
+                }
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
