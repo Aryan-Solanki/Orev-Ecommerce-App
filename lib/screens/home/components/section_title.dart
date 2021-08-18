@@ -47,7 +47,9 @@ class _SectionTitleState extends State<SectionTitle> {
                 },
                 child: Text(
                   "See More",
-                  style: TextStyle(color: Color(0xFFBBBBBB),fontSize: getProportionateScreenWidth(12)),
+                  style: TextStyle(
+                      color: Color(0xFFBBBBBB),
+                      fontSize: getProportionateScreenWidth(12)),
                 ),
               )
             : Text(""),
@@ -72,8 +74,6 @@ class _SectionTitleState extends State<SectionTitle> {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     print(categoryId);
-//     print(categoryId);
 //     return Row(
 //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //       children: [

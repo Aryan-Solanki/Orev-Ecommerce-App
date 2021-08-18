@@ -77,6 +77,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Ready to Explore",
                       press: () {
+                        UserSimplePreferences.setFirst("status");
                         Navigator.pushNamed(context, HomeScreen.routeName);
                       },
                     ),

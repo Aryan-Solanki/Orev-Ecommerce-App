@@ -12,25 +12,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String authkey = '';
+  String getFirst = '';
 
   @override
   void initState() {
-    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    getFirst = UserSimplePreferences.getFirst() ?? '';
     super.initState();
-    authkey = UserSimplePreferences.getAuthKey() ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     // You have to call it on your starting screen
     SizeConfig().init(context);
-    authkey = UserSimplePreferences.getAuthKey() ?? '';
+    getFirst = UserSimplePreferences.getFirst() ?? '';
     return AnimatedSplashScreen(
         duration: 1,
         splashIconSize: getProportionateScreenWidth(150),
         splash: 'assets/images/splash_1.png',
-        nextScreen: (authkey == '')
+        nextScreen: (getFirst == '')
             ? Scaffold(
                 body: Body(),
               )

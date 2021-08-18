@@ -30,7 +30,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   Future<void> getCartNumber() async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     numberOfItems = keys.length;
