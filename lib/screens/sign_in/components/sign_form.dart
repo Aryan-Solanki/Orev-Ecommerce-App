@@ -68,14 +68,19 @@ class _SignFormState extends State<SignForm> {
                   },
                 ),
               ),
-              Text("Remember me",style: TextStyle(fontSize: getProportionateScreenWidth(13)),),
+              Text(
+                "Remember me",
+                style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+              ),
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline,fontSize: getProportionateScreenWidth(13)),
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontSize: getProportionateScreenWidth(13)),
                 ),
               )
             ],
@@ -92,15 +97,18 @@ class _SignFormState extends State<SignForm> {
                 KeyboardUtil.hideKeyboard(context);
                 try {
                   EasyLoading.show(status: 'loading...', dismissOnTap: false);
-                  UserCredential userCredential = await _auth.signIn(
+                  await _auth.signIn(
                     email: number + "@orev.user",
                     password: password,
                   );
+                  if (_auth.firebaseAuthException != null) {
+                    throw (_auth.firebaseAuthException);
+                  }
                   String emailuid = _auth.user.uid;
                   UserSimplePreferences.setAuthKey(emailuid);
                   EasyLoading.dismiss();
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                } on FirebaseAuthException catch (e) {
+                } catch (e) {
                   EasyLoading.dismiss();
                   if (e.code == 'user-not-found') {
                     setState(() {
@@ -114,7 +122,12 @@ class _SignFormState extends State<SignForm> {
                     setState(() {
                       addError(error: kFirebaseNetworkError);
                     });
+                  } else {
+                    setState(() {
+                      addError(error: ksomethingerror);
+                    });
                   }
+                  _auth.firebaseAuthException = null;
                 }
               }
             },
@@ -224,5 +237,3 @@ class _SignFormState extends State<SignForm> {
     );
   }
 }
-
-

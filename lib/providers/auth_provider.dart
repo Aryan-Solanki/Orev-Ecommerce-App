@@ -9,6 +9,7 @@ class AuthProvider with ChangeNotifier {
   String smsOtp;
   String verificationId;
   String error = '';
+  FirebaseAuthException firebaseAuthException;
   UserServices _userServices = UserServices();
   bool loading = false;
   String screen;
@@ -34,7 +35,9 @@ class AuthProvider with ChangeNotifier {
       return null;
     } on FirebaseAuthException catch (e) {
       this.error = e.toString();
+      this.firebaseAuthException = e;
       print(e.message);
+      return e;
     }
   }
 

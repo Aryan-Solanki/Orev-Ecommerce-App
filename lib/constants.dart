@@ -47,6 +47,7 @@ const String kUserExistsError = "This user already exists";
 const String kUserNotFoundError = "This User Does Not Exist";
 const String kPassWrongError = "Password Is Incorrect";
 const String kFirebaseNetworkError = "Firebase Network Error";
+const String ksomethingerror = "Authentication not successful";
 const String kShortPassError = "Password Is Too Short";
 const String kMatchPassError = "Passwords Don't Match";
 const String kNamelNullError = "Please Enter Your Name";
