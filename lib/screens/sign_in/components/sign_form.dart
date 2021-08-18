@@ -92,6 +92,7 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           RoundedLoadingButton(
+            successColor: kPrimaryColor,
             borderRadius: 8,
             duration: Duration(milliseconds: 1300),
             width: getProportionateScreenWidth(500),
@@ -117,8 +118,8 @@ class _SignFormState extends State<SignForm> {
                   UserSimplePreferences.setAuthKey(emailuid);
                   _btnController.success();
                   Timer(Duration(milliseconds: 1300), () {
+                    Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                   });
-                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } catch (e) {
                   _btnController.error();
                   if (e.code == 'user-not-found') {
