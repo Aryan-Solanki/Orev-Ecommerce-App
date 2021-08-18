@@ -116,9 +116,7 @@ class _SignFormState extends State<SignForm> {
                   String emailuid = _auth.user.uid;
                   UserSimplePreferences.setAuthKey(emailuid);
                   _btnController.success();
-                  Timer(Duration(milliseconds: 1300), () {
-                    Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                  });
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
 
                 } catch (e) {
                   _btnController.error();
