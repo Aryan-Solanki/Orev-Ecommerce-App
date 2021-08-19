@@ -126,73 +126,21 @@ class _CheckoutCardState extends State<CheckoutCard> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: getProportionateScreenWidth(40),
-                    width: getProportionateScreenWidth(40),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F6F9),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: SvgPicture.asset("assets/icons/receipt.svg"),
-                  ),
-                  Spacer(),
-                  Container(
-                    height: getProportionateScreenHeight(50),
-                    width: getProportionateScreenWidth(120),
-                    child: TextField(
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(12)
-                      ),
-                      onChanged: (value) {
-                        print(value);
-                        coupon = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter code',
-                        hintStyle: TextStyle(
-                          fontSize: getProportionateScreenWidth(12)
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.lightGreen, width: 1.0),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.lightGreen, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 12,
-                    color: kTextColor,
-                  )
-                ],
-              ),
-              SizedBox(height: getProportionateScreenHeight(20)),
+              SizedBox(height: getProportionateScreenHeight(10)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text.rich(
                     TextSpan(
                       text: "Total:\n",
-                      style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(15)),
                       children: [
                         TextSpan(
                           text: "\₹$totalamt",
-                          style: TextStyle(fontSize: getProportionateScreenWidth(18), color: Colors.black),
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(18),
+                              color: Colors.black),
                         ),
                       ],
                     ),
