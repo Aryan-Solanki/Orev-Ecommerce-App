@@ -12,11 +12,15 @@ class OrderDetails extends StatefulWidget {
     @required this.currentVarient,
     @required this.quantity,
     @required this.selectedaddress,
+    @required this.totalCost,
+    @required this.deliveryCost,
   }) : super(key: key);
 
   final Product product;
   final int currentVarient;
   final int quantity;
+  final double totalCost;
+  final double deliveryCost;
   final Map<String, dynamic> selectedaddress;
 
   static String routeName = "/order_details";
@@ -37,16 +41,19 @@ class _OrderDetailsState extends State<OrderDetails> {
         appBar: buildAppBar(context),
         body: SingleChildScrollView(
           child: Body(
-              key: UniqueKey(),
-              product: widget.product,
-              currentVarient: widget.currentVarient,
+            key: UniqueKey(),
+            product: widget.product,
+            currentVarient: widget.currentVarient,
             quantity: widget.quantity,
-              selectedaddress: widget.selectedaddress,
+            selectedaddress: widget.selectedaddress,
+            totalCost: widget.totalCost,
+            deliveryCost: widget.deliveryCost,
           ),
         ),
       ),
     );
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       title: Column(

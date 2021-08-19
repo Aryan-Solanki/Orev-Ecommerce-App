@@ -881,6 +881,10 @@ class _BodyState extends State<Body> {
                                                                       quantity,
                                                                   selectedaddress:
                                                                       SelectedAddress,
+                                                                  totalCost:
+                                                                      totalCost,
+                                                                  deliveryCost:
+                                                                      finalDeliveryCost,
                                                                 )),
                                                       );
                                                     },
@@ -906,6 +910,10 @@ class _BodyState extends State<Body> {
                                                                   quantity,
                                                               selectedaddress:
                                                                   SelectedAddress,
+                                                              totalCost:
+                                                                  totalCost,
+                                                              deliveryCost:
+                                                                  finalDeliveryCost,
                                                             )),
                                                   );
                                                 })
@@ -1044,6 +1052,7 @@ class _BodyState extends State<Body> {
                                               if (quantity != 1) {
                                                 setState(() {
                                                   quantity--;
+                                                  getFinalCost(SelectedAddress);
                                                 });
                                               }
                                             },
@@ -1070,6 +1079,7 @@ class _BodyState extends State<Body> {
                                             press: () {
                                               setState(() {
                                                 quantity++;
+                                                getFinalCost(SelectedAddress);
                                               });
                                             },
                                           ),
