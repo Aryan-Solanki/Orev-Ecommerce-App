@@ -38,11 +38,11 @@ class _CartScreenState extends State<CartScreen> {
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     setState(() {
-      final snackBar = SnackBar(
-        content: Text('Cart Updated'),
-        backgroundColor: kPrimaryColor,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // final snackBar = SnackBar(
+      //   content: Text('Cart Updated'),
+      //   backgroundColor: kPrimaryColor,
+      // );
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
