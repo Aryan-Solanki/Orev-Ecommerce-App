@@ -52,7 +52,8 @@ class _CartCardState extends State<CartCard> {
     var keys = favref["cartItems"];
 
     for (var k in keys) {
-      if (k["varientNumber"] == widget.cart.varientNumber) {
+      if (k["varientNumber"] == widget.cart.varientNumber &&
+          k["productId"] == widget.cart.product.id) {
         k["qty"] = quantity;
         break;
       }
@@ -148,10 +149,9 @@ class _CartCardState extends State<CartCard> {
                           TextSpan(
                               text: " x${quantity}",
                               style: TextStyle(
-                                color: kTextColor,
+                                  color: kTextColor,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: getProportionateScreenWidth(14))
-                          ),
+                                  fontSize: getProportionateScreenWidth(14))),
                         ],
                       ),
                     ),

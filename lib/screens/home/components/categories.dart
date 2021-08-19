@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Category.dart';
 import 'package:orev/screens/category_page/category_page.dart';
+import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 
 import 'package:orev/screens/wallet/wallet.dart';
@@ -57,8 +58,8 @@ class _CategoriesState extends State<Categories> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                            categoryId: "JAgrZhNaIa3ryRug2wrn",
+                      builder: (context) => SeeMore(
+                            categoryId: "E7dYkDBguiRFEYag2sKi",
                             title: "Offer Zone",
                           )),
                 );
