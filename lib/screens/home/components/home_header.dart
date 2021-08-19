@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:menu_button/menu_button.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 
 class HomeHeader extends StatefulWidget {
   final bool simplebutton;
+  final bool address;
   final Function func;
   const HomeHeader({
     bool this.simplebutton = true,
+    bool this.address = false,
     @required this.func,
     Key key,
   }) : super(key: key);
@@ -45,25 +49,95 @@ class _HomeHeaderState extends State<HomeHeader> {
     }
     super.initState();
   }
+  String selectedKey="Please Select";
+
 
   @override
   Widget build(BuildContext context) {
+    List<String> addresses = <String>[
+      'Aryan Solanki - 400-B, pocket-N,Sarita Vihar,New Delhi-110076',
+      'Medium',
+      'High',
+      'Add new address'
+    ];
+
+    final Widget normalChildButton = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      width: SizeConfig.screenWidth * 0.6,
+      height: getProportionateScreenHeight(65),
+      child: Container(
+        color: Colors.transparent,
+        padding: EdgeInsets.only(left: getProportionateScreenWidth(10),right: getProportionateScreenWidth(10) ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Flexible(
+                child:Text(
+                  selectedKey,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: getProportionateScreenWidth(14),),)
+            ),
+            FittedBox(
+              fit: BoxFit.fill,
+              child: Icon(
+                Icons.arrow_drop_down,
+                // color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     if (authkey != "") {
       getCartNumber();
     }
     function(value, boo) {
       widget.func(value, boo);
     }
-
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SearchField(
+          widget.address==false?SearchField(
             simplebutton: widget.simplebutton,
             func: function,
+          ):Container(
+            width: SizeConfig.screenWidth * 0.6,
+            height: getProportionateScreenHeight(65),
+            child: MenuButton<String>(
+              menuButtonBackgroundColor: Colors.transparent,
+              decoration: BoxDecoration(
+                color: kSecondaryColor.withOpacity(0.1), //border: Border.all(color: Colors.grey[300]!),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15.0),
+                )
+              ),
+              child: normalChildButton,
+              items: addresses,
+              itemBuilder: (String value) => Container(
+                color:kSecondaryColor.withOpacity(0.1),
+                height: getProportionateScreenHeight(65),
+                alignment: Alignment.centerLeft,
+                padding:  EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+                child: Text(value,style: TextStyle(fontSize: getProportionateScreenWidth(13)), overflow: TextOverflow.ellipsis),
+              ),
+              toggledChild: Container(
+                child: normalChildButton,
+              ),
+              onItemSelected: (String value) {
+                setState(() {
+                  selectedKey = value;
+                });
+              },
+              onMenuButtonToggle: (bool isToggle) {
+                print(isToggle);
+              },
+            ),
           ),
           numberOfItems == 0
               ? IconBtnWithCounter(

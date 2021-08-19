@@ -43,7 +43,8 @@ class _SearchFieldState extends State<SearchField> {
                   MaterialPageRoute(builder: (context) => SearchPage()));
             },
             child: Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(13)),
+              padding: EdgeInsets.only(left:getProportionateScreenWidth(13)),
+              height: getProportionateScreenHeight(65),
               width: SizeConfig.screenWidth * 0.6,
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
@@ -61,7 +62,7 @@ class _SearchFieldState extends State<SearchField> {
                   ),
                   Text(
                     "Search product",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                    style: TextStyle(fontSize: getProportionateScreenWidth(14)),
                   )
                 ],
               ),
@@ -69,12 +70,13 @@ class _SearchFieldState extends State<SearchField> {
           )
         : Container(
             width: SizeConfig.screenWidth * 0.6,
+      height: getProportionateScreenHeight(65),
             decoration: BoxDecoration(
               color: kSecondaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),
             ),
             child: TextField(
-              style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+              style: TextStyle(fontSize: getProportionateScreenWidth(14)),
               focusNode: focusNode,
               textInputAction: TextInputAction.search,
               onChanged: (value) {
@@ -92,8 +94,7 @@ class _SearchFieldState extends State<SearchField> {
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   hintText: "Search product",
-                  hintStyle:
-                      TextStyle(fontSize: getProportionateScreenWidth(15)),
+                  hintStyle:TextStyle(fontSize: getProportionateScreenWidth(14),),
                   prefixIcon: Icon(Icons.search,
                       size: getProportionateScreenWidth(18))),
             ),
