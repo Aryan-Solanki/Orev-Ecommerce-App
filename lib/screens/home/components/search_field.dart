@@ -44,6 +44,7 @@ class _SearchFieldState extends State<SearchField> {
             },
             child: Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(13)),
+              height: getProportionateScreenHeight(65),
               width: SizeConfig.screenWidth * 0.6,
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
@@ -69,6 +70,7 @@ class _SearchFieldState extends State<SearchField> {
           )
         : Container(
             width: SizeConfig.screenWidth * 0.6,
+      height: getProportionateScreenHeight(65),
             decoration: BoxDecoration(
               color: kSecondaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),

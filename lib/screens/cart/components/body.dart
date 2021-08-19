@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:menu_button/menu_button.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
@@ -116,11 +117,55 @@ class _BodyState extends State<Body> {
       });
     }
 
+    // String selectedKey="Please Select";
+    // List<String> addresses = <String>[
+    //   'Aryan Solanki - 400-B,pocket-N,Sarita Vihar,New Delhi-110076',
+    //   'Medium',
+    //   'High',
+    // ];
+    //
+    // final Widget normalChildButton = Container(
+    //
+    //   height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
+    //   child: Padding(
+    //     padding: EdgeInsets.only(top: getProportionateScreenHeight(20),bottom: getProportionateScreenHeight(20),left: getProportionateScreenWidth(10),right: getProportionateScreenWidth(20) ),
+    //     child: Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //
+    //       children: <Widget>[
+    //         Flexible(
+    //           child:RichText(
+    //             maxLines: 1,
+    //             overflow:TextOverflow.ellipsis,
+    //             text:  TextSpan(
+    //               style:  TextStyle(
+    //                 fontSize: getProportionateScreenWidth(15),
+    //                 color: Colors.black,
+    //               ),
+    //               children: <TextSpan>[
+    //                 new TextSpan(text: 'Aryan Solanki',style: TextStyle(fontWeight: FontWeight.bold)),
+    //                 new TextSpan(text: ' - 400-B,pocket-N,Sarita Vihar,New Delhi-110076'),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //         FittedBox(
+    //           fit: BoxFit.fill,
+    //           child: Icon(
+    //             Icons.arrow_drop_down,
+    //             // color: Colors.grey,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+
 
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        HomeHeader(address: true,),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: Padding(
