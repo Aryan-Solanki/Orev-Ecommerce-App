@@ -76,6 +76,15 @@ class _AllItemsState extends State<AllItems> {
     super.initState();
   }
 
+  Future<void> removeFavourite(productId) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.remove(productId);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -95,6 +104,7 @@ class _AllItemsState extends State<AllItems> {
                       direction: DismissDirection.endToStart,
                       onDismissed: (direction) {
                         setState(() {
+                          removeFavourite(ProductList[index].id);
                           ProductList.removeAt(index);
                         });
                       },
