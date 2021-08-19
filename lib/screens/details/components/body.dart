@@ -336,6 +336,10 @@ class _BodyState extends State<Body> {
     double totalCost = 0.0;
     double finalDeliveryCost = 0.0;
 
+    // updateTotalCost(walletBalance) {
+    //     totalCost = totalCost - walletbalance;
+    // }
+
     Future<double> getFinalCost(SelectedAddress) async {
       List<Location> locations =
           await locationFromAddress(SelectedAddress["pincode"].toString());
@@ -677,7 +681,7 @@ class _BodyState extends State<Body> {
                                                 : Text(
                                                     totalCost >= walletbalance
                                                         ? "Balance: ₹0.0"
-                                                        : "Balance: ₹${walletbalance - (totalCost)}",
+                                                        : "Balance: ₹${(walletbalance - (totalCost))}",
                                                     style: TextStyle(
                                                         fontSize:
                                                             getProportionateScreenWidth(
@@ -734,7 +738,7 @@ class _BodyState extends State<Body> {
                                                           : Text(
                                                               totalCost >
                                                                       walletbalance
-                                                                  ? "\₹${(totalCost) - walletbalance}"
+                                                                  ? "\₹${((totalCost) - walletbalance)}"
                                                                   : "\₹0.0",
                                                               style: TextStyle(
                                                                   color: Colors
