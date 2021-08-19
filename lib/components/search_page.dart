@@ -69,6 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                           style: TextStyle(color: Colors.black),
                         );
                       else {
+                        productList = [];
                         List<AlgoliaObjectSnapshot> currSearchStuff =
                             snapshot.data;
                         ProductServices _services = ProductServices();
