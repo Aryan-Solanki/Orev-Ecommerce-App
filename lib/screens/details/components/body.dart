@@ -587,125 +587,26 @@ class _BodyState extends State<Body> {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width:
-                                                  getProportionateScreenWidth(
-                                                      120),
-                                              child: TextField(
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        getProportionateScreenWidth(
-                                                            15)),
-                                                onChanged: (value) {
-                                                  coupon = value;
-                                                },
-                                                decoration: InputDecoration(
-                                                  hintText: 'Enter code',
-                                                  hintStyle: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              15)),
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 10.0,
-                                                          horizontal: 20.0),
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Colors.lightGreen,
-                                                        width: 1.0),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Colors.lightGreen,
-                                                        width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width:
-                                                  getProportionateScreenWidth(
-                                                      10),
-                                            ),
-                                            Container(
-                                              height:
-                                                  getProportionateScreenHeight(
-                                                      40),
-                                              width:
-                                                  getProportionateScreenWidth(
-                                                      50),
-                                              child: FlatButton(
-                                                  padding: EdgeInsets.all(0),
-                                                  color: Colors.lightGreen,
-                                                  onPressed: () {
-                                                    setState(() {});
-                                                  },
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      "Add",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize:
-                                                              getProportionateScreenWidth(
-                                                                  10)),
-                                                    ),
-                                                  )),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width:
-                                              getProportionateScreenWidth(30),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: GestureDetector(
-                                              onTap: () async {
-                                                _navigateAndDisplaySelection(
-                                                    context);
-                                              },
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  "Add New Address",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              13),
-                                                      color: Colors.blue,
-                                                      decoration: TextDecoration
-                                                          .underline),
-                                                ),
-                                              ),
-                                            ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          _navigateAndDisplaySelection(context);
+                                        },
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
+                                            "Add New Address",
+                                            style: TextStyle(
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        13),
+                                                color: Colors.blue,
+                                                decoration:
+                                                    TextDecoration.underline),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                     coupon == "aryan"
                                         ? Text(
