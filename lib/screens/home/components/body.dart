@@ -142,8 +142,10 @@ class _BodyState extends State<Body> {
           // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
         });
       } else if (type == "ads") {
-        var productId = e["data"]["productId"];
-        var imageLink = e["data"]["image"];
+        ProductServices _services = new ProductServices();
+        var adDoc = await _services.getAdInfo(e["adId"]);
+        var productId = adDoc["productId"];
+        var imageLink = adDoc["image"];
 
         setState(() {
           ListWidgets.add(AdView(imageLink, productId));
@@ -151,6 +153,7 @@ class _BodyState extends State<Body> {
       }
     }
     ListWidgets.add(SizedBox(height: getProportionateScreenWidth(20)));
+    setState(() {});
   }
 
   @override
