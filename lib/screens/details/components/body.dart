@@ -453,6 +453,7 @@ class _BodyState extends State<Body> {
           onWillPop: () async {
             Navigator.pop(context);
             firstTime = true;
+            _radioSelected = 0;
             setState(() {});
             return true;
           },
