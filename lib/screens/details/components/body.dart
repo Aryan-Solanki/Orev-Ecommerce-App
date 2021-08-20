@@ -16,6 +16,7 @@ import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
+import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
@@ -1172,6 +1173,10 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              PaymentSuccess
+                                                                  .routeName);
                                                           setState(() {});
                                                           if (authkey == '') {
                                                             Navigator.pushNamed(
