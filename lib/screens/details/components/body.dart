@@ -1173,10 +1173,6 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              PaymentSuccess
-                                                                  .routeName);
                                                           setState(() {});
                                                           if (authkey == '') {
                                                             Navigator.pushNamed(
