@@ -341,7 +341,7 @@ class _BodyState extends State<Body> {
     //     totalCost = totalCost - walletbalance;
     // }
 
-    Future<double> getFinalCost(SelectedAddress) async {
+    Future<double> getFinalCost(SelectedAddress, boo) async {
       List<Location> locations =
           await locationFromAddress(SelectedAddress["pincode"].toString());
       var distanceInMeters = await Geolocator.distanceBetween(
@@ -359,6 +359,10 @@ class _BodyState extends State<Body> {
         totalCost =
             widget.product.varients[selectedFoodVariants].price * quantity;
         finalDeliveryCost = 0.0;
+      }
+
+      if (boo) {
+        setState(() {});
       }
     }
 
@@ -381,7 +385,19 @@ class _BodyState extends State<Body> {
       } else {
         deliverable = false;
       }
-      getFinalCost(SelectedAddress);
+      for (var maps in addressmap) {
+        List<Location> locations =
+            await locationFromAddress(maps["pincode"].toString());
+        var distanceInMeters = await Geolocator.distanceBetween(
+          locations[0].latitude,
+          locations[0].longitude,
+          vendorlocation.latitude,
+          vendorlocation.longitude,
+        );
+        maps["distanceInMeters"] = distanceInMeters;
+      }
+
+      getFinalCost(SelectedAddress, false);
     }
 
     _navigateAndDisplaySelection(BuildContext context) async {
@@ -404,23 +420,10 @@ class _BodyState extends State<Body> {
 
     getAllAddress();
 
-    getFinalCost(SelectedAddress);
-
-    locationFunction(x) async {
-      List<Location> locations =
-          await locationFromAddress(x["pincode"].toString());
-      var distanceInMeters = await Geolocator.distanceBetween(
-        locations[0].latitude,
-        locations[0].longitude,
-        vendorlocation.latitude,
-        vendorlocation.longitude,
-      );
-
-      return distanceInMeters;
-    }
+    getFinalCost(SelectedAddress, false);
 
     void _showDialog() {
-      getFinalCost(SelectedAddress);
+      getFinalCost(SelectedAddress, false);
       slideDialog.showSlideDialog(
           context: context,
           child: StatefulBuilder(
@@ -468,10 +471,10 @@ class _BodyState extends State<Body> {
                                   itemCount: addressmap.length,
                                   itemBuilder: (context, i) {
                                     return GestureDetector(
-                                      onTap: () async {
+                                      onTap: () {
                                         var distanceInMeters =
-                                            await locationFunction(
-                                                addressmap[i]);
+                                            addressmap[i]["distanceInMeters"];
+
                                         if ((distanceInMeters / 1000) <
                                             sellingdistance) {
                                           deliverable = true;
@@ -481,7 +484,7 @@ class _BodyState extends State<Body> {
                                         _radioSelected = i;
                                         setState(() {
                                           SelectedAddress = addressmap[i];
-                                          getFinalCost(SelectedAddress);
+                                          getFinalCost(SelectedAddress, true);
                                         });
                                       },
                                       child: Container(
@@ -672,7 +675,8 @@ class _BodyState extends State<Body> {
                                                         orevwallet = newValue;
                                                         if (!orevwallet) {
                                                           getFinalCost(
-                                                              SelectedAddress);
+                                                              SelectedAddress,
+                                                              false);
                                                         }
                                                       });
                                                     },
@@ -1067,7 +1071,8 @@ class _BodyState extends State<Body> {
                                               if (quantity != 1) {
                                                 setState(() {
                                                   quantity--;
-                                                  getFinalCost(SelectedAddress);
+                                                  getFinalCost(
+                                                      SelectedAddress, false);
                                                 });
                                               }
                                             },
@@ -1094,7 +1099,8 @@ class _BodyState extends State<Body> {
                                             press: () {
                                               setState(() {
                                                 quantity++;
-                                                getFinalCost(SelectedAddress);
+                                                getFinalCost(
+                                                    SelectedAddress, false);
                                               });
                                             },
                                           ),
