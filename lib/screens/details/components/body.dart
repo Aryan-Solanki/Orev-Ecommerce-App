@@ -1308,7 +1308,7 @@ class _BodyState extends State<Body> {
                                     left: getProportionateScreenWidth(15),
                                     bottom: getProportionateScreenWidth(5)),
                                 child: Text(
-                                  "You Might Also Like",
+                                  authkey == "" ? "You Might Also Like" : "",
                                   style: smallerheadingStyle,
                                 ),
                               ),
