@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:orev/components/default_button.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/screens/your_order/your_order.dart';
 
 import '../../../size_config.dart';
 
@@ -15,7 +17,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    bool transaction=false;
+    bool transaction=true;
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
@@ -145,7 +147,16 @@ class _BodyState extends State<Body> {
                 Text("06:34 AM, 1 Oct 2020",style: TextStyle(fontSize: getProportionateScreenWidth(14)),),
                 Text("Transaction ID: Not Generated",style: TextStyle(fontSize: getProportionateScreenWidth(14))),
               ],
-            )
+            ),
+            SizedBox(height: getProportionateScreenHeight(25),),
+            DefaultButton(
+              color: kPrimaryColor2,
+              text: "Manage Orders",
+              press: () {
+                Navigator.pushNamed(context, YourOrder.routeName);
+              },
+            ),
+            SizedBox(height: getProportionateScreenHeight(15),),
 
 
           ],
