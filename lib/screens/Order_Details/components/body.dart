@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:orev/components/default_button.dart';
+import 'package:orev/models/Order.dart';
+import 'package:orev/models/OrderProduct.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/Order_Details/components/price_cart.dart';
 import 'package:orev/screens/your_order/your_order.dart';
+import 'package:orev/services/order_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import 'package:paytm/paytm.dart';
 
 import '../../../constants.dart';
@@ -116,6 +120,51 @@ class _BodyState extends State<Body> {
                     MaterialPageRoute(builder: (context) => YourOrder()));
                 print("Transaction Successful");
                 print(value['response']['RESPMSG']);
+                String authkey = UserSimplePreferences.getAuthKey() ?? "";
+                if (authkey == "") {
+                  print("Some error occured");
+                }
+                Order order = Order(
+                    cod: false,
+                    deliveryBoy: "",
+                    deliveryCost: widget.deliveryCost,
+                    orderStatus: "Ordered",
+                    product: new OrderProduct(
+                        brandname: widget.product.brandname,
+                        id: widget.product.id,
+                        sellerId: widget.product.sellerId,
+                        title: widget.product.title,
+                        detail: widget.product.detail,
+                        varient: widget.product.varients[widget.currentVarient],
+                        tax: widget.product.tax),
+                    orderId: orderId,
+                    totalCost: widget.totalCost,
+                    userId: authkey,
+                    timestamp: DateTime.now().toString(),
+                    responseMsg: value['response']['RESPMSG']);
+
+                var values = {
+                  "cod": order.cod,
+                  "deliveryBoy": order.deliveryBoy,
+                  "deliveryCost": order.deliveryCost,
+                  "orderStatus": order.orderStatus,
+                  "product": {
+                    "brandname": order.product.brandname,
+                    "id": order.product.id,
+                    "sellerId": order.product.sellerId,
+                    "title": order.product.title,
+                    "detail": order.product.detail,
+                    "varient": order.product.varient,
+                    "tax": order.product.tax,
+                  },
+                  "orderId": order.orderId,
+                  "totalCost": order.totalCost,
+                  "userId": order.userId,
+                  "timestamp": order.timestamp,
+                  "responseMsg": order.responseMsg,
+                };
+                OrderServices _services = new OrderServices();
+                _services.addOrder(values);
               }
             }
           }
