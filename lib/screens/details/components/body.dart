@@ -406,6 +406,19 @@ class _BodyState extends State<Body> {
 
     getFinalCost(SelectedAddress);
 
+    locationFunction(x) async {
+      List<Location> locations =
+          await locationFromAddress(x["pincode"].toString());
+      var distanceInMeters = await Geolocator.distanceBetween(
+        locations[0].latitude,
+        locations[0].longitude,
+        vendorlocation.latitude,
+        vendorlocation.longitude,
+      );
+
+      return distanceInMeters;
+    }
+
     void _showDialog() {
       getFinalCost(SelectedAddress);
       slideDialog.showSlideDialog(
@@ -456,17 +469,9 @@ class _BodyState extends State<Body> {
                                   itemBuilder: (context, i) {
                                     return GestureDetector(
                                       onTap: () async {
-                                        List<Location> locations =
-                                            await locationFromAddress(
-                                                addressmap[i]["pincode"]
-                                                    .toString());
                                         var distanceInMeters =
-                                            await Geolocator.distanceBetween(
-                                          locations[0].latitude,
-                                          locations[0].longitude,
-                                          vendorlocation.latitude,
-                                          vendorlocation.longitude,
-                                        );
+                                            await locationFunction(
+                                                addressmap[i]);
                                         if ((distanceInMeters / 1000) <
                                             sellingdistance) {
                                           deliverable = true;
