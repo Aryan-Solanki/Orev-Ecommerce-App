@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -15,16 +14,11 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/home/components/home_header.dart';
-import 'package:orev/screens/liked_item/like_screen.dart';
-import 'package:orev/screens/payment_success/payment_success.dart';
-import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/size_config.dart';
-import 'package:paytm/paytm.dart';
-import 'package:search_choices/search_choices.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'product_description.dart';
 import 'top_rounded_container.dart';
@@ -1308,7 +1302,7 @@ class _BodyState extends State<Body> {
                                     left: getProportionateScreenWidth(15),
                                     bottom: getProportionateScreenWidth(5)),
                                 child: Text(
-                                  authkey == "" ? "You Might Also Like" : "",
+                                  authkey != "" ? "You Might Also Like" : "",
                                   style: smallerheadingStyle,
                                 ),
                               ),
