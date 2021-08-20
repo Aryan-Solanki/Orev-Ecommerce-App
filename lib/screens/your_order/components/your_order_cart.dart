@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/models/Cart.dart';
+import 'package:orev/models/Order.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/your_order/components/your_order_detail.dart';
@@ -12,11 +13,11 @@ import '../../../size_config.dart';
 class YouOrderCard extends StatefulWidget {
   const YouOrderCard({
     Key key,
-    @required this.cart,
+    @required this.order,
     @required this.notifyParent,
   }) : super(key: key);
 
-  final Cart cart;
+  final Order order;
   final Function() notifyParent;
 
   @override
@@ -25,79 +26,15 @@ class YouOrderCard extends StatefulWidget {
 
 class _YouOrderCardState extends State<YouOrderCard> {
   String user_key;
-  int selectedVarient = 0;
-
-  Future<int> getVarientNumber(id, productId) async {
-    ProductServices _services = ProductServices();
-    print(user_key);
-    Product product = await _services.getProduct(productId);
-    var varlist = product.varients;
-    int ind = 0;
-    bool foundit = false;
-    for (var varient in varlist) {
-      if (varient.id == id) {
-        foundit = true;
-        break;
-      }
-      ind += 1;
-    }
-    selectedVarient = ind;
-    setState(() {});
-  }
-
-  Future<void> changeCartQty(quantity) async {
-    ProductServices _services = ProductServices();
-    print(user_key);
-    var favref = await _services.cart.doc(user_key).get();
-    var keys = favref["cartItems"];
-
-    for (var k in keys) {
-      if (k["varientNumber"] == widget.cart.varientNumber) {
-        k["qty"] = quantity;
-        break;
-      }
-    }
-    await _services.cart.doc(user_key).update({'cartItems': keys});
-    setState(() {
-      widget.notifyParent();
-    });
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
-  }
-
-  Future<void> removeFromCart(varientid) async {
-    ProductServices _services = ProductServices();
-    print(user_key);
-    var favref = await _services.cart.doc(user_key).get();
-    var keys = favref["cartItems"];
-
-    var ind = 0;
-    for (var cartItem in keys) {
-      if (cartItem["varientNumber"] == varientid) {
-        break;
-      }
-      ind += 1;
-    }
-    keys.removeAt(ind);
-    await _services.cart.doc(user_key).update({'cartItems': keys});
-    widget.notifyParent();
-    // final snackBar = SnackBar(
-    //   content: Text('Item removed from Cart'),
-    //   backgroundColor: kPrimaryColor,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
-  }
 
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
-    getVarientNumber(widget.cart.varientNumber, widget.cart.product.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    int quantity = widget.cart.numOfItem;
     return Row(
       children: [
         SizedBox(
@@ -110,8 +47,7 @@ class _YouOrderCardState extends State<YouOrderCard> {
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.network(
-                  widget.cart.product.varients[selectedVarient].images[0]),
+              child: Image.network(widget.order.product.variant.images[0]),
             ),
           ),
         ),
@@ -133,7 +69,7 @@ class _YouOrderCardState extends State<YouOrderCard> {
               // height: getProportionateScreenHeight(50),
               width: getProportionateScreenWidth(210),
               child: Text(
-                widget.cart.product.title,
+                widget.order.product.title,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(15)),
@@ -142,26 +78,23 @@ class _YouOrderCardState extends State<YouOrderCard> {
               ),
             ),
             Text(
-              "Delivered",
-              style: TextStyle(
-                  fontSize: getProportionateScreenHeight(14)),
+              widget.order.orderStatus,
+              style: TextStyle(fontSize: getProportionateScreenHeight(14)),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
-
           ],
         ),
         SizedBox(width: getProportionateScreenWidth(5)),
         GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context,
-                YourOrderDetail.routeName);
-            },
-          child:Icon(Icons.arrow_forward_ios,
-              size: getProportionateScreenHeight(25),
+          onTap: () {
+            Navigator.pushNamed(context, YourOrderDetail.routeName);
+          },
+          child: Icon(
+            Icons.arrow_forward_ios,
+            size: getProportionateScreenHeight(25),
           ),
         )
-
       ],
     );
   }

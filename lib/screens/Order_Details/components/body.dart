@@ -134,7 +134,7 @@ class _BodyState extends State<Body> {
                         sellerId: widget.product.sellerId,
                         title: widget.product.title,
                         detail: widget.product.detail,
-                        varient: widget.product.varients[widget.currentVarient],
+                        variant: widget.product.varients[widget.currentVarient],
                         tax: widget.product.tax),
                     orderId: orderId,
                     totalCost: widget.totalCost,
@@ -153,24 +153,24 @@ class _BodyState extends State<Body> {
                     "sellerId": order.product.sellerId,
                     "title": order.product.title,
                     "detail": order.product.detail,
-                    "varient": {
-                      "title": order.product.varient.title,
-                      "default": order.product.varient.default_product,
-                      "id": order.product.varient.id,
+                    "variant": {
+                      "title": order.product.variant.title,
+                      "default": order.product.variant.default_product,
+                      "id": order.product.variant.id,
                       "onSale": {
-                        "comparedPrice": order.product.varient.comparedPrice,
+                        "comparedPrice": order.product.variant.comparedPrice,
                         "discountPercentage":
-                            order.product.varient.discountPercentage,
-                        "isOnSale": order.product.varient.isOnSale,
+                            order.product.variant.discountPercentage,
+                        "isOnSale": order.product.variant.isOnSale,
                       },
-                      "price": order.product.varient.price,
+                      "price": order.product.variant.price,
                       "stock": {
-                        "inStock": order.product.varient.inStock,
-                        "qty": order.product.varient.qty
+                        "inStock": order.product.variant.inStock,
+                        "qty": order.product.variant.qty
                       },
                       "variantDetails": {
-                        "images": order.product.varient.images,
-                        "title": order.product.varient.title,
+                        "images": order.product.variant.images,
+                        "title": order.product.variant.title,
                       },
                     },
                     "tax": order.product.tax,

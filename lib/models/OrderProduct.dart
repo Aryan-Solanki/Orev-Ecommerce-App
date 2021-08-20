@@ -6,7 +6,7 @@ class OrderProduct {
   final String id;
   final String sellerId;
   final String title, detail;
-  final Varient varient;
+  final Varient variant;
   final double tax;
 
   OrderProduct({
@@ -15,7 +15,7 @@ class OrderProduct {
     @required this.sellerId,
     @required this.title,
     @required this.detail,
-    @required this.varient,
+    @required this.variant,
     @required this.tax,
   });
 }
