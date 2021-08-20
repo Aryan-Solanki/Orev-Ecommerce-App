@@ -5,313 +5,160 @@ import 'package:flutter/painting.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/screens/your_order/your_order.dart';
-import 'package:orev/models/Order.dart';
-import 'package:orev/models/Product.dart';
-import 'package:orev/screens/details/details_screen.dart';
-import 'package:orev/services/product_services.dart';
-import 'package:orev/services/user_services.dart';
 
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
-  final bool transaction;
-  final Order order;
-  Body({@required this.transaction, @required this.order});
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  String username = "";
-  String userphone = "";
-  String sellername = "";
-
-  Future<void> getUserInfo() async {
-    UserServices _services = new UserServices();
-    var user = await _services.getUserById(widget.order.userId);
-    username = user["name"];
-    userphone = user["number"];
-    setState(() {});
-  }
-
-  Future<void> getSellerInfo() async {
-    ProductServices _services = new ProductServices();
-    sellername = await _services.getSellerInfo(widget.order.product.sellerId);
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getUserInfo();
-    getSellerInfo();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    // bool transaction=false;
+    bool transaction=true;
     return SingleChildScrollView(
       child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FittedBox(
               child: Row(
                 children: [
-                  widget.transaction == true
-                      ? Text(
-                          "Transaction Successful ",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        )
-                      : Text(
-                          "Transaction Failed ",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                  widget.transaction == true
-                      ? Icon(
-                          Icons.check_circle,
-                          color: kPrimaryColor,
-                          size: getProportionateScreenHeight(50),
-                        )
-                      : Icon(
-                          Icons.error,
-                          color: Colors.red,
-                          size: getProportionateScreenHeight(50),
-                        )
+                  transaction==true?Text("Transaction Successful ",style: TextStyle(fontSize: getProportionateScreenWidth(25),fontWeight: FontWeight.bold,color: Colors.black),):Text("Transaction Failed ",style: TextStyle(fontSize: getProportionateScreenWidth(25),fontWeight: FontWeight.bold,color: Colors.black),),
+                  transaction==true?Icon(Icons.check_circle,color: kPrimaryColor,size: getProportionateScreenHeight(50),):Icon(Icons.error,color: Colors.red,size: getProportionateScreenHeight(50),)
                 ],
               ),
             ),
-            SizedBox(
-              height: getProportionateScreenHeight(15),
-            ),
-            widget.transaction == true
-                ? Column(
+            SizedBox(height: getProportionateScreenHeight(15),),
+            transaction==true?Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenWidth(15)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hi $username,",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: getProportionateScreenWidth(18),
-                              ),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(10),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                    color: kTextColor,
-                                    fontSize: getProportionateScreenWidth(15)),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          "Thank you for placing order with us.Your order ",
-                                      style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                      )),
-                                  TextSpan(
-                                      text: '"${widget.order.product.title}"',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          ProductServices _services =
-                                              new ProductServices();
-                                          Product product =
-                                              await _services.getProduct(
-                                                  widget.order.product.id);
-                                          Navigator.pushNamed(
-                                            context,
-                                            DetailsScreen.routeName,
-                                            arguments: ProductDetailsArguments(
-                                                product: product),
-                                          );
-                                        }),
-                                  TextSpan(
-                                      text:
-                                          "\n is being processed by our delivery team, and you will soon receive a confirmation from our side.",
-                                      style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                      )),
-                                ],
-                              ),
-                            )
+                      Text("Hi Aryan Solanki,",style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(18),
+                      ),),
+                      SizedBox(height: getProportionateScreenHeight(10),),
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: kTextColor,fontSize: getProportionateScreenWidth(15)),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "Thank you for placing order with us.Your order ",
+                                style: TextStyle(fontSize: getProportionateScreenWidth(15),)),
+                            TextSpan(
+                                text: '"Organic Chakki Atta"',
+                                style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => print('click')),
+                            TextSpan(
+                                text: "\nWe will send a confirmation when your items ships.",
+                                style: TextStyle(fontSize: getProportionateScreenWidth(15),)),
+
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                      Text(
-                        "Transition Details ",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(20),
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        padding:
-                            EdgeInsets.all(getProportionateScreenWidth(15)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Date: ${widget.order.timestamp} IST",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                            Text(
-                              "Seller: $sellername",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                            Text(
-                              "Order Id: ${widget.order.orderId}",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                            Text(
-                              "Status: Successful",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                            Text(
-                              "Payment Method: Online",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                            Text(
-                              "Transition amount: ₹${widget.order.totalCost}",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                      Text(
-                        "Billing Address",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(20),
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        padding:
-                            EdgeInsets.all(getProportionateScreenWidth(15)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${widget.order.selectedAddress["adline1"]}",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    color: Colors.black)),
-                            Text("${widget.order.selectedAddress["adline2"]}",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    color: Colors.black)),
-                            Text(
-                                "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    color: Colors.black)),
-                            Text("Phone number: ${userphone}",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    color: Colors.black)),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
+                      )
+
                     ],
-                  )
-                : Column(
+                  ),
+
+                ),
+                SizedBox(height: getProportionateScreenHeight(15),),
+                Text("Transition Details ",style: TextStyle(fontSize: getProportionateScreenWidth(20),fontWeight: FontWeight.bold,color: Colors.black),),
+                SizedBox(height: getProportionateScreenHeight(15),),
+                Container(
+                  width: double.maxFinite,
+                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenWidth(15)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Text(
-                          "The transaction was not processed due to the following error.\n ${widget.order.responseMsg}.\nIf your money was debited you will get a refund within 24hrs.",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: getProportionateScreenWidth(18)),
-                        ),
-                      ),
-                      Text(
-                        "${widget.order.timestamp}",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(14)),
-                      ),
-                      Text("Transaction ID: Not Generated",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(14))),
+                      Text("Date: 3 March,2020 10:06:43 PM IST",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+                      Text("Seller: Aryan Tatwa Seller",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+                      Text("Order Id: NZER12THH4N45OPJ",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+                      Text("Status: Successful",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+                      Text("Payment Method: Online",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+                      Text("Transition amount: ₹6253",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black),),
+
                     ],
-                  )
+                  ),
+
+                ),
+                SizedBox(height: getProportionateScreenHeight(15),),
+                Text("Billing Address",style: TextStyle(fontSize: getProportionateScreenWidth(20),fontWeight: FontWeight.bold,color: Colors.black),),
+                SizedBox(height: getProportionateScreenHeight(15),),
+                Container(
+                  width: double.maxFinite,
+                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("400-B,Pocket-N",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black)),
+                      Text("Sarita Vihar",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black)),
+                      Text("New Delhi-110076",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black)),
+                      Text("Phone number: 7982916348",style: TextStyle(fontSize: getProportionateScreenWidth(14),color: Colors.black)),
+                    ],
+                  ),
+
+                ),
+                SizedBox(height: getProportionateScreenHeight(15),),
+              ],
+            ):Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Text("The transaction failed due to a technical error. If your money was debited you will get a refund within 24hrs.",style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18)),),
+                ),
+                Text("06:34 AM, 1 Oct 2020",style: TextStyle(fontSize: getProportionateScreenWidth(14)),),
+                Text("Transaction ID: Not Generated",style: TextStyle(fontSize: getProportionateScreenWidth(14))),
+              ],
+            ),
+            SizedBox(height: getProportionateScreenHeight(25),),
+            DefaultButton(
+              color: kPrimaryColor2,
+              text: "Manage Orders",
+              press: () {
+                Navigator.pushNamed(context, YourOrder.routeName);
+              },
+            ),
+            SizedBox(height: getProportionateScreenHeight(15),),
+
+
           ],
         ),
       ),
