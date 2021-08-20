@@ -484,7 +484,7 @@ class _BodyState extends State<Body> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "Choose a delivery address for your product..",
+                          "Choose a delivery address for your product.",
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(12),
                             color: Color(0xff565656),
