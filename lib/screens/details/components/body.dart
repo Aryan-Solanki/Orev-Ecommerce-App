@@ -1217,7 +1217,57 @@ class _BodyState extends State<Body> {
                                                   ),
                                                 ),
                                               )
-                                            : Center()
+                                            : TopRoundedContainer(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left:
+                                                        SizeConfig.screenWidth *
+                                                            0.1,
+                                                    right:
+                                                        SizeConfig.screenWidth *
+                                                            0.1,
+                                                    bottom:
+                                                        getProportionateScreenWidth(
+                                                            30),
+                                                    top:
+                                                        getProportionateScreenWidth(
+                                                            10),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      DefaultButton(
+                                                        color: kPrimaryColor2,
+                                                        text: "Buy Now",
+                                                        press: () {
+                                                          if (authkey == '') {
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                SignInScreen
+                                                                    .routeName);
+                                                          }
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        height:
+                                                            getProportionateScreenHeight(
+                                                                15),
+                                                      ),
+                                                      DefaultButton(
+                                                        text: "Add To Cart",
+                                                        press: () {
+                                                          if (authkey == '') {
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                SignInScreen
+                                                                    .routeName);
+                                                          }
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
                                         : TopRoundedContainer(
                                             color: Colors.white,
                                             child: Padding(

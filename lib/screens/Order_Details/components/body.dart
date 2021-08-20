@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:orev/components/default_button.dart';
@@ -101,7 +102,7 @@ class _BodyState extends State<Body> {
 
       paytmResponse.then((value) {
         print(value);
-        setState(() {
+        setState(() async {
           loading = false;
           print("Value is ");
           print(value);
@@ -116,8 +117,6 @@ class _BodyState extends State<Body> {
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => YourOrder()));
                 print("Transaction Successful");
                 print(value['response']['RESPMSG']);
                 String authkey = UserSimplePreferences.getAuthKey() ?? "";
@@ -164,7 +163,14 @@ class _BodyState extends State<Body> {
                   "responseMsg": order.responseMsg,
                 };
                 OrderServices _services = new OrderServices();
-                _services.addOrder(values);
+                await _services.addOrder(values);
+                Fluttertoast.showToast(
+                    msg: "Order Placed",
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 2,
+                    gravity: ToastGravity.BOTTOM);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => YourOrder()));
               }
             }
           }
