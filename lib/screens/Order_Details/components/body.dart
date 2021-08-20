@@ -7,6 +7,7 @@ import 'package:orev/models/Order.dart';
 import 'package:orev/models/OrderProduct.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/Order_Details/components/price_cart.dart';
+import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 import 'package:orev/services/order_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
@@ -114,6 +115,12 @@ class _BodyState extends State<Body> {
               print(
                   "Response                                           STATUS   ${value['response']['STATUS']}");
               if (payment_response == "TXN_FAILURE") {
+                Navigator.push(
+                    context,
+                    (MaterialPageRoute(
+                        builder: (context) => PaymentSuccess(
+                              transaction_success: false,
+                            ))));
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
@@ -124,23 +131,25 @@ class _BodyState extends State<Body> {
                   print("Some error occured");
                 }
                 Order order = Order(
-                    cod: false,
-                    deliveryBoy: "",
-                    deliveryCost: widget.deliveryCost,
-                    orderStatus: "Ordered",
-                    product: new OrderProduct(
-                        brandname: widget.product.brandname,
-                        id: widget.product.id,
-                        sellerId: widget.product.sellerId,
-                        title: widget.product.title,
-                        detail: widget.product.detail,
-                        variant: widget.product.varients[widget.currentVarient],
-                        tax: widget.product.tax),
-                    orderId: orderId,
-                    totalCost: widget.totalCost,
-                    userId: authkey,
-                    timestamp: DateTime.now().toString(),
-                    responseMsg: value['response']['RESPMSG']);
+                  cod: false,
+                  deliveryBoy: "",
+                  deliveryCost: widget.deliveryCost,
+                  orderStatus: "Ordered",
+                  product: new OrderProduct(
+                      brandname: widget.product.brandname,
+                      id: widget.product.id,
+                      sellerId: widget.product.sellerId,
+                      title: widget.product.title,
+                      detail: widget.product.detail,
+                      variant: widget.product.varients[widget.currentVarient],
+                      tax: widget.product.tax),
+                  orderId: orderId,
+                  totalCost: widget.totalCost,
+                  userId: authkey,
+                  timestamp: DateTime.now().toString(),
+                  selectedAddress: widget.selectedaddress,
+                  responseMsg: value['response']['RESPMSG'],
+                );
 
                 var values = {
                   "cod": order.cod,
@@ -180,6 +189,14 @@ class _BodyState extends State<Body> {
                   "userId": order.userId,
                   "timestamp": order.timestamp,
                   "responseMsg": order.responseMsg,
+                  "address": {
+                    "name": widget.selectedaddress["name"],
+                    "adline1": widget.selectedaddress["adline1"],
+                    "adline2": widget.selectedaddress["adline2"],
+                    "city": widget.selectedaddress["city"],
+                    "state": widget.selectedaddress["state"],
+                    "pincode": widget.selectedaddress["pincode"],
+                  },
                 };
                 OrderServices _services = new OrderServices();
                 try {
@@ -196,8 +213,8 @@ class _BodyState extends State<Body> {
                     toastLength: Toast.LENGTH_SHORT,
                     timeInSecForIosWeb: 2,
                     gravity: ToastGravity.BOTTOM);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => YourOrder()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => YourOrder()));
               }
             }
           }

@@ -54,6 +54,7 @@ class _YourOrderState extends State<YourOrder> {
           totalCost: doc["totalCost"],
           userId: doc["userId"],
           timestamp: doc["timestamp"],
+          selectedAddress: doc["address"],
           responseMsg: doc["responseMsg"]));
     });
     setState(() {});

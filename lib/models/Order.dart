@@ -14,6 +14,7 @@ class Order {
   final String userId;
   final String timestamp;
   final String responseMsg;
+  final Map selectedAddress;
   Order(
       {this.cod,
       this.deliveryBoy,
@@ -24,5 +25,6 @@ class Order {
       this.totalCost,
       this.userId,
       this.timestamp,
-      this.responseMsg});
+      this.responseMsg,
+      this.selectedAddress});
 }
