@@ -362,6 +362,13 @@ class _BodyState extends State<Body> {
         vendorlocation.latitude,
         vendorlocation.longitude,
       );
+
+      if ((distanceInMeters / 1000) < sellingdistance) {
+        deliverable = true;
+      } else {
+        deliverable = false;
+      }
+
       if (distanceInMeters / 1000 > freekms) {
         totalCost =
             widget.product.varients[selectedFoodVariants].price * quantity +
@@ -698,16 +705,18 @@ class _BodyState extends State<Body> {
                                                   child: Checkbox(
                                                     activeColor: kPrimaryColor,
                                                     value: orevwallet,
-                                                    onChanged: (bool newValue) {
-                                                      setState(() {
-                                                        orevwallet = newValue;
-                                                        SelectedAddress =
-                                                            addressmap[
-                                                                _radioSelected];
-                                                        getFinalCost(
-                                                            SelectedAddress,
-                                                            false);
-                                                      });
+                                                    onChanged:
+                                                        (bool newValue) async {
+                                                      orevwallet = newValue;
+                                                      SelectedAddress =
+                                                          addressmap[
+                                                              _radioSelected];
+
+                                                      await getFinalCost(
+                                                          SelectedAddress,
+                                                          false);
+
+                                                      setState(() {});
                                                     },
                                                   ),
                                                 ),
