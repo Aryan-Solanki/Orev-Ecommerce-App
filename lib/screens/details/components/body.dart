@@ -104,6 +104,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    firstTime = true;
     authkey = UserSimplePreferences.getAuthKey() ?? '';
     getVarientList();
     getDefaultVarient();
@@ -120,6 +121,7 @@ class _BodyState extends State<Body> {
   String coupon = "";
   int coupon_value = 100;
   bool deliverable = true;
+  bool firstTime = false;
   double sellingdistance = 0.0;
   double walletbalance = 0.0;
   double newwalletbalance = 0.0;
@@ -370,34 +372,39 @@ class _BodyState extends State<Body> {
       ProductServices _services = ProductServices();
       var userref = await _services.users.doc(user_key).get();
       addressmap = userref["address"];
-      SelectedAddress = addressmap[0];
 
-      List<Location> locations =
-          await locationFromAddress(addressmap[0]["pincode"].toString());
-      var distanceInMeters = await Geolocator.distanceBetween(
-        locations[0].latitude,
-        locations[0].longitude,
-        vendorlocation.latitude,
-        vendorlocation.longitude,
-      );
-      if ((distanceInMeters / 1000) < sellingdistance) {
-        deliverable = true;
-      } else {
-        deliverable = false;
-      }
-      for (var maps in addressmap) {
+      if (firstTime) {
+        SelectedAddress = addressmap[0];
+
         List<Location> locations =
-            await locationFromAddress(maps["pincode"].toString());
+            await locationFromAddress(addressmap[0]["pincode"].toString());
         var distanceInMeters = await Geolocator.distanceBetween(
           locations[0].latitude,
           locations[0].longitude,
           vendorlocation.latitude,
           vendorlocation.longitude,
         );
-        maps["distanceInMeters"] = distanceInMeters;
-      }
+        if ((distanceInMeters / 1000) < sellingdistance) {
+          deliverable = true;
+        } else {
+          deliverable = false;
+        }
+        for (var maps in addressmap) {
+          List<Location> locations =
+              await locationFromAddress(maps["pincode"].toString());
+          var distanceInMeters = await Geolocator.distanceBetween(
+            locations[0].latitude,
+            locations[0].longitude,
+            vendorlocation.latitude,
+            vendorlocation.longitude,
+          );
+          maps["distanceInMeters"] = distanceInMeters;
+        }
 
-      getFinalCost(SelectedAddress, false);
+        getFinalCost(SelectedAddress, false);
+
+        firstTime = false;
+      }
     }
 
     _navigateAndDisplaySelection(BuildContext context) async {
@@ -690,11 +697,12 @@ class _BodyState extends State<Body> {
                                                     onChanged: (bool newValue) {
                                                       setState(() {
                                                         orevwallet = newValue;
-                                                        if (!orevwallet) {
-                                                          getFinalCost(
-                                                              SelectedAddress,
-                                                              false);
-                                                        }
+                                                        SelectedAddress =
+                                                            addressmap[
+                                                                _radioSelected];
+                                                        getFinalCost(
+                                                            SelectedAddress,
+                                                            false);
                                                       });
                                                     },
                                                   ),
