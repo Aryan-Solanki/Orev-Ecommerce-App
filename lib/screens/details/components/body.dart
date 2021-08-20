@@ -447,7 +447,15 @@ class _BodyState extends State<Body> {
     void _showDialog() {
       getFinalCost(SelectedAddress, false);
       slideDialog.showSlideDialog(
-          context: context,
+        context: context,
+        barrierDismissible: false,
+        child: WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context);
+            firstTime = true;
+            setState(() {});
+            return true;
+          },
           child: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Expanded(
@@ -982,7 +990,9 @@ class _BodyState extends State<Body> {
                 ),
               ),
             );
-          }));
+          }),
+        ),
+      );
     }
 
     List<dynamic> keys = [];
