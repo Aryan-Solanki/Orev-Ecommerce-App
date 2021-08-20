@@ -13,7 +13,10 @@ class OrderServices {
         .update(values);
   }
 
-  Future<void> addOrder(Map<String, dynamic> values) async {
-    await FirebaseFirestore.instance.collection("orders").add(values);
+  Future<void> addOrder(Map<String, dynamic> values, orderId) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(orderId)
+        .set(values);
   }
 }

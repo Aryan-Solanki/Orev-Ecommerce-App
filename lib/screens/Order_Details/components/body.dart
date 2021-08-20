@@ -153,7 +153,26 @@ class _BodyState extends State<Body> {
                     "sellerId": order.product.sellerId,
                     "title": order.product.title,
                     "detail": order.product.detail,
-                    "varient": order.product.varient,
+                    "varient": {
+                      "title": order.product.varient.title,
+                      "default": order.product.varient.default_product,
+                      "id": order.product.varient.id,
+                      "onSale": {
+                        "comparedPrice": order.product.varient.comparedPrice,
+                        "discountPercentage":
+                            order.product.varient.discountPercentage,
+                        "isOnSale": order.product.varient.isOnSale,
+                      },
+                      "price": order.product.varient.price,
+                      "stock": {
+                        "inStock": order.product.varient.inStock,
+                        "qty": order.product.varient.qty
+                      },
+                      "variantDetails": {
+                        "images": order.product.varient.images,
+                        "title": order.product.varient.title,
+                      },
+                    },
                     "tax": order.product.tax,
                   },
                   "orderId": order.orderId,
@@ -163,7 +182,15 @@ class _BodyState extends State<Body> {
                   "responseMsg": order.responseMsg,
                 };
                 OrderServices _services = new OrderServices();
-                await _services.addOrder(values);
+                try {
+                  await _services.addOrder(values, order.orderId);
+                } catch (e) {
+                  Fluttertoast.showToast(
+                      msg: e.toString(),
+                      toastLength: Toast.LENGTH_LONG,
+                      timeInSecForIosWeb: 2,
+                      gravity: ToastGravity.BOTTOM);
+                }
                 Fluttertoast.showToast(
                     msg: "Order Placed",
                     toastLength: Toast.LENGTH_SHORT,
