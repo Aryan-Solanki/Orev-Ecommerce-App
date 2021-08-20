@@ -478,7 +478,7 @@ class _BodyState extends State<Body> {
                                   itemCount: addressmap.length,
                                   itemBuilder: (context, i) {
                                     return GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         var distanceInMeters =
                                             addressmap[i]["distanceInMeters"];
 
@@ -489,10 +489,10 @@ class _BodyState extends State<Body> {
                                           deliverable = false;
                                         }
                                         _radioSelected = i;
-                                        setState(() {
-                                          SelectedAddress = addressmap[i];
-                                          getFinalCost(SelectedAddress, true);
-                                        });
+                                        SelectedAddress = addressmap[i];
+                                        await getFinalCost(
+                                            SelectedAddress, true);
+                                        setState(() {});
                                       },
                                       child: Container(
                                           width:
