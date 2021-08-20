@@ -493,23 +493,6 @@ class _BodyState extends State<Body> {
                                           SelectedAddress = addressmap[i];
                                           getFinalCost(SelectedAddress, true);
                                         });
-
-                                        // Second Time
-
-                                        distanceInMeters =
-                                            addressmap[i]["distanceInMeters"];
-
-                                        if ((distanceInMeters / 1000) <
-                                            sellingdistance) {
-                                          deliverable = true;
-                                        } else {
-                                          deliverable = false;
-                                        }
-                                        _radioSelected = i;
-                                        setState(() {
-                                          SelectedAddress = addressmap[i];
-                                          getFinalCost(SelectedAddress, true);
-                                        });
                                       },
                                       child: Container(
                                           width:
