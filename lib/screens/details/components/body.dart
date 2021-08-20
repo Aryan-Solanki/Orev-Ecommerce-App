@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -49,6 +50,7 @@ class _BodyState extends State<Body> {
   int selectedFoodVariants = 0;
   bool orevwallet = false;
   String soldby = "";
+  bool L_loading = false;
 
   void getVarientList() {
     for (var title in widget.product.varients) {
@@ -88,6 +90,7 @@ class _BodyState extends State<Body> {
     UserServices _services2 = UserServices();
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
+    L_loading = true;
     setState(() {});
   }
 
@@ -156,6 +159,18 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // showLoading(boo) {
+    //   if (boo) {
+    //     CoolAlert.show(
+    //       context: context,
+    //       type: CoolAlertType.loading,
+    //       text: "Loading",
+    //     );
+    //   } else {}
+    // }
+    //
+    // showLoading(true);
+
     void _showCODDialog() {
       slideDialog.showSlideDialog(
           context: context,
@@ -1120,68 +1135,72 @@ class _BodyState extends State<Body> {
                                                 .varients[selectedFoodVariants]
                                                 .inStock ==
                                             false
-                                        ? TopRoundedContainer(
-                                            color: Colors.white,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                left: SizeConfig.screenWidth *
-                                                    0.1,
-                                                right: SizeConfig.screenWidth *
-                                                    0.1,
-                                                bottom:
-                                                    getProportionateScreenWidth(
-                                                        30),
-                                                top:
-                                                    getProportionateScreenWidth(
-                                                        10),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  DefaultButton(
-                                                    color: kPrimaryColor2,
-                                                    text: "Buy Now",
-                                                    press: () {
-                                                      setState(() {});
-                                                      if (authkey == '') {
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            SignInScreen
-                                                                .routeName);
-                                                      } else {
-                                                        if (addressmap
-                                                            .isEmpty) {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              Address
-                                                                  .routeName);
-                                                        } else {
-                                                          _showDialog();
-                                                        }
-                                                      }
-                                                    },
+                                        ? L_loading
+                                            ? TopRoundedContainer(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left:
+                                                        SizeConfig.screenWidth *
+                                                            0.1,
+                                                    right:
+                                                        SizeConfig.screenWidth *
+                                                            0.1,
+                                                    bottom:
+                                                        getProportionateScreenWidth(
+                                                            30),
+                                                    top:
+                                                        getProportionateScreenWidth(
+                                                            10),
                                                   ),
-                                                  SizedBox(
-                                                    height:
-                                                        getProportionateScreenHeight(
-                                                            15),
+                                                  child: Column(
+                                                    children: [
+                                                      DefaultButton(
+                                                        color: kPrimaryColor2,
+                                                        text: "Buy Now",
+                                                        press: () {
+                                                          setState(() {});
+                                                          if (authkey == '') {
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                SignInScreen
+                                                                    .routeName);
+                                                          } else {
+                                                            if (addressmap
+                                                                .isEmpty) {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  Address
+                                                                      .routeName);
+                                                            } else {
+                                                              _showDialog();
+                                                            }
+                                                          }
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        height:
+                                                            getProportionateScreenHeight(
+                                                                15),
+                                                      ),
+                                                      DefaultButton(
+                                                        text: "Add To Cart",
+                                                        press: () {
+                                                          if (authkey == '') {
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                SignInScreen
+                                                                    .routeName);
+                                                          } else {
+                                                            addToCart();
+                                                          }
+                                                        },
+                                                      )
+                                                    ],
                                                   ),
-                                                  DefaultButton(
-                                                    text: "Add To Cart",
-                                                    press: () {
-                                                      if (authkey == '') {
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            SignInScreen
-                                                                .routeName);
-                                                      } else {
-                                                        addToCart();
-                                                      }
-                                                    },
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                                ),
+                                              )
+                                            : Center()
                                         : TopRoundedContainer(
                                             color: Colors.white,
                                             child: Padding(
