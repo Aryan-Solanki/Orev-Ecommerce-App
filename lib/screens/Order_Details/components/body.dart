@@ -114,42 +114,43 @@ class _BodyState extends State<Body> {
               payment_response = value['response']['STATUS'];
               print(
                   "Response                                           STATUS   ${value['response']['STATUS']}");
+              String authkey = UserSimplePreferences.getAuthKey() ?? "";
+              if (authkey == "") {
+                print("Some error occured");
+              }
+              Order order = Order(
+                cod: false,
+                deliveryBoy: "",
+                deliveryCost: widget.deliveryCost,
+                orderStatus: "Ordered",
+                product: new OrderProduct(
+                    brandname: widget.product.brandname,
+                    id: widget.product.id,
+                    sellerId: widget.product.sellerId,
+                    title: widget.product.title,
+                    detail: widget.product.detail,
+                    variant: widget.product.varients[widget.currentVarient],
+                    tax: widget.product.tax),
+                orderId: orderId,
+                totalCost: widget.totalCost,
+                userId: authkey,
+                timestamp: DateTime.now().toString(),
+                selectedAddress: widget.selectedaddress,
+                responseMsg: value['response']['RESPMSG'],
+              );
               if (payment_response == "TXN_FAILURE") {
                 Navigator.push(
                     context,
                     (MaterialPageRoute(
                         builder: (context) => PaymentSuccess(
                               transaction_success: false,
+                              order: order,
                             ))));
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
                 print("Transaction Successful");
                 print(value['response']['RESPMSG']);
-                String authkey = UserSimplePreferences.getAuthKey() ?? "";
-                if (authkey == "") {
-                  print("Some error occured");
-                }
-                Order order = Order(
-                  cod: false,
-                  deliveryBoy: "",
-                  deliveryCost: widget.deliveryCost,
-                  orderStatus: "Ordered",
-                  product: new OrderProduct(
-                      brandname: widget.product.brandname,
-                      id: widget.product.id,
-                      sellerId: widget.product.sellerId,
-                      title: widget.product.title,
-                      detail: widget.product.detail,
-                      variant: widget.product.varients[widget.currentVarient],
-                      tax: widget.product.tax),
-                  orderId: orderId,
-                  totalCost: widget.totalCost,
-                  userId: authkey,
-                  timestamp: DateTime.now().toString(),
-                  selectedAddress: widget.selectedaddress,
-                  responseMsg: value['response']['RESPMSG'],
-                );
 
                 var values = {
                   "cod": order.cod,
@@ -213,8 +214,13 @@ class _BodyState extends State<Body> {
                     toastLength: Toast.LENGTH_SHORT,
                     timeInSecForIosWeb: 2,
                     gravity: ToastGravity.BOTTOM);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => YourOrder()));
+                Navigator.push(
+                    context,
+                    (MaterialPageRoute(
+                        builder: (context) => PaymentSuccess(
+                              transaction_success: true,
+                              order: order,
+                            ))));
               }
             }
           }
