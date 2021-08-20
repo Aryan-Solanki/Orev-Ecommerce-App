@@ -1291,58 +1291,65 @@ class _BodyState extends State<Body> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 20),
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: getProportionateScreenWidth(15),
-                                    bottom: getProportionateScreenWidth(5)),
-                                child: Text(
-                                  authkey != "" ? "You Might Also Like" : "",
-                                  style: smallerheadingStyle,
-                                ),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(10),
-                              ),
-                              ScrollConfiguration(
-                                behavior: ScrollBehavior(),
-                                child: GlowingOverscrollIndicator(
-                                  axisDirection: AxisDirection.right,
-                                  color: kPrimaryColor2,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        ...List.generate(
-                                          widget.product.youmayalsolike.length,
-                                          (index) {
-                                            if (youMayAlsoLikeList.length ==
-                                                0) {
-                                              return SizedBox.shrink();
-                                            } else {
-                                              return ProductCard(
-                                                  product: youMayAlsoLikeList[
-                                                      index]);
-                                            }
-                                            // here by default width and height is 0
-                                          },
-                                        ),
-                                        SizedBox(
-                                            width: getProportionateScreenWidth(
-                                                20)),
-                                      ],
+                        authkey != ""
+                            ? Container(
+                                padding: EdgeInsets.only(bottom: 20),
+                                color: Colors.white,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: getProportionateScreenWidth(15),
+                                          bottom:
+                                              getProportionateScreenWidth(5)),
+                                      child: Text(
+                                        "You Might Also Like",
+                                        style: smallerheadingStyle,
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(10),
+                                    ),
+                                    ScrollConfiguration(
+                                      behavior: ScrollBehavior(),
+                                      child: GlowingOverscrollIndicator(
+                                        axisDirection: AxisDirection.right,
+                                        color: kPrimaryColor2,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: [
+                                              ...List.generate(
+                                                widget.product.youmayalsolike
+                                                    .length,
+                                                (index) {
+                                                  if (youMayAlsoLikeList
+                                                          .length ==
+                                                      0) {
+                                                    return SizedBox.shrink();
+                                                  } else {
+                                                    return ProductCard(
+                                                        product:
+                                                            youMayAlsoLikeList[
+                                                                index]);
+                                                  }
+                                                  // here by default width and height is 0
+                                                },
+                                              ),
+                                              SizedBox(
+                                                  width:
+                                                      getProportionateScreenWidth(
+                                                          20)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        )
+                            : Center(),
                       ],
                     ),
                   ),
