@@ -54,7 +54,4 @@ final Map<String, WidgetBuilder> routes = {
   PaymentSuccess.routeName: (context) => PaymentSuccess(),
 };
 
-// Navigator.pushNamed(
-// context,
-// PaymentSuccess
-//     .routeName);
+
