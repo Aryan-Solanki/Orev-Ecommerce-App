@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Order.dart';
+import 'package:orev/screens/home/home_screen.dart';
 
 import 'components/body.dart';
 
@@ -16,15 +17,22 @@ class PaymentSuccess extends StatefulWidget {
 class _PaymentSuccessState extends State<PaymentSuccess> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.transaction_success
-              ? "Payment Success"
-              : "Payment Failure"),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        return false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.transaction_success
+                ? "Payment Success"
+                : "Payment Failure"),
+          ),
+          body: Body(
+              transaction: widget.transaction_success, order: widget.order),
         ),
-        body:
-            Body(transaction: widget.transaction_success, order: widget.order),
       ),
     );
   }
