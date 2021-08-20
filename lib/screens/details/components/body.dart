@@ -122,6 +122,7 @@ class _BodyState extends State<Body> {
   bool deliverable = true;
   double sellingdistance = 0.0;
   double walletbalance = 0.0;
+  double newwalletbalance = 0.0;
   GeoPoint vendorlocation;
   Map deliveryCost;
   double freekms = 0.0;
@@ -406,6 +407,7 @@ class _BodyState extends State<Body> {
     getFinalCost(SelectedAddress);
 
     void _showDialog() {
+      getFinalCost(SelectedAddress);
       slideDialog.showSlideDialog(
           context: context,
           child: StatefulBuilder(
@@ -663,6 +665,10 @@ class _BodyState extends State<Body> {
                                                     onChanged: (bool newValue) {
                                                       setState(() {
                                                         orevwallet = newValue;
+                                                        if (!orevwallet) {
+                                                          getFinalCost(
+                                                              SelectedAddress);
+                                                        }
                                                       });
                                                     },
                                                   ),
@@ -680,8 +686,8 @@ class _BodyState extends State<Body> {
                                                   )
                                                 : Text(
                                                     totalCost >= walletbalance
-                                                        ? "Balance: ₹0.0"
-                                                        : "Balance: ₹${(walletbalance - (totalCost))}",
+                                                        ? "Balance: ₹${newwalletbalance = 0.0}"
+                                                        : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
                                                     style: TextStyle(
                                                         fontSize:
                                                             getProportionateScreenWidth(
@@ -738,8 +744,8 @@ class _BodyState extends State<Body> {
                                                           : Text(
                                                               totalCost >
                                                                       walletbalance
-                                                                  ? "\₹${((totalCost) - walletbalance)}"
-                                                                  : "\₹0.0",
+                                                                  ? "\₹${totalCost = ((totalCost) - walletbalance)}"
+                                                                  : "\₹${totalCost = 0.0}",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .black,
@@ -784,9 +790,9 @@ class _BodyState extends State<Body> {
                                                             ),
                                                             Text(
                                                               totalCost >=
-                                                                      walletbalance
-                                                                  ? "( - Orev Wallet: $walletbalance)"
-                                                                  : "( - Orev Wallet: ${totalCost})",
+                                                                      newwalletbalance
+                                                                  ? "( - Orev Wallet: ${walletbalance - newwalletbalance})"
+                                                                  : "( - Orev Wallet: ${walletbalance - newwalletbalance})",
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
@@ -839,7 +845,7 @@ class _BodyState extends State<Body> {
                                             height: 70,
                                             color: kPrimaryColor2,
                                             text: orevwallet == true
-                                                ? totalCost <= walletbalance
+                                                ? totalCost == 0.0
                                                     ? "Place Order"
                                                     : "Cash on Delivery (COD)"
                                                 : "Cash on Delivery (COD)",
@@ -861,7 +867,7 @@ class _BodyState extends State<Body> {
                                     ),
                                     deliverable == true
                                         ? orevwallet == true
-                                            ? totalCost <= walletbalance
+                                            ? totalCost == 0.0
                                                 ? Center()
                                                 : DefaultButton(
                                                     textheight: 15,
