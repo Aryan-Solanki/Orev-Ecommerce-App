@@ -445,6 +445,8 @@ class _BodyState extends State<Body> {
     getFinalCost(SelectedAddress, false);
 
     void _showDialog() {
+      _radioSelected = 0;
+      SelectedAddress = addressmap[0];
       getFinalCost(SelectedAddress, false);
       slideDialog.showSlideDialog(
         context: context,
@@ -1184,6 +1186,10 @@ class _BodyState extends State<Body> {
                                                                   Address
                                                                       .routeName);
                                                             } else {
+                                                              firstTime = true;
+                                                              _radioSelected =
+                                                                  0;
+                                                              setState(() {});
                                                               _showDialog();
                                                             }
                                                           }
