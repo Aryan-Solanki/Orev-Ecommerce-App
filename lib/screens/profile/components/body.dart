@@ -85,6 +85,17 @@ class _BodyState extends State<Body> {
                         context, SignInScreen.routeName);
                   },
                 ),
+          ProfileMenu(
+            text: "Become a Vendor",
+            icon: "assets/icons/Shop Icon.svg",
+            press: () {
+              if (authkey != "") {
+                Navigator.pushNamed(context, MyAccount.routeName);
+              } else {
+                Navigator.pushNamed(context, SignInScreen.routeName);
+              }
+            },
+          ),
         ],
       ),
     );
