@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/components/comingsoonpage.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/help_center/help_center.dart';
 import 'package:orev/screens/home/home_screen.dart';
@@ -90,7 +91,10 @@ class _BodyState extends State<Body> {
             icon: "assets/icons/Shop Icon.svg",
             press: () {
               if (authkey != "") {
-                Navigator.pushNamed(context, MyAccount.routeName);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ComingSoon(value: "Vendor Service",)),
+                );
               } else {
                 Navigator.pushNamed(context, SignInScreen.routeName);
               }

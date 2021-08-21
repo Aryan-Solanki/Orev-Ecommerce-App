@@ -9,6 +9,8 @@ import '../constants.dart';
 import '../enums.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 
+import 'comingsoonpage.dart';
+
 class CustomBottomNavBar extends StatefulWidget {
   final MenuState selectedMenu;
 
@@ -92,7 +94,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ComingSoon(value: "Messaging Service",)),
+                  );
+                },
               ),
               IconButton(
                   icon: SvgPicture.asset(
