@@ -206,7 +206,9 @@ class _BodyState extends State<Body> {
                       child: CartCard(
                           cart: CartList[index],
                           notifyParent: refresh,
-                          key: UniqueKey()),
+                          key: UniqueKey(),
+                        errorvalue: "no_cod",//not_deliverable
+                      ),
                     ),
                   ),
                 ),

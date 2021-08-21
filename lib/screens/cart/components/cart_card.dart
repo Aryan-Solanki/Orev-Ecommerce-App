@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/models/Cart.dart';
@@ -14,10 +17,12 @@ class CartCard extends StatefulWidget {
     Key key,
     @required this.cart,
     @required this.notifyParent,
+    @required this.errorvalue,
   }) : super(key: key);
 
   final Cart cart;
   final Function() notifyParent;
+  final String errorvalue;
 
   @override
   _CartCardState createState() => _CartCardState();
@@ -100,124 +105,163 @@ class _CartCardState extends State<CartCard> {
         arguments: ProductDetailsArguments(
             product: widget.cart.product, varientCartNum: selectedVarient),
       ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: getProportionateScreenWidth(88),
-                child: AspectRatio(
-                  aspectRatio: 0.88,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F6F9),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Image.network(widget
-                        .cart.product.varients[selectedVarient].images[0]),
-                  ),
-                ),
-              ),
-              SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.cart.product.title,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenWidth(15)),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                    SizedBox(height: 3),
-                    Text(
-                      "${widget.cart.product.varients[selectedVarient].title}",
-                      style:
-                          TextStyle(fontSize: getProportionateScreenWidth(13)),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text:
-                            "\₹${widget.cart.product.varients[selectedVarient].price}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            fontSize: getProportionateScreenWidth(18)),
-                        children: [
-                          TextSpan(
-                              text: " x${quantity}",
+      child: Container(
+        // padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+        child: Stack(
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: getProportionateScreenHeight(225),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: getProportionateScreenWidth(88),
+                        child: AspectRatio(
+                          aspectRatio: 0.88,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF5F6F9),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Image.network(widget
+                                .cart.product.varients[selectedVarient].images[0]),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.cart.product.title,
                               style: TextStyle(
-                                  color: kTextColor,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: getProportionateScreenWidth(14))),
+                                  color: Colors.black,
+                                  fontSize: getProportionateScreenWidth(15)),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: 3),
+                            Text(
+                              "${widget.cart.product.varients[selectedVarient].title}",
+                              style:
+                              TextStyle(fontSize: getProportionateScreenWidth(13)),
+                            ),
+                            Text.rich(
+                              TextSpan(
+                                text:
+                                "\₹${widget.cart.product.varients[selectedVarient].price}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize: getProportionateScreenWidth(18)),
+                                children: [
+                                  TextSpan(
+                                      text: " x${quantity}",
+                                      style: TextStyle(
+                                          color: kTextColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: getProportionateScreenWidth(14))),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenWidth(5)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          RoundedIconBtn(
+                            width: 23.0,
+                            height: 23.0,
+                            colour: Color(0xFFB0B0B0).withOpacity(0.2),
+                            icon: Icons.remove,
+                            press: () {
+                              if (quantity != 1) {
+                                setState(() {
+                                  --quantity;
+                                  changeCartQty(quantity);
+                                });
+                              } else if (quantity == 1) {
+                                removeFromCart(widget.cart.varientNumber);
+                              }
+                            },
+                          ),
+                          SizedBox(width: getProportionateScreenWidth(7)),
+                          Text(
+                            "x" + quantity.toString(),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: getProportionateScreenHeight(20)),
+                          ),
+                          SizedBox(width: getProportionateScreenWidth(7)),
+                          RoundedIconBtn(
+                            width: 23.0,
+                            height: 23.0,
+                            colour: Color(0xFFB0B0B0).withOpacity(0.2),
+                            icon: Icons.add,
+                            showShadow: true,
+                            press: () {
+                              setState(() {
+                                ++quantity;
+                                changeCartQty(quantity);
+                              });
+                            },
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: getProportionateScreenWidth(5)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  RoundedIconBtn(
-                    width: 23.0,
-                    height: 23.0,
-                    colour: Color(0xFFB0B0B0).withOpacity(0.2),
-                    icon: Icons.remove,
-                    press: () {
-                      if (quantity != 1) {
-                        setState(() {
-                          --quantity;
-                          changeCartQty(quantity);
-                        });
-                      } else if (quantity == 1) {
-                        removeFromCart(widget.cart.varientNumber);
-                      }
-                    },
-                  ),
-                  SizedBox(width: getProportionateScreenWidth(7)),
-                  Text(
-                    "x" + quantity.toString(),
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: getProportionateScreenHeight(20)),
-                  ),
-                  SizedBox(width: getProportionateScreenWidth(7)),
-                  RoundedIconBtn(
-                    width: 23.0,
-                    height: 23.0,
-                    colour: Color(0xFFB0B0B0).withOpacity(0.2),
-                    icon: Icons.add,
-                    showShadow: true,
-                    press: () {
-                      setState(() {
-                        ++quantity;
-                        changeCartQty(quantity);
-                      });
-                    },
+                      Text.rich(
+                        TextSpan(
+                          text:
+                          "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: kPrimaryColor,
+                              fontSize: getProportionateScreenWidth(18)),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Text.rich(
-                TextSpan(
-                  text:
-                      "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor,
-                      fontSize: getProportionateScreenWidth(18)),
+            ),
+            widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
+                child: Container(
+                  width: double.maxFinite,
+                  height: getProportionateScreenHeight(225),
+                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                  child: FittedBox(
+                    child: Column(
+                      children: [
+                        widget.errorvalue=="not_deliverable"?Text(
+                          "This product is not available in the selected location",
+                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
+                        ):Text(
+                          "Cash on delivery is not available for this product",
+                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(20),),
+                        Text("Swipe left to remove product or Tap to view Item",
+                          style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
-        ],
+            ):Center(),
+
+          ],
+        ),
       ),
     );
   }
