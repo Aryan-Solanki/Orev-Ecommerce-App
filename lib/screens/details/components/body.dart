@@ -161,18 +161,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // showLoading(boo) {
-    //   if (boo) {
-    //     CoolAlert.show(
-    //       context: context,
-    //       type: CoolAlertType.loading,
-    //       text: "Loading",
-    //     );
-    //   } else {}
-    // }
-    //
-    // showLoading(true);
-
     List<dynamic> addressmap = [];
 
     updateWalletBalance(newwalletbalance, orderId, timestamp) async {
@@ -1329,11 +1317,27 @@ class _BodyState extends State<Body> {
                                             icon: Icons.add,
                                             showShadow: true,
                                             press: () {
-                                              setState(() {
-                                                quantity++;
-                                                getFinalCost(
-                                                    SelectedAddress, false);
-                                              });
+                                              if (quantity <
+                                                  widget
+                                                      .product
+                                                      .varients[
+                                                          selectedFoodVariants]
+                                                      .qty) {
+                                                setState(() {
+                                                  quantity++;
+                                                  getFinalCost(
+                                                      SelectedAddress, false);
+                                                });
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Seller Quantity Exceeded",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 2,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM);
+                                              }
                                             },
                                           ),
                                         ],
