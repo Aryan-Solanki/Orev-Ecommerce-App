@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Category.dart';
 import 'package:orev/screens/category_page/category_page.dart';
+import 'package:orev/screens/offer_and_category_screen/offerzone_and_category.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 
@@ -55,14 +56,19 @@ class _CategoriesState extends State<Categories> {
               icon: Icons.local_offer_outlined,
               text: "Offer\nZone",
               press: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => SeeMore(
+                //             categoryId: "E7dYkDBguiRFEYag2sKi",
+                //             title: "Offer Zone",
+                //           )),
+                // );
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SeeMore(
-                            categoryId: "E7dYkDBguiRFEYag2sKi",
-                            title: "Offer Zone",
-                          )),
-                );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OfferzoneCategory()),
+                    );
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
