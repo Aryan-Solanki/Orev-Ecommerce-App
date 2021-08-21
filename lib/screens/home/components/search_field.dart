@@ -75,28 +75,30 @@ class _SearchFieldState extends State<SearchField> {
               color: kSecondaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: TextField(
-              style: TextStyle(fontSize: getProportionateScreenWidth(14)),
-              focusNode: focusNode,
-              textInputAction: TextInputAction.search,
-              onChanged: (value) {
-                widget.func(value, false);
-                title = value;
-              },
-              onSubmitted: (value) {
-                widget.func(value, true);
-              },
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: getProportionateScreenWidth(13)),
-                  // horizontal: getProportionateScreenWidth(20),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: "Search product",
-                  hintStyle:TextStyle(fontSize: getProportionateScreenWidth(14),),
-                  prefixIcon: Icon(Icons.search,
-                      size: getProportionateScreenWidth(18))),
+            child: Center(
+              child: TextField(
+                style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                focusNode: focusNode,
+                textInputAction: TextInputAction.search,
+                onChanged: (value) {
+                  widget.func(value, false);
+                  title = value;
+                },
+                onSubmitted: (value) {
+                  widget.func(value, true);
+                },
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: getProportionateScreenWidth(13)),
+                    // horizontal: getProportionateScreenWidth(20),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    hintText: "Search product",
+                    hintStyle:TextStyle(fontSize: getProportionateScreenWidth(14),),
+                    prefixIcon: Icon(Icons.search,
+                        size: getProportionateScreenWidth(18))),
+              ),
             ),
           );
   }
