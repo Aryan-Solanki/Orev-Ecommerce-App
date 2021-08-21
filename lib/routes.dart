@@ -12,6 +12,7 @@ import 'package:orev/screens/forgot_password/update_password_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:orev/screens/my_account/my_account.dart';
+import 'package:orev/screens/offer_and_category_screen/offerzone_and_category.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
@@ -52,6 +53,7 @@ final Map<String, WidgetBuilder> routes = {
   HelpCenter.routeName: (context) => HelpCenter(),
   HelpForm.routeName: (context) => HelpForm(),
   PaymentSuccess.routeName: (context) => PaymentSuccess(),
+  OfferzoneCategory.routeName: (context) => OfferzoneCategory(),
 };
 
 
