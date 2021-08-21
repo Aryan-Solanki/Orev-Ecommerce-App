@@ -61,7 +61,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         : inActiveIconColor,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, HomeScreen.routeName);
+                    if(MenuState.home == widget.selectedMenu){
+
+                    }
+                    else{
+                      Navigator.pushNamed(context, HomeScreen.routeName);
+                    }
+
                   }),
               IconButton(
                 icon: SvgPicture.asset(
@@ -71,11 +77,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       : inActiveIconColor,
                 ),
                 onPressed: () {
-                  if (authkey == '') {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
-                  } else {
-                    Navigator.pushNamed(context, LikedScreen.routeName);
+                  if(MenuState.favourite == widget.selectedMenu){
+
                   }
+                  else{
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    } else {
+                      Navigator.pushNamed(context, LikedScreen.routeName);
+                    }
+                  }
+
                 },
               ),
               IconButton(
@@ -90,7 +102,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         : inActiveIconColor,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, ProfileScreen.routeName);
+                    if(MenuState.profile == widget.selectedMenu){
+
+                    }
+                    else{
+                      Navigator.pushNamed(context, ProfileScreen.routeName);
+                    }
                   }),
             ],
           )),
