@@ -29,6 +29,12 @@ class ProductServices {
     return document["shopName"];
   }
 
+  Future<double> getSellerCODcost(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["codCharge"].toDouble();
+  }
+
   Future<DocumentSnapshot> getAdInfo(id) async {
     var document =
         await FirebaseFirestore.instance.collection("Ads").doc(id).get();

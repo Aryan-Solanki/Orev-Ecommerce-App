@@ -15,6 +15,9 @@ class Order {
   final String timestamp;
   final String responseMsg;
   final Map selectedAddress;
+  final double codcharges;
+  final bool usedOrevWallet;
+  final double orevWalletAmountUsed;
   Order(
       {this.cod,
       this.deliveryBoy,
@@ -26,5 +29,8 @@ class Order {
       this.userId,
       this.timestamp,
       this.responseMsg,
-      this.selectedAddress});
+      this.selectedAddress,
+      this.codcharges,
+      this.orevWalletAmountUsed,
+      this.usedOrevWallet});
 }

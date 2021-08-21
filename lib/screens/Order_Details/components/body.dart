@@ -26,6 +26,9 @@ class Body extends StatefulWidget {
     @required this.selectedaddress,
     @required this.totalCost,
     @required this.deliveryCost,
+    @required this.codSellerCharge,
+    @required this.orevWalletMoneyUsed,
+    @required this.usedOrevWallet,
   }) : super(key: key);
 
   final Product product;
@@ -33,6 +36,9 @@ class Body extends StatefulWidget {
   final int quantity;
   final double totalCost;
   final double deliveryCost;
+  final bool usedOrevWallet;
+  final double codSellerCharge;
+  final double orevWalletMoneyUsed;
   final Map<String, dynamic> selectedaddress;
 
   @override
@@ -119,25 +125,27 @@ class _BodyState extends State<Body> {
                 print("Some error occured");
               }
               Order order = Order(
-                cod: false,
-                deliveryBoy: "",
-                deliveryCost: widget.deliveryCost,
-                orderStatus: "Ordered",
-                product: new OrderProduct(
-                    brandname: widget.product.brandname,
-                    id: widget.product.id,
-                    sellerId: widget.product.sellerId,
-                    title: widget.product.title,
-                    detail: widget.product.detail,
-                    variant: widget.product.varients[widget.currentVarient],
-                    tax: widget.product.tax),
-                orderId: orderId,
-                totalCost: widget.totalCost,
-                userId: authkey,
-                timestamp: DateTime.now().toString(),
-                selectedAddress: widget.selectedaddress,
-                responseMsg: value['response']['RESPMSG'],
-              );
+                  cod: false,
+                  deliveryBoy: "",
+                  deliveryCost: widget.deliveryCost,
+                  orderStatus: "Ordered",
+                  product: new OrderProduct(
+                      brandname: widget.product.brandname,
+                      id: widget.product.id,
+                      sellerId: widget.product.sellerId,
+                      title: widget.product.title,
+                      detail: widget.product.detail,
+                      variant: widget.product.varients[widget.currentVarient],
+                      tax: widget.product.tax),
+                  orderId: orderId,
+                  totalCost: widget.totalCost,
+                  userId: authkey,
+                  timestamp: DateTime.now().toString(),
+                  selectedAddress: widget.selectedaddress,
+                  responseMsg: value['response']['RESPMSG'],
+                  codcharges: widget.codSellerCharge,
+                  usedOrevWallet: widget.usedOrevWallet,
+                  orevWalletAmountUsed: widget.orevWalletMoneyUsed);
               if (payment_response == "TXN_FAILURE") {
                 Navigator.push(
                     context,
@@ -198,6 +206,9 @@ class _BodyState extends State<Body> {
                     "state": widget.selectedaddress["state"],
                     "pincode": widget.selectedaddress["pincode"],
                   },
+                  "codcharges": order.codcharges,
+                  "usedOrevWallet": order.usedOrevWallet,
+                  "orevWalletAmountUsed": order.orevWalletAmountUsed,
                 };
                 OrderServices _services = new OrderServices();
                 try {
@@ -220,6 +231,7 @@ class _BodyState extends State<Body> {
                         builder: (context) => PaymentSuccess(
                               transaction_success: true,
                               order: order,
+                              cod: false,
                             ))));
               }
             }

@@ -9,7 +9,11 @@ class PaymentSuccess extends StatefulWidget {
   static String routeName = "/paymment_success";
   final bool transaction_success;
   final Order order;
-  PaymentSuccess({@required this.transaction_success, @required this.order});
+  final bool cod;
+  PaymentSuccess(
+      {@required this.transaction_success,
+      @required this.order,
+      @required this.cod});
   @override
   _PaymentSuccessState createState() => _PaymentSuccessState();
 }
@@ -31,7 +35,10 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
                 : "Payment Failure"),
           ),
           body: Body(
-              transaction: widget.transaction_success, order: widget.order),
+            transaction: widget.transaction_success,
+            order: widget.order,
+            cod: widget.cod,
+          ),
         ),
       ),
     );

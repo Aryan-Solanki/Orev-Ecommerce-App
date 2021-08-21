@@ -88,7 +88,13 @@ class _YouOrderCardState extends State<YouOrderCard> {
         SizedBox(width: getProportionateScreenWidth(5)),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, YourOrderDetail.routeName);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => YourOrderDetail(
+                          order: widget.order,
+                        )));
+            // Navigator.pushNamed(context, YourOrderDetail.routeName);
           },
           child: Icon(
             Icons.arrow_forward_ios,

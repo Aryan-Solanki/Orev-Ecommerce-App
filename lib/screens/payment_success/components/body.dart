@@ -16,7 +16,8 @@ import '../../../size_config.dart';
 class Body extends StatefulWidget {
   final bool transaction;
   final Order order;
-  Body({@required this.transaction, @required this.order});
+  final bool cod;
+  Body({@required this.transaction, @required this.order, @required this.cod});
   @override
   _BodyState createState() => _BodyState();
 }
@@ -217,7 +218,9 @@ class _BodyState extends State<Body> {
                                   color: Colors.black),
                             ),
                             Text(
-                              "Payment Method: Online",
+                              widget.cod
+                                  ? "Payment Method: Cash On Delivery"
+                                  : "Payment Method: Online",
                               style: TextStyle(
                                   fontSize: getProportionateScreenWidth(14),
                                   color: Colors.black),
