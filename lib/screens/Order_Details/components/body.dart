@@ -220,6 +220,7 @@ class _BodyState extends State<Body> {
                         builder: (context) => PaymentSuccess(
                               transaction_success: true,
                               order: order,
+                              cod: false,
                             ))));
               }
             }

@@ -2,19 +2,24 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/product_card.dart';
 import 'package:orev/components/rounded_icon_btn.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/models/Order.dart';
+import 'package:orev/models/OrderProduct.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/home/components/home_header.dart';
+import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
+import 'package:orev/services/order_services.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
@@ -46,6 +51,7 @@ class _BodyState extends State<Body> {
   bool orevwallet = false;
   String soldby = "";
   bool L_loading = false;
+  double codSellerCharge = 0.0;
 
   void getVarientList() {
     for (var title in widget.product.varients) {
@@ -86,6 +92,7 @@ class _BodyState extends State<Body> {
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
     L_loading = true;
+    codSellerCharge = await _services.getSellerCODcost(widget.product.sellerId);
     setState(() {});
   }
 
@@ -166,185 +173,337 @@ class _BodyState extends State<Body> {
     //
     // showLoading(true);
 
-    void _showCODDialog() {
+    List<dynamic> addressmap = [];
+
+    void _showCODDialog(totalCost, finalDeliveryCost) {
+      totalCost = totalCost + codSellerCharge;
+      SelectedAddress = addressmap[_radioSelected];
       slideDialog.showSlideDialog(
           context: context,
-          child: Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: getProportionateScreenHeight(80),
-                          width: getProportionateScreenWidth(80),
-                          child: Image.network(widget.product
-                              .varients[selectedFoodVariants].images[0]),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.product.title,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: getProportionateScreenWidth(15)),
-                              ),
-                              Text(
-                                "Sold by $soldby",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(13)),
-                              )
-                            ],
+          child: WillPopScope(
+            onWillPop: () async {
+              Navigator.pop(context);
+              firstTime = true;
+              _radioSelected = 0;
+              setState(() {});
+              return true;
+            },
+            child: Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: getProportionateScreenHeight(80),
+                            width: getProportionateScreenWidth(80),
+                            child: Image.network(widget.product
+                                .varients[selectedFoodVariants].images[0]),
                           ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(10)),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            width: getProportionateScreenWidth(90),
-                            child: Text(
-                              "Deliver to",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: getProportionateScreenWidth(16)),
-                            )),
-                        SizedBox(
-                          width: getProportionateScreenWidth(20),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                SelectedAddress["name"],
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              ),
-                              Text(
-                                SelectedAddress["adline1"] +
-                                    " " +
-                                    SelectedAddress["adline2"] +
-                                    " " +
-                                    SelectedAddress["city"] +
-                                    " " +
-                                    SelectedAddress["state"],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            width: getProportionateScreenWidth(90),
-                            child: Text(
-                              "Pay with",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: getProportionateScreenWidth(16)),
-                            )),
-                        SizedBox(
-                          width: getProportionateScreenWidth(20),
-                        ),
-                        Text(
-                          "Cash on Delivery (COD)",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: getProportionateScreenWidth(16)),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            width: getProportionateScreenWidth(90),
-                            child: Text(
-                              "Total",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: getProportionateScreenWidth(16)),
-                            )),
-                        SizedBox(
-                          width: getProportionateScreenWidth(20),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "\₹${widget.product.varients[selectedFoodVariants].price * quantity}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              ),
-                              Text(
-                                "(includes tax + Delivery: \₹$deliveryCharge)",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(35)),
-                    SwipeButton(
-                      thumb: Icon(Icons.double_arrow_outlined),
-                      activeThumbColor: kPrimaryColor4,
-                      borderRadius: BorderRadius.circular(8),
-                      activeTrackColor: kPrimaryColor3,
-                      height: getProportionateScreenHeight(70),
-                      child: Text(
-                        "Swipe to place your order",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenWidth(12),
-                        ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.product.title,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize:
+                                          getProportionateScreenWidth(15)),
+                                ),
+                                Text(
+                                  "${widget.product.varients[selectedFoodVariants].title}",
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenWidth(13)),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                      onSwipe: () {
-                        print("Order Placed");
-                      },
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(10)),
-                    Text(
-                      "By placing your order, you agree to Orev's privacy notice and conditions of use.",
-                      style:
-                          TextStyle(fontSize: getProportionateScreenWidth(12)),
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(10)),
-                  ],
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              width: getProportionateScreenWidth(90),
+                              child: Text(
+                                "Deliver to",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: getProportionateScreenWidth(16)),
+                              )),
+                          SizedBox(
+                            width: getProportionateScreenWidth(20),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  SelectedAddress["name"],
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          getProportionateScreenWidth(16)),
+                                ),
+                                Text(
+                                  SelectedAddress["adline1"] +
+                                      " " +
+                                      SelectedAddress["adline2"] +
+                                      " " +
+                                      SelectedAddress["city"] +
+                                      " " +
+                                      SelectedAddress["state"],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenWidth(14)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              width: getProportionateScreenWidth(90),
+                              child: Text(
+                                "Pay with",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: getProportionateScreenWidth(16)),
+                              )),
+                          SizedBox(
+                            width: getProportionateScreenWidth(20),
+                          ),
+                          Text(
+                            "Cash on Delivery (COD)",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: getProportionateScreenWidth(16)),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              width: getProportionateScreenWidth(90),
+                              child: Text(
+                                "COD Charges",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: getProportionateScreenWidth(16)),
+                              )),
+                          SizedBox(
+                            width: getProportionateScreenWidth(20),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "\₹${codSellerCharge}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          getProportionateScreenWidth(16)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              width: getProportionateScreenWidth(90),
+                              child: Text(
+                                "Total",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: getProportionateScreenWidth(16)),
+                              )),
+                          SizedBox(
+                            width: getProportionateScreenWidth(20),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "\₹${totalCost}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          getProportionateScreenWidth(16)),
+                                ),
+                                Text(
+                                  "(includes tax + Delivery : $finalDeliveryCost)",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize:
+                                          getProportionateScreenWidth(14)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(35)),
+                      SwipeButton(
+                        thumb: Icon(Icons.double_arrow_outlined),
+                        activeThumbColor: kPrimaryColor4,
+                        borderRadius: BorderRadius.circular(8),
+                        activeTrackColor: kPrimaryColor3,
+                        height: getProportionateScreenHeight(70),
+                        child: Text(
+                          "Swipe to place your order",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(12),
+                          ),
+                        ),
+                        onSwipe: () async {
+                          String authkey =
+                              UserSimplePreferences.getAuthKey() ?? "";
+                          if (authkey == "") {
+                            print("Some error occured");
+                          }
+                          String orderId =
+                              DateTime.now().millisecondsSinceEpoch.toString();
+
+                          Order order = Order(
+                            cod: true,
+                            deliveryBoy: "",
+                            deliveryCost: finalDeliveryCost,
+                            orderStatus: "Ordered",
+                            product: new OrderProduct(
+                                brandname: widget.product.brandname,
+                                id: widget.product.id,
+                                sellerId: widget.product.sellerId,
+                                title: widget.product.title,
+                                detail: widget.product.detail,
+                                variant: widget
+                                    .product.varients[selectedFoodVariants],
+                                tax: widget.product.tax),
+                            orderId: orderId,
+                            totalCost: totalCost,
+                            userId: authkey,
+                            timestamp: DateTime.now().toString(),
+                            selectedAddress: SelectedAddress,
+                            responseMsg: "Cash on Delivery order",
+                          );
+
+                          var values = {
+                            "cod": order.cod,
+                            "deliveryBoy": order.deliveryBoy,
+                            "deliveryCost": order.deliveryCost,
+                            "orderStatus": order.orderStatus,
+                            "product": {
+                              "brandname": order.product.brandname,
+                              "id": order.product.id,
+                              "sellerId": order.product.sellerId,
+                              "title": order.product.title,
+                              "detail": order.product.detail,
+                              "variant": {
+                                "title": order.product.variant.title,
+                                "default":
+                                    order.product.variant.default_product,
+                                "id": order.product.variant.id,
+                                "onSale": {
+                                  "comparedPrice":
+                                      order.product.variant.comparedPrice,
+                                  "discountPercentage":
+                                      order.product.variant.discountPercentage,
+                                  "isOnSale": order.product.variant.isOnSale,
+                                },
+                                "price": order.product.variant.price,
+                                "stock": {
+                                  "inStock": order.product.variant.inStock,
+                                  "qty": order.product.variant.qty
+                                },
+                                "variantDetails": {
+                                  "images": order.product.variant.images,
+                                  "title": order.product.variant.title,
+                                },
+                              },
+                              "tax": order.product.tax,
+                            },
+                            "orderId": order.orderId,
+                            "totalCost": order.totalCost,
+                            "userId": order.userId,
+                            "timestamp": order.timestamp,
+                            "responseMsg": order.responseMsg,
+                            "address": {
+                              "name": SelectedAddress["name"],
+                              "adline1": SelectedAddress["adline1"],
+                              "adline2": SelectedAddress["adline2"],
+                              "city": SelectedAddress["city"],
+                              "state": SelectedAddress["state"],
+                              "pincode": SelectedAddress["pincode"],
+                            },
+                          };
+                          OrderServices _services = new OrderServices();
+
+                          try {
+                            await _services.addOrder(values, order.orderId);
+                            Fluttertoast.showToast(
+                                msg: "Order Placed",
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 2,
+                                gravity: ToastGravity.BOTTOM);
+                            Navigator.push(
+                                context,
+                                (MaterialPageRoute(
+                                    builder: (context) => PaymentSuccess(
+                                          transaction_success: true,
+                                          order: order,
+                                          cod: true,
+                                        ))));
+                          } catch (e) {
+                            Fluttertoast.showToast(
+                                msg: e.toString(),
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 2,
+                                gravity: ToastGravity.BOTTOM);
+                          }
+                        },
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Text(
+                        "By placing your order, you agree to Orev's privacy notice and conditions of use.",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(12)),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                    ],
+                  ),
                 ),
               ),
             ),
           ));
     }
-
-    List<dynamic> addressmap = [];
 
     double totalCost = 0.0;
     double finalDeliveryCost = 0.0;
@@ -897,8 +1056,11 @@ class _BodyState extends State<Body> {
                                                     : "Cash on Delivery (COD)"
                                                 : "Cash on Delivery (COD)",
                                             press: () {
-                                              Navigator.pop(context);
-                                              _showCODDialog();
+                                              // Navigator.pop(context);
+                                              _showCODDialog(
+                                                totalCost,
+                                                finalDeliveryCost,
+                                              );
                                             },
                                           )
                                         : DefaultButton(
