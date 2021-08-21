@@ -175,7 +175,7 @@ class _BodyState extends State<Body> {
 
     List<dynamic> addressmap = [];
 
-    void _showCODDialog(totalCost, finalDeliveryCost) {
+    void _showCODDialog(totalCost, finalDeliveryCost, usedWalletMoney) {
       totalCost = totalCost + codSellerCharge;
       SelectedAddress = addressmap[_radioSelected];
       slideDialog.showSlideDialog(
@@ -394,26 +394,28 @@ class _BodyState extends State<Body> {
                               DateTime.now().millisecondsSinceEpoch.toString();
 
                           Order order = Order(
-                            cod: true,
-                            deliveryBoy: "",
-                            deliveryCost: finalDeliveryCost,
-                            orderStatus: "Ordered",
-                            product: new OrderProduct(
-                                brandname: widget.product.brandname,
-                                id: widget.product.id,
-                                sellerId: widget.product.sellerId,
-                                title: widget.product.title,
-                                detail: widget.product.detail,
-                                variant: widget
-                                    .product.varients[selectedFoodVariants],
-                                tax: widget.product.tax),
-                            orderId: orderId,
-                            totalCost: totalCost,
-                            userId: authkey,
-                            timestamp: DateTime.now().toString(),
-                            selectedAddress: SelectedAddress,
-                            responseMsg: "Cash on Delivery order",
-                          );
+                              cod: true,
+                              deliveryBoy: "",
+                              deliveryCost: finalDeliveryCost,
+                              orderStatus: "Ordered",
+                              product: new OrderProduct(
+                                  brandname: widget.product.brandname,
+                                  id: widget.product.id,
+                                  sellerId: widget.product.sellerId,
+                                  title: widget.product.title,
+                                  detail: widget.product.detail,
+                                  variant: widget
+                                      .product.varients[selectedFoodVariants],
+                                  tax: widget.product.tax),
+                              orderId: orderId,
+                              totalCost: totalCost,
+                              userId: authkey,
+                              timestamp: DateTime.now().toString(),
+                              selectedAddress: SelectedAddress,
+                              responseMsg: "Cash on Delivery order",
+                              codcharges: codSellerCharge,
+                              usedOrevWallet: orevwallet,
+                              orevWalletAmountUsed: usedWalletMoney);
 
                           var values = {
                             "cod": order.cod,
@@ -463,6 +465,9 @@ class _BodyState extends State<Body> {
                               "state": SelectedAddress["state"],
                               "pincode": SelectedAddress["pincode"],
                             },
+                            "codcharges": order.codcharges,
+                            "usedOrevWallet": order.usedOrevWallet,
+                            "orevWalletAmountUsed": order.orevWalletAmountUsed,
                           };
                           OrderServices _services = new OrderServices();
 
@@ -1057,10 +1062,13 @@ class _BodyState extends State<Body> {
                                                 : "Cash on Delivery (COD)",
                                             press: () {
                                               // Navigator.pop(context);
+                                              var usedWalletMoney =
+                                                  walletbalance -
+                                                      newwalletbalance;
                                               _showCODDialog(
-                                                totalCost,
-                                                finalDeliveryCost,
-                                              );
+                                                  totalCost,
+                                                  finalDeliveryCost,
+                                                  usedWalletMoney);
                                             },
                                           )
                                         : DefaultButton(

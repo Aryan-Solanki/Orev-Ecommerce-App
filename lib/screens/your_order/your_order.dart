@@ -25,7 +25,8 @@ class _YourOrderState extends State<YourOrder> {
     var querySnapshot =
         await _services.orders.where("userId", isEqualTo: user_key).get();
     querySnapshot.docs.forEach((doc) {
-      orders.add(new Order(
+      orders.add(
+        new Order(
           cod: doc["cod"],
           deliveryBoy: doc["deliveryBoy"],
           deliveryCost: doc["deliveryCost"],
@@ -55,7 +56,12 @@ class _YourOrderState extends State<YourOrder> {
           userId: doc["userId"],
           timestamp: doc["timestamp"],
           selectedAddress: doc["address"],
-          responseMsg: doc["responseMsg"]));
+          responseMsg: doc["responseMsg"],
+          codcharges: doc["codcharges"].toDouble(),
+          usedOrevWallet: doc["usedOrevWallet"],
+          orevWalletAmountUsed: doc["orevWalletAmountUsed"].toDouble(),
+        ),
+      );
     });
     setState(() {});
   }

@@ -12,12 +12,9 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../../../size_config.dart';
 
 class YourOrderDetail extends StatefulWidget {
-  final bool transaction;
   final Order order;
-  final bool cod;
   static String routeName = "/your_order_detail";
-  YourOrderDetail(
-      {@required this.transaction, @required this.order, @required this.cod});
+  YourOrderDetail({@required this.order});
   @override
   _YourOrderDetailState createState() => _YourOrderDetailState();
 }
@@ -421,36 +418,47 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                     fontSize: getProportionateScreenWidth(15))),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total before Tax:",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: getProportionateScreenWidth(15)),
-                            ),
-                            Text("₹500.34",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: getProportionateScreenWidth(15))),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Tax:",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: getProportionateScreenWidth(15)),
-                            ),
-                            Text("₹500.34",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: getProportionateScreenWidth(15))),
-                          ],
-                        ),
+                        widget.order.usedOrevWallet
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Wallet Amount Used:",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            getProportionateScreenWidth(15)),
+                                  ),
+                                  Text(
+                                      " - ₹${widget.order.orevWalletAmountUsed}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenWidth(15))),
+                                ],
+                              )
+                            : Center(),
+                        widget.order.cod
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "COD Charges:",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            getProportionateScreenWidth(15)),
+                                  ),
+                                  Text("₹${widget.order.codcharges}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenWidth(15))),
+                                ],
+                              )
+                            : Center(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -460,7 +468,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                   color: Colors.black,
                                   fontSize: getProportionateScreenWidth(15)),
                             ),
-                            Text("₹500.34",
+                            Text("₹${widget.order.totalCost}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: getProportionateScreenWidth(15))),
@@ -476,7 +484,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                   fontSize: getProportionateScreenWidth(20),
                                   fontWeight: FontWeight.bold),
                             ),
-                            Text("₹500.34",
+                            Text("₹${widget.order.totalCost}",
                                 style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: getProportionateScreenWidth(20),
