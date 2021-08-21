@@ -10,6 +10,7 @@ import 'package:orev/screens/Order_Details/components/price_cart.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 import 'package:orev/services/order_services.dart';
+import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:paytm/paytm.dart';
 
@@ -26,6 +27,8 @@ class Body extends StatefulWidget {
     @required this.selectedaddress,
     @required this.totalCost,
     @required this.deliveryCost,
+    @required this.newwalletbalance,
+    @required this.oldwalletbalance,
     @required this.codSellerCharge,
     @required this.orevWalletMoneyUsed,
     @required this.usedOrevWallet,
@@ -36,6 +39,8 @@ class Body extends StatefulWidget {
   final int quantity;
   final double totalCost;
   final double deliveryCost;
+  final double newwalletbalance;
+  final double oldwalletbalance;
   final bool usedOrevWallet;
   final double codSellerCharge;
   final double orevWalletMoneyUsed;
@@ -124,6 +129,25 @@ class _BodyState extends State<Body> {
               if (authkey == "") {
                 print("Some error occured");
               }
+
+              updateWalletBalance(newwalletbalance, orderId, timestamp) async {
+                UserServices _service = new UserServices();
+                var user = await _service.getUserById(authkey);
+                var transactionsList = user["walletTransactions"];
+                transactionsList.add({
+                  "newWalletBalance": newwalletbalance,
+                  "oldWalletBalance": widget.oldwalletbalance,
+                  "orderId": orderId,
+                  "timestamp": timestamp
+                });
+                var values = {
+                  "id": authkey,
+                  "walletAmt": newwalletbalance,
+                  "walletTransactions": transactionsList
+                };
+                _service.updateUserData(values);
+              }
+
               Order order = Order(
                   cod: false,
                   deliveryBoy: "",
@@ -220,6 +244,10 @@ class _BodyState extends State<Body> {
                       timeInSecForIosWeb: 2,
                       gravity: ToastGravity.BOTTOM);
                 }
+
+                updateWalletBalance(
+                    widget.newwalletbalance, orderId, order.timestamp);
+
                 Fluttertoast.showToast(
                     msg: "Order Placed",
                     toastLength: Toast.LENGTH_SHORT,

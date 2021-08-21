@@ -175,6 +175,24 @@ class _BodyState extends State<Body> {
 
     List<dynamic> addressmap = [];
 
+    updateWalletBalance(newwalletbalance, orderId, timestamp) async {
+      UserServices _service = new UserServices();
+      var user = await _service.getUserById(authkey);
+      var transactionsList = user["walletTransactions"];
+      transactionsList.add({
+        "newWalletBalance": newwalletbalance,
+        "oldWalletBalance": walletbalance,
+        "orderId": orderId,
+        "timestamp": timestamp
+      });
+      var values = {
+        "id": authkey,
+        "walletAmt": newwalletbalance,
+        "walletTransactions": transactionsList
+      };
+      _service.updateUserData(values);
+    }
+
     void _showCODDialog(totalCost, finalDeliveryCost, usedWalletMoney) {
       totalCost = totalCost + codSellerCharge;
       SelectedAddress = addressmap[_radioSelected];
@@ -359,7 +377,7 @@ class _BodyState extends State<Body> {
                                           getProportionateScreenWidth(16)),
                                 ),
                                 Text(
-                                  "(includes tax + Delivery : $finalDeliveryCost)",
+                                  "(includes tax + Delivery + COD Charges)",
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize:
@@ -478,6 +496,8 @@ class _BodyState extends State<Body> {
                                 toastLength: Toast.LENGTH_SHORT,
                                 timeInSecForIosWeb: 2,
                                 gravity: ToastGravity.BOTTOM);
+                            updateWalletBalance(
+                                newwalletbalance, orderId, order.timestamp);
                             Navigator.push(
                                 context,
                                 (MaterialPageRoute(
@@ -1096,23 +1116,25 @@ class _BodyState extends State<Body> {
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                OrderDetails(
-                                                                  key:
-                                                                      UniqueKey(),
-                                                                  product: widget
-                                                                      .product,
-                                                                  currentVarient:
-                                                                      selectedFoodVariants,
-                                                                  quantity:
-                                                                      quantity,
-                                                                  selectedaddress:
-                                                                      SelectedAddress,
-                                                                  totalCost:
-                                                                      totalCost,
-                                                                  deliveryCost:
-                                                                      finalDeliveryCost,
-                                                                )),
+                                                            builder: (context) => OrderDetails(
+                                                                key:
+                                                                    UniqueKey(),
+                                                                product: widget
+                                                                    .product,
+                                                                currentVarient:
+                                                                    selectedFoodVariants,
+                                                                quantity:
+                                                                    quantity,
+                                                                selectedaddress:
+                                                                    SelectedAddress,
+                                                                totalCost:
+                                                                    totalCost,
+                                                                deliveryCost:
+                                                                    finalDeliveryCost,
+                                                                newwalletbalance:
+                                                                    newwalletbalance,
+                                                                oldwalletbalance:
+                                                                    walletbalance)),
                                                       );
                                                     },
                                                   )
