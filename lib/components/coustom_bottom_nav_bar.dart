@@ -97,7 +97,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ComingSoon(value: "Messaging Service",)),
+                    MaterialPageRoute(builder: (context) => ComingSoon(value: "Ticketing Service",)),
                   );
                 },
               ),
