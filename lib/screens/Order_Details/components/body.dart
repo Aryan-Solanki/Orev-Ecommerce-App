@@ -131,6 +131,7 @@ class _BodyState extends State<Body> {
               }
 
               updateWalletBalance(newwalletbalance, orderId, timestamp) async {
+                newwalletbalance = newwalletbalance.toDouble();
                 UserServices _service = new UserServices();
                 var user = await _service.getUserById(authkey);
                 var transactionsList = user["walletTransactions"];
