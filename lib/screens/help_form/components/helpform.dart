@@ -1,18 +1,18 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:orev/services/user_services.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 import 'package:search_choices/search_choices.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:menu_button/menu_button.dart';
-
-
 
 class HelpForm extends StatefulWidget {
   @override
@@ -20,33 +20,37 @@ class HelpForm extends StatefulWidget {
 }
 
 class _HelpFormState extends State<HelpForm> with ChangeNotifier {
-
-  String selectedKey="Please Select";
+  String selectedKey = "Please Select";
 
   List<String> keys = <String>[
-    'Lowdjdj0f0qgffhj9qrwhupfjwqpajuf1huqahfup1hq9u',
-    'Medium',
-    'High',
+    'Ordering',
+    'Payments & Pricing',
+    'Orev Wallet',
+    'Shipping & Delivery',
+    'Returns & Refunds',
+    'Security & Privacy',
+    'Orev Vendor Account',
   ];
-
-
-
 
   final _formKey = GlobalKey<FormState>();
   @override
-  String message="";
+  String message = "";
   Widget build(BuildContext context) {
     final Widget normalChildButton = Container(
-
       height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
       child: Padding(
-        padding: EdgeInsets.only(top: getProportionateScreenHeight(20),bottom: getProportionateScreenHeight(20),left: getProportionateScreenWidth(40),right: getProportionateScreenWidth(20) ),
+        padding: EdgeInsets.only(
+            top: getProportionateScreenHeight(20),
+            bottom: getProportionateScreenHeight(20),
+            left: getProportionateScreenWidth(40),
+            right: getProportionateScreenWidth(20)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Flexible(
-                child: Text(selectedKey,style: TextStyle(fontSize: getProportionateScreenWidth(13)), overflow: TextOverflow.ellipsis)
-            ),
+                child: Text(selectedKey,
+                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                    overflow: TextOverflow.ellipsis)),
             FittedBox(
               fit: BoxFit.fill,
               child: Icon(
@@ -58,56 +62,90 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
         ),
       ),
     );
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          MenuButton<String>(
-            // itemBackgroundColor: Colors.transparent,
-            menuButtonBackgroundColor: Colors.transparent,
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: kTextColor,
-                ),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(28)
-                )
-
-            ),
-            child: normalChildButton,
-            items: keys,
-            itemBuilder: (String value) => Container(
-              height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
-              alignment: Alignment.centerLeft,
-              padding:  EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20), horizontal: getProportionateScreenWidth(40)),
-              child: Text(value,style: TextStyle(fontSize: getProportionateScreenWidth(13)), overflow: TextOverflow.ellipsis),
-            ),
-            toggledChild: Container(
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            MenuButton<String>(
+              // itemBackgroundColor: Colors.transparent,
+              menuButtonBackgroundColor: Colors.transparent,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: kTextColor,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(28))),
               child: normalChildButton,
+              items: keys,
+              itemBuilder: (String value) => Container(
+                height: getProportionateScreenHeight(
+                    getProportionateScreenHeight(90)),
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(20),
+                    horizontal: getProportionateScreenWidth(40)),
+                child: Text(value,
+                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                    overflow: TextOverflow.ellipsis),
+              ),
+              toggledChild: Container(
+                child: normalChildButton,
+              ),
+              onItemSelected: (String value) {
+                setState(() {
+                  selectedKey = value;
+                });
+              },
+              onMenuButtonToggle: (bool isToggle) {
+                print(isToggle);
+              },
             ),
-            onItemSelected: (String value) {
-              setState(() {
-                selectedKey = value;
-              });
-            },
-            onMenuButtonToggle: (bool isToggle) {
-              print(isToggle);
-            },
-          ),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          MessageFormField(),
-          SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-            text: "Continue",
-            press: ()  {
+            SizedBox(height: getProportionateScreenHeight(30)),
+            MessageFormField(),
+            SizedBox(height: getProportionateScreenHeight(40)),
+            DefaultButton(
+              text: "Continue",
+              press: () {
+                if (selectedKey != "Please Select" && message != "") {
+                  String authkey = UserSimplePreferences.getAuthKey() ?? "";
+                  var values = {
+                    "description": message,
+                    "topic": selectedKey,
+                    "id": authkey
+                  };
+                  UserServices _services = new UserServices();
+                  _services.registerComplaint(values);
 
-            },
-          ),
-        ],
+                  //TODO: Show a query registered successfully screen sort of thing
+
+                } else {
+                  if (message == "") {
+                    Fluttertoast.showToast(
+                        msg: "Write a message to continue",
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 2,
+                        gravity: ToastGravity.BOTTOM);
+                  } else if (selectedKey == "Please Select") {
+                    Fluttertoast.showToast(
+                        msg: "Please Select a valid  topic",
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 2,
+                        gravity: ToastGravity.BOTTOM);
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Unknown error occured",
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 2,
+                        gravity: ToastGravity.BOTTOM);
+                  }
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
-
 
   TextFormField MessageFormField() {
     return TextFormField(
@@ -116,7 +154,7 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
         message = value;
       },
       decoration: InputDecoration(
-        labelText: "Message (Optional)",
+        labelText: "Message",
         hintText: "Please enter your message ... ",
         hintStyle: TextStyle(fontSize: getProportionateScreenWidth(13)),
         // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -125,5 +163,4 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
       ),
     );
   }
-
 }
