@@ -9,6 +9,7 @@ import 'package:orev/services/user_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 class CheckoutCard extends StatefulWidget {
   final List<dynamic> keys;
@@ -96,6 +97,426 @@ class _CheckoutCardState extends State<CheckoutCard> {
     getAllCartProducts();
     super.initState();
   }
+  bool orevwallet=false;
+  double walletbalance=100;
+  double totalCost=1000;
+  double newwalletbalance;
+  double finalDeliveryCost=10;
+
+  void _showDialog() {
+    // _radioSelected = 0;
+    // SelectedAddress = addressmap[0];
+    // getFinalCost(SelectedAddress, false);
+    slideDialog.showSlideDialog(
+      context: context,
+      barrierDismissible: false,
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context);
+          // firstTime = true;
+          // _radioSelected = 0;
+          // setState(() {});
+          return true;
+        },
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Shipping location",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenWidth(23),
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(5)),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "This will be your shipping location",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenWidth(12),
+                              color: Color(0xff565656),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(10)),
+                        StatefulBuilder(
+                          builder: (BuildContext context, StateSetter setState) {
+                            return Column(
+                              children: [
+                                Container(
+                                    width:double.maxFinite,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 3, horizontal: 13),
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: kPrimaryColor,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            "Aryan Solanki",
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize:
+                                                getProportionateScreenWidth(
+                                                    18),
+                                                fontWeight:
+                                                FontWeight.bold),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          getProportionateScreenHeight(
+                                              15),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "400-B,Pocket-N",
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    getProportionateScreenWidth(
+                                                        14),
+                                                    color: Colors.black),
+                                                overflow:
+                                                TextOverflow.ellipsis,
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                getProportionateScreenHeight(
+                                                    3),
+                                              ),
+                                              Text(
+                                                "Sarita Vihar",
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    getProportionateScreenWidth(
+                                                        14),
+                                                    color: Colors.black),
+                                                overflow:
+                                                TextOverflow.ellipsis,
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                getProportionateScreenHeight(
+                                                    3),
+                                              ),
+                                              Text(
+                                                "New Delhi" +
+                                                    " ," +
+                                                    "Delhi",
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    getProportionateScreenWidth(
+                                                        14),
+                                                    color: Colors.black),
+                                                overflow:
+                                                TextOverflow.ellipsis,
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                getProportionateScreenHeight(
+                                                    3),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                                SizedBox(
+                                    height: getProportionateScreenHeight(10)),
+                                StatefulBuilder(
+                                    builder: (BuildContext context, setState) {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "Use Orev Wallet",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                            getProportionateScreenWidth(
+                                                                13)),
+                                                      ),
+                                                      Transform.scale(
+                                                        scale:
+                                                        getProportionateScreenHeight(
+                                                            1),
+                                                        child: Checkbox(
+                                                          activeColor: kPrimaryColor,
+                                                          value: orevwallet,
+                                                          onChanged:
+                                                              (bool newValue) async {
+                                                            orevwallet = newValue;
+                                                            // SelectedAddress =
+                                                            // addressmap[
+                                                            // _radioSelected];
+
+                                                            // await getFinalCost(
+                                                            //     SelectedAddress,
+                                                            //     false);
+
+                                                            setState(() {});
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  orevwallet == false
+                                                      ? Text(
+                                                    "Balance: ₹$walletbalance",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                        getProportionateScreenWidth(
+                                                            12),
+                                                        color: kPrimaryColor),
+                                                  )
+                                                      : Text(
+                                                    totalCost >= walletbalance
+                                                        ? "Balance: ₹${newwalletbalance = 0.0}"
+                                                        : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                        getProportionateScreenWidth(
+                                                            12),
+                                                        color: kPrimaryColor),
+                                                  ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                          children: [
+                                                            SizedBox(
+                                                              width:
+                                                              getProportionateScreenWidth(
+                                                                  30),
+                                                            ),
+                                                            Container(
+                                                                child: Text(
+                                                                  "Total",
+                                                                  style: TextStyle(
+                                                                      color: Colors.blue,
+                                                                      fontSize:
+                                                                      getProportionateScreenHeight(
+                                                                          23)),
+                                                                )),
+                                                            SizedBox(
+                                                              width:
+                                                              getProportionateScreenWidth(
+                                                                  20),
+                                                            ),
+                                                            orevwallet == false
+                                                                ? Text(
+                                                              "\₹${totalCost}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                                  fontSize:
+                                                                  getProportionateScreenHeight(
+                                                                      20)),
+                                                            )
+                                                                : Text(
+                                                              totalCost >
+                                                                  walletbalance
+                                                                  ? "\₹${totalCost = ((totalCost) - walletbalance)}"
+                                                                  : "\₹${totalCost = 0.0}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                                  fontSize:
+                                                                  getProportionateScreenHeight(
+                                                                      20)),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        orevwallet == false
+                                                            ? Column(
+                                                          children: [
+                                                            Text(
+                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                              overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      13)),
+                                                            )
+                                                          ],
+                                                        )
+                                                            : Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                          children: [
+                                                            Text(
+                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                              overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      13)),
+                                                            ),
+                                                            Text(
+                                                              totalCost >=
+                                                                  newwalletbalance
+                                                                  ? "( - Orev Wallet: ${walletbalance - newwalletbalance})"
+                                                                  : "( - Orev Wallet: ${walletbalance - newwalletbalance})",
+                                                              overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      13)),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: getProportionateScreenHeight(20),
+                                          ),
+                                          DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kPrimaryColor2,
+                                            text: orevwallet == true
+                                                ? totalCost == 0.0
+                                                ? "Place Order"
+                                                : "Cash on Delivery (COD)"
+                                                : "Cash on Delivery (COD)",
+                                            press: () {
+                                              // Navigator.pop(context);
+                                              var usedWalletMoney =
+                                                  walletbalance -
+                                                      newwalletbalance;
+                                              // _showCODDialog(
+                                              //     totalCost,
+                                              //     finalDeliveryCost,
+                                              //     usedWalletMoney);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: getProportionateScreenHeight(10),
+                                          ),
+                                          DefaultButton(
+                                            textheight: 15,
+                                            colour: Colors.white,
+                                            height: 70,
+                                            color: kPrimaryColor,
+                                            text: "Pay Online",
+                                            press: () {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) => OrderDetails(
+                                              //           key:
+                                              //           UniqueKey(),
+                                              //           product: widget
+                                              //               .product,
+                                              //           currentVarient:
+                                              //           selectedFoodVariants,
+                                              //           quantity:
+                                              //           quantity,
+                                              //           selectedaddress:
+                                              //           SelectedAddress,
+                                              //           totalCost:
+                                              //           totalCost,
+                                              //           deliveryCost:
+                                              //           finalDeliveryCost,
+                                              //           newwalletbalance:
+                                              //           newwalletbalance,
+                                              //           oldwalletbalance:
+                                              //           walletbalance)),
+                                              // );
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +570,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
                     width: getProportionateScreenWidth(190),
                     child: DefaultButton(
                       text: "Check Out",
-                      press: () {},
+                      press: () {
+                        _showDialog();
+                      },
                     ),
                   ),
                 ],

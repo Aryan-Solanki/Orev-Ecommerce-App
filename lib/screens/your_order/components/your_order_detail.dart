@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orev/components/default_button.dart';
+import 'package:orev/components/pdf_invoice_generate.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/services/product_services.dart';
@@ -499,7 +500,13 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                 DefaultButton(
                   color: kPrimaryColor2,
                   text: "Download Invoice",
-                  press: () {},
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PdfGenerate()),
+                    );
+
+                  },
                 ),
                 SizedBox(
                   height: getProportionateScreenHeight(20),
