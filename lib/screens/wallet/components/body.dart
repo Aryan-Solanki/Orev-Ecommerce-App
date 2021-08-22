@@ -164,67 +164,111 @@ class _BodyState extends State<Body> {
     getCurrentBalance();
     super.initState();
   }
-
+  String coupon="";
   @override
   Widget build(BuildContext context) {
+
+    double coupon_value=234.0;
+
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Apply Coupon Code",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(25),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(50),
-                ),
-                Theme(
-                  data: Theme.of(context).copyWith(
-                      inputDecorationTheme: InputDecorationTheme(
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-                  )),
-                  child: TextField(
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(20),
-                        fontWeight: FontWeight.bold),
-                    onChanged: (value) {
-                      print(value);
-                    },
-                    decoration: InputDecoration(
-                        suffixIcon: GestureDetector(
-                            onTap: () {},
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: getProportionateScreenHeight(13)),
-                              child: Text(
-                                "Apply",
-                                style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(12),
-                                  color: kPrimaryColor2,
-                                ),
-                              ),
-                            )),
-                        hintText: 'Enter Coupon Code',
-                        hintStyle: TextStyle(
-                            fontSize: getProportionateScreenWidth(20),
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState){
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Apply Coupon Code",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(25),
                             fontWeight: FontWeight.bold,
-                            color: ruppeecolor),
-                        contentPadding: EdgeInsets.only(
-                            bottom: getProportionateScreenHeight(13))),
-                  ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(50),
+                        ),
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                              inputDecorationTheme: InputDecorationTheme(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                contentPadding:
+                                EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+                              )),
+                          child: TextField(
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(20),
+                                fontWeight: FontWeight.bold),
+                            onChanged: (value) {
+                              coupon=value;
+                              print(value);
+                            },
+                            decoration: InputDecoration(
+                                suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: getProportionateScreenHeight(13)),
+                                      child: Text(
+                                        "Apply",
+                                        style: TextStyle(
+                                          fontSize: getProportionateScreenWidth(12),
+                                          color: kPrimaryColor2,
+                                        ),
+                                      ),
+                                    )),
+                                hintText: 'Enter Coupon Code',
+                                hintStyle: TextStyle(
+                                    fontSize: getProportionateScreenWidth(20),
+                                    fontWeight: FontWeight.bold,
+                                    color: ruppeecolor),
+                                contentPadding: EdgeInsets.only(
+                                    bottom: getProportionateScreenHeight(13))),
+                          ),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(20),
+                        ),
+                        coupon == "aryan"
+                            ? Text(
+                          "You saved \₹$coupon_value",
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize:
+                            getProportionateScreenWidth(
+                                15),
+                          ),
+                        )
+                            : coupon == ""
+                            ? Text("",
+                            style: TextStyle(
+                              fontSize:
+                              getProportionateScreenWidth(
+                                  15),
+                            ))
+                            : Text("Invalid Coupon",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize:
+                              getProportionateScreenWidth(
+                                  15),
+                            )),
+
+                      ],
+                    );
+                  }
                 ),
-              ],
+              ),
             ),
           ));
     }
