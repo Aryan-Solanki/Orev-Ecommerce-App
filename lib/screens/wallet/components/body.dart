@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:orev/components/default_button.dart';
+import 'package:orev/components/orevwallet_afterpage.dart';
 import 'package:paytm/paytm.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:http/http.dart' as http;
@@ -217,7 +218,11 @@ class _BodyState extends State<Body> {
               text: " Proceed",
               press: () {
                 print(amount);
-                generateTxnToken();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: false,)),
+                );
+                // generateTxnToken();
               },
             )
           ],
