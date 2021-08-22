@@ -3,12 +3,13 @@ import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/screens/help_form/help_form.dart';
 import 'package:orev/screens/my_account/my_account.dart';
+import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/screens/your_order/your_order.dart';
+import 'package:orev/services/user_simple_preferences.dart';
 
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
-
   @override
   _BodyState createState() => _BodyState();
 }
@@ -18,7 +19,9 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal:getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(10)),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(20),
+            vertical: getProportionateScreenHeight(10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,7 +41,9 @@ class _BodyState extends State<Body> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: getProportionateScreenHeight(25),),
+            SizedBox(
+              height: getProportionateScreenHeight(25),
+            ),
             Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(20)),
               decoration: BoxDecoration(
@@ -48,14 +53,16 @@ class _BodyState extends State<Body> {
                   width: 2.0,
                 ),
               ),
-              child:Text("Orev is focused on the health and safety of both the customers and associates.If your address lies in an area with local restrictions ,then your order might get delayed. You may also call us.For fast and easy self-help solutions.\nThank you for your patience",
-                style: TextStyle(
-                color: Colors.black,
-                fontSize: getProportionateScreenWidth(14),
-              )
-              ),
+              child: Text(
+                  "Orev is focused on the health and safety of both the customers and associates.If your address lies in an area with local restrictions ,then your order might get delayed. You may also call us.For fast and easy self-help solutions.\nThank you for your patience",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(14),
+                  )),
             ),
-            SizedBox(height: getProportionateScreenHeight(25),),
+            SizedBox(
+              height: getProportionateScreenHeight(25),
+            ),
             Text(
               " Quick Links ",
               style: TextStyle(
@@ -64,101 +71,108 @@ class _BodyState extends State<Body> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: getProportionateScreenHeight(20),),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
             Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 0.5,
-                ),
-              ),
-              child:Column(
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.pushNamed(context, YourOrder.routeName);
-                    },
-                    child: Padding(
-                      padding:  EdgeInsets.only(left: getProportionateScreenWidth(10),bottom: getProportionateScreenHeight(10)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Your Orders",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: getProportionateScreenWidth(15),
-                                    ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text("Track or  view your order",
-                                  style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(12),
-                                ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-
-                                ),
-
-                              ],
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward_ios)
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
+                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(
                     color: Colors.black,
+                    width: 0.5,
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.pushNamed(context, MyAccount.routeName);
-                    },
-                    child: Padding(
-                      padding:  EdgeInsets.only(left: getProportionateScreenWidth(10),top: getProportionateScreenHeight(10)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Account Setting",
+                ),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, YourOrder.routeName);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(10),
+                            bottom: getProportionateScreenHeight(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Your Orders",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: getProportionateScreenWidth(15),
                                     ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text("Edit Username,address or wallet details",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    "Track or  view your order",
                                     style: TextStyle(
                                       fontSize: getProportionateScreenWidth(12),
                                     ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-
-                                ),
-
-                              ],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Icon(Icons.arrow_forward_ios)
-                        ],
+                            Icon(Icons.arrow_forward_ios)
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, MyAccount.routeName);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(10),
+                            top: getProportionateScreenHeight(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Account Setting",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: getProportionateScreenWidth(15),
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    "Edit Username,address or wallet details",
+                                    style: TextStyle(
+                                      fontSize: getProportionateScreenWidth(12),
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: getProportionateScreenHeight(25),
             ),
-            SizedBox(height: getProportionateScreenHeight(25),),
             Text(
               " Need More Help ",
               style: TextStyle(
@@ -167,7 +181,9 @@ class _BodyState extends State<Body> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: getProportionateScreenHeight(20),),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
             Container(
                 padding: EdgeInsets.all(getProportionateScreenWidth(5)),
                 decoration: BoxDecoration(
@@ -177,34 +193,49 @@ class _BodyState extends State<Body> {
                     width: 0.5,
                   ),
                 ),
-                child:GFAccordion(
+                child: GFAccordion(
                   expandedTitleBackgroundColor: Colors.white,
-                  titleChild: Text("Contact Us",style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15),
-                  ),),
+                  titleChild: Text(
+                    "Contact Us",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(15),
+                    ),
+                  ),
                   // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
                   contentChild: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Contact Number: +91 70489 62990",style: TextStyle(
-                        fontSize: getProportionateScreenWidth(12),
-                      ),),
-                      SizedBox(height: getProportionateScreenHeight(7),),
-                      Text("Contact Email: contact@orevhealth.com",style: TextStyle(
-                        fontSize: getProportionateScreenWidth(12),
-                      ),),
-                      SizedBox(height: getProportionateScreenHeight(7),),
-                      Text("Business Address: A1/356, Sushant Lok 2, Sector 55, Gurgaon, Haryana, India - 122011",style: TextStyle(
-                        fontSize: getProportionateScreenWidth(12),
-                      ),),
-
+                      Text(
+                        "Contact Number: +91 70489 62990",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(12),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(7),
+                      ),
+                      Text(
+                        "Contact Email: contact@orevhealth.com",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(12),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(7),
+                      ),
+                      Text(
+                        "Business Address: A1/356, Sushant Lok 2, Sector 55, Gurgaon, Haryana, India - 122011",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(12),
+                        ),
+                      ),
                     ],
                   ),
-
-                )
+                )),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
-            SizedBox(height: getProportionateScreenHeight(20),),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -213,7 +244,14 @@ class _BodyState extends State<Body> {
                   style: TextStyle(fontSize: getProportionateScreenWidth(13)),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, HelpForm.routeName),
+                  onTap: () {
+                    String authkey = UserSimplePreferences.getAuthKey() ?? "";
+                    if (authkey != "") {
+                      Navigator.pushNamed(context, HelpForm.routeName);
+                    } else {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    }
+                  },
                   child: Text(
                     " Form",
                     style: TextStyle(
@@ -223,10 +261,6 @@ class _BodyState extends State<Body> {
                 ),
               ],
             )
-
-
-
-
           ],
         ),
       ),

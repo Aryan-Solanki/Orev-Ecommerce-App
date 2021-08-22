@@ -37,6 +37,10 @@ class UserServices {
     await _firestore.collection("keypass").doc(id).set(values);
   }
 
+  Future<void> registerComplaint(Map<String, dynamic> values) async {
+    await _firestore.collection("helpcenter").add(values);
+  }
+
   Future<void> updateKeyPass(Map<String, dynamic> values) async {
     String id = values['id'];
     await _firestore.collection("keypass").doc(id).update(values);
