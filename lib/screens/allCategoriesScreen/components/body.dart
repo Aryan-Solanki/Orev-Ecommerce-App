@@ -133,40 +133,42 @@ class _BodyState extends State<Body> {
                   seemore: false,
                 ),
               ),
+              SizedBox(height: getProportionateScreenHeight(10)),
               _loadingProducts == true
                   ? Container(
-                      child: Text("Loading..."),
-                      // REPLACE THIS WITH LOADING
-                    )
+                child: Text("Loading..."),
+                // REPLACE THIS WITH LOADING
+              )
                   : Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(10)),
-                      child: _categories.length == 0
-                          ? Center(
-                              child: Text("No products to display"),
-                            )
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: _categories.length,
-                              itemBuilder: (BuildContext ctx, int index) {
-                                return CategoryCard(
-                                  image: CategoryList[index].image,
-                                  numOfBrands: CategoryList[index].noOfBrands,
-                                  category: CategoryList[index].name,
-                                  press: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SeeMore(
-                                                categoryId: CategoryList[index]
-                                                    .categoryId,
-                                                title:
-                                                    CategoryList[index].name)));
-                                  },
-                                );
-                              }),
-                    )
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: _categories.length == 0
+                    ? Center(
+                  child: Text("No products to display"),
+                )
+                    : ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: _categories.length,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return CategoryCard(
+                        image: CategoryList[index].image,
+                        numOfBrands: CategoryList[index].noOfBrands,
+                        category: CategoryList[index].name,
+                        press: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SeeMore(
+                                      categoryId: CategoryList[index]
+                                          .categoryId,
+                                      title:
+                                      CategoryList[index].name)));
+                        },
+                      );
+                    }),
+              ),
+              SizedBox(height: getProportionateScreenHeight(10)),
             ],
           ),
         ),
@@ -200,7 +202,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
       child: GestureDetector(
         onTap: press,
         child: SizedBox(

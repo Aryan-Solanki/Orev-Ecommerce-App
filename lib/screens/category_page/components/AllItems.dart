@@ -108,7 +108,7 @@ class _AllItemsState extends State<AllItems> {
             seemore: false,
           ),
         ),
-        SizedBox(height: getProportionateScreenWidth(20)),
+        SizedBox(height: getProportionateScreenHeight(20)),
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
