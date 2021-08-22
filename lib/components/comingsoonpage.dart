@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:orev/screens/home/components/home_header.dart';
 
+import '../enums.dart';
 import '../size_config.dart';
+import 'coustom_bottom_nav_bar.dart';
 
 class ComingSoon extends StatefulWidget {
   final String value;
+  final bool bottomNavigation;
   const ComingSoon({
     Key key,
     @required this.value,
+    @required this.bottomNavigation,
   }) : super(key: key);
 
   @override
@@ -20,31 +25,41 @@ class _ComingSoonState extends State<ComingSoon> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-            padding: EdgeInsets.all(20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(
-                    "Orev",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: getProportionateScreenWidth(35),
-                      fontWeight: FontWeight.w100,
+                  SizedBox(height: getProportionateScreenHeight(10)),
+                  HomeHeader(),
+                  SizedBox(height: getProportionateScreenHeight(10)),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    child: Column(
+                      children:[
+                        Text(
+                          "Orev",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(35),
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
+                        Text(
+                          widget.value,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(30),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(150),),
+                        Lottie.asset("assets/animation/comming-soon.json"),
+                      ]
                     ),
-                  ),
-                  Text(
-                    widget.value,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: getProportionateScreenWidth(30),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(150),),
-                  Lottie.asset("assets/animation/comming-soon.json"),
+                  )
                 ],
               ),
             )),
+        bottomNavigationBar: widget.bottomNavigation==true?CustomBottomNavBar(selectedMenu: MenuState.message):null,
       ),
     );
   }

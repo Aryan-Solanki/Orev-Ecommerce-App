@@ -93,12 +93,23 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 },
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
+                icon: SvgPicture.asset(
+                    "assets/icons/Chat bubble Icon.svg",
+                  color: MenuState.message == widget.selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ComingSoon(value: "Ticketing Service",)),
-                  );
+                  if(MenuState.message == widget.selectedMenu){
+
+                  }
+                  else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ComingSoon(value: "Ticketing Service",bottomNavigation: true,)),
+                    );
+                  }
+
                 },
               ),
               IconButton(
