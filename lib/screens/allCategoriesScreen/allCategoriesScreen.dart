@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
-class OfferzoneCategory extends StatefulWidget {
-  static String routeName = "/offerzone_category";
+class AllCategoryScreen extends StatefulWidget {
+  static String routeName = "/allCategoryScreen";
   @override
-  _OfferzoneCategoryState createState() => _OfferzoneCategoryState();
+  _AllCategoryScreenState createState() => _AllCategoryScreenState();
 }
 
-class _OfferzoneCategoryState extends State<OfferzoneCategory> {
+class _AllCategoryScreenState extends State<AllCategoryScreen> {
   refresh() {
     setState(() {});
   }

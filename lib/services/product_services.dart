@@ -17,6 +17,9 @@ class ProductServices {
 
   CollectionReference cart = FirebaseFirestore.instance.collection('cart');
 
+  CollectionReference offerZone =
+      FirebaseFirestore.instance.collection('offerZone');
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future<void> updateAddress(Map<String, dynamic> values, id) async {

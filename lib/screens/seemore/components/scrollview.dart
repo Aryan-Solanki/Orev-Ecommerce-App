@@ -39,8 +39,11 @@ class AllItemsState extends State<AllItems> {
   ProductServices _services = ProductServices();
 
   _getProducts() async {
-    Query q =
-        _firestore.collection("products").orderBy("title").limit(_perpage);
+    Query q = _firestore
+        .collection("products")
+        .where("categories", arrayContains: widget.categoryId)
+        .orderBy("title")
+        .limit(_perpage);
     setState(() {
       _loadingProducts = true;
     });
@@ -68,8 +71,10 @@ class AllItemsState extends State<AllItems> {
 
     Query q = _firestore
         .collection("products")
+        .where("categories", arrayContains: widget.categoryId)
         .orderBy("title")
-        .startAfter([_lastDocument.data()["title"]]).limit(_perpage);
+        .startAfterDocument(_lastDocument)
+        .limit(_perpage);
     QuerySnapshot querySnapshot = await q.get();
 
     if (querySnapshot.docs.length < _perpage) {
@@ -78,7 +83,7 @@ class AllItemsState extends State<AllItems> {
 
     _lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
     _products.addAll(querySnapshot.docs);
-    for (var product in _products) {
+    for (var product in querySnapshot.docs) {
       ProductList.add(_services.getProductSeeMore(product));
     }
     setState(() {});

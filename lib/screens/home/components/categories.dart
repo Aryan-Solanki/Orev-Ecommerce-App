@@ -5,6 +5,7 @@ import 'package:orev/models/Category.dart';
 import 'package:orev/screens/category_page/category_page.dart';
 import 'package:orev/screens/offer_and_category_screen/offerzone_and_category.dart';
 import 'package:orev/screens/seemore/seemore.dart';
+import 'package:orev/screens/allCategoriesScreen/allCategoriesScreen.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 
 import 'package:orev/screens/wallet/wallet.dart';
@@ -65,10 +66,9 @@ class _CategoriesState extends State<Categories> {
                 //           )),
                 // );
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OfferzoneCategory()),
-                    );
+                  context,
+                  MaterialPageRoute(builder: (context) => OfferzoneCategory()),
+                );
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
@@ -89,13 +89,11 @@ class _CategoriesState extends State<Categories> {
               text: "Fresh",
               press: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                            categoryId: "JAgrZhNaIa3ryRug2wrn",
-                            title: "Fresh",
-                          )),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SeeMore(
+                            categoryId: "EQsBoA7cGvzpBxkylFVC",
+                            title: "Fresh")));
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
@@ -105,11 +103,7 @@ class _CategoriesState extends State<Categories> {
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                            categoryId: "JAgrZhNaIa3ryRug2wrn",
-                            title: "Category",
-                          )),
+                  MaterialPageRoute(builder: (context) => AllCategoryScreen()),
                 );
               },
             ),
@@ -119,13 +113,11 @@ class _CategoriesState extends State<Categories> {
               text: "Best\nSellers",
               press: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                            categoryId: "JAgrZhNaIa3ryRug2wrn",
-                            title: "Best Sellers",
-                          )),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SeeMore(
+                            categoryId: "2iMKUa7Z2ViQJAnY54ef",
+                            title: "Best Sellers")));
               },
             ),
           ],
