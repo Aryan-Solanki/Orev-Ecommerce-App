@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -53,7 +55,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
 
   @override
   Widget build(BuildContext context) {
-    bool returnvalue=false;
+    String return_cancel_value="cancel";
     bool invoice=false;
     final double _orderState = 0;
     final double _packedState = 10;
@@ -128,190 +130,202 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),
-                      Divider(color: Colors.black),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
-                      ),
-                      Text(
-                        returnvalue==false?
-                        "Shipping Address":
-                        "Returning Address",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(25),
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black45, // red as border color
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${widget.order.selectedAddress["name"]}",
-                                    style: TextStyle(
-                                        fontSize: getProportionateScreenWidth(20),
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(5),
-                                  ),
-                                  Text("${widget.order.selectedAddress["adline1"]}",
-                                      style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(14))),
-                                  Text("${widget.order.selectedAddress["adline2"]}",
-                                      style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(14))),
-                                  Text(
-                                      "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
-                                      style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(14))),
-                                  Text("Phone number: $userphone",
-                                      style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(14))),
-                                ],
-                              ),
-                            ),
-                            Container(
-                                height: getProportionateScreenHeight(200),
-                                child: SfLinearGauge(
-                                  orientation: LinearGaugeOrientation.vertical,
-                                  minimum: 0,
-                                  maximum: returnvalue==false?30:20,
-                                  labelOffset: 24,
-                                  isAxisInversed: true,
-                                  showTicks: false,
-                                  onGenerateLabels: () {
-                                    return returnvalue==false?<LinearAxisLabel>[
-                                      const LinearAxisLabel(
-                                          text: 'Ordered', value: 0),
-                                      const LinearAxisLabel(
-                                          text: 'Packed', value: 10),
-                                      const LinearAxisLabel(
-                                          text: 'Shipped', value: 20),
-                                      const LinearAxisLabel(
-                                          text: 'Delivered', value: 30),
-                                    ]:<LinearAxisLabel>[
-                                      const LinearAxisLabel(
-                                          text: 'Return Accepted', value: 0),
-                                      const LinearAxisLabel(
-                                          text: 'On the way', value: 10),
-                                      const LinearAxisLabel(
-                                          text: 'Returned', value: 20),
-                                    ];
-                                  },
-                                  axisTrackStyle: LinearAxisTrackStyle(
-                                    color: _activeColor,
-                                  ),
-                                  barPointers: <LinearBarPointer>[
-                                    LinearBarPointer(
-                                      value: _deliveryStatus,
-                                      color: _activeColor,
-                                      enableAnimation: false,
-                                      position: LinearElementPosition.cross,
-                                    ),
-                                  ],
-                                  markerPointers: <LinearMarkerPointer>[
-                                    LinearWidgetPointer(
-                                      value: _orderState,
-                                      enableAnimation: false,
-                                      position: LinearElementPosition.cross,
-                                      child: Container(
-                                        width: getProportionateScreenWidth(14),
-                                        height: getProportionateScreenWidth(14),
-                                        decoration: BoxDecoration(
-                                            color: _deliveryStatus > 0
-                                                ? _activeColor
-                                                : Colors.white,
-                                            border: Border.all(
-                                                width: 4, color: _activeColor),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(12))),
-                                      ),
-                                    ),
-                                    LinearWidgetPointer(
-                                      enableAnimation: false,
-                                      value: _packedState,
-                                      position: LinearElementPosition.cross,
-                                      child: Container(
-                                        width: getProportionateScreenWidth(14),
-                                        height: getProportionateScreenWidth(14),
-                                        decoration: BoxDecoration(
-                                            color: _deliveryStatus > 10
-                                                ? _activeColor
-                                                : Colors.white,
-                                            border: Border.all(
-                                                width: 4, color: _activeColor),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(12))),
-                                      ),
-                                    ),
-                                    LinearWidgetPointer(
-                                      value: _shippedState,
-                                      enableAnimation: false,
-                                      position: LinearElementPosition.cross,
-                                      child: Container(
-                                        width: getProportionateScreenWidth(14),
-                                        height: getProportionateScreenWidth(14),
-                                        decoration: BoxDecoration(
-                                            color: _deliveryStatus > 20
-                                                ? _activeColor
-                                                : Colors.white,
-                                            border: Border.all(
-                                                width: 4, color: _activeColor),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(12))),
-                                      ),
-                                    ),
-                                    LinearWidgetPointer(
-                                      value: _deliveredState,
-                                      enableAnimation: false,
-                                      position: LinearElementPosition.cross,
-                                      child: Container(
-                                        width: getProportionateScreenWidth(14),
-                                        height: getProportionateScreenWidth(14),
-                                        decoration: BoxDecoration(
-                                            color: _deliveryStatus > 30
-                                                ? _activeColor
-                                                : Colors.white,
-                                            border: Border.all(
-                                                width: 4, color: _activeColor),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(12))),
-                                      ),
-                                    ),
-                                    LinearShapePointer(
-                                      animationDuration: 2000,
-                                      value: _deliveryStatus,
-                                      enableAnimation: true,
-                                      color: _activeColor,
-                                      width: getProportionateScreenWidth(14),
-                                      height: getProportionateScreenWidth(14),
-                                      position: LinearElementPosition.cross,
-                                      shapeType: LinearShapePointerType.circle,
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
+
+                      return_cancel_value==""?Center():Text(
+
+                          return_cancel_value=="return"?"Your order is being process for returning":"This order has been cancelled",
+                        style: TextStyle(fontSize: getProportionateScreenWidth(15),color: Colors.black,fontWeight: FontWeight.bold),
                       ),
                       Divider(color: Colors.black),
+                      return_cancel_value=="cancel"?Center():Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          return_cancel_value=="cancel"?Center():
+                          Text(
+                            return_cancel_value=="return"?"Returning Address":
+                            "Shipping Address",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(25),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          Text(""),
+                          Container(
+                            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black45, // red as border color
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${widget.order.selectedAddress["name"]}",
+                                        style: TextStyle(
+                                            fontSize: getProportionateScreenWidth(20),
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
+                                      SizedBox(
+                                        height: getProportionateScreenHeight(5),
+                                      ),
+                                      Text("${widget.order.selectedAddress["adline1"]}",
+                                          style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(14))),
+                                      Text("${widget.order.selectedAddress["adline2"]}",
+                                          style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(14))),
+                                      Text(
+                                          "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
+                                          style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(14))),
+                                      Text("Phone number: $userphone",
+                                          style: TextStyle(
+                                              fontSize: getProportionateScreenWidth(14))),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    height: getProportionateScreenHeight(200),
+                                    child: SfLinearGauge(
+                                      orientation: LinearGaugeOrientation.vertical,
+                                      minimum: 0,
+                                      maximum: return_cancel_value==""?30:20,
+                                      labelOffset: 24,
+                                      isAxisInversed: true,
+                                      showTicks: false,
+                                      onGenerateLabels: () {
+                                        return return_cancel_value==""?<LinearAxisLabel>[
+                                          const LinearAxisLabel(
+                                              text: 'Ordered', value: 0),
+                                          const LinearAxisLabel(
+                                              text: 'Packed', value: 10),
+                                          const LinearAxisLabel(
+                                              text: 'Shipped', value: 20),
+                                          const LinearAxisLabel(
+                                              text: 'Delivered', value: 30),
+                                        ]:<LinearAxisLabel>[
+                                          const LinearAxisLabel(
+                                              text: 'Return Accepted', value: 0),
+                                          const LinearAxisLabel(
+                                              text: 'On the way', value: 10),
+                                          const LinearAxisLabel(
+                                              text: 'Returned', value: 20),
+                                        ];
+                                      },
+                                      axisTrackStyle: LinearAxisTrackStyle(
+                                        color: _activeColor,
+                                      ),
+                                      barPointers: <LinearBarPointer>[
+                                        LinearBarPointer(
+                                          value: _deliveryStatus,
+                                          color: _activeColor,
+                                          enableAnimation: false,
+                                          position: LinearElementPosition.cross,
+                                        ),
+                                      ],
+                                      markerPointers: <LinearMarkerPointer>[
+                                        LinearWidgetPointer(
+                                          value: _orderState,
+                                          enableAnimation: false,
+                                          position: LinearElementPosition.cross,
+                                          child: Container(
+                                            width: getProportionateScreenWidth(14),
+                                            height: getProportionateScreenWidth(14),
+                                            decoration: BoxDecoration(
+                                                color: _deliveryStatus > 0
+                                                    ? _activeColor
+                                                    : Colors.white,
+                                                border: Border.all(
+                                                    width: 4, color: _activeColor),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12))),
+                                          ),
+                                        ),
+                                        LinearWidgetPointer(
+                                          enableAnimation: false,
+                                          value: _packedState,
+                                          position: LinearElementPosition.cross,
+                                          child: Container(
+                                            width: getProportionateScreenWidth(14),
+                                            height: getProportionateScreenWidth(14),
+                                            decoration: BoxDecoration(
+                                                color: _deliveryStatus > 10
+                                                    ? _activeColor
+                                                    : Colors.white,
+                                                border: Border.all(
+                                                    width: 4, color: _activeColor),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12))),
+                                          ),
+                                        ),
+                                        LinearWidgetPointer(
+                                          value: _shippedState,
+                                          enableAnimation: false,
+                                          position: LinearElementPosition.cross,
+                                          child: Container(
+                                            width: getProportionateScreenWidth(14),
+                                            height: getProportionateScreenWidth(14),
+                                            decoration: BoxDecoration(
+                                                color: _deliveryStatus > 20
+                                                    ? _activeColor
+                                                    : Colors.white,
+                                                border: Border.all(
+                                                    width: 4, color: _activeColor),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12))),
+                                          ),
+                                        ),
+                                        LinearWidgetPointer(
+                                          value: _deliveredState,
+                                          enableAnimation: false,
+                                          position: LinearElementPosition.cross,
+                                          child: Container(
+                                            width: getProportionateScreenWidth(14),
+                                            height: getProportionateScreenWidth(14),
+                                            decoration: BoxDecoration(
+                                                color: _deliveryStatus > 30
+                                                    ? _activeColor
+                                                    : Colors.white,
+                                                border: Border.all(
+                                                    width: 4, color: _activeColor),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12))),
+                                          ),
+                                        ),
+                                        LinearShapePointer(
+                                          animationDuration: 2000,
+                                          value: _deliveryStatus,
+                                          enableAnimation: true,
+                                          color: _activeColor,
+                                          width: getProportionateScreenWidth(14),
+                                          height: getProportionateScreenWidth(14),
+                                          position: LinearElementPosition.cross,
+                                          shapeType: LinearShapePointerType.circle,
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          Divider(color: Colors.black),
+                        ],
+                      ),
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),
@@ -524,34 +538,38 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                       SizedBox(
                         height: getProportionateScreenHeight(20),
                       ),
-                      DefaultButton(
-                        color: kPrimaryColor2,
-                        text: "Return/Replacement",
-                        press: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReturnCancel(formname: "Return Form",)),
-                          );
+                      return_cancel_value==""?Column(
+                        children: [
+                          DefaultButton(
+                            color: kPrimaryColor2,
+                            text: "Return/Replacement",
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ReturnCancel(formname: "Return Form",)),
+                              );
 
-                        },
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(20),
-                      ),
-                      DefaultButton(
-                        color: Colors.red,
-                        text: "Cancel",
-                        press: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReturnCancel(formname: "Cancel Form",)),
-                          );
+                            },
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                          DefaultButton(
+                            color: Colors.red,
+                            text: "Cancel",
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ReturnCancel(formname: "Cancel Form",)),
+                              );
 
-                        },
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(20),
-                      ),
+                            },
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                        ],
+                      ):Center(),
                       Divider(color: Colors.black),
                       SizedBox(
                         height: getProportionateScreenHeight(20),
