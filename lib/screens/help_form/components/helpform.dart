@@ -29,8 +29,8 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
     'Orev Wallet',
     'Shipping & Delivery',
     'Returns & Refunds',
-    'Security & Privacy',
-    'Orev Vendor Account',
+    // 'Security & Privacy',
+    // 'Orev Vendor Account',
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -107,12 +107,6 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
             DefaultButton(
               text: "Continue",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuerySuccess(queryname: "Query",)),
-                );
-
-
                 if (selectedKey != "Please Select" && message != "") {
                   String authkey = UserSimplePreferences.getAuthKey() ?? "";
                   var values = {
@@ -123,8 +117,13 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
                   UserServices _services = new UserServices();
                   _services.registerComplaint(values);
 
-                  //TODO: Show a query registered successfully screen sort of thing
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => QuerySuccess(
+                              queryname: "Query",
+                            )),
+                  );
                 } else {
                   if (message == "") {
                     Fluttertoast.showToast(
