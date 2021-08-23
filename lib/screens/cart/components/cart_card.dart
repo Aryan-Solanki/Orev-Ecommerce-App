@@ -94,17 +94,26 @@ class _CartCardState extends State<CartCard> {
     getVarientNumber(widget.cart.varientNumber, widget.cart.product.id);
     super.initState();
   }
-
+  bool visible=false;
   @override
   Widget build(BuildContext context) {
     int quantity = widget.cart.numOfItem;
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(
-        context,
-        DetailsScreen.routeName,
-        arguments: ProductDetailsArguments(
-            product: widget.cart.product, varientCartNum: selectedVarient),
-      ),
+      onTap: (){
+        if(visible==true){
+          Navigator.pushNamed(
+            context,
+            DetailsScreen.routeName,
+            arguments: ProductDetailsArguments(
+                product: widget.cart.product, varientCartNum: selectedVarient),
+          );
+        }
+        else{
+          setState(() {
+            visible=true;
+          });
+        }
+      },
       child: Container(
         // padding: EdgeInsets.all(getProportionateScreenWidth(10)),
         child: Stack(
@@ -167,6 +176,8 @@ class _CartCardState extends State<CartCard> {
                                 ],
                               ),
                             ),
+                            SizedBox(height: 3),
+                            widget.errorvalue=="not_deliverable"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11)),):widget.errorvalue=="no_cod"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11))):Center(),
                           ],
                         ),
                       )
@@ -232,7 +243,7 @@ class _CartCardState extends State<CartCard> {
                 ],
               ),
             ),
-            widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?ClipRect(
+            visible==false?widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
                 child: Container(
@@ -258,8 +269,7 @@ class _CartCardState extends State<CartCard> {
                   ),
                 ),
               ),
-            ):Center(),
-
+            ):Center():Center(),
           ],
         ),
       ),
