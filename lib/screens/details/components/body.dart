@@ -161,6 +161,8 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool cod_available=false;
     List<dynamic> addressmap = [];
 
     updateWalletBalance(newwalletbalance, orderId, timestamp) async {
@@ -1032,33 +1034,45 @@ class _BodyState extends State<Body> {
                                     SizedBox(
                                       height: getProportionateScreenHeight(20),
                                     ),
-                                    deliverable == true
-                                        ? Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "",
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        13),
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          )
-                                        : Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "This product is not availabe in the selected location\n",
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        13),
-                                                color: Colors.red,
-                                              ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        deliverable == true
+                                            ?Center()
+                                            : Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "This product is not availabe in the selected location",
+                                            textAlign:TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                              getProportionateScreenWidth(
+                                                  13),
+                                              color: Colors.red,
                                             ),
                                           ),
-                                    deliverable == true
-                                        ? DefaultButton(
+
+                                        ),
+                                        SizedBox(height: getProportionateScreenHeight(5),),
+                                        cod_available==true?Center():
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Cash On Delivery is not available for this product",
+                                            textAlign:TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                              getProportionateScreenWidth(
+                                                  13),
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: getProportionateScreenHeight(10),),
+                                      ],
+                                    ),
+                                    deliverable == true?
+                                        cod_available==true? DefaultButton(
                                             textheight: 15,
                                             colour: Colors.white,
                                             height: 70,
@@ -1078,15 +1092,15 @@ class _BodyState extends State<Body> {
                                                   finalDeliveryCost,
                                                   usedWalletMoney);
                                             },
-                                          )
-                                        : DefaultButton(
+                                          ):Center()
+                                        : cod_available==true?DefaultButton(
                                             textheight: 15,
                                             colour: Colors.white,
                                             height: 70,
                                             color: kSecondaryColor,
                                             text: "Cash on Delivery (COD)",
                                             press: () {},
-                                          ),
+                                          ):Center(),
                                     SizedBox(
                                       height: getProportionateScreenHeight(10),
                                     ),
