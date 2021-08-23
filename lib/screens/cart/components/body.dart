@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:menu_button/menu_button.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
@@ -15,11 +17,13 @@ import 'check_out_card.dart';
 
 class Body extends StatefulWidget {
   final List<dynamic> keys;
+  final Map currentAddress;
   final Function() notifyParent;
   const Body({
     Key key,
     this.keys,
     @required this.notifyParent,
+    @required this.currentAddress,
   }) : super(key: key);
   @override
   _BodyState createState() => _BodyState(keys: keys);
@@ -31,6 +35,7 @@ class _BodyState extends State<Body> {
 
   List<Cart> CartList = [];
   double totalamt = 0.0;
+  bool codSelected = false;
 
   Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
@@ -52,7 +57,6 @@ class _BodyState extends State<Body> {
     widget.notifyParent();
   }
 
-
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
     print(user_key);
@@ -72,6 +76,12 @@ class _BodyState extends State<Body> {
 
   String user_key;
 
+  codSelectedState() {
+    setState(() {
+      codSelected = true;
+    });
+  }
+
   Future<void> getAllCartProducts() async {
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
@@ -88,18 +98,39 @@ class _BodyState extends State<Body> {
           removeFromCart(k["varientNumber"], k["productId"]);
           continue;
         }
-        CartList.add(new Cart(
-            product: product,
-            varientNumber: product.varients[xx].id,
-            numOfItem: k["qty"]));
-        if (_user_services.isAvailableOnUserLocation()) {
+
+        Map returnMap = await _user_services.isAvailableOnUserLocation(
+            widget.currentAddress, product.sellerId);
+
+        if (returnMap["deliverable"]) {
+          CartList.add(
+            new Cart(
+              product: product,
+              varientNumber: product.varients[xx].id,
+              numOfItem: k["qty"],
+              deliverable: true,
+              deliveryCharges: returnMap["deliveryCost"],
+              codAvailable: returnMap["codAvailable"],
+              codCharges: returnMap["codCharges"],
+            ),
+          );
           totalamt += product.varients[xx].price * k["qty"];
+        } else {
+          CartList.add(
+            new Cart(
+              product: product,
+              varientNumber: product.varients[xx].id,
+              numOfItem: k["qty"],
+              deliverable: false,
+              deliveryCharges: returnMap["deliveryCost"],
+              codAvailable: returnMap["codAvailable"],
+              codCharges: returnMap["codCharges"],
+            ),
+          );
         }
       }
-      setState(() {
-        print(totalamt);
-      });
     }
+    setState(() {});
   }
 
   @override
@@ -161,15 +192,17 @@ class _BodyState extends State<Body> {
     //   ),
     // );
 
-
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(address: true,),
+        HomeHeader(
+          address: true,
+        ),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: Padding(
-            padding:EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
             child: ScrollConfiguration(
               behavior: ScrollBehavior(),
               child: GlowingOverscrollIndicator(
@@ -183,12 +216,10 @@ class _BodyState extends State<Body> {
                       key: Key(CartList[index].product.id.toString()),
                       direction: DismissDirection.endToStart,
                       onDismissed: (direction) {
-                        setState(() {
-                          removeFromCart(CartList[index].varientNumber,
-                              CartList[index].product.id);
-                          CartList.removeAt(index);
-                          widget.notifyParent();
-                        });
+                        removeFromCart(CartList[index].varientNumber,
+                            CartList[index].product.id);
+                        CartList.removeAt(index);
+                        widget.notifyParent();
                       },
                       background: Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -203,12 +234,19 @@ class _BodyState extends State<Body> {
                           ],
                         ),
                       ),
-                      child: CartCard(
-                          cart: CartList[index],
-                          notifyParent: refresh,
-                          key: UniqueKey(),
-                        errorvalue: "no_cod",//not_deliverable
-                      ),
+                      child: CartList[index].deliverable
+                          ? CartCard(
+                              cart: CartList[index],
+                              notifyParent: refresh,
+                              key: UniqueKey(),
+                              errorvalue: "", //not_deliverable
+                            )
+                          : CartCard(
+                              cart: CartList[index],
+                              notifyParent: refresh,
+                              key: UniqueKey(),
+                              errorvalue: "not_deliverable", //not_deliverable
+                            ),
                     ),
                   ),
                 ),
@@ -219,6 +257,7 @@ class _BodyState extends State<Body> {
         CheckoutCard(
           keys: keys,
           key: UniqueKey(),
+          currentAddress: widget.currentAddress,
         )
       ],
     );

@@ -62,6 +62,12 @@ class ProductServices {
     return document["location"];
   }
 
+  Future<bool> getSellerCODAvailable(id) async {
+    var document =
+        await FirebaseFirestore.instance.collection("vendors").doc(id).get();
+    return document["codAvailable"];
+  }
+
   Product getProductSeeMore(document) {
     var exists = document.exists;
     if (exists) {

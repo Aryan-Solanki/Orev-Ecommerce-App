@@ -7,10 +7,20 @@ class Cart {
   final Product product;
   final int numOfItem;
   final String varientNumber;
-  Cart(
-      {@required this.product,
-      @required this.numOfItem,
-      @required this.varientNumber});
+  final bool deliverable;
+  final bool codAvailable;
+  final double deliveryCharges;
+  final double codCharges;
+
+  Cart({
+    @required this.product,
+    @required this.numOfItem,
+    @required this.varientNumber,
+    @required this.deliverable,
+    @required this.codAvailable,
+    @required this.deliveryCharges,
+    @required this.codCharges,
+  });
 }
 
 // Demo data for our cart

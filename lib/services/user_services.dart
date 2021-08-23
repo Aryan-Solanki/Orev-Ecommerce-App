@@ -1,5 +1,8 @@
 //for all firebase related services for user
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:orev/services/product_services.dart';
 
 class UserServices {
   String collection = 'users';
@@ -46,7 +49,47 @@ class UserServices {
     await _firestore.collection("keypass").doc(id).update(values);
   }
 
-  bool isAvailableOnUserLocation() {
-    return true;
+  Future<Map> isAvailableOnUserLocation(currentLocation, sellerId) async {
+    ProductServices _services = new ProductServices();
+    var sellingdistance = await _services.getSellerSellingDistance(sellerId);
+    var vendorlocation = await _services.getSellerLocation(sellerId);
+    var codAvailable = await _services.getSellerCODAvailable(sellerId);
+    List<Location> locations =
+        await locationFromAddress(currentLocation["pincode"].toString());
+    var codCharge = await _services.getSellerCODcost(sellerId);
+    var deliveryCost = await _services.getSellerDeliveryCharge(sellerId);
+    var deliveryCharge = deliveryCost["charge"].toDouble();
+    var freekms = deliveryCost["freeRadius"].toDouble();
+
+    var distanceInMeters = await Geolocator.distanceBetween(
+      locations[0].latitude,
+      locations[0].longitude,
+      vendorlocation.latitude,
+      vendorlocation.longitude,
+    );
+
+    bool deliverable = false;
+    double finalDeliveryCost = 0.0;
+
+    if ((distanceInMeters / 1000) < sellingdistance) {
+      deliverable = true;
+    } else {
+      deliverable = false;
+    }
+
+    if (distanceInMeters / 1000 > freekms) {
+      finalDeliveryCost = deliveryCharge;
+    } else {
+      finalDeliveryCost = 0.0;
+    }
+
+    var returnValue = {
+      "deliverable": deliverable,
+      "codAvailable": codAvailable,
+      "deliveryCost": finalDeliveryCost,
+      "codCharges": codCharge
+    };
+
+    return returnValue;
   }
 }

@@ -125,8 +125,8 @@ class _CartCardState extends State<CartCard> {
                               color: Color(0xFFF5F6F9),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Image.network(widget
-                                .cart.product.varients[selectedVarient].images[0]),
+                            child: Image.network(widget.cart.product
+                                .varients[selectedVarient].images[0]),
                           ),
                         ),
                       ),
@@ -146,13 +146,13 @@ class _CartCardState extends State<CartCard> {
                             SizedBox(height: 3),
                             Text(
                               "${widget.cart.product.varients[selectedVarient].title}",
-                              style:
-                              TextStyle(fontSize: getProportionateScreenWidth(13)),
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(13)),
                             ),
                             Text.rich(
                               TextSpan(
                                 text:
-                                "\₹${widget.cart.product.varients[selectedVarient].price}",
+                                    "\₹${widget.cart.product.varients[selectedVarient].price}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
@@ -163,7 +163,8 @@ class _CartCardState extends State<CartCard> {
                                       style: TextStyle(
                                           color: kTextColor,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: getProportionateScreenWidth(14))),
+                                          fontSize:
+                                              getProportionateScreenWidth(14))),
                                 ],
                               ),
                             ),
@@ -220,7 +221,7 @@ class _CartCardState extends State<CartCard> {
                       Text.rich(
                         TextSpan(
                           text:
-                          "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
+                              "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor,
@@ -232,34 +233,53 @@ class _CartCardState extends State<CartCard> {
                 ],
               ),
             ),
-            widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
-                child: Container(
-                  width: double.maxFinite,
-                  height: getProportionateScreenHeight(225),
-                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                  child: FittedBox(
-                    child: Column(
-                      children: [
-                        widget.errorvalue=="not_deliverable"?Text(
-                          "This product is not available in the selected location",
-                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
-                        ):Text(
-                          "Cash on delivery is not available for this product",
-                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
+            widget.errorvalue == "not_deliverable" ||
+                    widget.errorvalue == "no_cod"
+                ? ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        height: getProportionateScreenHeight(225),
+                        decoration:
+                            BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                        child: FittedBox(
+                          child: Column(
+                            children: [
+                              widget.errorvalue == "not_deliverable"
+                                  ? Text(
+                                      "This product is not available in the selected location",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenWidth(18),
+                                          fontWeight: FontWeight.w900),
+                                    )
+                                  : Text(
+                                      "Cash on delivery is not available for this product",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenWidth(18),
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              Text(
+                                "Swipe left to remove product or Tap to view Item",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: getProportionateScreenWidth(15),
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
                         ),
-                        SizedBox(height: getProportionateScreenHeight(20),),
-                        Text("Swipe left to remove product or Tap to view Item",
-                          style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ):Center(),
-
+                  )
+                : Center(),
           ],
         ),
       ),

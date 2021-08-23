@@ -8,15 +8,21 @@ import 'components/body.dart';
 import 'components/check_out_card.dart';
 
 class CartScreen extends StatefulWidget {
+  final Map address;
+  CartScreen({this.address, Key key}) : super(key: key);
   static String routeName = "/cart";
   @override
-  _CartScreenState createState() => _CartScreenState();
+  CartScreenState createState() => CartScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class CartScreenState extends State<CartScreen> {
   int numberOfItems = 0;
   String user_key;
   List<dynamic> keys = [];
+
+  void printSample() {
+    print("Sample text");
+  }
 
   Future<void> getCartInfo() async {
     ProductServices _services = ProductServices();
@@ -31,6 +37,12 @@ class _CartScreenState extends State<CartScreen> {
     user_key = AuthProvider().user.uid;
     getCartInfo();
     super.initState();
+  }
+
+  refresh2() {
+    ProductServices _services = ProductServices();
+    print("Refresh2 called");
+    return true;
   }
 
   refresh() async {
@@ -51,6 +63,7 @@ class _CartScreenState extends State<CartScreen> {
     return SafeArea(
       child: Scaffold(
         body: Body(
+          currentAddress: widget.address,
           keys: keys,
           key: UniqueKey(),
           notifyParent: refresh,
@@ -59,4 +72,3 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
-

@@ -43,9 +43,9 @@ class _SearchFieldState extends State<SearchField> {
                   MaterialPageRoute(builder: (context) => SearchPage()));
             },
             child: Container(
-              padding: EdgeInsets.only(left:getProportionateScreenWidth(13)),
+              padding: EdgeInsets.only(left: getProportionateScreenWidth(13)),
               height: getProportionateScreenHeight(65),
-              width: SizeConfig.screenWidth * 0.6,
+              width: SizeConfig.screenWidth * 0.75,
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
@@ -69,8 +69,8 @@ class _SearchFieldState extends State<SearchField> {
             ),
           )
         : Container(
-            width: SizeConfig.screenWidth * 0.6,
-      height: getProportionateScreenHeight(65),
+            width: SizeConfig.screenWidth * 0.75,
+            height: getProportionateScreenHeight(65),
             decoration: BoxDecoration(
               color: kSecondaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),
@@ -95,7 +95,9 @@ class _SearchFieldState extends State<SearchField> {
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     hintText: "Search product",
-                    hintStyle:TextStyle(fontSize: getProportionateScreenWidth(14),),
+                    hintStyle: TextStyle(
+                      fontSize: getProportionateScreenWidth(14),
+                    ),
                     prefixIcon: Icon(Icons.search,
                         size: getProportionateScreenWidth(18))),
               ),
