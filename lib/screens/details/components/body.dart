@@ -115,11 +115,11 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    twilioFlutter = TwilioFlutter(
-        accountSid : 'ACd65329a40fdca6b7260504938fd8a16f', // replace *** with Account SID
-        authToken : '547309e1bd486a67d6283dbad5cacf4d',  // replace xxx with Auth Token
-        twilioNumber : '7982916348'  // replace .... with Twilio Number
-    );
+    // twilioFlutter = TwilioFlutter(
+    //     accountSid : 'ACd65329a40fdca6b7260504938fd8a16f', // replace *** with Account SID
+    //     authToken : '547309e1bd486a67d6283dbad5cacf4d',  // replace xxx with Auth Token
+    //     twilioNumber : '7982916348'  // replace .... with Twilio Number
+    // );
 
     // var twilioFlutter = TwilioFlutter(accountSid: '', authToken: '', twilioNumber: '');
 
@@ -134,9 +134,9 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  void sendSms() async {
-    twilioFlutter.sendSMS(toNumber: '+919540014357', messageBody: 'aryan twilio msg');
-  }
+  // void sendSms() async {
+  //   twilioFlutter.sendSMS(toNumber: '+919540014357', messageBody: 'aryan twilio msg');
+  // }
 
   int quantity = 1;
   Map<String, dynamic> SelectedAddress;
@@ -1404,7 +1404,7 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
-                                                          sendSms();
+                                                          // sendSms();
                                                           setState(() {});
                                                           if (authkey == '') {
                                                             Navigator.pushNamed(
