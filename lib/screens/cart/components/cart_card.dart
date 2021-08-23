@@ -94,17 +94,26 @@ class _CartCardState extends State<CartCard> {
     getVarientNumber(widget.cart.varientNumber, widget.cart.product.id);
     super.initState();
   }
-
+  bool visible=false;
   @override
   Widget build(BuildContext context) {
     int quantity = widget.cart.numOfItem;
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(
-        context,
-        DetailsScreen.routeName,
-        arguments: ProductDetailsArguments(
-            product: widget.cart.product, varientCartNum: selectedVarient),
-      ),
+      onTap: (){
+        if(visible==true){
+          Navigator.pushNamed(
+            context,
+            DetailsScreen.routeName,
+            arguments: ProductDetailsArguments(
+                product: widget.cart.product, varientCartNum: selectedVarient),
+          );
+        }
+        else{
+          setState(() {
+            visible=true;
+          });
+        }
+      },
       child: Container(
         // padding: EdgeInsets.all(getProportionateScreenWidth(10)),
         child: Stack(
@@ -168,6 +177,8 @@ class _CartCardState extends State<CartCard> {
                                 ],
                               ),
                             ),
+                            SizedBox(height: 3),
+                            widget.errorvalue=="not_deliverable"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11)),):widget.errorvalue=="no_cod"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11))):Center(),
                           ],
                         ),
                       )
@@ -233,53 +244,29 @@ class _CartCardState extends State<CartCard> {
                 ],
               ),
             ),
-            widget.errorvalue == "not_deliverable" ||
-                    widget.errorvalue == "no_cod"
-                ? ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
-                      child: Container(
-                        width: double.maxFinite,
-                        height: getProportionateScreenHeight(225),
-                        decoration:
-                            BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                        child: FittedBox(
-                          child: Column(
-                            children: [
-                              widget.errorvalue == "not_deliverable"
-                                  ? Text(
-                                      "This product is not available in the selected location",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(18),
-                                          fontWeight: FontWeight.w900),
-                                    )
-                                  : Text(
-                                      "Cash on delivery is not available for this product",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(18),
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(20),
-                              ),
-                              Text(
-                                "Swipe left to remove product or Tap to view Item",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: getProportionateScreenWidth(15),
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
+            visible==false?widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
+                child: Container(
+                  width: double.maxFinite,
+                  height: getProportionateScreenHeight(225),
+                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                  child: FittedBox(
+                    child: Column(
+                      children: [
+                        widget.errorvalue=="not_deliverable"?Text(
+                          "This product is not available in the selected location",
+                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
+                        ):Text(
+                          "Cash on delivery is not available for this product",
+                          style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
                         ),
                       ),
                     ),
-                  )
-                : Center(),
+                  ),
+                ),
+              ),
+            ):Center():Center(),
           ],
         ),
       ),

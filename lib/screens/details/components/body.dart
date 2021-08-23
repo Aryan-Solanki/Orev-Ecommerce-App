@@ -33,6 +33,10 @@ import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
+
+
+import 'package:twilio_flutter/twilio_flutter.dart';
+
 class Body extends StatefulWidget {
   final Product product;
   final int varientNumberCart;
@@ -107,8 +111,18 @@ class _BodyState extends State<Body> {
 
   String authkey = '';
 
+  TwilioFlutter twilioFlutter;
+
   @override
   void initState() {
+    // twilioFlutter = TwilioFlutter(
+    //     accountSid : 'ACd65329a40fdca6b7260504938fd8a16f', // replace *** with Account SID
+    //     authToken : '547309e1bd486a67d6283dbad5cacf4d',  // replace xxx with Auth Token
+    //     twilioNumber : '7982916348'  // replace .... with Twilio Number
+    // );
+
+    // var twilioFlutter = TwilioFlutter(accountSid: '', authToken: '', twilioNumber: '');
+
     firstTime = true;
     authkey = UserSimplePreferences.getAuthKey() ?? '';
     getVarientList();
@@ -119,6 +133,10 @@ class _BodyState extends State<Body> {
     getYouMayAlsoLikeProductList();
     super.initState();
   }
+
+  // void sendSms() async {
+  //   twilioFlutter.sendSMS(toNumber: '+919540014357', messageBody: 'aryan twilio msg');
+  // }
 
   int quantity = 1;
   Map<String, dynamic> SelectedAddress;
@@ -161,6 +179,8 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool cod_available=false;
     List<dynamic> addressmap = [];
 
     updateWalletBalance(newwalletbalance, orderId, timestamp) async {
@@ -1032,33 +1052,45 @@ class _BodyState extends State<Body> {
                                     SizedBox(
                                       height: getProportionateScreenHeight(20),
                                     ),
-                                    deliverable == true
-                                        ? Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "",
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        13),
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          )
-                                        : Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "This product is not availabe in the selected location\n",
-                                              style: TextStyle(
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        13),
-                                                color: Colors.red,
-                                              ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        deliverable == true
+                                            ?Center()
+                                            : Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "This product is not availabe in the selected location",
+                                            textAlign:TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                              getProportionateScreenWidth(
+                                                  13),
+                                              color: Colors.red,
                                             ),
                                           ),
-                                    deliverable == true
-                                        ? DefaultButton(
+
+                                        ),
+                                        SizedBox(height: getProportionateScreenHeight(5),),
+                                        cod_available==true?Center():
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Cash On Delivery is not available for this product",
+                                            textAlign:TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                              getProportionateScreenWidth(
+                                                  13),
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: getProportionateScreenHeight(10),),
+                                      ],
+                                    ),
+                                    deliverable == true?
+                                        cod_available==true? DefaultButton(
                                             textheight: 15,
                                             colour: Colors.white,
                                             height: 70,
@@ -1078,15 +1110,15 @@ class _BodyState extends State<Body> {
                                                   finalDeliveryCost,
                                                   usedWalletMoney);
                                             },
-                                          )
-                                        : DefaultButton(
+                                          ):Center()
+                                        : cod_available==true?DefaultButton(
                                             textheight: 15,
                                             colour: Colors.white,
                                             height: 70,
                                             color: kSecondaryColor,
                                             text: "Cash on Delivery (COD)",
                                             press: () {},
-                                          ),
+                                          ):Center(),
                                     SizedBox(
                                       height: getProportionateScreenHeight(10),
                                     ),
@@ -1372,6 +1404,7 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
+                                                          // sendSms();
                                                           setState(() {});
                                                           if (authkey == '') {
                                                             Navigator.pushNamed(
