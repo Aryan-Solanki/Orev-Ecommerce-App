@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/form_error.dart';
+import 'package:orev/components/querysuccess.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
@@ -106,6 +107,12 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
             DefaultButton(
               text: "Continue",
               press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuerySuccess(queryname: "Query",)),
+                );
+
+
                 if (selectedKey != "Please Select" && message != "") {
                   String authkey = UserSimplePreferences.getAuthKey() ?? "";
                   var values = {

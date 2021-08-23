@@ -35,73 +35,63 @@ class _YouOrderCardState extends State<YouOrderCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 88,
-          child: AspectRatio(
-            aspectRatio: 0.88,
-            child: Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(10)),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                borderRadius: BorderRadius.circular(15),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => YourOrderDetail(
+                  order: widget.order,
+                )));
+        // Navigator.pushNamed(context, YourOrderDetail.routeName);
+      },
+      child: Row(
+        children: [
+          SizedBox(
+            width: 88,
+            child: AspectRatio(
+              aspectRatio: 0.88,
+              child: Container(
+                padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F6F9),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.network(widget.order.product.variant.images[0]),
               ),
-              child: Image.network(widget.order.product.variant.images[0]),
             ),
           ),
-        ),
-        SizedBox(width: getProportionateScreenWidth(15)),
-        // Expanded(
-        //   child: Text(
-        //     widget.cart.product.title,
-        //     style: TextStyle(
-        //         color: Colors.black,
-        //         fontSize: getProportionateScreenHeight(20)),
-        //     overflow: TextOverflow.ellipsis,
-        //     maxLines: 2,
-        //   ),
-        // ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              // height: getProportionateScreenHeight(50),
-              width: getProportionateScreenWidth(210),
-              child: Text(
-                widget.order.product.title,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15)),
+          SizedBox(width: getProportionateScreenWidth(15)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // height: getProportionateScreenHeight(50),
+                width: getProportionateScreenWidth(210),
+                child: Text(
+                  widget.order.product.title,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(15)),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+              Text(
+                widget.order.orderStatus,
+                style: TextStyle(fontSize: getProportionateScreenHeight(14)),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
-            ),
-            Text(
-              widget.order.orderStatus,
-              style: TextStyle(fontSize: getProportionateScreenHeight(14)),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-          ],
-        ),
-        SizedBox(width: getProportionateScreenWidth(5)),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => YourOrderDetail(
-                          order: widget.order,
-                        )));
-            // Navigator.pushNamed(context, YourOrderDetail.routeName);
-          },
-          child: Icon(
+            ],
+          ),
+          SizedBox(width: getProportionateScreenWidth(5)),
+          Icon(
             Icons.arrow_forward_ios,
             size: getProportionateScreenHeight(25),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

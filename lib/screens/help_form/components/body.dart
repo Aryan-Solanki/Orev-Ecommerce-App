@@ -36,7 +36,8 @@ class _BodyState extends State<Body> {
                   'By continuing your confirm that you agree \nwith our Term and Condition',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
-                )
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.10),
               ],
             ),
           ),
