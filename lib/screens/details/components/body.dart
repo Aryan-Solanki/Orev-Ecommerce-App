@@ -33,6 +33,10 @@ import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
+
+
+import 'package:twilio_flutter/twilio_flutter.dart';
+
 class Body extends StatefulWidget {
   final Product product;
   final int varientNumberCart;
@@ -107,8 +111,18 @@ class _BodyState extends State<Body> {
 
   String authkey = '';
 
+  TwilioFlutter twilioFlutter;
+
   @override
   void initState() {
+    twilioFlutter = TwilioFlutter(
+        accountSid : 'ACd65329a40fdca6b7260504938fd8a16f', // replace *** with Account SID
+        authToken : '547309e1bd486a67d6283dbad5cacf4d',  // replace xxx with Auth Token
+        twilioNumber : '7982916348'  // replace .... with Twilio Number
+    );
+
+    // var twilioFlutter = TwilioFlutter(accountSid: '', authToken: '', twilioNumber: '');
+
     firstTime = true;
     authkey = UserSimplePreferences.getAuthKey() ?? '';
     getVarientList();
@@ -118,6 +132,10 @@ class _BodyState extends State<Body> {
     }
     getYouMayAlsoLikeProductList();
     super.initState();
+  }
+
+  void sendSms() async {
+    twilioFlutter.sendSMS(toNumber: '+919540014357', messageBody: 'aryan twilio msg');
   }
 
   int quantity = 1;
@@ -1386,6 +1404,7 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
+                                                          sendSms();
                                                           setState(() {});
                                                           if (authkey == '') {
                                                             Navigator.pushNamed(
