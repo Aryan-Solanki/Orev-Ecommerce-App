@@ -66,7 +66,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
     await _services.cart.doc(user_key).update({'cartItems': keys});
   }
 
-  Future<void> getAllCartProducts() async {
+  Future<void> getAllCartProducts(currentAddress) async {
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
@@ -84,7 +84,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
         }
 
         Map returnMap = await _user_services.isAvailableOnUserLocation(
-            widget.currentAddress, product.sellerId);
+            currentAddress, product.sellerId);
 
         if (returnMap["deliverable"]) {
           CartList.add(
@@ -105,7 +105,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
               product: product,
               varientNumber: product.varients[xx].id,
               numOfItem: k["qty"],
-              deliverable: true,
+              deliverable: false,
               deliveryCharges: returnMap["deliveryCost"],
               codAvailable: returnMap["codAvailable"],
               codCharges: returnMap["codCharges"],
@@ -114,13 +114,12 @@ class _CheckoutCardState extends State<CheckoutCard> {
         }
       }
     }
-    setState(() {});
   }
 
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
-    getAllCartProducts();
+    getAllCartProducts(widget.currentAddress);
     super.initState();
   }
 
@@ -529,6 +528,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   @override
   Widget build(BuildContext context) {
+    refresh() {
+      setState(() {});
+    }
+
     // getAllCartProducts();
     return SingleChildScrollView(
       child: Container(
