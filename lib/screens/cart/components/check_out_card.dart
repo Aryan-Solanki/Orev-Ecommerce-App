@@ -578,7 +578,27 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 //     usedWalletMoney);
                                               },
                                             )
-                                      : Center(),
+                                      : orevwallet == true
+                                          ? totalamt == 0.0
+                                              ? DefaultButton(
+                                                  textheight: 15,
+                                                  colour: Colors.white,
+                                                  height: 70,
+                                                  color: kPrimaryColor2,
+                                                  text: "Place Order",
+                                                  press: () {
+                                                    // Navigator.pop(context);
+                                                    var usedWalletMoney =
+                                                        walletbalance -
+                                                            newwalletbalance;
+                                                    // _showCODDialog(
+                                                    //     totalCost,
+                                                    //     finalDeliveryCost,
+                                                    //     usedWalletMoney);
+                                                  },
+                                                )
+                                              : Center()
+                                          : Center(),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
