@@ -42,38 +42,19 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: buildAppBar(context),
-        body: SingleChildScrollView(
-          child: Body(
-            key: UniqueKey(),
-            product: widget.product,
-            currentVarient: widget.currentVarient,
-            quantity: widget.quantity,
-            selectedaddress: widget.selectedaddress,
-            totalCost: widget.totalCost,
-            deliveryCost: widget.deliveryCost,
-            newwalletbalance: widget.newwalletbalance,
-            oldwalletbalance: widget.oldwalletbalance,
-          ),
+        body: Body(
+          key: UniqueKey(),
+          product: widget.product,
+          currentVarient: widget.currentVarient,
+          quantity: widget.quantity,
+          selectedaddress: widget.selectedaddress,
+          totalCost: widget.totalCost,
+          deliveryCost: widget.deliveryCost,
+          newwalletbalance: widget.newwalletbalance,
+          oldwalletbalance: widget.oldwalletbalance,
         ),
       ),
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Column(
-        children: [
-          Text(
-            "Order Now",
-            style: TextStyle(color: Colors.black),
-          ),
-          // Text(
-          //   "${demoCarts.length} items",
-          //   style: Theme.of(context).textTheme.caption,
-          // ),
-        ],
-      ),
-    );
-  }
 }

@@ -105,62 +105,68 @@ class _BodyState extends State<Body> {
       });
     }
 
-    return ScrollConfiguration(
-      behavior: ScrollBehavior(),
-      child: GlowingOverscrollIndicator(
-        axisDirection: AxisDirection.down,
-        color: kPrimaryColor2,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              SizedBox(height: getProportionateScreenHeight(10)),
-              HomeHeader(),
-              SizedBox(height: getProportionateScreenHeight(10)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: SectionTitle(
-                  title: "OfferZone",
-                  // categoryId: widget.categoryId,
-                  press: () {},
-                  seemore: false,
+    return Column(
+      children: [
+        SizedBox(height: getProportionateScreenHeight(10)),
+        HomeHeader(),
+        SizedBox(height: getProportionateScreenHeight(10)),
+        Expanded(
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: SectionTitle(
+                        title: "OfferZone",
+                        // categoryId: widget.categoryId,
+                        press: () {},
+                        seemore: false,
+                      ),
+                    ),
+                    _loadingProducts == true
+                        ? Container(
+                            child: Text("Loading..."),
+                            // REPLACE THIS WITH LOADING
+                          )
+                        : Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(10)),
+                            child: _offers.length == 0
+                                ? Center(
+                                    child: Text("No products to display"),
+                                  )
+                                : GridView.count(
+                                    padding: EdgeInsets.all(0),
+                                    physics: NeverScrollableScrollPhysics(),
+                                    crossAxisCount: 2,
+                                    shrinkWrap: true,
+                                    children: [
+                                      ...List.generate(
+                                        _offers.length,
+                                        (index) {
+                                          return OfferzoneCard(
+                                              offer: OfferList[index]);
+                                          // return SizedBox
+                                          //     .shrink(); // here by default width and height is 0
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                          )
+                  ],
                 ),
               ),
-              _loadingProducts == true
-                  ? Container(
-                      child: Text("Loading..."),
-                      // REPLACE THIS WITH LOADING
-                    )
-                  : Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(10)),
-                      child: _offers.length == 0
-                          ? Center(
-                              child: Text("No products to display"),
-                            )
-                          : GridView.count(
-                              padding: EdgeInsets.all(0),
-                              physics: NeverScrollableScrollPhysics(),
-                              crossAxisCount: 2,
-                              shrinkWrap: true,
-                              children: [
-                                ...List.generate(
-                                  _offers.length,
-                                  (index) {
-                                    return OfferzoneCard(
-                                        offer: OfferList[index]);
-                                    // return SizedBox
-                                    //     .shrink(); // here by default width and height is 0
-                                  },
-                                ),
-                              ],
-                            ),
-                    )
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

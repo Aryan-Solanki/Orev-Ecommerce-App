@@ -77,7 +77,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
                 GFAccordion(
                   expandedTitleBackgroundColor: Colors.white,
                   contentPadding: EdgeInsets.only(bottom: 0,top: 0),
-                  titlePadding: EdgeInsets.only(left: getProportionateScreenWidth(15)),
+                  titlePadding: EdgeInsets.only(left: getProportionateScreenWidth(8)),
                   titleChild: Text("My Addresses (3)",style: TextStyle(fontSize: getProportionateScreenWidth(15)),),
                   // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
                   contentChild: Padding(
@@ -98,7 +98,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Akshat Rastogi",style: TextStyle(fontSize: getProportionateScreenWidth(13)),),
+                                      Text("Akshat Rastogi",style: TextStyle(fontSize: getProportionateScreenWidth(15)),),
                                       GestureDetector(
                                           onTap: (){
                                             SimpleAlertBox(context: context);
@@ -113,13 +113,13 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text("400-B,Pocket-N",style: TextStyle(
-                                            fontSize: getProportionateScreenHeight(15))),
+                                            fontSize: getProportionateScreenWidth(13))),
                                         Text("Sarita Vihar",style: TextStyle(
-                                            fontSize: getProportionateScreenHeight(15))),
+                                            fontSize: getProportionateScreenWidth(13))),
                                         Text("New Delhi",style: TextStyle(
-                                            fontSize: getProportionateScreenHeight(15))),
+                                            fontSize: getProportionateScreenWidth(13))),
                                         Text("Delhi",style: TextStyle(
-                                            fontSize: getProportionateScreenHeight(15))),
+                                            fontSize: getProportionateScreenWidth(13))),
                                       ],
                                     ),
                                   ),
@@ -141,6 +141,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
                             child: Text(
                               "Add New Address",
                               style: TextStyle(
+                                fontSize: getProportionateScreenWidth(13),
                                 color: Colors.blue,
                                   decoration:
                                   TextDecoration.underline),
@@ -157,7 +158,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.only(right: getProportionateScreenWidth(20),top: getProportionateScreenWidth(20),bottom: getProportionateScreenWidth(20),left: getProportionateScreenWidth(30)),
+            height: getProportionateScreenHeight(80),
+            padding: EdgeInsets.only(right: getProportionateScreenWidth(20),left: getProportionateScreenWidth(20)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: kTextColor)
@@ -183,18 +185,30 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> with ChangeNotifi
   }
 
 
-  TextFormField buildUpdateNameFormField() {
-    return TextFormField(
-      // onSaved: (newValue) => Addressname = newValue,
-      onChanged: (value) {
-        newname=value;
-      },
-      decoration: InputDecoration(
-        labelText: "New Name",
-        hintText: "Aryan Solanki",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+  Container buildUpdateNameFormField() {
+    return Container(
+      height: getProportionateScreenHeight(80),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
+        onChanged: (value) {
+          newname=value;
+        },
+        decoration: InputDecoration(
+          labelStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(15),
+          ),
+          hintStyle: TextStyle(
+            fontSize: getProportionateScreenWidth(16),
+          ),
+          labelText: "Full Name",
+          hintText: "Enter your full name",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+        ),
       ),
     );
   }

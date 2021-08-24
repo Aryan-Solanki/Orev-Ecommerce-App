@@ -12,11 +12,10 @@ class HelpCenter extends StatefulWidget {
 class _HelpCenterState extends State<HelpCenter> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Help Center"),
+    return SafeArea(
+      child: Scaffold(
+        body: Body(),
       ),
-      body: Body(),
     );
   }
 }

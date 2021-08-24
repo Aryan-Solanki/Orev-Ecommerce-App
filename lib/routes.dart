@@ -40,20 +40,20 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),//done ui
   DetailsScreen.routeName: (context) => DetailsScreen(),//done ui
   CartScreen.routeName: (context) => CartScreen(),//ui done
-  LikedScreen.routeName: (context) => LikedScreen(),
-  ProfileScreen.routeName: (context) => ProfileScreen(),
-  SeeMore.routeName: (context) => SeeMore(),
+  LikedScreen.routeName: (context) => LikedScreen(),//ui done
+  ProfileScreen.routeName: (context) => ProfileScreen(),//uidone
+  SeeMore.routeName: (context) => SeeMore(),//uidone
   Address.routeName: (context) => Address(),
-  OrderDetails.routeName: (context) => OrderDetails(),
-  YourOrder.routeName: (context) => YourOrder(),
-  YourOrderDetail.routeName: (context) => YourOrderDetail(),
-  Wallet.routeName: (context) => Wallet(),
-  CategoryPage.routeName: (context) => CategoryPage(),
-  MyAccount.routeName: (context) => MyAccount(),
-  HelpCenter.routeName: (context) => HelpCenter(),
-  HelpForm.routeName: (context) => HelpForm(),
-  PaymentSuccess.routeName: (context) => PaymentSuccess(),
-  OfferzoneCategory.routeName: (context) => OfferzoneCategory(),
+  OrderDetails.routeName: (context) => OrderDetails(),//uidone
+  YourOrder.routeName: (context) => YourOrder(),//uidone
+  YourOrderDetail.routeName: (context) => YourOrderDetail(),//uidone
+  Wallet.routeName: (context) => Wallet(),//uidone
+  CategoryPage.routeName: (context) => CategoryPage(),//uidone
+  MyAccount.routeName: (context) => MyAccount(),//uidone
+  HelpCenter.routeName: (context) => HelpCenter(),//uidone
+  HelpForm.routeName: (context) => HelpForm(),//uidone
+  PaymentSuccess.routeName: (context) => PaymentSuccess(),//uidone
+  OfferzoneCategory.routeName: (context) => OfferzoneCategory(),//uidone
 };
 
 

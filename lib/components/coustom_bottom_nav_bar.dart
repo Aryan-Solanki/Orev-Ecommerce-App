@@ -9,6 +9,7 @@ import '../constants.dart';
 import '../enums.dart';
 import 'package:orev/screens/liked_item/like_screen.dart';
 
+import '../size_config.dart';
 import 'comingsoonpage.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
@@ -35,7 +36,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     final Color inActiveIconColor = Color(0xFFB6B6B6);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 14),
+      padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(14)),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -57,7 +58,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             children: [
               IconButton(
                   icon: SvgPicture.asset(
-                    "assets/icons/Shop Icon.svg",
+                    "assets/icons/Shop Icon.svg",height: getProportionateScreenHeight(25),
                     color: MenuState.home == widget.selectedMenu
                         ? kPrimaryColor
                         : inActiveIconColor,
@@ -73,7 +74,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   }),
               IconButton(
                 icon: SvgPicture.asset(
-                  "assets/icons/Heart Icon.svg",
+                  "assets/icons/Heart Icon.svg",height: getProportionateScreenHeight(25),
                   color: MenuState.favourite == widget.selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,
@@ -94,7 +95,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               ),
               IconButton(
                 icon: SvgPicture.asset(
-                    "assets/icons/Chat bubble Icon.svg",
+                    "assets/icons/Chat bubble Icon.svg",height: getProportionateScreenHeight(25),
                   color: MenuState.message == widget.selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,
@@ -114,7 +115,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               ),
               IconButton(
                   icon: SvgPicture.asset(
-                    "assets/icons/User Icon.svg",
+                    "assets/icons/User Icon.svg",height: getProportionateScreenHeight(25),
                     color: MenuState.profile == widget.selectedMenu
                         ? kPrimaryColor
                         : inActiveIconColor,

@@ -48,7 +48,7 @@ class _YouOrderCardState extends State<YouOrderCard> {
       child: Row(
         children: [
           SizedBox(
-            width: 88,
+            width: getProportionateScreenWidth(88),
             child: AspectRatio(
               aspectRatio: 0.88,
               child: Container(
@@ -85,7 +85,6 @@ class _YouOrderCardState extends State<YouOrderCard> {
               ),
             ],
           ),
-          SizedBox(width: getProportionateScreenWidth(5)),
           Icon(
             Icons.arrow_forward_ios,
             size: getProportionateScreenHeight(25),
