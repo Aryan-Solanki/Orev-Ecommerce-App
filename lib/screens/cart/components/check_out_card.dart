@@ -376,7 +376,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                     ),
                                                     orevwallet == false
                                                         ? Text(
-                                                            "\₹${totalCost}",
+                                                            "\₹${totalamt}",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
