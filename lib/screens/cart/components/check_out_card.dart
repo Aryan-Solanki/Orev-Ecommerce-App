@@ -92,51 +92,75 @@ class _CheckoutCardState extends State<CheckoutCard> {
             currentAddress, product.sellerId);
 
         if (returnMap["deliverable"]) {
-          CartList.add(
-            new Cart(
+          Cart c = new Cart(
               product: product,
               varientNumber: product.varients[xx].id,
               numOfItem: k["qty"],
               deliverable: true,
               deliveryCharges: returnMap["deliveryCost"],
               codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"],
-            ),
-          );
+              codCharges: returnMap["codCharges"].toDouble(),
+              distanceInMeters: returnMap["distanceInMeters"].toDouble(),
+              freekms: returnMap["freekms"].toDouble());
+          CartList.add(c);
           totalamt += product.varients[xx].price * k["qty"];
         } else {
-          CartList.add(
-            new Cart(
+          Cart c = new Cart(
               product: product,
               varientNumber: product.varients[xx].id,
               numOfItem: k["qty"],
               deliverable: false,
               deliveryCharges: returnMap["deliveryCost"],
               codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"],
-            ),
-          );
+              codCharges: returnMap["codCharges"].toDouble(),
+              distanceInMeters: returnMap["distanceInMeters"].toDouble(),
+              freekms: returnMap["freekms"].toDouble());
+          CartList.add(c);
+        }
+      }
+    }
+    var sellerIdList = [];
+    for (var cart in CartList) {
+      if (!sellerIdList.contains(cart.product.sellerId)) {
+        sellerIdList.add(cart.product.sellerId);
+        if (cart.deliverable) {
+          if (cart.distanceInMeters / 1000 > cart.freekms) {
+            finalDeliveryCost += cart.deliveryCharges;
+          }
         }
       }
     }
     setState(() {
-      checkoutavailable = true;
-      totalamt = totalamt + 0.0;
+      if (totalamt == 0.0) {
+        checkoutavailable = false;
+      } else {
+        checkoutavailable = true;
+      }
+      totalamt = totalamt + finalDeliveryCost;
     });
+  }
+
+  Future<void> getWalletBalance() async {
+    UserServices _services = UserServices();
+    var result = await _services.getUserById(user_key);
+    walletbalance = result["walletAmt"].toDouble();
+    setState(() {});
   }
 
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
     getAllCartProducts(widget.currentAddress);
+    getWalletBalance();
     super.initState();
   }
 
   bool orevwallet = false;
-  double walletbalance = 100;
+  double walletbalance = 0.0;
   double totalCost = 1000;
   double newwalletbalance;
-  double finalDeliveryCost = 10;
+  double finalDeliveryCost = 0.0;
+  bool cod_available = false;
 
   void _showDialog() {
     slideDialog.showSlideDialog(
@@ -308,14 +332,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   onChanged:
                                                       (bool newValue) async {
                                                     orevwallet = newValue;
-                                                    // SelectedAddress =
-                                                    // addressmap[
-                                                    // _radioSelected];
-
-                                                    // await getFinalCost(
-                                                    //     SelectedAddress,
-                                                    //     false);
-
                                                     setState(() {});
                                                   },
                                                 ),
@@ -334,7 +350,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               : Text(
                                                   totalCost >= walletbalance
                                                       ? "Balance: ₹${newwalletbalance = 0.0}"
-                                                      : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
+                                                      : "Balance: ₹${newwalletbalance = (walletbalance - (totalamt))}",
                                                   style: TextStyle(
                                                       fontSize:
                                                           getProportionateScreenWidth(
@@ -391,7 +407,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                         : Text(
                                                             totalCost >
                                                                     walletbalance
-                                                                ? "\₹${totalCost = ((totalCost) - walletbalance)}"
+                                                                ? "\₹${totalCost = ((totalamt) - walletbalance)}"
                                                                 : "\₹${totalCost = 0.0}",
                                                             style: TextStyle(
                                                                 color: Colors
@@ -460,61 +476,131 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   SizedBox(
                                     height: getProportionateScreenHeight(20),
                                   ),
-                                  DefaultButton(
-                                    textheight: 15,
-                                    colour: Colors.white,
-                                    height: 70,
-                                    color: kPrimaryColor2,
-                                    text: orevwallet == true
-                                        ? totalCost == 0.0
-                                            ? "Place Order"
-                                            : "Cash on Delivery (COD)"
-                                        : "Cash on Delivery (COD)",
-                                    press: () {
-                                      // Navigator.pop(context);
-                                      var usedWalletMoney =
-                                          walletbalance - newwalletbalance;
-                                      // _showCODDialog(
-                                      //     totalCost,
-                                      //     finalDeliveryCost,
-                                      //     usedWalletMoney);
-                                    },
-                                  ),
+                                  cod_available
+                                      ? Center()
+                                      : Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Cash On Delivery is not available for this product",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      13),
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  DefaultButton(
-                                    textheight: 15,
-                                    colour: Colors.white,
-                                    height: 70,
-                                    color: kPrimaryColor,
-                                    text: "Pay Online",
-                                    press: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => OrderDetails(
-                                      //           key:
-                                      //           UniqueKey(),
-                                      //           product: widget
-                                      //               .product,
-                                      //           currentVarient:
-                                      //           selectedFoodVariants,
-                                      //           quantity:
-                                      //           quantity,
-                                      //           selectedaddress:
-                                      //           SelectedAddress,
-                                      //           totalCost:
-                                      //           totalCost,
-                                      //           deliveryCost:
-                                      //           finalDeliveryCost,
-                                      //           newwalletbalance:
-                                      //           newwalletbalance,
-                                      //           oldwalletbalance:
-                                      //           walletbalance)),
-                                      // );
-                                    },
-                                  )
+                                  cod_available
+                                      ? DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kPrimaryColor2,
+                                          text: orevwallet == true
+                                              ? totalamt == 0.0
+                                                  ? "Place Order"
+                                                  : "Cash on Delivery (COD)"
+                                              : "Cash on Delivery (COD)",
+                                          press: () {
+                                            // Navigator.pop(context);
+                                            var usedWalletMoney =
+                                                walletbalance -
+                                                    newwalletbalance;
+                                            // _showCODDialog(
+                                            //     totalCost,
+                                            //     finalDeliveryCost,
+                                            //     usedWalletMoney);
+                                          },
+                                        )
+                                      : totalamt == 0.0
+                                          ? DefaultButton(
+                                              textheight: 15,
+                                              colour: Colors.white,
+                                              height: 70,
+                                              color: kPrimaryColor2,
+                                              text: "Place Order",
+                                              press: () {
+                                                // Navigator.pop(context);
+                                                var usedWalletMoney =
+                                                    walletbalance -
+                                                        newwalletbalance;
+                                                // _showCODDialog(
+                                                //     totalCost,
+                                                //     finalDeliveryCost,
+                                                //     usedWalletMoney);
+                                              },
+                                            )
+                                          : Center(),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(10),
+                                  ),
+                                  orevwallet == true
+                                      ? totalamt == 0.0
+                                          ? Center()
+                                          : DefaultButton(
+                                              textheight: 15,
+                                              colour: Colors.white,
+                                              height: 70,
+                                              color: kPrimaryColor,
+                                              text: "Pay Online",
+                                              press: () {
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) => OrderDetails(
+                                                //           key:
+                                                //           UniqueKey(),
+                                                //           product: widget
+                                                //               .product,
+                                                //           currentVarient:
+                                                //           selectedFoodVariants,
+                                                //           quantity:
+                                                //           quantity,
+                                                //           selectedaddress:
+                                                //           SelectedAddress,
+                                                //           totalCost:
+                                                //           totalCost,
+                                                //           deliveryCost:
+                                                //           finalDeliveryCost,
+                                                //           newwalletbalance:
+                                                //           newwalletbalance,
+                                                //           oldwalletbalance:
+                                                //           walletbalance)),
+                                                // );
+                                              },
+                                            )
+                                      : DefaultButton(
+                                          textheight: 15,
+                                          colour: Colors.white,
+                                          height: 70,
+                                          color: kPrimaryColor,
+                                          text: "Pay Online",
+                                          press: () {
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           OrderDetails(
+                                            //             key: UniqueKey(),
+                                            //             product: widget
+                                            //                 .product,
+                                            //             currentVarient:
+                                            //             selectedFoodVariants,
+                                            //             quantity:
+                                            //             quantity,
+                                            //             selectedaddress:
+                                            //             SelectedAddress,
+                                            //             totalCost:
+                                            //             totalCost,
+                                            //             deliveryCost:
+                                            //             finalDeliveryCost,
+                                            //           )),
+                                            // );
+                                          })
                                 ],
                               );
                             }),

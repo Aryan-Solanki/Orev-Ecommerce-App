@@ -12,6 +12,7 @@ class Cart {
   final double deliveryCharges;
   final double codCharges;
   final double distanceInMeters;
+  final double freekms;
 
   Cart({
     @required this.product,
@@ -22,6 +23,7 @@ class Cart {
     @required this.deliveryCharges,
     @required this.codCharges,
     @required this.distanceInMeters,
+    @required this.freekms,
   });
 }
 
