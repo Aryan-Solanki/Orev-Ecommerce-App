@@ -494,29 +494,31 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  cod_available
-                                      ? DefaultButton(
-                                          textheight: 15,
-                                          colour: Colors.white,
-                                          height: 70,
-                                          color: kPrimaryColor2,
-                                          text: orevwallet == true
-                                              ? totalamt == 0.0
-                                                  ? "Place Order"
-                                                  : "Cash on Delivery (COD)"
-                                              : "Cash on Delivery (COD)",
-                                          press: () {
-                                            // Navigator.pop(context);
-                                            var usedWalletMoney =
-                                                walletbalance -
-                                                    newwalletbalance;
-                                            // _showCODDialog(
-                                            //     totalCost,
-                                            //     finalDeliveryCost,
-                                            //     usedWalletMoney);
-                                          },
-                                        )
-                                      : totalamt == 0.0
+                                  DefaultButton(
+                                    textheight: 15,
+                                    colour: Colors.white,
+                                    height: 70,
+                                    color: kPrimaryColor2,
+                                    text: orevwallet == true
+                                        ? totalamt == 0.0
+                                            ? "Place Order"
+                                            : "Cash on Delivery (COD)"
+                                        : "Cash on Delivery (COD)",
+                                    press: () {
+                                      // Navigator.pop(context);
+                                      var usedWalletMoney =
+                                          walletbalance - newwalletbalance;
+                                      // _showCODDialog(
+                                      //     totalCost,
+                                      //     finalDeliveryCost,
+                                      //     usedWalletMoney);
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(10),
+                                  ),
+                                  orevwallet == true
+                                      ? totalamt == 0.0
                                           ? DefaultButton(
                                               textheight: 15,
                                               colour: Colors.white,
@@ -534,13 +536,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 //     usedWalletMoney);
                                               },
                                             )
-                                          : Center(),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  orevwallet == true
-                                      ? totalamt == 0.0
-                                          ? Center()
                                           : DefaultButton(
                                               textheight: 15,
                                               colour: Colors.white,
