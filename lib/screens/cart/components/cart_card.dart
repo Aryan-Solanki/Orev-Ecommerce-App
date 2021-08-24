@@ -120,7 +120,6 @@ class _CartCardState extends State<CartCard> {
           children: [
             Container(
               width: double.maxFinite,
-              height: getProportionateScreenHeight(225),
               child: Column(
                 children: [
                   Row(
@@ -249,7 +248,7 @@ class _CartCardState extends State<CartCard> {
                 filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
                 child: Container(
                   width: double.maxFinite,
-                  height: getProportionateScreenHeight(225),
+                  height: getProportionateScreenHeight(135),
                   decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
                   child: FittedBox(
                     child: Column(
@@ -261,12 +260,16 @@ class _CartCardState extends State<CartCard> {
                           "Cash on delivery is not available for this product",
                           style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
                         ),
-                  ]
-                      ),
+                        SizedBox(height: getProportionateScreenHeight(20),),
+                        Text("Swipe left to remove product or Tap to view Item",
+                          style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
                   ),
                 ),
-              ):Center():Center(),
+              ),
+            ):Center():Center(),
           ],
         ),
       ),
