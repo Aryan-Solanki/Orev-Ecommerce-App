@@ -82,26 +82,15 @@ class _YourOrderState extends State<YourOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context, numberOfItems),
-      body: Body(
-        keys: orders,
-        key: UniqueKey(),
-        notifyParent: refresh,
+    return SafeArea(
+      child: Scaffold(
+        body: Body(
+          keys: orders,
+          key: UniqueKey(),
+          notifyParent: refresh,
+        ),
       ),
     );
   }
 }
 
-AppBar buildAppBar(BuildContext context, int numberOfItems) {
-  return AppBar(
-    title: Column(
-      children: [
-        Text(
-          "Your Orders",
-          style: TextStyle(color: Colors.black),
-        ),
-      ],
-    ),
-  );
-}

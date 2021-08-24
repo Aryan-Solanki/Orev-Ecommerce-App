@@ -204,14 +204,14 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       child: Column(
         children: [
           buildFirstNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(8)),
           buildPhoneFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(8)),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: getProportionateScreenHeight(8)),
           buildConformPassFormField(),
           FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
+          SizedBox(height: getProportionateScreenHeight(15)),
           DefaultButton(
             text: "Continue",
             press: () async {

@@ -76,22 +76,22 @@ class _OrderInfoState extends State<OrderInfo> {
                     Text(
                       "Sold by: $soldby",
                       style: TextStyle(
-                          fontSize: getProportionateScreenHeight(15)),
+                          fontSize: getProportionateScreenWidth(12)),
                     ),
                     Text(
                       "Variant: ${widget.product.varients[widget.currentVarient].title}",
                       style: TextStyle(
-                          fontSize: getProportionateScreenHeight(15)),
+                          fontSize: getProportionateScreenWidth(12)),
                     ),
                     Text(
                       "Quantity: ${widget.quantity}",
                       style: TextStyle(
-                          fontSize: getProportionateScreenHeight(15)),
+                          fontSize: getProportionateScreenWidth(12)),
                     ),
                     Text(
                       "${widget.product.detail}",
                       style: TextStyle(
-                          fontSize: getProportionateScreenHeight(15)),
+                          fontSize: getProportionateScreenWidth(12)),
                     )
 
                   ],
@@ -126,13 +126,13 @@ class _OrderInfoState extends State<OrderInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.selectedaddress["adline1"],style: TextStyle(
-                      fontSize: getProportionateScreenHeight(15))),
+                      fontSize: getProportionateScreenWidth(12))),
                   Text(widget.selectedaddress["adline2"],style: TextStyle(
-                      fontSize: getProportionateScreenHeight(15))),
+                      fontSize: getProportionateScreenWidth(12))),
                   Text(widget.selectedaddress["city"],style: TextStyle(
-                      fontSize: getProportionateScreenHeight(15))),
+                      fontSize: getProportionateScreenWidth(12))),
                   Text(widget.selectedaddress["state"],style: TextStyle(
-                      fontSize: getProportionateScreenHeight(15))),
+                      fontSize: getProportionateScreenWidth(12))),
                 ],
               ),
             ),
@@ -163,7 +163,8 @@ class _OrderInfoState extends State<OrderInfo> {
             ),
             contentChild: Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Text("We work hard to protect your security and privacy. Our payment security system encrypts your information during transmission. We don’t share your credit card details with third-party sellers, and we don’t sell your information to others. "),
+              child: Text("We work hard to protect your security and privacy. Our payment security system encrypts your information during transmission. We don’t share your credit card details with third-party sellers, and we don’t sell your information to others. ",
+              style: TextStyle(fontSize:getProportionateScreenWidth(12)),),
             ),
 
 

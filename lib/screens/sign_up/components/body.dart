@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
+                SizedBox(height: SizeConfig.screenHeight * 0.01), // 4%
                 Text("Register Account", style: TextStyle(
                   color: Colors.black,
                   fontSize: getProportionateScreenWidth(27),
@@ -37,8 +37,9 @@ class Body extends StatelessWidget {
                   'By continuing your confirm that you agree \nwith our Term and Condition',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(10)),
-                )
+                    fontSize: getProportionateScreenWidth(13)),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.015),
               ],
             ),
           ),

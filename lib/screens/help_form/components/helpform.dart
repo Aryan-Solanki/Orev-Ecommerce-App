@@ -24,13 +24,9 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
   String selectedKey = "Please Select";
 
   List<String> keys = <String>[
-    'Ordering',
-    'Payments & Pricing',
-    'Orev Wallet',
+    'Orders ,Returns & Refunds',
+    'Payments ,Pricing & Orev Wallet',
     'Shipping & Delivery',
-    'Returns & Refunds',
-    // 'Security & Privacy',
-    // 'Orev Vendor Account',
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -38,11 +34,9 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
   String message = "";
   Widget build(BuildContext context) {
     final Widget normalChildButton = Container(
-      height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
+      height: getProportionateScreenHeight(90),
       child: Padding(
         padding: EdgeInsets.only(
-            top: getProportionateScreenHeight(20),
-            bottom: getProportionateScreenHeight(20),
             left: getProportionateScreenWidth(40),
             right: getProportionateScreenWidth(20)),
         child: Row(
@@ -79,8 +73,7 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
               child: normalChildButton,
               items: keys,
               itemBuilder: (String value) => Container(
-                height: getProportionateScreenHeight(
-                    getProportionateScreenHeight(90)),
+                height: getProportionateScreenHeight(90),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                     vertical: getProportionateScreenHeight(20),
@@ -155,14 +148,22 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
 
   TextFormField MessageFormField() {
     return TextFormField(
+      style: TextStyle(
+        fontSize: getProportionateScreenWidth(15),
+      ),
       maxLines: 5,
       onChanged: (value) {
         message = value;
       },
       decoration: InputDecoration(
         labelText: "Message",
+        labelStyle: TextStyle(
+          fontSize: getProportionateScreenWidth(15),
+        ),
+        hintStyle: TextStyle(
+          fontSize: getProportionateScreenWidth(13),
+        ),
         hintText: "Please enter your message ... ",
-        hintStyle: TextStyle(fontSize: getProportionateScreenWidth(13)),
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,

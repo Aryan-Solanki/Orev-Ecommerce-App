@@ -13,16 +13,10 @@ class Wallet extends StatefulWidget {
 class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: Body(),
-    );
-  }
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text("Wallet",style: TextStyle(
-        fontSize: getProportionateScreenWidth(18),
-      ),),
+    return SafeArea(
+      child: Scaffold(
+        body: Body(),
+      ),
     );
   }
 }
