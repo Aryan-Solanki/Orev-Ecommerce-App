@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orev/components/default_button.dart';
@@ -27,10 +28,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
   String coupon = "";
   List<Cart> CartList = [];
   double totalamt = 0.0;
+  bool checkoutavailable = false;
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var product = await _services.getProduct(productId);
     var varlist = product.varients;
     int ind = 0;
@@ -49,7 +50,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     var keys = favref["cartItems"];
     bool found = false;
@@ -67,6 +67,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
   }
 
   Future<void> getAllCartProducts(currentAddress) async {
+    // setState(() {
+    //   checkoutavailable = false;
+    // });
+    checkoutavailable = false;
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
@@ -114,6 +118,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
         }
       }
     }
+    setState(() {
+      checkoutavailable = true;
+      totalamt = totalamt + 0.0;
+    });
   }
 
   @override
@@ -130,18 +138,12 @@ class _CheckoutCardState extends State<CheckoutCard> {
   double finalDeliveryCost = 10;
 
   void _showDialog() {
-    // _radioSelected = 0;
-    // SelectedAddress = addressmap[0];
-    // getFinalCost(SelectedAddress, false);
     slideDialog.showSlideDialog(
       context: context,
       barrierDismissible: false,
       child: WillPopScope(
         onWillPop: () async {
           Navigator.pop(context);
-          // firstTime = true;
-          // _radioSelected = 0;
-          // setState(() {});
           return true;
         },
         child: StatefulBuilder(
@@ -198,7 +200,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                     Align(
                                       alignment: Alignment.topLeft,
                                       child: Text(
-                                        "Aryan Solanki",
+                                        widget.currentAddress["name"],
                                         maxLines: 1,
                                         style: TextStyle(
                                             color: Colors.black,
@@ -218,7 +220,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "400-B,Pocket-N",
+                                            widget.currentAddress["adline1"],
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize:
@@ -232,7 +234,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 getProportionateScreenHeight(3),
                                           ),
                                           Text(
-                                            "Sarita Vihar",
+                                            widget.currentAddress["adline2"],
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize:
@@ -246,7 +248,13 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 getProportionateScreenHeight(3),
                                           ),
                                           Text(
-                                            "New Delhi" + " ," + "Delhi",
+                                            widget.currentAddress["city"] +
+                                                ", " +
+                                                widget.currentAddress["state"] +
+                                                " (" +
+                                                widget.currentAddress["pincode"]
+                                                    .toString() +
+                                                ")",
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize:
@@ -580,12 +588,18 @@ class _CheckoutCardState extends State<CheckoutCard> {
                   ),
                   SizedBox(
                     width: getProportionateScreenWidth(190),
-                    child: DefaultButton(
-                      text: "Check Out",
-                      press: () {
-                        _showDialog();
-                      },
-                    ),
+                    child: checkoutavailable
+                        ? DefaultButton(
+                            text: "Checkout",
+                            press: () {
+                              _showDialog();
+                            },
+                          )
+                        : DefaultButton(
+                            text: "Checkout",
+                            color: kSecondaryColor,
+                            press: () {},
+                          ),
                   ),
                 ],
               ),

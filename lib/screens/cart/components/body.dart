@@ -45,7 +45,6 @@ class BodyState extends State<Body> {
 
   Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     bool found = false;
@@ -65,7 +64,6 @@ class BodyState extends State<Body> {
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var product = await _services.getProduct(productId);
     var varlist = product.varients;
     int ind = 0;
@@ -228,7 +226,7 @@ class BodyState extends State<Body> {
         CheckoutCard(
           keys: keys,
           key: UniqueKey(),
-          currentAddress: widget.currentAddress,
+          currentAddress: currentAddress,
         )
       ],
     );
@@ -390,9 +388,7 @@ class _AddressHeaderState extends State<AddressHeader> {
                   }
                 });
               },
-              onMenuButtonToggle: (bool isToggle) {
-                print(isToggle);
-              },
+              onMenuButtonToggle: (bool isToggle) {},
             ),
           ),
           numberOfItems == 0
