@@ -261,7 +261,11 @@ class _CartCardState extends State<CartCard> {
                             "Cash on delivery is not available for this product",
                             style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
                           ),
-                    ]
+                          SizedBox(height: getProportionateScreenHeight(20),),
+                          Text("Swipe left to remove product or Tap to view Item",
+                            style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
+                          )
+                        ]
                         ),
                       ),
                     ),
