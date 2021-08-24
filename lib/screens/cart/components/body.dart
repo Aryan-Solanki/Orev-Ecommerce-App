@@ -30,12 +30,14 @@ class Body extends StatefulWidget {
     @required this.currentAddress,
   }) : super(key: key);
   @override
-  _BodyState createState() => _BodyState(keys: keys);
+  BodyState createState() =>
+      BodyState(keys: keys, currentAddress: currentAddress);
 }
 
-class _BodyState extends State<Body> {
+class BodyState extends State<Body> {
+  Map currentAddress;
   List<dynamic> keys;
-  _BodyState({@required this.keys});
+  BodyState({@required this.keys, this.currentAddress});
 
   List<Cart> CartList = [];
   double totalamt = 0.0;
@@ -43,7 +45,6 @@ class _BodyState extends State<Body> {
 
   Future<void> removeFromCart(varientid, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     bool found = false;
@@ -63,7 +64,6 @@ class _BodyState extends State<Body> {
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
-    print(user_key);
     var product = await _services.getProduct(productId);
     var varlist = product.varients;
     int ind = 0;
@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
     });
   }
 
-  Future<void> getAllCartProducts() async {
+  Future<void> getAllCartProducts(currentAddress) async {
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
         }
 
         Map returnMap = await _user_services.isAvailableOnUserLocation(
-            widget.currentAddress, product.sellerId);
+            currentAddress, product.sellerId);
 
         if (returnMap["deliverable"]) {
           CartList.add(
@@ -140,7 +140,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
-    getAllCartProducts();
+    getAllCartProducts(widget.currentAddress);
     super.initState();
   }
 
@@ -152,55 +152,20 @@ class _BodyState extends State<Body> {
       });
     }
 
-    // String selectedKey="Please Select";
-    // List<String> addresses = <String>[
-    //   'Aryan Solanki - 400-B,pocket-N,Sarita Vihar,New Delhi-110076',
-    //   'Medium',
-    //   'High',
-    // ];
-    //
-    // final Widget normalChildButton = Container(
-    //
-    //   height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
-    //   child: Padding(
-    //     padding: EdgeInsets.only(top: getProportionateScreenHeight(20),bottom: getProportionateScreenHeight(20),left: getProportionateScreenWidth(10),right: getProportionateScreenWidth(20) ),
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //
-    //       children: <Widget>[
-    //         Flexible(
-    //           child:RichText(
-    //             maxLines: 1,
-    //             overflow:TextOverflow.ellipsis,
-    //             text:  TextSpan(
-    //               style:  TextStyle(
-    //                 fontSize: getProportionateScreenWidth(15),
-    //                 color: Colors.black,
-    //               ),
-    //               children: <TextSpan>[
-    //                 new TextSpan(text: 'Aryan Solanki',style: TextStyle(fontWeight: FontWeight.bold)),
-    //                 new TextSpan(text: ' - 400-B,pocket-N,Sarita Vihar,New Delhi-110076'),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //         FittedBox(
-    //           fit: BoxFit.fill,
-    //           child: Icon(
-    //             Icons.arrow_drop_down,
-    //             // color: Colors.grey,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+    changeAddress(CurrentAddress) {
+      setState(() {
+        CartList = [];
+        currentAddress = CurrentAddress;
+        getAllCartProducts(CurrentAddress);
+      });
+    }
 
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
         AddressHeader(
           address: true,
+          notifyParent: changeAddress,
         ),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
@@ -261,23 +226,23 @@ class _BodyState extends State<Body> {
         CheckoutCard(
           keys: keys,
           key: UniqueKey(),
-          currentAddress: widget.currentAddress,
+          currentAddress: currentAddress,
         )
       ],
     );
   }
 }
 
-
-
 class AddressHeader extends StatefulWidget {
   final bool simplebutton;
   final bool address;
   final Function func;
+  final Function(Map) notifyParent;
   const AddressHeader({
     bool this.simplebutton = true,
     bool this.address = false,
     @required this.func,
+    @required this.notifyParent,
     Key key,
   }) : super(key: key);
 
@@ -286,8 +251,7 @@ class AddressHeader extends StatefulWidget {
 }
 
 class _AddressHeaderState extends State<AddressHeader> {
-  final GlobalKey<CartScreenState> myCartScreenState =
-  GlobalKey<CartScreenState>();
+  final GlobalKey<BodyState> myCartScreenState = GlobalKey<BodyState>();
 
   int numberOfItems = 0;
   int numberOfIAddress = 0;
@@ -332,7 +296,6 @@ class _AddressHeaderState extends State<AddressHeader> {
       getCartNumber();
       getuseraddress();
     }
-
     super.initState();
   }
 
@@ -356,13 +319,13 @@ class _AddressHeaderState extends State<AddressHeader> {
           children: <Widget>[
             Flexible(
                 child: Text(
-                  selectedKey,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(14),
-                  ),
-                )),
+              selectedKey,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(14),
+              ),
+            )),
             FittedBox(
               fit: BoxFit.fill,
               child: Icon(
@@ -384,7 +347,7 @@ class _AddressHeaderState extends State<AddressHeader> {
 
     return Padding(
       padding:
-      EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -408,8 +371,7 @@ class _AddressHeaderState extends State<AddressHeader> {
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(10)),
                 child: Text(value,
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(13)),
+                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
                     overflow: TextOverflow.ellipsis),
               ),
               toggledChild: Container(
@@ -422,60 +384,57 @@ class _AddressHeaderState extends State<AddressHeader> {
                   } else {
                     selectedKey = value;
                     CurrentAddress = addressMapFinal[selectedKey];
+                    widget.notifyParent(CurrentAddress);
                   }
                 });
-                var x = myCartScreenState.currentState.user_key;
-                print(x);
               },
-              onMenuButtonToggle: (bool isToggle) {
-                print(isToggle);
-              },
+              onMenuButtonToggle: (bool isToggle) {},
             ),
           ),
           numberOfItems == 0
               ? IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  Navigator.pushNamed(context, Address.routeName);
-                }
-              }
-            },
-          )
+                  svgSrc: "assets/icons/Cart Icon.svg",
+                  press: () {
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    } else {
+                      if (numberOfIAddress != 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CartScreen(
+                                      address: CurrentAddress,
+                                      key: myCartScreenState,
+                                    )));
+                        // Navigator.pushNamed(context, CartScreen.routeName);
+                      } else {
+                        Navigator.pushNamed(context, Address.routeName);
+                      }
+                    }
+                  },
+                )
               : IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  Navigator.pushNamed(context, Address.routeName);
-                }
-              }
-            },
-          ),
+                  svgSrc: "assets/icons/Cart Icon.svg",
+                  numOfitem: numberOfItems,
+                  press: () {
+                    if (authkey == '') {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    } else {
+                      if (numberOfIAddress != 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CartScreen(
+                                      address: CurrentAddress,
+                                      key: myCartScreenState,
+                                    )));
+                        // Navigator.pushNamed(context, CartScreen.routeName);
+                      } else {
+                        Navigator.pushNamed(context, Address.routeName);
+                      }
+                    }
+                  },
+                ),
           // IconBtnWithCounter(
           //   svgSrc: "assets/icons/Bell.svg",
           //   numOfitem: 3,
@@ -486,4 +445,3 @@ class _AddressHeaderState extends State<AddressHeader> {
     );
   }
 }
-
