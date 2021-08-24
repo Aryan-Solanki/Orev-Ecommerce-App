@@ -394,46 +394,12 @@ class _AddressHeaderState extends State<AddressHeader> {
           numberOfItems == 0
               ? IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
-                  press: () {
-                    if (authkey == '') {
-                      Navigator.pushNamed(context, SignInScreen.routeName);
-                    } else {
-                      if (numberOfIAddress != 0) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CartScreen(
-                                      address: CurrentAddress,
-                                      key: myCartScreenState,
-                                    )));
-                        // Navigator.pushNamed(context, CartScreen.routeName);
-                      } else {
-                        Navigator.pushNamed(context, Address.routeName);
-                      }
-                    }
-                  },
+                  press: () {},
                 )
               : IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
                   numOfitem: numberOfItems,
-                  press: () {
-                    if (authkey == '') {
-                      Navigator.pushNamed(context, SignInScreen.routeName);
-                    } else {
-                      if (numberOfIAddress != 0) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CartScreen(
-                                      address: CurrentAddress,
-                                      key: myCartScreenState,
-                                    )));
-                        // Navigator.pushNamed(context, CartScreen.routeName);
-                      } else {
-                        Navigator.pushNamed(context, Address.routeName);
-                      }
-                    }
-                  },
+                  press: () {},
                 ),
           // IconBtnWithCounter(
           //   svgSrc: "assets/icons/Bell.svg",

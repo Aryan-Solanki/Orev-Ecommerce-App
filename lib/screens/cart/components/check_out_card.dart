@@ -68,21 +68,23 @@ class _CheckoutCardState extends State<CheckoutCard> {
     await _services.cart.doc(user_key).update({'cartItems': keys});
   }
 
-  // reUpdateCartCost(){
-  //   totalamt = 0.0;
-  //   finalDeliveryCost = 0.0;
-  //   var sellerIdList = [];
-  //   for (var cart in SecondCartList) {
-  //     if (!sellerIdList.contains(cart.product.sellerId)) {
-  //       sellerIdList.add(cart.product.sellerId);
-  //       if (cart.deliverable) {
-  //         if (cart.distanceInMeters / 1000 > cart.freekms) {
-  //           finalDeliveryCost += cart.deliveryCharges;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  reUpdateCartCost() {
+    totalamt = 0.0;
+    finalDeliveryCost = 0.0;
+    var sellerIdList = [];
+    for (var cart in SecondCartList) {
+      totalamt += cart.variantPrice * cart.numOfItem;
+      if (!sellerIdList.contains(cart.product.sellerId)) {
+        sellerIdList.add(cart.product.sellerId);
+        if (cart.deliverable) {
+          if (cart.distanceInMeters / 1000 > cart.freekms) {
+            finalDeliveryCost += cart.deliveryCharges;
+          }
+        }
+      }
+    }
+    totalamt = totalamt + finalDeliveryCost;
+  }
 
   Future<void> getAllCartProducts(currentAddress) async {
     // setState(() {
@@ -110,29 +112,33 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
         if (returnMap["deliverable"]) {
           Cart c = new Cart(
-              product: product,
-              varientNumber: product.varients[xx].id,
-              numOfItem: k["qty"],
-              deliverable: true,
-              deliveryCharges: returnMap["deliveryCost"],
-              codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"].toDouble(),
-              distanceInMeters: returnMap["distanceInMeters"].toDouble(),
-              freekms: returnMap["freekms"].toDouble());
+            product: product,
+            varientNumber: product.varients[xx].id,
+            numOfItem: k["qty"],
+            deliverable: true,
+            deliveryCharges: returnMap["deliveryCost"],
+            codAvailable: returnMap["codAvailable"],
+            codCharges: returnMap["codCharges"].toDouble(),
+            distanceInMeters: returnMap["distanceInMeters"].toDouble(),
+            freekms: returnMap["freekms"].toDouble(),
+            variantPrice: product.varients[xx].price.toDouble(),
+          );
           CartList.add(c);
           SecondCartList.add(c);
           totalamt += product.varients[xx].price * k["qty"];
         } else {
           Cart c = new Cart(
-              product: product,
-              varientNumber: product.varients[xx].id,
-              numOfItem: k["qty"],
-              deliverable: false,
-              deliveryCharges: returnMap["deliveryCost"],
-              codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"].toDouble(),
-              distanceInMeters: returnMap["distanceInMeters"].toDouble(),
-              freekms: returnMap["freekms"].toDouble());
+            product: product,
+            varientNumber: product.varients[xx].id,
+            numOfItem: k["qty"],
+            deliverable: false,
+            deliveryCharges: returnMap["deliveryCost"],
+            codAvailable: returnMap["codAvailable"],
+            codCharges: returnMap["codCharges"].toDouble(),
+            distanceInMeters: returnMap["distanceInMeters"].toDouble(),
+            freekms: returnMap["freekms"].toDouble(),
+            variantPrice: product.varients[xx].price.toDouble(),
+          );
           CartList.add(c);
         }
       }
@@ -350,11 +356,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       (bool newValue) async {
                                                     orevwallet = newValue;
                                                     if (!orevwallet) {
-                                                      totalamt = 0.0;
-                                                      finalDeliveryCost = 0.0;
-                                                      await getAllCartProducts(
-                                                          widget
-                                                              .currentAddress);
+                                                      reUpdateCartCost();
                                                     }
                                                     setState(() {});
                                                   },
