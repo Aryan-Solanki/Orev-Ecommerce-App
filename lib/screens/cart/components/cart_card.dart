@@ -94,30 +94,29 @@ class _CartCardState extends State<CartCard> {
     getVarientNumber(widget.cart.varientNumber, widget.cart.product.id);
     super.initState();
   }
-  bool visible=false;
+
+  bool visible = false;
   @override
   Widget build(BuildContext context) {
     int quantity = widget.cart.numOfItem;
     return GestureDetector(
-      onTap: (){
-        if(visible==true){
+      onTap: () {
+        if (visible == true) {
           Navigator.pushNamed(
             context,
             DetailsScreen.routeName,
             arguments: ProductDetailsArguments(
                 product: widget.cart.product, varientCartNum: selectedVarient),
           );
-        }
-        else{
+        } else {
           setState(() {
-            visible=true;
+            visible = true;
           });
         }
       },
       child: Container(
         // padding: EdgeInsets.all(getProportionateScreenWidth(10)),
         child: Stack(
-
           children: [
             Container(
               width: double.maxFinite,
@@ -147,7 +146,9 @@ class _CartCardState extends State<CartCard> {
                             Text(
                               widget.cart.product.title,
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: widget.errorvalue != ""
+                                      ? kSecondaryColor
+                                      : Colors.black,
                                   fontSize: getProportionateScreenWidth(15)),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -164,7 +165,9 @@ class _CartCardState extends State<CartCard> {
                                     "\₹${widget.cart.product.varients[selectedVarient].price}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black,
+                                    color: widget.errorvalue != ""
+                                        ? kSecondaryColor
+                                        : Colors.black,
                                     fontSize: getProportionateScreenWidth(18)),
                                 children: [
                                   TextSpan(
@@ -178,7 +181,23 @@ class _CartCardState extends State<CartCard> {
                               ),
                             ),
                             SizedBox(height: 3),
-                            widget.errorvalue=="not_deliverable"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11)),):widget.errorvalue=="no_cod"?Text("Cash on delivery is not available for this product",style: TextStyle(color: Colors.red,fontSize: getProportionateScreenWidth(11))):Center(),
+                            widget.errorvalue == "not_deliverable"
+                                ? Text(
+                                    "This product is currently not available at your location",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize:
+                                            getProportionateScreenWidth(11)),
+                                  )
+                                : widget.errorvalue == "no_cod"
+                                    ? Text(
+                                        "Cash on delivery is not available for this product",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize:
+                                                getProportionateScreenWidth(
+                                                    11)))
+                                    : Center(),
                           ],
                         ),
                       )
@@ -194,7 +213,12 @@ class _CartCardState extends State<CartCard> {
                             width: 23.0,
                             height: 23.0,
                             colour: Color(0xFFB0B0B0).withOpacity(0.2),
-                            icon: Icons.remove,
+                            icon: Icon(
+                              Icons.remove,
+                              color: widget.errorvalue != ""
+                                  ? kSecondaryColor
+                                  : Colors.black,
+                            ),
                             press: () {
                               if (quantity != 1) {
                                 setState(() {
@@ -210,7 +234,9 @@ class _CartCardState extends State<CartCard> {
                           Text(
                             "x" + quantity.toString(),
                             style: TextStyle(
-                                color: Colors.black,
+                                color: widget.errorvalue != ""
+                                    ? kSecondaryColor
+                                    : Colors.black,
                                 fontSize: getProportionateScreenHeight(20)),
                           ),
                           SizedBox(width: getProportionateScreenWidth(7)),
@@ -218,7 +244,12 @@ class _CartCardState extends State<CartCard> {
                             width: 23.0,
                             height: 23.0,
                             colour: Color(0xFFB0B0B0).withOpacity(0.2),
-                            icon: Icons.add,
+                            icon: Icon(
+                              Icons.add,
+                              color: widget.errorvalue != ""
+                                  ? kSecondaryColor
+                                  : Colors.black,
+                            ),
                             showShadow: true,
                             press: () {
                               setState(() {
@@ -235,7 +266,9 @@ class _CartCardState extends State<CartCard> {
                               "\₹${widget.cart.product.varients[selectedVarient].price * quantity}",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: kPrimaryColor,
+                              color: widget.errorvalue != ""
+                                  ? kSecondaryColor
+                                  : kPrimaryColor,
                               fontSize: getProportionateScreenWidth(18)),
                         ),
                       ),
@@ -244,34 +277,58 @@ class _CartCardState extends State<CartCard> {
                 ],
               ),
             ),
-            visible==false?widget.errorvalue=="not_deliverable" || widget.errorvalue=="no_cod" ?Positioned.fill(
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
-                  child: Container(
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                    child: FittedBox(
-                      child: Column(
-                        children: [
-                          widget.errorvalue=="not_deliverable"?Text(
-                            "This product is not available in the selected location",
-                            style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
-                          ):Text(
-                            "Cash on delivery is not available for this product",
-                            style: TextStyle(color: Colors.black,fontSize: getProportionateScreenWidth(18),fontWeight: FontWeight.w900),
+            visible == false
+                ? widget.errorvalue == "not_deliverable" ||
+                        widget.errorvalue == "no_cod"
+                    ? Positioned.fill(
+                        child: ClipRect(
+                          child: BackdropFilter(
+                            filter:
+                                ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
+                            child: Container(
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.0)),
+                              child: FittedBox(
+                                child: Column(children: [
+                                  widget.errorvalue == "not_deliverable"
+                                      ? Text(
+                                          "This product is not available in the selected location",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      18),
+                                              fontWeight: FontWeight.w900),
+                                        )
+                                      : Text(
+                                          "Cash on delivery is not available for this product",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      18),
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(20),
+                                  ),
+                                  Text(
+                                    "Swipe left to remove product or Tap to view Item",
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize:
+                                            getProportionateScreenWidth(15),
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
+                              ),
+                            ),
                           ),
-                          SizedBox(height: getProportionateScreenHeight(20),),
-                          Text("Swipe left to remove product or Tap to view Item",
-                            style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
-                          )
-                        ]
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-            ):Center():Center(),
+                      )
+                    : Center()
+                : Center(),
           ],
         ),
       ),

@@ -8,12 +8,12 @@ class RoundedIconBtn extends StatelessWidget {
     @required this.icon,
     @required this.press,
     this.showShadow = false,
-    this.colour=Colors.white,
-    this.width=40.0,
-    this.height=40.0,
+    this.colour = Colors.white,
+    this.width = 40.0,
+    this.height = 40.0,
   }) : super(key: key);
 
-  final IconData icon;
+  final Icon icon;
   final GestureTapCancelCallback press;
   final bool showShadow;
   final colour;
@@ -41,7 +41,7 @@ class RoundedIconBtn extends StatelessWidget {
         color: colour,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         onPressed: press,
-        child: Icon(icon),
+        child: icon,
       ),
     );
   }

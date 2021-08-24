@@ -28,6 +28,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
   String coupon = "";
   List<Cart> CartList = [];
   double totalamt = 0.0;
+  double totaldeliveryamt = 0.0;
   bool checkoutavailable = false;
 
   Future<List> getVarientNumber(id, productId) async {

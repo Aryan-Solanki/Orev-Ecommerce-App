@@ -11,6 +11,7 @@ class Cart {
   final bool codAvailable;
   final double deliveryCharges;
   final double codCharges;
+  final double distanceInMeters;
 
   Cart({
     @required this.product,
@@ -20,6 +21,7 @@ class Cart {
     @required this.codAvailable,
     @required this.deliveryCharges,
     @required this.codCharges,
+    @required this.distanceInMeters,
   });
 }
 

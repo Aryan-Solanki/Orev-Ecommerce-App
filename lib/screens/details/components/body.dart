@@ -33,8 +33,6 @@ import 'package:direct_select_flutter/direct_select_item.dart';
 import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 
-
-
 import 'package:twilio_flutter/twilio_flutter.dart';
 
 class Body extends StatefulWidget {
@@ -179,8 +177,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-
-    bool cod_available=false;
+    bool cod_available = false;
     List<dynamic> addressmap = [];
 
     updateWalletBalance(newwalletbalance, orderId, timestamp) async {
@@ -1053,72 +1050,83 @@ class _BodyState extends State<Body> {
                                       height: getProportionateScreenHeight(20),
                                     ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         deliverable == true
-                                            ?Center()
+                                            ? Center()
                                             : Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "This product is not availabe in the selected location",
-                                            textAlign:TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize:
-                                              getProportionateScreenWidth(
-                                                  13),
-                                              color: Colors.red,
-                                            ),
-                                          ),
-
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "This product is not availabe in the selected location",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        getProportionateScreenWidth(
+                                                            13),
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                        SizedBox(
+                                          height:
+                                              getProportionateScreenHeight(5),
                                         ),
-                                        SizedBox(height: getProportionateScreenHeight(5),),
-                                        cod_available==true?Center():
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "Cash On Delivery is not available for this product",
-                                            textAlign:TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize:
-                                              getProportionateScreenWidth(
-                                                  13),
-                                              color: Colors.red,
-                                            ),
-                                          ),
+                                        cod_available == true
+                                            ? Center()
+                                            : Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Cash On Delivery is not available for this product",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        getProportionateScreenWidth(
+                                                            13),
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                        SizedBox(
+                                          height:
+                                              getProportionateScreenHeight(10),
                                         ),
-                                        SizedBox(height: getProportionateScreenHeight(10),),
                                       ],
                                     ),
-                                    deliverable == true?
-                                        cod_available==true? DefaultButton(
-                                            textheight: 15,
-                                            colour: Colors.white,
-                                            height: 70,
-                                            color: kPrimaryColor2,
-                                            text: orevwallet == true
-                                                ? totalCost == 0.0
-                                                    ? "Place Order"
-                                                    : "Cash on Delivery (COD)"
-                                                : "Cash on Delivery (COD)",
-                                            press: () {
-                                              // Navigator.pop(context);
-                                              var usedWalletMoney =
-                                                  walletbalance -
-                                                      newwalletbalance;
-                                              _showCODDialog(
-                                                  totalCost,
-                                                  finalDeliveryCost,
-                                                  usedWalletMoney);
-                                            },
-                                          ):Center()
-                                        : cod_available==true?DefaultButton(
-                                            textheight: 15,
-                                            colour: Colors.white,
-                                            height: 70,
-                                            color: kSecondaryColor,
-                                            text: "Cash on Delivery (COD)",
-                                            press: () {},
-                                          ):Center(),
+                                    deliverable == true
+                                        ? cod_available == true
+                                            ? DefaultButton(
+                                                textheight: 15,
+                                                colour: Colors.white,
+                                                height: 70,
+                                                color: kPrimaryColor2,
+                                                text: orevwallet == true
+                                                    ? totalCost == 0.0
+                                                        ? "Place Order"
+                                                        : "Cash on Delivery (COD)"
+                                                    : "Cash on Delivery (COD)",
+                                                press: () {
+                                                  // Navigator.pop(context);
+                                                  var usedWalletMoney =
+                                                      walletbalance -
+                                                          newwalletbalance;
+                                                  _showCODDialog(
+                                                      totalCost,
+                                                      finalDeliveryCost,
+                                                      usedWalletMoney);
+                                                },
+                                              )
+                                            : Center()
+                                        : cod_available == true
+                                            ? DefaultButton(
+                                                textheight: 15,
+                                                colour: Colors.white,
+                                                height: 70,
+                                                color: kSecondaryColor,
+                                                text: "Cash on Delivery (COD)",
+                                                press: () {},
+                                              )
+                                            : Center(),
                                     SizedBox(
                                       height: getProportionateScreenHeight(10),
                                     ),
@@ -1318,7 +1326,10 @@ class _BodyState extends State<Body> {
                                                 getProportionateScreenWidth(15),
                                           ),
                                           RoundedIconBtn(
-                                            icon: Icons.remove,
+                                            icon: Icon(
+                                              Icons.remove,
+                                              color: Colors.black,
+                                            ),
                                             press: () {
                                               if (quantity != 1) {
                                                 setState(() {
@@ -1346,7 +1357,10 @@ class _BodyState extends State<Body> {
                                                   getProportionateScreenWidth(
                                                       20)),
                                           RoundedIconBtn(
-                                            icon: Icons.add,
+                                            icon: Icon(
+                                              Icons.add,
+                                              color: Colors.black,
+                                            ),
                                             showShadow: true,
                                             press: () {
                                               if (quantity <
