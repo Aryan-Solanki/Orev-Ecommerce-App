@@ -31,6 +31,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
   double totalamt = 0.0;
   double totaldeliveryamt = 0.0;
   bool checkoutavailable = false;
+  bool cod_available = true;
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -144,7 +145,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
       }
     }
     var sellerIdList = [];
-    for (var cart in CartList) {
+    for (var cart in SecondCartList) {
+      if (!cart.codAvailable) {
+        cod_available = false;
+      }
       if (!sellerIdList.contains(cart.product.sellerId)) {
         sellerIdList.add(cart.product.sellerId);
         if (cart.deliverable) {
@@ -183,7 +187,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
   double walletbalance = 0.0;
   double newwalletbalance;
   double finalDeliveryCost = 0.0;
-  bool cod_available = false;
 
   void _showDialog() {
     slideDialog.showSlideDialog(
@@ -520,26 +523,62 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  DefaultButton(
-                                    textheight: 15,
-                                    colour: Colors.white,
-                                    height: 70,
-                                    color: kPrimaryColor2,
-                                    text: orevwallet == true
-                                        ? totalamt == 0.0
-                                            ? "Place Order"
-                                            : "Cash on Delivery (COD)"
-                                        : "Cash on Delivery (COD)",
-                                    press: () {
-                                      // Navigator.pop(context);
-                                      var usedWalletMoney =
-                                          walletbalance - newwalletbalance;
-                                      // _showCODDialog(
-                                      //     totalCost,
-                                      //     finalDeliveryCost,
-                                      //     usedWalletMoney);
-                                    },
-                                  ),
+                                  cod_available
+                                      ? orevwallet == true
+                                          ? totalamt == 0.0
+                                              ? DefaultButton(
+                                                  textheight: 15,
+                                                  colour: Colors.white,
+                                                  height: 70,
+                                                  color: kPrimaryColor2,
+                                                  text: "Place Order",
+                                                  press: () {
+                                                    // Navigator.pop(context);
+                                                    var usedWalletMoney =
+                                                        walletbalance -
+                                                            newwalletbalance;
+                                                    // _showCODDialog(
+                                                    //     totalCost,
+                                                    //     finalDeliveryCost,
+                                                    //     usedWalletMoney);
+                                                  },
+                                                )
+                                              : DefaultButton(
+                                                  textheight: 15,
+                                                  colour: Colors.white,
+                                                  height: 70,
+                                                  color: kPrimaryColor2,
+                                                  text:
+                                                      "Cash on Delivery (COD)",
+                                                  press: () {
+                                                    // Navigator.pop(context);
+                                                    var usedWalletMoney =
+                                                        walletbalance -
+                                                            newwalletbalance;
+                                                    // _showCODDialog(
+                                                    //     totalCost,
+                                                    //     finalDeliveryCost,
+                                                    //     usedWalletMoney);
+                                                  },
+                                                )
+                                          : DefaultButton(
+                                              textheight: 15,
+                                              colour: Colors.white,
+                                              height: 70,
+                                              color: kPrimaryColor2,
+                                              text: "Cash on Delivery (COD)",
+                                              press: () {
+                                                // Navigator.pop(context);
+                                                var usedWalletMoney =
+                                                    walletbalance -
+                                                        newwalletbalance;
+                                                // _showCODDialog(
+                                                //     totalCost,
+                                                //     finalDeliveryCost,
+                                                //     usedWalletMoney);
+                                              },
+                                            )
+                                      : Center(),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
