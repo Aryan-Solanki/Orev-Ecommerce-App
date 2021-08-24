@@ -88,7 +88,8 @@ class UserServices {
       "codAvailable": codAvailable,
       "deliveryCost": finalDeliveryCost,
       "codCharges": codCharge,
-      "freekms": freekms
+      "freekms": freekms,
+      "distanceInMeters": distanceInMeters
     };
 
     return returnValue;
