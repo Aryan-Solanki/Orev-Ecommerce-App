@@ -27,6 +27,7 @@ class CheckoutCard extends StatefulWidget {
 class _CheckoutCardState extends State<CheckoutCard> {
   String coupon = "";
   List<Cart> CartList = [];
+  List<Cart> SecondCartList = [];
   double totalamt = 0.0;
   double totaldeliveryamt = 0.0;
   bool checkoutavailable = false;
@@ -67,6 +68,22 @@ class _CheckoutCardState extends State<CheckoutCard> {
     await _services.cart.doc(user_key).update({'cartItems': keys});
   }
 
+  // reUpdateCartCost(){
+  //   totalamt = 0.0;
+  //   finalDeliveryCost = 0.0;
+  //   var sellerIdList = [];
+  //   for (var cart in SecondCartList) {
+  //     if (!sellerIdList.contains(cart.product.sellerId)) {
+  //       sellerIdList.add(cart.product.sellerId);
+  //       if (cart.deliverable) {
+  //         if (cart.distanceInMeters / 1000 > cart.freekms) {
+  //           finalDeliveryCost += cart.deliveryCharges;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
   Future<void> getAllCartProducts(currentAddress) async {
     // setState(() {
     //   checkoutavailable = false;
@@ -103,6 +120,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
               distanceInMeters: returnMap["distanceInMeters"].toDouble(),
               freekms: returnMap["freekms"].toDouble());
           CartList.add(c);
+          SecondCartList.add(c);
           totalamt += product.varients[xx].price * k["qty"];
         } else {
           Cart c = new Cart(
@@ -157,7 +175,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   bool orevwallet = false;
   double walletbalance = 0.0;
-  double totalCost = 1000;
   double newwalletbalance;
   double finalDeliveryCost = 0.0;
   bool cod_available = false;
@@ -332,6 +349,13 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   onChanged:
                                                       (bool newValue) async {
                                                     orevwallet = newValue;
+                                                    if (!orevwallet) {
+                                                      totalamt = 0.0;
+                                                      finalDeliveryCost = 0.0;
+                                                      await getAllCartProducts(
+                                                          widget
+                                                              .currentAddress);
+                                                    }
                                                     setState(() {});
                                                   },
                                                 ),
@@ -348,7 +372,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       color: kPrimaryColor),
                                                 )
                                               : Text(
-                                                  totalCost >= walletbalance
+                                                  totalamt >= walletbalance
                                                       ? "Balance: ₹${newwalletbalance = 0.0}"
                                                       : "Balance: ₹${newwalletbalance = (walletbalance - (totalamt))}",
                                                   style: TextStyle(
@@ -405,10 +429,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                         20)),
                                                           )
                                                         : Text(
-                                                            totalCost >
+                                                            totalamt >
                                                                     walletbalance
-                                                                ? "\₹${totalCost = ((totalamt) - walletbalance)}"
-                                                                : "\₹${totalCost = 0.0}",
+                                                                ? "\₹${totalamt = ((totalamt) - walletbalance)}"
+                                                                : "\₹${totalamt = 0.0}",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
@@ -452,7 +476,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                         13)),
                                                           ),
                                                           Text(
-                                                            totalCost >=
+                                                            totalamt >=
                                                                     newwalletbalance
                                                                 ? "( - Orev Wallet: ${walletbalance - newwalletbalance})"
                                                                 : "( - Orev Wallet: ${walletbalance - newwalletbalance})",
@@ -519,23 +543,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   ),
                                   orevwallet == true
                                       ? totalamt == 0.0
-                                          ? DefaultButton(
-                                              textheight: 15,
-                                              colour: Colors.white,
-                                              height: 70,
-                                              color: kPrimaryColor2,
-                                              text: "Place Order",
-                                              press: () {
-                                                // Navigator.pop(context);
-                                                var usedWalletMoney =
-                                                    walletbalance -
-                                                        newwalletbalance;
-                                                // _showCODDialog(
-                                                //     totalCost,
-                                                //     finalDeliveryCost,
-                                                //     usedWalletMoney);
-                                              },
-                                            )
+                                          ? Center()
                                           : DefaultButton(
                                               textheight: 15,
                                               colour: Colors.white,
