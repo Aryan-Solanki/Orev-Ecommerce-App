@@ -312,6 +312,11 @@ class _CartCardState extends State<CartCard> {
                               ),
                             ),
                           ),
+                          SizedBox(height: getProportionateScreenHeight(20),),
+                          Text("Swipe left to remove product or Tap to view Item",
+                            style: TextStyle(color: kPrimaryColor,fontSize: getProportionateScreenWidth(15),fontWeight: FontWeight.bold),
+                          )
+                        ]
                         ),
                       )
                     : Center()
