@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:orev/components/coustom_bottom_nav_bar.dart';
+import 'package:orev/enums.dart';
+import 'package:orev/models/Product.dart';
+
+import 'components/body.dart';
+
+class OrderDetailsMultiple extends StatefulWidget {
+  const OrderDetailsMultiple({
+    Key key,
+    @required this.product,
+    @required this.currentVarient,
+    @required this.quantity,
+    @required this.selectedaddress,
+    @required this.totalCost,
+    @required this.deliveryCost,
+    @required this.newwalletbalance,
+    @required this.oldwalletbalance,
+  }) : super(key: key);
+
+  final Product product;
+  final int currentVarient;
+  final int quantity;
+  final double totalCost;
+  final double deliveryCost;
+  final double newwalletbalance;
+  final double oldwalletbalance;
+  final Map<String, dynamic> selectedaddress;
+
+  static String routeName = "/order_details_multiple";
+  @override
+  _OrderDetailsMultipleState createState() => _OrderDetailsMultipleState();
+}
+
+class _OrderDetailsMultipleState extends State<OrderDetailsMultiple> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Body(
+          key: UniqueKey(),
+          product: widget.product,
+          currentVarient: widget.currentVarient,
+          quantity: widget.quantity,
+          selectedaddress: widget.selectedaddress,
+          totalCost: widget.totalCost,
+          deliveryCost: widget.deliveryCost,
+          newwalletbalance: widget.newwalletbalance,
+          oldwalletbalance: widget.oldwalletbalance,
+        ),
+      ),
+    );
+  }
+
+}

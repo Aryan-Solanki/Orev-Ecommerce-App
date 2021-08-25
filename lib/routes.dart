@@ -13,6 +13,7 @@ import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/login_success/login_success_screen.dart';
 import 'package:orev/screens/my_account/my_account.dart';
 import 'package:orev/screens/offer_and_category_screen/offerzone_and_category.dart';
+import 'package:orev/screens/order_details_multiple/order_details_multiple.dart';
 import 'package:orev/screens/otp/otp_screen.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/profile/profile_screen.dart';
@@ -45,6 +46,7 @@ final Map<String, WidgetBuilder> routes = {
   SeeMore.routeName: (context) => SeeMore(),//uidone
   Address.routeName: (context) => Address(),
   OrderDetails.routeName: (context) => OrderDetails(),//uidone
+  OrderDetailsMultiple.routeName: (context) => OrderDetailsMultiple(),//uidone
   YourOrder.routeName: (context) => YourOrder(),//uidone
   YourOrderDetail.routeName: (context) => YourOrderDetail(),//uidone
   Wallet.routeName: (context) => Wallet(),//uidone
