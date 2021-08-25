@@ -1,75 +1,75 @@
-
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
+import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/services/product_services.dart';
 
 import '../../../size_config.dart';
 
 class OrderInfo extends StatefulWidget {
-  const OrderInfo({
-    Key key,
-    @required this.product,
-    @required this.currentVarient,
-    @required this.quantity,
-    @required this.selectedaddress
-  }) : super(key: key);
-  final Product product;
-  final int currentVarient;
-  final int quantity;
+  const OrderInfo(
+      {Key key,
+      @required this.CartList,
+      @required this.selectedaddress,
+      @required this.onlinepayment})
+      : super(key: key);
+  final List<Cart> CartList;
+  final bool onlinepayment;
   final Map<String, dynamic> selectedaddress;
 
   @override
   _OrderInfoState createState() => _OrderInfoState();
 }
 
-bool applied_coupon=false;
-String soldby = "Aryan Tatva Sellers";
 class _OrderInfoState extends State<OrderInfo> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(getProportionateScreenWidth(10)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.black,)
-      ),
+          border: Border.all(
+            color: Colors.black,
+          )),
       child: Column(
         children: [
-          ListView.builder
-            (
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-              itemCount: 5,
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: widget.CartList.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Column(
                   children: [
                     GFAccordion(
                       expandedTitleBackgroundColor: Colors.white,
-                      contentPadding: EdgeInsets.only(bottom: 0,top: 0),
+                      contentPadding: EdgeInsets.only(bottom: 0, top: 0),
                       titlePadding: EdgeInsets.all(0),
                       titleChild: Row(
                         children: [
                           Container(
                             height: getProportionateScreenHeight(80),
                             width: getProportionateScreenWidth(80),
-                            child: Image.network(widget.product.varients[widget.currentVarient].images[0]),
+                            child: Image.network(widget
+                                .CartList[index]
+                                .product
+                                .varients[
+                                    widget.CartList[index].actualVarientNumber]
+                                .images[0]),
                           ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.product.title,
+                                  widget.CartList[index].product.title,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: getProportionateScreenWidth(15)),
+                                      fontSize:
+                                          getProportionateScreenWidth(15)),
                                 ),
-
                               ],
                             ),
                           ),
-
                         ],
                       ),
 
@@ -82,54 +82,46 @@ class _OrderInfoState extends State<OrderInfo> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Sold by: $soldby",
+                                "Variant: ${widget.CartList[index].product.varients[widget.CartList[index].actualVarientNumber].title}",
                                 style: TextStyle(
                                     fontSize: getProportionateScreenWidth(12)),
                               ),
                               Text(
-                                "Variant: ${widget.product.varients[widget.currentVarient].title}",
+                                "Quantity: ${widget.CartList[index].numOfItem}",
                                 style: TextStyle(
                                     fontSize: getProportionateScreenWidth(12)),
                               ),
                               Text(
-                                "Quantity: ${widget.quantity}",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12)),
-                              ),
-                              Text(
-                                "${widget.product.detail}",
+                                "${widget.CartList[index].product.detail}",
                                 style: TextStyle(
                                     fontSize: getProportionateScreenWidth(12)),
                               )
-
                             ],
                           ),
                         ),
                       ),
-
                     ),
                     Divider(
                       color: Colors.black,
                     ),
                   ],
                 );
-              }
-          ),
+              }),
           GFAccordion(
             expandedTitleBackgroundColor: Colors.white,
-            contentPadding: EdgeInsets.only(bottom: 0,top: 0),
+            contentPadding: EdgeInsets.only(bottom: 0, top: 0),
             titlePadding: EdgeInsets.all(0),
             titleChild: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Deliver to",style:
-                TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15))),
-                Text(widget.selectedaddress["name"],style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15))),
-
+                Text("Deliver to",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(15))),
+                Text(widget.selectedaddress["name"],
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(15))),
               ],
             ),
             contentChild: Padding(
@@ -137,55 +129,59 @@ class _OrderInfoState extends State<OrderInfo> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.selectedaddress["adline1"],style: TextStyle(
-                      fontSize: getProportionateScreenWidth(12))),
-                  Text(widget.selectedaddress["adline2"],style: TextStyle(
-                      fontSize: getProportionateScreenWidth(12))),
-                  Text(widget.selectedaddress["city"],style: TextStyle(
-                      fontSize: getProportionateScreenWidth(12))),
-                  Text(widget.selectedaddress["state"],style: TextStyle(
-                      fontSize: getProportionateScreenWidth(12))),
+                  Text(widget.selectedaddress["adline1"],
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                  Text(widget.selectedaddress["adline2"],
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                  Text(widget.selectedaddress["city"],
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                  Text(widget.selectedaddress["state"],
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(12))),
                 ],
               ),
             ),
 
-
             // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
-
           ),
           Divider(
             color: Colors.black,
           ),
           GFAccordion(
             expandedTitleBackgroundColor: Colors.white,
-            contentPadding: EdgeInsets.only(bottom: 0,top: 0),
+            contentPadding: EdgeInsets.only(bottom: 0, top: 0),
             titlePadding: EdgeInsets.all(0),
             titleChild: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Pay with",style:
-                TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15))),
-                Text("Online Payment",style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(15))),
-
+                Text("Pay with",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(15))),
+                Text(
+                    widget.onlinepayment
+                        ? "Online Payment"
+                        : "Cash on Delivery (COD)",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenWidth(15))),
               ],
             ),
             contentChild: Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Text("We work hard to protect your security and privacy. Our payment security system encrypts your information during transmission. We don’t share your credit card details with third-party sellers, and we don’t sell your information to others. ",
-              style: TextStyle(fontSize:getProportionateScreenWidth(12)),),
+              child: Text(
+                "We work hard to protect your security and privacy. Our payment security system encrypts your information during transmission. We don’t share your credit card details with third-party sellers, and we don’t sell your information to others. ",
+                style: TextStyle(fontSize: getProportionateScreenWidth(12)),
+              ),
             ),
 
-
             // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
-
           )
         ],
       ),
     );
   }
 }
-

@@ -111,6 +111,7 @@ class BodyState extends State<Body> {
             new Cart(
               product: product,
               varientNumber: product.varients[xx].id,
+              actualVarientNumber: xx,
               numOfItem: k["qty"],
               deliverable: true,
               deliveryCharges: returnMap["deliveryCost"],
@@ -124,6 +125,7 @@ class BodyState extends State<Body> {
             new Cart(
               product: product,
               varientNumber: product.varients[xx].id,
+              actualVarientNumber: xx,
               numOfItem: k["qty"],
               deliverable: false,
               deliveryCharges: returnMap["deliveryCost"],

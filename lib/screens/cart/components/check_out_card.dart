@@ -5,6 +5,7 @@ import 'package:orev/components/default_button.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/order_details_multiple/order_details_multiple.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 
@@ -32,6 +33,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
   double totaldeliveryamt = 0.0;
   bool checkoutavailable = false;
   bool cod_available = true;
+  double codSellerCost = 0.0;
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -72,7 +74,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
   reUpdateCartCost() {
     totalamt = 0.0;
     finalDeliveryCost = 0.0;
+    codSellerCost = 0.0;
     var sellerIdList = [];
+    ProductServices _services = new ProductServices();
     for (var cart in SecondCartList) {
       totalamt += cart.variantPrice * cart.numOfItem;
       if (!sellerIdList.contains(cart.product.sellerId)) {
@@ -81,6 +85,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
           if (cart.distanceInMeters / 1000 > cart.freekms) {
             finalDeliveryCost += cart.deliveryCharges;
           }
+          // codSellerCost +=
+          //     await _services.getSellerCODcost(cart.product.sellerId);
         }
       }
     }
@@ -116,6 +122,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
             product: product,
             varientNumber: product.varients[xx].id,
             numOfItem: k["qty"],
+            actualVarientNumber: xx,
             deliverable: true,
             deliveryCharges: returnMap["deliveryCost"],
             codAvailable: returnMap["codAvailable"],
@@ -131,6 +138,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
           Cart c = new Cart(
             product: product,
             varientNumber: product.varients[xx].id,
+            actualVarientNumber: xx,
             numOfItem: k["qty"],
             deliverable: false,
             deliveryCharges: returnMap["deliveryCost"],
@@ -144,6 +152,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
         }
       }
     }
+    ProductServices _services = new ProductServices();
     var sellerIdList = [];
     for (var cart in SecondCartList) {
       if (!cart.codAvailable) {
@@ -155,6 +164,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
           if (cart.distanceInMeters / 1000 > cart.freekms) {
             finalDeliveryCost += cart.deliveryCharges;
           }
+          codSellerCost +=
+              await _services.getSellerCODcost(cart.product.sellerId);
         }
       }
     }
@@ -185,7 +196,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   bool orevwallet = false;
   double walletbalance = 0.0;
-  double newwalletbalance;
+  double newwalletbalance = 0.0;
   double finalDeliveryCost = 0.0;
 
   void _showDialog() {
@@ -537,6 +548,33 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                     var usedWalletMoney =
                                                         walletbalance -
                                                             newwalletbalance;
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => OrderDetailsMultiple(
+                                                              key: UniqueKey(),
+                                                              CartList:
+                                                                  CartList,
+                                                              orevWalletMoneyUsed:
+                                                                  usedWalletMoney,
+                                                              selectedaddress:
+                                                                  widget
+                                                                      .currentAddress,
+                                                              totalCost:
+                                                                  totalamt,
+                                                              deliveryCost:
+                                                                  finalDeliveryCost,
+                                                              newwalletbalance:
+                                                                  newwalletbalance,
+                                                              onlinePayment:
+                                                                  true,
+                                                              codSellerCost:
+                                                                  codSellerCost,
+                                                              oldwalletbalance:
+                                                                  walletbalance)),
+                                                    );
+
                                                     // _showCODDialog(
                                                     //     totalCost,
                                                     //     finalDeliveryCost,
@@ -555,6 +593,33 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                     var usedWalletMoney =
                                                         walletbalance -
                                                             newwalletbalance;
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => OrderDetailsMultiple(
+                                                              key: UniqueKey(),
+                                                              CartList:
+                                                                  CartList,
+                                                              orevWalletMoneyUsed:
+                                                                  usedWalletMoney,
+                                                              selectedaddress:
+                                                                  widget
+                                                                      .currentAddress,
+                                                              totalCost:
+                                                                  totalamt,
+                                                              deliveryCost:
+                                                                  finalDeliveryCost,
+                                                              newwalletbalance:
+                                                                  newwalletbalance,
+                                                              onlinePayment:
+                                                                  false,
+                                                              codSellerCost:
+                                                                  codSellerCost,
+                                                              oldwalletbalance:
+                                                                  walletbalance)),
+                                                    );
+
                                                     // _showCODDialog(
                                                     //     totalCost,
                                                     //     finalDeliveryCost,
@@ -569,9 +634,30 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               text: "Cash on Delivery (COD)",
                                               press: () {
                                                 // Navigator.pop(context);
-                                                var usedWalletMoney =
-                                                    walletbalance -
-                                                        newwalletbalance;
+                                                var usedWalletMoney = 0.0;
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => OrderDetailsMultiple(
+                                                          key: UniqueKey(),
+                                                          CartList: CartList,
+                                                          orevWalletMoneyUsed:
+                                                              usedWalletMoney,
+                                                          selectedaddress: widget
+                                                              .currentAddress,
+                                                          totalCost: totalamt,
+                                                          deliveryCost:
+                                                              finalDeliveryCost,
+                                                          newwalletbalance:
+                                                              newwalletbalance,
+                                                          onlinePayment: false,
+                                                          codSellerCost:
+                                                              codSellerCost,
+                                                          oldwalletbalance:
+                                                              walletbalance)),
+                                                );
+
                                                 // _showCODDialog(
                                                 //     totalCost,
                                                 //     finalDeliveryCost,
@@ -591,6 +677,33 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                     var usedWalletMoney =
                                                         walletbalance -
                                                             newwalletbalance;
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => OrderDetailsMultiple(
+                                                              key: UniqueKey(),
+                                                              CartList:
+                                                                  CartList,
+                                                              orevWalletMoneyUsed:
+                                                                  usedWalletMoney,
+                                                              selectedaddress:
+                                                                  widget
+                                                                      .currentAddress,
+                                                              totalCost:
+                                                                  totalamt,
+                                                              deliveryCost:
+                                                                  finalDeliveryCost,
+                                                              newwalletbalance:
+                                                                  newwalletbalance,
+                                                              onlinePayment:
+                                                                  true,
+                                                              codSellerCost:
+                                                                  codSellerCost,
+                                                              oldwalletbalance:
+                                                                  walletbalance)),
+                                                    );
+
                                                     // _showCODDialog(
                                                     //     totalCost,
                                                     //     finalDeliveryCost,
@@ -612,6 +725,29 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               color: kPrimaryColor,
                                               text: "Pay Online",
                                               press: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          OrderDetailsMultiple(
+                                                              key: UniqueKey(),
+                                                              CartList:
+                                                                  CartList,
+                                                              selectedaddress:
+                                                                  widget
+                                                                      .currentAddress,
+                                                              totalCost:
+                                                                  totalamt,
+                                                              deliveryCost:
+                                                                  finalDeliveryCost,
+                                                              newwalletbalance:
+                                                                  newwalletbalance,
+                                                              onlinePayment:
+                                                                  true,
+                                                              oldwalletbalance:
+                                                                  walletbalance)),
+                                                );
+
                                                 // Navigator.push(
                                                 //   context,
                                                 //   MaterialPageRoute(

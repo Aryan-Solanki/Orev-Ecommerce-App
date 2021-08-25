@@ -64,13 +64,13 @@ class _BodyState extends State<Body> {
     setState(() {
       loading = true;
     });
-    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+    String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
 
     String callBackUrl = (testing
             ? 'https://securegw-stage.paytm.in'
             : 'https://securegw.paytm.in') +
         '/theia/paytmCallback?ORDER_ID=' +
-        orderId;
+        transactionId;
 
     //Host the Server Side Code on your Server and use your URL here. The following URL may or may not work. Because hosted on free server.
     //Server Side code url: https://github.com/mrdishant/Paytm-Plugin-Server
@@ -80,7 +80,7 @@ class _BodyState extends State<Body> {
       "mid": mid,
       "key_secret": PAYTM_MERCHANT_KEY,
       "website": website,
-      "orderId": orderId,
+      "orderId": transactionId,
       // "amount": (widget.product.varients[widget.currentVarient].price * widget.quantity)
       //     .toString(),
       "amount": "1",
@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
 
       var paytmResponse = Paytm.payWithPaytm(
           mid,
-          orderId,
+          transactionId,
           txnToken,
           // (widget.product.varients[widget.currentVarient].price *
           //         widget.quantity)
@@ -150,6 +150,9 @@ class _BodyState extends State<Body> {
                 _service.updateUserData(values);
               }
 
+              String orderIdnew =
+                  DateTime.now().millisecondsSinceEpoch.toString();
+
               Order order = Order(
                   cod: false,
                   deliveryBoy: "",
@@ -163,7 +166,7 @@ class _BodyState extends State<Body> {
                       detail: widget.product.detail,
                       variant: widget.product.varients[widget.currentVarient],
                       tax: widget.product.tax),
-                  orderId: orderId,
+                  orderId: orderIdnew,
                   totalCost: widget.totalCost,
                   userId: authkey,
                   timestamp: DateTime.now().toString(),
@@ -171,6 +174,7 @@ class _BodyState extends State<Body> {
                   responseMsg: value['response']['RESPMSG'],
                   codcharges: widget.codSellerCharge,
                   usedOrevWallet: widget.usedOrevWallet,
+                  transactionId: transactionId,
                   orevWalletAmountUsed: widget.orevWalletMoneyUsed);
               if (payment_response == "TXN_FAILURE") {
                 Navigator.push(
@@ -235,6 +239,7 @@ class _BodyState extends State<Body> {
                   "codcharges": order.codcharges,
                   "usedOrevWallet": order.usedOrevWallet,
                   "orevWalletAmountUsed": order.orevWalletAmountUsed,
+                  "transactionId": transactionId
                 };
                 OrderServices _services = new OrderServices();
                 try {
@@ -248,7 +253,7 @@ class _BodyState extends State<Body> {
                 }
 
                 updateWalletBalance(
-                    widget.newwalletbalance, orderId, order.timestamp);
+                    widget.newwalletbalance, transactionId, order.timestamp);
 
                 Fluttertoast.showToast(
                     msg: "Order Placed",
@@ -284,8 +289,8 @@ class _BodyState extends State<Body> {
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
               child: Column(
                 children: [
                   TotalPrice(
@@ -311,14 +316,20 @@ class _BodyState extends State<Body> {
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 2),
                       child: Text(
-                          "By placing your order, you agree to Orev's privacy notice and conditions of use.",style: TextStyle(fontSize: getProportionateScreenWidth(12)),)),
+                        "By placing your order, you agree to Orev's privacy notice and conditions of use.",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(12)),
+                      )),
                   SizedBox(
                     height: getProportionateScreenHeight(15),
                   ),
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 2),
                       child: Text(
-                          "If you choose to pay using an electronic payment method (credit card or debit card), you will be directed to your bank's website to complete your payment. Your contract to purchase an item will not be complete until we receive your electronic payment and dispatch your item. If you choose to pay using Pay on Delivery (POD), you can pay using cash/card/net banking when you receive your item.",style: TextStyle(fontSize: getProportionateScreenWidth(12)),)),
+                        "If you choose to pay using an electronic payment method (credit card or debit card), you will be directed to your bank's website to complete your payment. Your contract to purchase an item will not be complete until we receive your electronic payment and dispatch your item. If you choose to pay using Pay on Delivery (POD), you can pay using cash/card/net banking when you receive your item.",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(12)),
+                      )),
                   SizedBox(
                     height: getProportionateScreenHeight(80),
                   ),

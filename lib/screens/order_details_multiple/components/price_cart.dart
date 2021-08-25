@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/size_config.dart';
 
@@ -8,24 +9,39 @@ import '../../../constants.dart';
 class TotalPrice extends StatefulWidget {
   const TotalPrice({
     Key key,
-    @required this.product,
-    @required this.currentVarient,
-    @required this.quantity,
     @required this.totalCost,
     @required this.deliveryCost,
+    @required this.CartList,
+    @required this.codSellerCost,
+    @required this.onlinePayment,
+    @required this.walletAmountUsed,
   }) : super(key: key);
-  final Product product;
-  final int currentVarient;
-  final int quantity;
   final double totalCost;
   final double deliveryCost;
+  final List<Cart> CartList;
+  final double walletAmountUsed;
+  final double codSellerCost;
+  final bool onlinePayment;
   @override
   _TotalPriceState createState() => _TotalPriceState();
 }
 
-bool applied_coupon = false;
-
 class _TotalPriceState extends State<TotalPrice> {
+  double totalPrice = 0.0;
+
+  getTotalCost() async {
+    for (var cart in widget.CartList) {
+      totalPrice += cart.product.varients[cart.actualVarientNumber].price;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getTotalCost();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,18 +53,15 @@ class _TotalPriceState extends State<TotalPrice> {
           )),
       child: Column(
         children: [
-          DetailRow(
-              "Items",
-              "\₹${widget.product.varients[widget.currentVarient].price}",
-              15.0,
-              FontWeight.normal,
-              Color(0xff777777),
-              Color(0xff777777)),
-          DetailRow("Delivery", "${widget.deliveryCost}", 15.0,
+          DetailRow("Items", "\₹${totalPrice}", 15.0, FontWeight.normal,
+              Color(0xff777777), Color(0xff777777)),
+          DetailRow("Delivery", "+ \₹${widget.deliveryCost}", 15.0,
               FontWeight.normal, Color(0xff777777), Color(0xff777777)),
-          applied_coupon == true
-              ? DetailRow("Applied Coupon", "₹0.00", 15.0, FontWeight.normal,
-                  Color(0xff777777), Color(0xff777777))
+          DetailRow("Wallet", "- \₹${widget.walletAmountUsed}", 15.0,
+              FontWeight.normal, Color(0xff777777), Color(0xff777777)),
+          !widget.onlinePayment
+              ? DetailRow("COD Charges", "+ \₹${widget.codSellerCost}", 15.0,
+                  FontWeight.normal, Color(0xff777777), Color(0xff777777))
               : Center(),
           SizedBox(
             height: getProportionateScreenHeight(10),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
+import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 
 import 'components/body.dart';
@@ -8,23 +9,25 @@ import 'components/body.dart';
 class OrderDetailsMultiple extends StatefulWidget {
   const OrderDetailsMultiple({
     Key key,
-    @required this.product,
-    @required this.currentVarient,
-    @required this.quantity,
+    @required this.CartList,
     @required this.selectedaddress,
     @required this.totalCost,
     @required this.deliveryCost,
     @required this.newwalletbalance,
     @required this.oldwalletbalance,
+    @required this.codSellerCost,
+    @required this.onlinePayment,
+    @required this.orevWalletMoneyUsed,
   }) : super(key: key);
 
-  final Product product;
-  final int currentVarient;
-  final int quantity;
+  final List<Cart> CartList;
   final double totalCost;
   final double deliveryCost;
   final double newwalletbalance;
   final double oldwalletbalance;
+  final double codSellerCost;
+  final double orevWalletMoneyUsed;
+  final bool onlinePayment;
   final Map<String, dynamic> selectedaddress;
 
   static String routeName = "/order_details_multiple";
@@ -34,27 +37,21 @@ class OrderDetailsMultiple extends StatefulWidget {
 
 class _OrderDetailsMultipleState extends State<OrderDetailsMultiple> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Body(
-          key: UniqueKey(),
-          product: widget.product,
-          currentVarient: widget.currentVarient,
-          quantity: widget.quantity,
-          selectedaddress: widget.selectedaddress,
-          totalCost: widget.totalCost,
-          deliveryCost: widget.deliveryCost,
-          newwalletbalance: widget.newwalletbalance,
-          oldwalletbalance: widget.oldwalletbalance,
-        ),
+            key: UniqueKey(),
+            CartList: widget.CartList,
+            selectedaddress: widget.selectedaddress,
+            totalCost: widget.totalCost,
+            deliveryCost: widget.deliveryCost,
+            newwalletbalance: widget.newwalletbalance,
+            oldwalletbalance: widget.oldwalletbalance,
+            onlinePayment: widget.onlinePayment,
+            orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+            codSellerCost: widget.codSellerCost),
       ),
     );
   }
-
 }

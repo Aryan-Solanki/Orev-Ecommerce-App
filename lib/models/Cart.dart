@@ -6,6 +6,7 @@ import 'Product.dart';
 class Cart {
   final Product product;
   final int numOfItem;
+  final int actualVarientNumber;
   final String varientNumber;
   final bool deliverable;
   final bool codAvailable;
@@ -26,6 +27,7 @@ class Cart {
     @required this.distanceInMeters,
     @required this.freekms,
     @required this.variantPrice,
+    @required this.actualVarientNumber,
   });
 }
 

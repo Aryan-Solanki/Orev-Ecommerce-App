@@ -1201,31 +1201,7 @@ class _BodyState extends State<Body> {
                                             height: 70,
                                             color: kSecondaryColor,
                                             text: "Pay Online",
-                                            press: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => OrderDetailsMultiple(
-                                                        key:
-                                                        UniqueKey(),
-                                                        product: widget
-                                                            .product,
-                                                        currentVarient:
-                                                        selectedFoodVariants,
-                                                        quantity:
-                                                        quantity,
-                                                        selectedaddress:
-                                                        SelectedAddress,
-                                                        totalCost:
-                                                        totalCost,
-                                                        deliveryCost:
-                                                        finalDeliveryCost,
-                                                        newwalletbalance:
-                                                        newwalletbalance,
-                                                        oldwalletbalance:
-                                                        walletbalance)),
-                                              );
-                                            },
+                                            press: () {},
                                           ),
                                   ],
                                 );
@@ -1443,7 +1419,6 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
-
                                                           // sendSms();
                                                           setState(() {});
                                                           if (authkey == '') {

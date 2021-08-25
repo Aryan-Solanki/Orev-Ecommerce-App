@@ -16,6 +16,7 @@ class OrderDetails extends StatefulWidget {
     @required this.deliveryCost,
     @required this.newwalletbalance,
     @required this.oldwalletbalance,
+    @required this.usedorevwallet,
   }) : super(key: key);
 
   final Product product;
@@ -25,6 +26,7 @@ class OrderDetails extends StatefulWidget {
   final double deliveryCost;
   final double newwalletbalance;
   final double oldwalletbalance;
+  final bool usedorevwallet;
   final Map<String, dynamic> selectedaddress;
 
   static String routeName = "/order_details";
@@ -43,18 +45,17 @@ class _OrderDetailsState extends State<OrderDetails> {
     return SafeArea(
       child: Scaffold(
         body: Body(
-          key: UniqueKey(),
-          product: widget.product,
-          currentVarient: widget.currentVarient,
-          quantity: widget.quantity,
-          selectedaddress: widget.selectedaddress,
-          totalCost: widget.totalCost,
-          deliveryCost: widget.deliveryCost,
-          newwalletbalance: widget.newwalletbalance,
-          oldwalletbalance: widget.oldwalletbalance,
-        ),
+            key: UniqueKey(),
+            product: widget.product,
+            currentVarient: widget.currentVarient,
+            quantity: widget.quantity,
+            selectedaddress: widget.selectedaddress,
+            totalCost: widget.totalCost,
+            deliveryCost: widget.deliveryCost,
+            newwalletbalance: widget.newwalletbalance,
+            oldwalletbalance: widget.oldwalletbalance,
+            usedOrevWallet: widget.usedorevwallet),
       ),
     );
   }
-
 }

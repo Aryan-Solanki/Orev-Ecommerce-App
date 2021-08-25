@@ -18,6 +18,7 @@ class Order {
   final double codcharges;
   final bool usedOrevWallet;
   final double orevWalletAmountUsed;
+  final String transactionId;
   Order(
       {this.cod,
       this.deliveryBoy,
@@ -32,5 +33,6 @@ class Order {
       this.selectedAddress,
       this.codcharges,
       this.orevWalletAmountUsed,
+      this.transactionId,
       this.usedOrevWallet});
 }
