@@ -14,6 +14,7 @@ import 'package:orev/services/order_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:paytm/paytm.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -269,10 +270,18 @@ class _BodyState extends State<Body> {
           payment_response += "\n" + value.toString();
         });
       });
+      Future.delayed(Duration(seconds: 1), () {
+        _btnController.reset();
+      });
+
     } catch (e) {
+      _btnController.reset();
       print(e);
     }
   }
+
+  final RoundedLoadingButtonController _btnController =
+  RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -322,10 +331,18 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: getProportionateScreenHeight(80),
                   ),
-                  DefaultButton(
+                  RoundedLoadingButton(
+                    successColor: kPrimaryColor,
+                    duration: Duration(milliseconds: 1300),
+                    width: getProportionateScreenWidth(500),
+                    height: getProportionateScreenHeight(56),
                     color: kPrimaryColor2,
-                    text: "Place Order",
-                    press: () {
+                    child: Text("  Place Order  ",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(18),
+                            color: Colors.white)),
+                    controller: _btnController,
+                    onPressed: () async {
                       generateTxnToken();
                     },
                   ),

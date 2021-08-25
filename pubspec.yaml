@@ -66,6 +66,7 @@ dependencies:
   barcode_widget:
   twilio_flutter: ^0.0.9
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
