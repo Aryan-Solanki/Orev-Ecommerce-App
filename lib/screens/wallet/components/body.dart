@@ -11,6 +11,7 @@ import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:paytm/paytm.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:http/http.dart' as http;
 
@@ -30,6 +31,9 @@ class _BodyState extends State<Body> {
   String website = "DEFAULT";
   bool testing = false;
   bool loading = false;
+
+  final RoundedLoadingButtonController _btnController =
+  RoundedLoadingButtonController();
 
   void generateTxnToken() async {
     setState(() {
@@ -110,16 +114,17 @@ class _BodyState extends State<Body> {
               }
 
               if (payment_response == "TXN_FAILURE") {
-                // Navigator.push(
-                //     context,
-                //     (MaterialPageRoute(
-                //         builder: (context) => PaymentSuccess(
-                //           transaction_success: false,
-                //           order: order,
-                //         ))));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: false,)),
+                );
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: true,)),
+                );
                 print("Transaction Successful");
                 print(value['response']['RESPMSG']);
 
@@ -141,7 +146,11 @@ class _BodyState extends State<Body> {
           payment_response += "\n" + value.toString();
         });
       });
+      Future.delayed(Duration(seconds: 1), () {
+        _btnController.reset();
+      });
     } catch (e) {
+      _btnController.reset();
       print(e);
     }
   }
@@ -372,18 +381,21 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: getProportionateScreenHeight(100),
                   ),
-                  DefaultButton(
+                  RoundedLoadingButton(
+                    successColor: kPrimaryColor,
+                    duration: Duration(milliseconds: 1300),
+                    width: getProportionateScreenWidth(500),
+                    height: getProportionateScreenHeight(56),
                     color: kPrimaryColor2,
-                    text: " Proceed",
-                    press: () {
-                      print(amount);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: false,)),
-                      );
-                      // generateTxnToken();
+                    child: Text("  Proceed  ",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(18),
+                            color: Colors.white)),
+                    controller: _btnController,
+                    onPressed: () async {
+                      generateTxnToken();
                     },
-                  )
+                  ),
                 ],
               ),
             ),
