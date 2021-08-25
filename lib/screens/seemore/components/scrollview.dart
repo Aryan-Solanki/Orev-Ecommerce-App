@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/components/fullwidth_product_cart.dart';
+import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/home/components/section_title.dart';
@@ -168,15 +170,14 @@ class AllItemsState extends State<AllItems> {
       ),
       SizedBox(height: getProportionateScreenWidth(20)),
       _loadingProducts == true
-          ? Container(
-              child: Text("Loading..."),
-              // REPLACE THIS WITH LOADING
-            )
+          ?CircularProgressIndicator(
+        color: kPrimaryColor,
+      )
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: _products.length == 0
                   ? Center(
-                      child: Text("No products to display"),
+                      child: Text("No products to display",style: TextStyle(fontSize: getProportionateScreenWidth(15)),),
                     )
                   : ListView.builder(
                       shrinkWrap: true,

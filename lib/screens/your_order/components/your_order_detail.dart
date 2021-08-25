@@ -11,6 +11,11 @@ import 'package:orev/components/return_or_cancel.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/screens/home/components/home_header.dart';
+import 'package:orev/screens/invoice/api/pdf_api.dart';
+import 'package:orev/screens/invoice/api/pdf_invoice_api.dart';
+import 'package:orev/screens/invoice/model/customer.dart';
+import 'package:orev/screens/invoice/model/invoice.dart';
+import 'package:orev/screens/invoice/model/supplier.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -56,7 +61,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
   @override
   Widget build(BuildContext context) {
     String return_cancel_value="cancel";
-    bool invoice=false;
+    bool invoice=true;
     final double _orderState = 0;
     final double _packedState = 10;
     final double _shippedState = 20;
@@ -530,9 +535,87 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                       ),
                       invoice==true?Align(
                         alignment: Alignment.centerRight,
-                        child: Text("Download Invoice",
-                          style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenWidth(13)),
+                        child: GestureDetector(
+                          onTap: ()async{
+                            final date = DateTime.now();
+                            final dueDate = date.add(Duration(days: 7));
+                            final invoice = Invoice(
+                              supplier: Supplier(
+                                name: 'Sarah Field',
+                                address: 'Sarah Street 9, Beijing, China',
+                                paymentInfo: 'https://paypal.me/sarahfieldzz',
+                              ),
+                              customer: Customer(
+                                name: 'Apple Inc.',
+                                address: 'Apple Street, Cupertino, CA 95014',
+                              ),
+                              info: InvoiceInfo(
+                                date: date,
+                                dueDate: dueDate,
+                                description: 'My description...',
+                                number: '${DateTime.now().year}-9999',
+                              ),
+                              items: [
+                                InvoiceItem(
+                                  description: 'Coffee',
+                                  date: DateTime.now(),
+                                  quantity: 3,
+                                  vat: 0.19,
+                                  unitPrice: 5.99,
+                                ),
+                                InvoiceItem(
+                                  description: 'Water',
+                                  date: DateTime.now(),
+                                  quantity: 8,
+                                  vat: 0.19,
+                                  unitPrice: 0.99,
+                                ),
+                                InvoiceItem(
+                                  description: 'Orange',
+                                  date: DateTime.now(),
+                                  quantity: 3,
+                                  vat: 0.19,
+                                  unitPrice: 2.99,
+                                ),
+                                InvoiceItem(
+                                  description: 'Apple',
+                                  date: DateTime.now(),
+                                  quantity: 8,
+                                  vat: 0.19,
+                                  unitPrice: 3.99,
+                                ),
+                                InvoiceItem(
+                                  description: 'Mango',
+                                  date: DateTime.now(),
+                                  quantity: 1,
+                                  vat: 0.19,
+                                  unitPrice: 1.59,
+                                ),
+                                InvoiceItem(
+                                  description: 'Blue Berries',
+                                  date: DateTime.now(),
+                                  quantity: 5,
+                                  vat: 0.19,
+                                  unitPrice: 0.99,
+                                ),
+                                InvoiceItem(
+                                  description: 'Lemon',
+                                  date: DateTime.now(),
+                                  quantity: 4,
+                                  vat: 0.19,
+                                  unitPrice: 1.29,
+                                ),
+                              ],
+                            );
 
+                            final pdfFile = await PdfInvoiceApi.generate(invoice);
+
+                            PdfApi.openFile(pdfFile);
+                          },
+                          child: Text("Download Invoice",
+                            style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenWidth(13)),
+
+                          ),
                         ),
                       ):Center(),
                       SizedBox(

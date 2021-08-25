@@ -58,4 +58,3 @@ final Map<String, WidgetBuilder> routes = {
   OfferzoneCategory.routeName: (context) => OfferzoneCategory(),//uidone
 };
 
-
