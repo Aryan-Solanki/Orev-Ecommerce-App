@@ -3,7 +3,6 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/screens/home/home_screen.dart';
 
-import '../Order_Details/components/components/body.dart';
 import 'components/body.dart';
 
 class MultiplePaymentSuccess extends StatefulWidget {
@@ -13,8 +12,8 @@ class MultiplePaymentSuccess extends StatefulWidget {
   final bool cod;
   MultiplePaymentSuccess(
       {@required this.transaction_success,
-        @required this.order,
-        @required this.cod});
+      @required this.order,
+      @required this.cod});
   @override
   _MultiplePaymentSuccessState createState() => _MultiplePaymentSuccessState();
 }

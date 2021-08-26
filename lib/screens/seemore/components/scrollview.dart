@@ -170,14 +170,18 @@ class AllItemsState extends State<AllItems> {
       ),
       SizedBox(height: getProportionateScreenWidth(20)),
       _loadingProducts == true
-          ?CircularProgressIndicator(
-        color: kPrimaryColor,
-      )
+          ? CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+            )
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: _products.length == 0
                   ? Center(
-                      child: Text("No products to display",style: TextStyle(fontSize: getProportionateScreenWidth(15)),),
+                      child: Text(
+                        "No products to display",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(15)),
+                      ),
                     )
                   : ListView.builder(
                       shrinkWrap: true,

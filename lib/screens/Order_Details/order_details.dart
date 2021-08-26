@@ -17,6 +17,8 @@ class OrderDetails extends StatefulWidget {
     @required this.newwalletbalance,
     @required this.oldwalletbalance,
     @required this.usedorevwallet,
+    @required this.codSellerCharge,
+    @required this.orevWalletMoneyUsed,
   }) : super(key: key);
 
   final Product product;
@@ -27,6 +29,8 @@ class OrderDetails extends StatefulWidget {
   final double newwalletbalance;
   final double oldwalletbalance;
   final bool usedorevwallet;
+  final double codSellerCharge;
+  final double orevWalletMoneyUsed;
   final Map<String, dynamic> selectedaddress;
 
   static String routeName = "/order_details";
@@ -49,6 +53,8 @@ class _OrderDetailsState extends State<OrderDetails> {
             product: widget.product,
             currentVarient: widget.currentVarient,
             quantity: widget.quantity,
+            orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+            codSellerCharge: widget.codSellerCharge,
             selectedaddress: widget.selectedaddress,
             totalCost: widget.totalCost,
             deliveryCost: widget.deliveryCost,

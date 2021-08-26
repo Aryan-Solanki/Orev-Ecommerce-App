@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/home/components/home_header.dart';
-import 'package:orev/screens/invoice/invoice.dart';
 import 'package:orev/screens/order_details_multiple/order_details_multiple.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
@@ -418,7 +418,10 @@ class _BodyState extends State<Body> {
                           String orderId =
                               DateTime.now().millisecondsSinceEpoch.toString();
 
+                          String transactionId = "COD";
+
                           Order order = Order(
+                              transactionId: transactionId,
                               cod: true,
                               deliveryBoy: "",
                               deliveryCost: finalDeliveryCost,
@@ -493,6 +496,7 @@ class _BodyState extends State<Body> {
                             "codcharges": order.codcharges,
                             "usedOrevWallet": order.usedOrevWallet,
                             "orevWalletAmountUsed": order.orevWalletAmountUsed,
+                            "transactionId": transactionId,
                           };
                           OrderServices _services = new OrderServices();
 
@@ -1096,7 +1100,7 @@ class _BodyState extends State<Body> {
                                       ],
                                     ),
                                     deliverable == true
-                                        ? cod_available == true
+                                        ? cod_available
                                             ? DefaultButton(
                                                 textheight: 15,
                                                 colour: Colors.white,
@@ -1119,7 +1123,7 @@ class _BodyState extends State<Body> {
                                                 },
                                               )
                                             : Center()
-                                        : cod_available == true
+                                        : cod_available
                                             ? DefaultButton(
                                                 textheight: 15,
                                                 colour: Colors.white,
@@ -1143,12 +1147,22 @@ class _BodyState extends State<Body> {
                                                     color: kPrimaryColor,
                                                     text: "Pay Online",
                                                     press: () {
+                                                      var usedWalletMoney =
+                                                          walletbalance -
+                                                              newwalletbalance;
+
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) => OrderDetails(
                                                                 key:
                                                                     UniqueKey(),
+                                                                usedorevwallet:
+                                                                    orevwallet,
+                                                                codSellerCharge:
+                                                                    0.0,
+                                                                orevWalletMoneyUsed:
+                                                                    usedWalletMoney,
                                                                 product: widget
                                                                     .product,
                                                                 currentVarient:
@@ -1175,25 +1189,36 @@ class _BodyState extends State<Body> {
                                                 color: kPrimaryColor,
                                                 text: "Pay Online",
                                                 press: () {
+                                                  var usedWalletMoney =
+                                                      walletbalance -
+                                                          newwalletbalance;
+
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            OrderDetails(
-                                                              key: UniqueKey(),
-                                                              product: widget
-                                                                  .product,
-                                                              currentVarient:
-                                                                  selectedFoodVariants,
-                                                              quantity:
-                                                                  quantity,
-                                                              selectedaddress:
-                                                                  SelectedAddress,
-                                                              totalCost:
-                                                                  totalCost,
-                                                              deliveryCost:
-                                                                  finalDeliveryCost,
-                                                            )),
+                                                        builder: (context) => OrderDetails(
+                                                            key: UniqueKey(),
+                                                            usedorevwallet:
+                                                                orevwallet,
+                                                            codSellerCharge:
+                                                                0.0,
+                                                            orevWalletMoneyUsed:
+                                                                usedWalletMoney,
+                                                            product:
+                                                                widget.product,
+                                                            currentVarient:
+                                                                selectedFoodVariants,
+                                                            quantity: quantity,
+                                                            selectedaddress:
+                                                                SelectedAddress,
+                                                            totalCost:
+                                                                totalCost,
+                                                            deliveryCost:
+                                                                finalDeliveryCost,
+                                                            newwalletbalance:
+                                                                newwalletbalance,
+                                                            oldwalletbalance:
+                                                                walletbalance)),
                                                   );
                                                 })
                                         : DefaultButton(
@@ -1420,10 +1445,10 @@ class _BodyState extends State<Body> {
                                                         color: kPrimaryColor2,
                                                         text: "Buy Now",
                                                         press: () {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              Invoice
-                                                                  .routeName);
+                                                          // Navigator.pushNamed(
+                                                          //     context,
+                                                          //     Invoice
+                                                          //         .routeName);
                                                           // sendSms();
                                                           setState(() {});
                                                           if (authkey == '') {
