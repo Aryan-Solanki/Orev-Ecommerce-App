@@ -812,7 +812,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                               finalDeliveryCost,
                                                           newwalletbalance:
                                                               newwalletbalance,
-                                                          onlinePayment: false,
+                                                          onlinePayment: true,
                                                           codSellerCost:
                                                               codSellerCost,
                                                           oldwalletbalance:
