@@ -6,6 +6,7 @@ import 'Product.dart';
 class Order {
   final bool cod;
   final String deliveryBoy;
+  final int qty;
   final double deliveryCost;
   final String orderStatus;
   final OrderProduct product;
@@ -22,6 +23,7 @@ class Order {
   Order(
       {this.cod,
       this.deliveryBoy,
+      this.qty,
       this.deliveryCost,
       this.orderStatus,
       this.product,

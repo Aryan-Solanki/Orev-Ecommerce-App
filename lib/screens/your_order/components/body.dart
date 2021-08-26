@@ -50,8 +50,8 @@ class _BodyState extends State<Body> {
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
             child: ScrollConfiguration(
               behavior: ScrollBehavior(),
               child: GlowingOverscrollIndicator(
@@ -62,7 +62,10 @@ class _BodyState extends State<Body> {
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: YouOrderCard(
-                        order: keys[index], notifyParent: refresh, key: UniqueKey()),
+                        order: keys[index],
+                        notifyParent: refresh,
+                        key: UniqueKey(),
+                        orders: keys),
                   ),
                 ),
               ),

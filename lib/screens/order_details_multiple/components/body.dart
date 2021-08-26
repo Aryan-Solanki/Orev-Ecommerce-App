@@ -180,6 +180,7 @@ class _BodyState extends State<Body> {
                     DateTime.now().millisecondsSinceEpoch.toString();
                 orderList.add(
                   new Order(
+                    qty: cart.numOfItem,
                     cod: widget.onlinePayment,
                     deliveryBoy: "",
                     deliveryCost: widget.deliveryCost,
@@ -202,6 +203,7 @@ class _BodyState extends State<Body> {
                     codcharges: widget.codSellerCharge[cart.product.sellerId],
                     usedOrevWallet: widget.usedOrevWallet,
                     orevWalletAmountUsed: orevwalletamountused,
+                    transactionId: transactionId,
                   ),
                 );
               }
@@ -225,6 +227,7 @@ class _BodyState extends State<Body> {
 
                 for (var order in orderList) {
                   var values = {
+                    "qty": order.qty,
                     "cod": order.cod,
                     "deliveryBoy": order.deliveryBoy,
                     "deliveryCost": order.deliveryCost,
@@ -273,6 +276,7 @@ class _BodyState extends State<Body> {
                     "codcharges": order.codcharges,
                     "usedOrevWallet": order.usedOrevWallet,
                     "orevWalletAmountUsed": order.orevWalletAmountUsed,
+                    "transactionId": transactionId,
                   };
                   try {
                     await _services.addOrder(values, order.orderId);
@@ -354,6 +358,7 @@ class _BodyState extends State<Body> {
       String orderIdnew = DateTime.now().millisecondsSinceEpoch.toString();
       orderList.add(
         new Order(
+          qty: cart.numOfItem,
           cod: widget.onlinePayment,
           deliveryBoy: "",
           deliveryCost: widget.deliveryCost,
@@ -375,6 +380,7 @@ class _BodyState extends State<Body> {
           codcharges: widget.codSellerCharge[cart.product.sellerId],
           usedOrevWallet: widget.usedOrevWallet,
           orevWalletAmountUsed: orevwalletamountused,
+          transactionId: transactionId,
         ),
       );
     }
@@ -382,6 +388,7 @@ class _BodyState extends State<Body> {
 
     for (var order in orderList) {
       var values = {
+        "qty": order.qty,
         "cod": order.cod,
         "deliveryBoy": order.deliveryBoy,
         "deliveryCost": order.deliveryCost,
@@ -429,6 +436,7 @@ class _BodyState extends State<Body> {
         "codcharges": order.codcharges,
         "usedOrevWallet": order.usedOrevWallet,
         "orevWalletAmountUsed": order.orevWalletAmountUsed,
+        "transactionId": transactionId,
       };
       try {
         await _services.addOrder(values, order.orderId);

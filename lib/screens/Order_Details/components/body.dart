@@ -155,6 +155,7 @@ class _BodyState extends State<Body> {
                   DateTime.now().millisecondsSinceEpoch.toString();
 
               Order order = Order(
+                  qty: widget.quantity,
                   cod: false,
                   deliveryBoy: "",
                   deliveryCost: widget.deliveryCost,
@@ -192,6 +193,7 @@ class _BodyState extends State<Body> {
                 print(value['response']['RESPMSG']);
 
                 var values = {
+                  "qty": order.qty,
                   "cod": order.cod,
                   "deliveryBoy": order.deliveryBoy,
                   "deliveryCost": order.deliveryCost,
@@ -278,7 +280,6 @@ class _BodyState extends State<Body> {
       Future.delayed(Duration(seconds: 1), () {
         _btnController.reset();
       });
-
     } catch (e) {
       _btnController.reset();
       print(e);
@@ -286,7 +287,7 @@ class _BodyState extends State<Body> {
   }
 
   final RoundedLoadingButtonController _btnController =
-  RoundedLoadingButtonController();
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {

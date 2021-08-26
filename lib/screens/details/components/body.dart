@@ -418,6 +418,7 @@ class _BodyState extends State<Body> {
                           String transactionId = "COD";
 
                           Order order = Order(
+                              qty: quantity,
                               transactionId: transactionId,
                               cod: true,
                               deliveryBoy: "",
@@ -443,6 +444,7 @@ class _BodyState extends State<Body> {
                               orevWalletAmountUsed: usedWalletMoney);
 
                           var values = {
+                            "qty": order.qty,
                             "cod": order.cod,
                             "deliveryBoy": order.deliveryBoy,
                             "deliveryCost": order.deliveryCost,

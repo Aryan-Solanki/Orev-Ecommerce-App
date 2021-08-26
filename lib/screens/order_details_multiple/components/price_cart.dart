@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:orev/models/Cart.dart';
+import 'package:orev/models/Order.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/size_config.dart';
 
@@ -12,6 +13,7 @@ class TotalPrice extends StatefulWidget {
     @required this.totalCost,
     @required this.deliveryCost,
     @required this.CartList,
+    @required this.OrderList,
     @required this.codSellerCost,
     @required this.onlinePayment,
     @required this.walletAmountUsed,
@@ -19,6 +21,7 @@ class TotalPrice extends StatefulWidget {
   final double totalCost;
   final double deliveryCost;
   final List<Cart> CartList;
+  final List<Order> OrderList;
   final double walletAmountUsed;
   final double codSellerCost;
   final bool onlinePayment;
@@ -30,8 +33,15 @@ class _TotalPriceState extends State<TotalPrice> {
   double totalPrice = 0.0;
 
   getTotalCost() async {
-    for (var cart in widget.CartList) {
-      totalPrice += cart.product.varients[cart.actualVarientNumber].price;
+    if (widget.OrderList == null) {
+      for (var cart in widget.CartList) {
+        totalPrice += cart.product.varients[cart.actualVarientNumber].price *
+            cart.numOfItem;
+      }
+    } else {
+      for (var cart in widget.OrderList) {
+        totalPrice += cart.product.variant.price * cart.qty;
+      }
     }
     setState(() {});
   }

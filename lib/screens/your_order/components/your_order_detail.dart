@@ -9,6 +9,7 @@ import 'package:orev/components/default_button.dart';
 import 'package:orev/components/return_or_cancel.dart';
 // import 'package:orev/components/pdf_invoice_generate.dart';
 import 'package:orev/constants.dart';
+import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/invoice/api/pdf_api.dart';
@@ -16,6 +17,7 @@ import 'package:orev/screens/invoice/api/pdf_invoice_api.dart';
 import 'package:orev/screens/invoice/model/customer.dart';
 import 'package:orev/screens/invoice/model/invoice.dart';
 import 'package:orev/screens/invoice/model/supplier.dart';
+import 'package:orev/screens/order_details_multiple/components/price_cart.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -23,8 +25,9 @@ import '../../../size_config.dart';
 
 class YourOrderDetail extends StatefulWidget {
   final Order order;
+  final List<Order> orders;
   static String routeName = "/your_order_detail";
-  YourOrderDetail({@required this.order});
+  YourOrderDetail({@required this.order, @required this.orders});
   @override
   _YourOrderDetailState createState() => _YourOrderDetailState();
 }
@@ -51,10 +54,55 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
     setState(() {});
   }
 
+  double totalCost = 0.0;
+  double deliveryCost = 0.0;
+  double orevWalletMoneyUsed = 0.0;
+  double finaltotalSellerCharge = 0.0;
+  bool onlinePayment = false;
+
+  Future<List> getVarientNumber(id, productId) async {
+    ProductServices _services = ProductServices();
+    var product = await _services.getProduct(productId);
+    var varlist = product.varients;
+    int ind = 0;
+    bool foundit = false;
+    for (var varient in varlist) {
+      if (varient.id == id) {
+        foundit = true;
+        break;
+      }
+      ind += 1;
+    }
+    return [ind, foundit];
+  }
+
+  getTransactionDetails() async {
+    totalCost = 0.0;
+    deliveryCost = 0.0;
+    orevWalletMoneyUsed = 0.0;
+    onlinePayment = false;
+    finaltotalSellerCharge = 0.0;
+
+    var sellerIdList = [];
+
+    for (var order in widget.orders) {
+      if (order.transactionId == widget.order.transactionId) {
+        totalCost += order.totalCost;
+        orevWalletMoneyUsed = order.orevWalletAmountUsed;
+        if (!sellerIdList.contains(order.product.sellerId)) {
+          sellerIdList.add(order.product.sellerId);
+          finaltotalSellerCharge += order.codcharges;
+          deliveryCost += order.deliveryCost;
+        }
+      }
+    }
+  }
+
   @override
   void initState() {
     getUserInfo();
     getSellerInfo();
+    getTransactionDetails();
     super.initState();
   }
 
@@ -114,6 +162,13 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                     height: getProportionateScreenHeight(5),
                                   ),
                                   Text("${widget.order.product.variant.title}",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(12))),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(5),
+                                  ),
+                                  Text("Qty : ${widget.order.qty}",
                                       style: TextStyle(
                                           fontSize:
                                               getProportionateScreenWidth(12)))
@@ -603,26 +658,6 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         ],
                                       )
                                     : Center(),
-                                // widget.order.cod
-                                //     ? Row(
-                                //   mainAxisAlignment:
-                                //   MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text(
-                                //       "COD Charges:",
-                                //       style: TextStyle(
-                                //           color: Colors.black,
-                                //           fontSize:
-                                //           getProportionateScreenWidth(15)),
-                                //     ),
-                                //     Text("₹${widget.order.codcharges}",
-                                //         style: TextStyle(
-                                //             color: Colors.black,
-                                //             fontSize:
-                                //             getProportionateScreenWidth(15))),
-                                //   ],
-                                // )
-                                //     : Center(),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -664,6 +699,25 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                 ),
                               ],
                             )),
+                        Text(
+                          "Transaction Summary",
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(25),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        TotalPrice(
+                          key: UniqueKey(),
+                          totalCost: totalCost,
+                          OrderList: widget.orders,
+                          deliveryCost: deliveryCost,
+                          walletAmountUsed: orevWalletMoneyUsed,
+                          onlinePayment: onlinePayment,
+                          codSellerCost: finaltotalSellerCharge,
+                        ),
                         SizedBox(
                           height: getProportionateScreenHeight(20),
                         ),

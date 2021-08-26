@@ -15,10 +15,12 @@ class YouOrderCard extends StatefulWidget {
     Key key,
     @required this.order,
     @required this.notifyParent,
+    @required this.orders,
   }) : super(key: key);
 
   final Order order;
   final Function() notifyParent;
+  final List<Order> orders;
 
   @override
   _YouOrderCardState createState() => _YouOrderCardState();
@@ -41,8 +43,9 @@ class _YouOrderCardState extends State<YouOrderCard> {
             context,
             MaterialPageRoute(
                 builder: (context) => YourOrderDetail(
-                  order: widget.order,
-                )));
+                      order: widget.order,
+                      orders: widget.orders,
+                    )));
         // Navigator.pushNamed(context, YourOrderDetail.routeName);
       },
       child: Row(

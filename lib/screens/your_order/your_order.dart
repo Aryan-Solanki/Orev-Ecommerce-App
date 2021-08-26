@@ -27,6 +27,7 @@ class _YourOrderState extends State<YourOrder> {
     querySnapshot.docs.forEach((doc) {
       orders.add(
         new Order(
+          qty: doc["qty"],
           cod: doc["cod"],
           deliveryBoy: doc["deliveryBoy"],
           deliveryCost: doc["deliveryCost"],
@@ -60,6 +61,7 @@ class _YourOrderState extends State<YourOrder> {
           codcharges: doc["codcharges"].toDouble(),
           usedOrevWallet: doc["usedOrevWallet"],
           orevWalletAmountUsed: doc["orevWalletAmountUsed"].toDouble(),
+          transactionId: doc["transactionId"],
         ),
       );
     });
