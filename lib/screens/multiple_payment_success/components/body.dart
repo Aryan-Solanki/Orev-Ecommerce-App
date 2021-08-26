@@ -17,7 +17,12 @@ class Body extends StatefulWidget {
   final bool transaction;
   final List<Order> order;
   final bool cod;
-  Body({@required this.transaction, @required this.order, @required this.cod});
+  final double orderTotal;
+  Body(
+      {@required this.transaction,
+      @required this.order,
+      @required this.cod,
+      @required this.orderTotal});
   @override
   _BodyState createState() => _BodyState();
 }
@@ -27,8 +32,6 @@ class _BodyState extends State<Body> {
   String userphone = "";
   String sellername = "";
 
-  double totalCost = 0.0;
-
   Future<void> getUserInfo() async {
     UserServices _services = new UserServices();
     var user = await _services.getUserById(widget.order[0].userId);
@@ -37,16 +40,9 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  Future<void> getTotalCost() {
-    for (var ord in widget.order) {
-      totalCost += ord.totalCost;
-    }
-  }
-
   @override
   void initState() {
     getUserInfo();
-    getTotalCost();
     super.initState();
   }
 
@@ -162,7 +158,7 @@ class _BodyState extends State<Body> {
                         height: getProportionateScreenHeight(15),
                       ),
                       Text(
-                        "Transition Details ",
+                        "Transaction Details ",
                         style: TextStyle(
                             fontSize: getProportionateScreenWidth(20),
                             fontWeight: FontWeight.bold,
@@ -206,7 +202,7 @@ class _BodyState extends State<Body> {
                                   color: Colors.black),
                             ),
                             Text(
-                              "Transition amount: ₹$totalCost",
+                              "Transaction amount: ₹${widget.orderTotal}",
                               style: TextStyle(
                                   fontSize: getProportionateScreenWidth(14),
                                   color: Colors.black),

@@ -213,10 +213,10 @@ class _BodyState extends State<Body> {
                     context,
                     (MaterialPageRoute(
                         builder: (context) => MultiplePaymentSuccess(
-                              transaction_success: false,
-                              order: orderList,
-                              cod: widget.onlinePayment,
-                            ))));
+                            transaction_success: false,
+                            order: orderList,
+                            cod: false,
+                            orderTotal: totalCost))));
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
@@ -301,10 +301,10 @@ class _BodyState extends State<Body> {
                     context,
                     (MaterialPageRoute(
                         builder: (context) => MultiplePaymentSuccess(
-                              transaction_success: true,
-                              order: orderList,
-                              cod: false,
-                            ))));
+                            transaction_success: true,
+                            order: orderList,
+                            cod: false,
+                            orderTotal: totalCost))));
               }
             }
           }
@@ -461,10 +461,10 @@ class _BodyState extends State<Body> {
         context,
         (MaterialPageRoute(
             builder: (context) => MultiplePaymentSuccess(
-                  transaction_success: true,
-                  order: orderList,
-                  cod: true,
-                ))));
+                transaction_success: true,
+                order: orderList,
+                cod: true,
+                orderTotal: totalCost))));
   }
 
   @override

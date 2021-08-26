@@ -10,9 +10,11 @@ class MultiplePaymentSuccess extends StatefulWidget {
   final bool transaction_success;
   final List<Order> order;
   final bool cod;
+  final double orderTotal;
   MultiplePaymentSuccess(
       {@required this.transaction_success,
       @required this.order,
+      @required this.orderTotal,
       @required this.cod});
   @override
   _MultiplePaymentSuccessState createState() => _MultiplePaymentSuccessState();
@@ -35,10 +37,10 @@ class _MultiplePaymentSuccessState extends State<MultiplePaymentSuccess> {
                 : "Payment Failure"),
           ),
           body: Body(
-            transaction: widget.transaction_success,
-            order: widget.order,
-            cod: widget.cod,
-          ),
+              transaction: widget.transaction_success,
+              order: widget.order,
+              cod: widget.cod,
+              orderTotal: widget.orderTotal),
         ),
       ),
     );
