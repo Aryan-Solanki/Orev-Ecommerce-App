@@ -11,6 +11,8 @@ import 'package:orev/components/return_or_cancel.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Order.dart';
+import 'package:orev/models/Product.dart';
+import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/invoice/api/pdf_api.dart';
 import 'package:orev/screens/invoice/api/pdf_invoice_api.dart';
@@ -59,6 +61,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
   double orevWalletMoneyUsed = 0.0;
   double finaltotalSellerCharge = 0.0;
   bool onlinePayment = false;
+  Product product;
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -98,11 +101,17 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
     }
   }
 
+  getProduct() async {
+    ProductServices _services = new ProductServices();
+    product = await _services.getProduct(widget.order.product.id);
+  }
+
   @override
   void initState() {
     getUserInfo();
     getSellerInfo();
     getTransactionDetails();
+    getProduct();
     super.initState();
   }
 
@@ -148,31 +157,44 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                         Row(
                           children: [
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${widget.order.product.title}",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize:
-                                            getProportionateScreenWidth(16)),
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(5),
-                                  ),
-                                  Text("${widget.order.product.variant.title}",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailsScreen.routeName,
+                                    arguments: ProductDetailsArguments(
+                                        product: product),
+                                  );
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${widget.order.product.title}",
                                       style: TextStyle(
+                                          color: Colors.black,
                                           fontSize:
-                                              getProportionateScreenWidth(12))),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(5),
-                                  ),
-                                  Text("Qty : ${widget.order.qty}",
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenWidth(12)))
-                                ],
+                                              getProportionateScreenWidth(16)),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(5),
+                                    ),
+                                    Text(
+                                        "${widget.order.product.variant.title}",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(
+                                                    12))),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(5),
+                                    ),
+                                    Text("Qty : ${widget.order.qty}",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(
+                                                    12)))
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
