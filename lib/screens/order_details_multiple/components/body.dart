@@ -180,7 +180,7 @@ class _BodyState extends State<Body> {
                     DateTime.now().millisecondsSinceEpoch.toString();
                 orderList.add(
                   new Order(
-                    cod: !widget.onlinePayment,
+                    cod: widget.onlinePayment,
                     deliveryBoy: "",
                     deliveryCost: widget.deliveryCost,
                     orderStatus: "Ordered",
@@ -213,7 +213,7 @@ class _BodyState extends State<Body> {
                         builder: (context) => MultiplePaymentSuccess(
                               transaction_success: false,
                               order: orderList,
-                              cod: !widget.onlinePayment,
+                              cod: widget.onlinePayment,
                             ))));
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
@@ -312,6 +312,153 @@ class _BodyState extends State<Body> {
     }
   }
 
+  void placeOrderCOD() async {
+    setState(() {
+      loading = true;
+    });
+    String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+
+    String authkey = UserSimplePreferences.getAuthKey() ?? "";
+    if (authkey == "") {
+      print("Some error occured");
+    }
+    updateWalletBalance(newwalletbalance, orderId, timestamp) async {
+      newwalletbalance = newwalletbalance.toDouble();
+      UserServices _service = new UserServices();
+      var user = await _service.getUserById(authkey);
+      var transactionsList = user["walletTransactions"];
+      transactionsList.add({
+        "newWalletBalance": newwalletbalance,
+        "oldWalletBalance": widget.oldwalletbalance,
+        "orderId": orderId,
+        "timestamp": timestamp
+      });
+      var values = {
+        "id": authkey,
+        "walletAmt": newwalletbalance,
+        "walletTransactions": transactionsList
+      };
+      _service.updateUserData(values);
+    }
+
+    List<Order> orderList = [];
+
+    var totalcostbeforewallet = totalCost - widget.orevWalletMoneyUsed;
+
+    for (var cart in widget.CartList) {
+      var itemprice = cart.product.varients[cart.actualVarientNumber].price;
+
+      var orevwalletamountused =
+          (itemprice / totalcostbeforewallet) * widget.orevWalletMoneyUsed;
+
+      String orderIdnew = DateTime.now().millisecondsSinceEpoch.toString();
+      orderList.add(
+        new Order(
+          cod: widget.onlinePayment,
+          deliveryBoy: "",
+          deliveryCost: widget.deliveryCost,
+          orderStatus: "Ordered",
+          product: new OrderProduct(
+              brandname: cart.product.brandname,
+              id: cart.product.id,
+              sellerId: cart.product.sellerId,
+              title: cart.product.title,
+              detail: cart.product.detail,
+              variant: cart.product.varients[cart.actualVarientNumber],
+              tax: cart.product.tax),
+          orderId: orderIdnew,
+          totalCost: itemprice - orevwalletamountused,
+          userId: authkey,
+          timestamp: DateTime.now().toString(),
+          selectedAddress: widget.selectedaddress,
+          responseMsg: "COD",
+          codcharges: widget.codSellerCharge[cart.product.sellerId],
+          usedOrevWallet: widget.usedOrevWallet,
+          orevWalletAmountUsed: orevwalletamountused,
+        ),
+      );
+    }
+    OrderServices _services = new OrderServices();
+
+    for (var order in orderList) {
+      var values = {
+        "cod": order.cod,
+        "deliveryBoy": order.deliveryBoy,
+        "deliveryCost": order.deliveryCost,
+        "orderStatus": order.orderStatus,
+        "product": {
+          "brandname": order.product.brandname,
+          "id": order.product.id,
+          "sellerId": order.product.sellerId,
+          "title": order.product.title,
+          "detail": order.product.detail,
+          "variant": {
+            "title": order.product.variant.title,
+            "default": order.product.variant.default_product,
+            "id": order.product.variant.id,
+            "onSale": {
+              "comparedPrice": order.product.variant.comparedPrice,
+              "discountPercentage": order.product.variant.discountPercentage,
+              "isOnSale": order.product.variant.isOnSale,
+            },
+            "price": order.product.variant.price,
+            "stock": {
+              "inStock": order.product.variant.inStock,
+              "qty": order.product.variant.qty
+            },
+            "variantDetails": {
+              "images": order.product.variant.images,
+              "title": order.product.variant.title,
+            },
+          },
+          "tax": order.product.tax,
+        },
+        "orderId": order.orderId,
+        "totalCost": order.totalCost,
+        "userId": order.userId,
+        "timestamp": order.timestamp,
+        "responseMsg": order.responseMsg,
+        "address": {
+          "name": widget.selectedaddress["name"],
+          "adline1": widget.selectedaddress["adline1"],
+          "adline2": widget.selectedaddress["adline2"],
+          "city": widget.selectedaddress["city"],
+          "state": widget.selectedaddress["state"],
+          "pincode": widget.selectedaddress["pincode"],
+        },
+        "codcharges": order.codcharges,
+        "usedOrevWallet": order.usedOrevWallet,
+        "orevWalletAmountUsed": order.orevWalletAmountUsed,
+      };
+      try {
+        await _services.addOrder(values, order.orderId);
+      } catch (e) {
+        Fluttertoast.showToast(
+            msg: e.toString(),
+            toastLength: Toast.LENGTH_LONG,
+            timeInSecForIosWeb: 2,
+            gravity: ToastGravity.BOTTOM);
+      }
+    }
+
+    updateWalletBalance(
+        widget.newwalletbalance, transactionId, DateTime.now().toString());
+
+    Fluttertoast.showToast(
+        msg: "Order Placed",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 2,
+        gravity: ToastGravity.BOTTOM);
+    Navigator.push(
+        context,
+        (MaterialPageRoute(
+            builder: (context) => MultiplePaymentSuccess(
+                  transaction_success: true,
+                  order: orderList,
+                  cod: true,
+                ))));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -371,7 +518,11 @@ class _BodyState extends State<Body> {
                     color: kPrimaryColor2,
                     text: "Place Order",
                     press: () {
-                      generateTxnToken();
+                      if (widget.onlinePayment) {
+                        generateTxnToken();
+                      } else {
+                        placeOrderCOD();
+                      }
                     },
                   ),
                   SizedBox(

@@ -536,7 +536,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                     height: getProportionateScreenHeight(10),
                                   ),
                                   cod_available
-                                      ? orevwallet == true
+                                      ? orevwallet
                                           ? totalamt == 0.0
                                               ? DefaultButton(
                                                   textheight: 15,
