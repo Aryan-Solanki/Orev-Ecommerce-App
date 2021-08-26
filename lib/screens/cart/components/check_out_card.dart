@@ -33,7 +33,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
   double totaldeliveryamt = 0.0;
   bool checkoutavailable = false;
   bool cod_available = true;
-  double codSellerCost = 0.0;
+  Map codSellerCost = new Map();
 
   Future<List> getVarientNumber(id, productId) async {
     ProductServices _services = ProductServices();
@@ -74,7 +74,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
   reUpdateCartCost() {
     totalamt = 0.0;
     finalDeliveryCost = 0.0;
-    codSellerCost = 0.0;
     var sellerIdList = [];
     ProductServices _services = new ProductServices();
     for (var cart in SecondCartList) {
@@ -164,8 +163,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
           if (cart.distanceInMeters / 1000 > cart.freekms) {
             finalDeliveryCost += cart.deliveryCharges;
           }
-          codSellerCost +=
-              await _services.getSellerCODcost(cart.product.sellerId);
+          codSellerCost.addAll({
+            cart.product.sellerId:
+                await _services.getSellerCODcost(cart.product.sellerId)
+          });
         }
       }
     }
@@ -533,7 +534,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                         ),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
-                                  ),g
+                                  ),
                                   cod_available
                                       ? orevwallet == true
                                           ? totalamt == 0.0
@@ -553,8 +554,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
-                                                              codSellerCharge:
-                                                                  codSellerCost,
                                                               usedOrevWallet:
                                                                   orevwallet,
                                                               key: UniqueKey(),
@@ -602,8 +601,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
-                                                              codSellerCharge:
-                                                                  codSellerCost,
                                                               usedOrevWallet:
                                                                   orevwallet,
                                                               key: UniqueKey(),
@@ -648,8 +645,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) => OrderDetailsMultiple(
-                                                          codSellerCharge:
-                                                              codSellerCost,
                                                           usedOrevWallet:
                                                               orevwallet,
                                                           key: UniqueKey(),
@@ -694,8 +689,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
-                                                              codSellerCharge:
-                                                                  codSellerCost,
                                                               usedOrevWallet:
                                                                   orevwallet,
                                                               key: UniqueKey(),
@@ -749,8 +742,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) => OrderDetailsMultiple(
-                                                          codSellerCharge:
-                                                              codSellerCost,
                                                           usedOrevWallet:
                                                               orevwallet,
                                                           key: UniqueKey(),
@@ -808,8 +799,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       OrderDetailsMultiple(
-                                                          codSellerCharge:
-                                                              codSellerCost,
                                                           usedOrevWallet:
                                                               orevwallet,
                                                           key: UniqueKey(),

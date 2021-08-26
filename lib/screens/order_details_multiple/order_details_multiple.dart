@@ -18,7 +18,6 @@ class OrderDetailsMultiple extends StatefulWidget {
     @required this.codSellerCost,
     @required this.onlinePayment,
     @required this.orevWalletMoneyUsed,
-    @required this.codSellerCharge,
     @required this.usedOrevWallet,
   }) : super(key: key);
 
@@ -27,8 +26,7 @@ class OrderDetailsMultiple extends StatefulWidget {
   final double deliveryCost;
   final double newwalletbalance;
   final double oldwalletbalance;
-  final double codSellerCharge;
-  final double codSellerCost;
+  final Map codSellerCost;
   final double orevWalletMoneyUsed;
   final bool onlinePayment;
   final bool usedOrevWallet;
@@ -45,18 +43,18 @@ class _OrderDetailsMultipleState extends State<OrderDetailsMultiple> {
     return SafeArea(
       child: Scaffold(
         body: Body(
-            key: UniqueKey(),
-            CartList: widget.CartList,
-            codSellerCharge: widget.codSellerCharge,
-            usedOrevWallet: widget.usedOrevWallet,
-            selectedaddress: widget.selectedaddress,
-            totalCost: widget.totalCost,
-            deliveryCost: widget.deliveryCost,
-            newwalletbalance: widget.newwalletbalance,
-            oldwalletbalance: widget.oldwalletbalance,
-            onlinePayment: widget.onlinePayment,
-            orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
-            codSellerCost: widget.codSellerCost),
+          key: UniqueKey(),
+          CartList: widget.CartList,
+          codSellerCharge: widget.codSellerCost,
+          usedOrevWallet: widget.usedOrevWallet,
+          selectedaddress: widget.selectedaddress,
+          totalCost: widget.totalCost,
+          deliveryCost: widget.deliveryCost,
+          newwalletbalance: widget.newwalletbalance,
+          oldwalletbalance: widget.oldwalletbalance,
+          onlinePayment: widget.onlinePayment,
+          orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+        ),
       ),
     );
   }

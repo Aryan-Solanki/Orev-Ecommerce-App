@@ -33,7 +33,6 @@ class Body extends StatefulWidget {
     @required this.codSellerCharge,
     @required this.orevWalletMoneyUsed,
     @required this.usedOrevWallet,
-    @required this.codSellerCost,
     @required this.onlinePayment,
   }) : super(key: key);
 
@@ -42,9 +41,8 @@ class Body extends StatefulWidget {
   final double deliveryCost;
   final double newwalletbalance;
   final double oldwalletbalance;
-  final double codSellerCost;
   final bool usedOrevWallet;
-  final double codSellerCharge;
+  final Map codSellerCharge;
   final double orevWalletMoneyUsed;
   final bool onlinePayment;
   final Map<String, dynamic> selectedaddress;
@@ -65,11 +63,15 @@ class _BodyState extends State<Body> {
   String website = "DEFAULT";
   bool testing = false;
   bool loading = false;
+  double finaltotalSellerCharge = 0.0;
 
   @override
   void initState() {
     if (!widget.onlinePayment) {
-      totalCost += widget.codSellerCost;
+      widget.codSellerCharge.forEach((key, value) {
+        totalCost += value;
+        finaltotalSellerCharge += value;
+      });
     }
     super.initState();
   }
@@ -163,10 +165,20 @@ class _BodyState extends State<Body> {
 
               List<Order> orderList = [];
 
+              var totalcostbeforewallet =
+                  totalCost - widget.orevWalletMoneyUsed;
+
               for (var cart in widget.CartList) {
+                var itemprice =
+                    cart.product.varients[cart.actualVarientNumber].price;
+
+                var orevwalletamountused = (itemprice / totalcostbeforewallet) *
+                    widget.orevWalletMoneyUsed;
+
                 String orderIdnew =
                     DateTime.now().millisecondsSinceEpoch.toString();
-                orderList.add(new Order(
+                orderList.add(
+                  new Order(
                     cod: !widget.onlinePayment,
                     deliveryBoy: "",
                     deliveryCost: widget.deliveryCost,
@@ -181,14 +193,16 @@ class _BodyState extends State<Body> {
                             cart.product.varients[cart.actualVarientNumber],
                         tax: cart.product.tax),
                     orderId: orderIdnew,
-                    totalCost: totalCost,
+                    totalCost: itemprice - orevwalletamountused,
                     userId: authkey,
                     timestamp: DateTime.now().toString(),
                     selectedAddress: widget.selectedaddress,
                     responseMsg: value['response']['RESPMSG'],
-                    codcharges: widget.codSellerCharge,
+                    codcharges: widget.codSellerCharge[cart.product.sellerId],
                     usedOrevWallet: widget.usedOrevWallet,
-                    orevWalletAmountUsed: widget.orevWalletMoneyUsed));
+                    orevWalletAmountUsed: orevwalletamountused,
+                  ),
+                );
               }
 
               if (payment_response == "TXN_FAILURE") {
@@ -318,7 +332,7 @@ class _BodyState extends State<Body> {
                     deliveryCost: widget.deliveryCost,
                     walletAmountUsed: widget.orevWalletMoneyUsed,
                     onlinePayment: widget.onlinePayment,
-                    codSellerCost: widget.codSellerCost,
+                    codSellerCost: finaltotalSellerCharge,
                   ),
                   SizedBox(
                     height: getProportionateScreenHeight(25),
