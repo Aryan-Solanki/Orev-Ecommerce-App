@@ -18,6 +18,8 @@ class OrderDetailsMultiple extends StatefulWidget {
     @required this.codSellerCost,
     @required this.onlinePayment,
     @required this.orevWalletMoneyUsed,
+    @required this.codSellerCharge,
+    @required this.usedOrevWallet,
   }) : super(key: key);
 
   final List<Cart> CartList;
@@ -25,9 +27,11 @@ class OrderDetailsMultiple extends StatefulWidget {
   final double deliveryCost;
   final double newwalletbalance;
   final double oldwalletbalance;
+  final double codSellerCharge;
   final double codSellerCost;
   final double orevWalletMoneyUsed;
   final bool onlinePayment;
+  final bool usedOrevWallet;
   final Map<String, dynamic> selectedaddress;
 
   static String routeName = "/order_details_multiple";
@@ -43,6 +47,8 @@ class _OrderDetailsMultipleState extends State<OrderDetailsMultiple> {
         body: Body(
             key: UniqueKey(),
             CartList: widget.CartList,
+            codSellerCharge: widget.codSellerCharge,
+            usedOrevWallet: widget.usedOrevWallet,
             selectedaddress: widget.selectedaddress,
             totalCost: widget.totalCost,
             deliveryCost: widget.deliveryCost,

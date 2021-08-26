@@ -533,7 +533,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                         ),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
-                                  ),
+                                  ),g
                                   cod_available
                                       ? orevwallet == true
                                           ? totalamt == 0.0
@@ -553,6 +553,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
+                                                              codSellerCharge:
+                                                                  codSellerCost,
+                                                              usedOrevWallet:
+                                                                  orevwallet,
                                                               key: UniqueKey(),
                                                               CartList:
                                                                   CartList,
@@ -598,6 +602,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
+                                                              codSellerCharge:
+                                                                  codSellerCost,
+                                                              usedOrevWallet:
+                                                                  orevwallet,
                                                               key: UniqueKey(),
                                                               CartList:
                                                                   CartList,
@@ -640,6 +648,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) => OrderDetailsMultiple(
+                                                          codSellerCharge:
+                                                              codSellerCost,
+                                                          usedOrevWallet:
+                                                              orevwallet,
                                                           key: UniqueKey(),
                                                           CartList: CartList,
                                                           orevWalletMoneyUsed:
@@ -682,6 +694,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) => OrderDetailsMultiple(
+                                                              codSellerCharge:
+                                                                  codSellerCost,
+                                                              usedOrevWallet:
+                                                                  orevwallet,
                                                               key: UniqueKey(),
                                                               CartList:
                                                                   CartList,
@@ -725,27 +741,34 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               color: kPrimaryColor,
                                               text: "Pay Online",
                                               press: () {
+                                                var usedWalletMoney =
+                                                    walletbalance -
+                                                        newwalletbalance;
+
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          OrderDetailsMultiple(
-                                                              key: UniqueKey(),
-                                                              CartList:
-                                                                  CartList,
-                                                              selectedaddress:
-                                                                  widget
-                                                                      .currentAddress,
-                                                              totalCost:
-                                                                  totalamt,
-                                                              deliveryCost:
-                                                                  finalDeliveryCost,
-                                                              newwalletbalance:
-                                                                  newwalletbalance,
-                                                              onlinePayment:
-                                                                  true,
-                                                              oldwalletbalance:
-                                                                  walletbalance)),
+                                                      builder: (context) => OrderDetailsMultiple(
+                                                          codSellerCharge:
+                                                              codSellerCost,
+                                                          usedOrevWallet:
+                                                              orevwallet,
+                                                          key: UniqueKey(),
+                                                          CartList: CartList,
+                                                          orevWalletMoneyUsed:
+                                                              usedWalletMoney,
+                                                          selectedaddress: widget
+                                                              .currentAddress,
+                                                          totalCost: totalamt,
+                                                          deliveryCost:
+                                                              finalDeliveryCost,
+                                                          newwalletbalance:
+                                                              newwalletbalance,
+                                                          onlinePayment: true,
+                                                          codSellerCost:
+                                                              codSellerCost,
+                                                          oldwalletbalance:
+                                                              walletbalance)),
                                                 );
 
                                                 // Navigator.push(
@@ -780,26 +803,32 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                           color: kPrimaryColor,
                                           text: "Pay Online",
                                           press: () {
-                                            // Navigator.push(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           OrderDetails(
-                                            //             key: UniqueKey(),
-                                            //             product: widget
-                                            //                 .product,
-                                            //             currentVarient:
-                                            //             selectedFoodVariants,
-                                            //             quantity:
-                                            //             quantity,
-                                            //             selectedaddress:
-                                            //             SelectedAddress,
-                                            //             totalCost:
-                                            //             totalCost,
-                                            //             deliveryCost:
-                                            //             finalDeliveryCost,
-                                            //           )),
-                                            // );
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderDetailsMultiple(
+                                                          codSellerCharge:
+                                                              codSellerCost,
+                                                          usedOrevWallet:
+                                                              orevwallet,
+                                                          key: UniqueKey(),
+                                                          CartList: CartList,
+                                                          orevWalletMoneyUsed:
+                                                              0.0,
+                                                          selectedaddress: widget
+                                                              .currentAddress,
+                                                          totalCost: totalamt,
+                                                          deliveryCost:
+                                                              finalDeliveryCost,
+                                                          newwalletbalance:
+                                                              newwalletbalance,
+                                                          onlinePayment: false,
+                                                          codSellerCost:
+                                                              codSellerCost,
+                                                          oldwalletbalance:
+                                                              walletbalance)),
+                                            );
                                           })
                                 ],
                               );
