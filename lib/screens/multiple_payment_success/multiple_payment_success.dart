@@ -8,7 +8,7 @@ import 'components/body.dart';
 class MultiplePaymentSuccess extends StatefulWidget {
   static String routeName = "/multiple_paymment_success";
   final bool transaction_success;
-  final Order order;
+  final List<Order> order;
   final bool cod;
   MultiplePaymentSuccess(
       {@required this.transaction_success,

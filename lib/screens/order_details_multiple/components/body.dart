@@ -9,6 +9,7 @@ import 'package:orev/models/OrderProduct.dart';
 import 'package:orev/models/Product.dart';
 
 import 'package:orev/screens/home/components/home_header.dart';
+import 'package:orev/screens/multiple_payment_success/multiple_payment_success.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 import 'package:orev/services/order_services.dart';
@@ -209,9 +210,9 @@ class _BodyState extends State<Body> {
                 Navigator.push(
                     context,
                     (MaterialPageRoute(
-                        builder: (context) => PaymentSuccess(
+                        builder: (context) => MultiplePaymentSuccess(
                               transaction_success: false,
-                              order: orderList[0],
+                              order: orderList,
                               cod: !widget.onlinePayment,
                             ))));
                 print("Transaction Failed");
@@ -295,9 +296,9 @@ class _BodyState extends State<Body> {
                 Navigator.push(
                     context,
                     (MaterialPageRoute(
-                        builder: (context) => PaymentSuccess(
+                        builder: (context) => MultiplePaymentSuccess(
                               transaction_success: true,
-                              order: orderList[0],
+                              order: orderList,
                               cod: false,
                             ))));
               }
