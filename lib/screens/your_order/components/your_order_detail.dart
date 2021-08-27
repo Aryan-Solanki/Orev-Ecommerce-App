@@ -684,25 +684,6 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize:
-                                              getProportionateScreenWidth(15)),
-                                    ),
-                                    Text("₹${widget.order.totalCost}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    15))),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Order Total:",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
                                               getProportionateScreenWidth(20),
                                           fontWeight: FontWeight.bold),
                                     ),
