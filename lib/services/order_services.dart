@@ -19,4 +19,18 @@ class OrderServices {
         .doc(orderId)
         .set(values);
   }
+
+  Future<DocumentSnapshot> getTransactions(transactionId) async {
+    return await FirebaseFirestore.instance
+        .collection("orderTransactions")
+        .doc(transactionId)
+        .get();
+  }
+
+  Future<void> addTransaction(Map<String, dynamic> values, orderId) async {
+    await FirebaseFirestore.instance
+        .collection("orderTransactions")
+        .doc(orderId)
+        .set(values);
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -77,11 +78,21 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
+  String transactionId = "";
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
+
   void generateTxnToken() async {
     setState(() {
       loading = true;
     });
-    String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+    transactionId = DateTime.now().millisecondsSinceEpoch.toString();
 
     String callBackUrl = (testing
             ? 'https://securegw-stage.paytm.in'
@@ -320,7 +331,7 @@ class _BodyState extends State<Body> {
     setState(() {
       loading = true;
     });
-    String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+    transactionId = DateTime.now().millisecondsSinceEpoch.toString();
 
     String authkey = UserSimplePreferences.getAuthKey() ?? "";
     if (authkey == "") {
@@ -355,7 +366,8 @@ class _BodyState extends State<Body> {
       var orevwalletamountused =
           (itemprice / totalcostbeforewallet) * widget.orevWalletMoneyUsed;
 
-      String orderIdnew = DateTime.now().millisecondsSinceEpoch.toString();
+      String orderIdnew = DateTime.now().millisecondsSinceEpoch.toString() +
+          generateRandomString(5);
       orderList.add(
         new Order(
           qty: cart.numOfItem,
@@ -482,14 +494,14 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: [
                   TotalPrice(
-                    key: UniqueKey(),
-                    totalCost: totalCost,
-                    CartList: widget.CartList,
-                    deliveryCost: widget.deliveryCost,
-                    walletAmountUsed: widget.orevWalletMoneyUsed,
-                    onlinePayment: widget.onlinePayment,
-                    codSellerCost: finaltotalSellerCharge,
-                  ),
+                      key: UniqueKey(),
+                      totalCost: totalCost,
+                      CartList: widget.CartList,
+                      deliveryCost: widget.deliveryCost,
+                      walletAmountUsed: widget.orevWalletMoneyUsed,
+                      onlinePayment: widget.onlinePayment,
+                      codSellerCost: finaltotalSellerCharge,
+                      transactionId: transactionId),
                   SizedBox(
                     height: getProportionateScreenHeight(25),
                   ),

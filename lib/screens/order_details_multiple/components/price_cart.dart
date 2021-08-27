@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/services/order_services.dart';
+import 'package:orev/services/product_services.dart';
 import 'package:orev/size_config.dart';
 
 import '../../../constants.dart';
@@ -16,6 +18,7 @@ class TotalPrice extends StatefulWidget {
     @required this.OrderList,
     @required this.codSellerCost,
     @required this.onlinePayment,
+    @required this.transactionId,
     @required this.walletAmountUsed,
   }) : super(key: key);
   final double totalCost;
@@ -24,6 +27,7 @@ class TotalPrice extends StatefulWidget {
   final List<Order> OrderList;
   final double walletAmountUsed;
   final double codSellerCost;
+  final String transactionId;
   final bool onlinePayment;
   @override
   _TotalPriceState createState() => _TotalPriceState();
@@ -43,7 +47,22 @@ class _TotalPriceState extends State<TotalPrice> {
         totalPrice += cart.product.variant.price * cart.qty;
       }
     }
-    setState(() {});
+    setState(() {
+      uploadTransaction();
+    });
+  }
+
+  uploadTransaction() async {
+    OrderServices _services = new OrderServices();
+
+    var values = {
+      "itemsCost": totalPrice,
+      "delivery": widget.deliveryCost,
+      "wallet": widget.walletAmountUsed,
+      "codCharges": !widget.onlinePayment ? widget.codSellerCost : 0.0,
+      "orderTotal": widget.totalCost
+    };
+    _services.addTransaction(values, widget.transactionId);
   }
 
   @override

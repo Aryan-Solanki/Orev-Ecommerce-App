@@ -61,11 +61,13 @@ class _BodyState extends State<Body> {
   bool testing = false;
   bool loading = false;
 
+  String transactionId = "";
+
   void generateTxnToken() async {
     setState(() {
       loading = true;
     });
-    String transactionId = DateTime.now().millisecondsSinceEpoch.toString();
+    transactionId = DateTime.now().millisecondsSinceEpoch.toString();
 
     String callBackUrl = (testing
             ? 'https://securegw-stage.paytm.in'
@@ -305,6 +307,10 @@ class _BodyState extends State<Body> {
                 children: [
                   TotalPrice(
                       key: UniqueKey(),
+                      onlinePayment: true,
+                      walletAmountUsed: widget.orevWalletMoneyUsed,
+                      codSellerCost: widget.codSellerCharge,
+                      transactionId: transactionId,
                       product: widget.product,
                       currentVarient: widget.currentVarient,
                       quantity: widget.quantity,
