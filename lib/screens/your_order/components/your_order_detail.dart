@@ -726,44 +726,54 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                         SizedBox(
                           height: getProportionateScreenHeight(10),
                         ),
-                        Column(
-                          children: [
-                            DetailRow(
-                                "Items",
-                                "\₹${itemsCost}",
-                                15.0,
-                                FontWeight.normal,
-                                Color(0xff777777),
-                                Color(0xff777777)),
-                            DetailRow(
-                                "Delivery",
-                                "+ \₹${delivery}",
-                                15.0,
-                                FontWeight.normal,
-                                Color(0xff777777),
-                                Color(0xff777777)),
-                            DetailRow(
-                                "Wallet",
-                                "- \₹${wallet}",
-                                15.0,
-                                FontWeight.normal,
-                                Color(0xff777777),
-                                Color(0xff777777)),
-                            widget.order.cod
-                                ? DetailRow(
-                                    "COD Charges",
-                                    "+ \₹${codCharges}",
-                                    15.0,
-                                    FontWeight.normal,
-                                    Color(0xff777777),
-                                    Color(0xff777777))
-                                : Center(),
-                            SizedBox(
-                              height: getProportionateScreenHeight(10),
-                            ),
-                            DetailRow("Order Total:", "\₹${orderTotal}", 20.0,
-                                FontWeight.w800, Colors.black, kPrimaryColor),
-                          ],
+                        Container(
+                          padding:
+                          EdgeInsets.all(getProportionateScreenWidth(15)),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black45, // red as border color
+                              ),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10))),
+                          child: Column(
+                            children: [
+                              DetailRow(
+                                  "Items",
+                                  "\₹${itemsCost}",
+                                  15.0,
+                                  FontWeight.normal,
+                                  Color(0xff777777),
+                                  Color(0xff777777)),
+                              DetailRow(
+                                  "Delivery",
+                                  "+ \₹${delivery}",
+                                  15.0,
+                                  FontWeight.normal,
+                                  Color(0xff777777),
+                                  Color(0xff777777)),
+                              DetailRow(
+                                  "Wallet",
+                                  "- \₹${wallet}",
+                                  15.0,
+                                  FontWeight.normal,
+                                  Color(0xff777777),
+                                  Color(0xff777777)),
+                              widget.order.cod
+                                  ? DetailRow(
+                                      "COD Charges",
+                                      "+ \₹${codCharges}",
+                                      15.0,
+                                      FontWeight.normal,
+                                      Color(0xff777777),
+                                      Color(0xff777777))
+                                  : Center(),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              DetailRow("Order Total:", "\₹${orderTotal}", 20.0,
+                                  FontWeight.w800, Colors.black, kPrimaryColor),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(10),
