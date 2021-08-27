@@ -110,8 +110,8 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
 
   @override
   Widget build(BuildContext context) {
-    String return_cancel_value = "cancel";
-    bool invoice = true;
+    String return_cancel_value = ""; // cancel , return ,
+    bool invoice = false;
     final double _orderState = 0;
     final double _packedState = 10;
     final double _shippedState = 20;
@@ -147,69 +147,72 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    DetailsScreen.routeName,
-                                    arguments: ProductDetailsArguments(
-                                        product: product),
-                                  );
-                                },
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${widget.order.product.title}",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(16)),
-                                    ),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(5),
-                                    ),
-                                    Text(
-                                        "${widget.order.product.variant.title}",
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DetailsScreen.routeName,
+                              arguments:
+                                  ProductDetailsArguments(product: product),
+                            );
+                          },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${widget.order.product.title}",
                                         style: TextStyle(
+                                            color: Colors.black,
                                             fontSize:
                                                 getProportionateScreenWidth(
-                                                    12))),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(5),
-                                    ),
-                                    Text("Qty : ${widget.order.qty}",
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    12))),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(5),
-                                    ),
-                                    Text("Seller : $sellername",
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    12))),
-                                  ],
+                                                    16)),
+                                      ),
+                                      SizedBox(
+                                        height: getProportionateScreenHeight(5),
+                                      ),
+                                      Text(
+                                          "${widget.order.product.variant.title}",
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      12))),
+                                      SizedBox(
+                                        height: getProportionateScreenHeight(5),
+                                      ),
+                                      Text("Qty : ${widget.order.qty}",
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      12))),
+                                      SizedBox(
+                                        height: getProportionateScreenHeight(5),
+                                      ),
+                                      Text("Seller : $sellername",
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      12))),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                Container(
+                                  height: getProportionateScreenHeight(100),
+                                  width: getProportionateScreenWidth(100),
+                                  child: Image.network(
+                                      "${widget.order.product.variant.images[0]}"),
+                                ),
+                              ],
                             ),
-                            Container(
-                              height: getProportionateScreenHeight(100),
-                              width: getProportionateScreenWidth(100),
-                              child: Image.network(
-                                  "${widget.order.product.variant.images[0]}"),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(10),
                         ),
-
                         return_cancel_value == ""
                             ? Center()
                             : Text(
@@ -697,6 +700,13 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                 ),
                               ],
                             )),
+                        SizedBox(
+                          height: getProportionateScreenHeight(20),
+                        ),
+                        Divider(color: Colors.black),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
                         Text(
                           "Transaction Summary",
                           style: TextStyle(
@@ -709,13 +719,13 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                         ),
                         Container(
                           padding:
-                          EdgeInsets.all(getProportionateScreenWidth(15)),
+                              EdgeInsets.all(getProportionateScreenWidth(15)),
                           decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.black45, // red as border color
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
+                                  BorderRadius.all(Radius.circular(10))),
                           child: Column(
                             children: [
                               DetailRow(
@@ -894,59 +904,6 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                 ],
                               )
                             : Center(),
-                        Divider(color: Colors.black),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        // Container(
-                        //   padding: EdgeInsets.only(bottom: 20),
-                        //   color: Colors.white,
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Padding(
-                        //         padding: EdgeInsets.only(
-                        //             left: getProportionateScreenWidth(15),
-                        //             bottom: getProportionateScreenWidth(5)),
-                        //         child: Text(
-                        //           "You Might Also Like",
-                        //           style: smallerheadingStyle,
-                        //         ),
-                        //       ),
-                        //       SizedBox(
-                        //         height: getProportionateScreenHeight(10),
-                        //       ),
-                        //       ScrollConfiguration(
-                        //         behavior: ScrollBehavior(),
-                        //         child: GlowingOverscrollIndicator(
-                        //           axisDirection: AxisDirection.right,
-                        //           color: kPrimaryColor2,
-                        //           child: SingleChildScrollView(
-                        //             scrollDirection: Axis.horizontal,
-                        //             child: Row(
-                        //               children: [
-                        //                 ...List.generate(
-                        //                   widget.product.youmayalsolike.length,
-                        //                       (index) {
-                        //                     if (youMayAlsoLikeList.length == 0) {
-                        //                       return SizedBox.shrink();
-                        //                     } else {
-                        //                       return ProductCard(
-                        //                           product: youMayAlsoLikeList[index]);
-                        //                     }
-                        //                     // here by default width and height is 0
-                        //                   },
-                        //                 ),
-                        //                 SizedBox(
-                        //                     width: getProportionateScreenWidth(20)),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
                         SizedBox(
                           height: getProportionateScreenHeight(20),
                         ),
