@@ -94,24 +94,35 @@ class _BodyState extends State<Body> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, YourOrder.routeName);
+                              String authkey =
+                                  UserSimplePreferences.getAuthKey() ?? "";
+                              if (authkey != "") {
+                                Navigator.pushNamed(
+                                    context, YourOrder.routeName);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, SignInScreen.routeName);
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
                                   left: getProportionateScreenWidth(10),
                                   bottom: getProportionateScreenHeight(10)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Your Orders",
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: getProportionateScreenWidth(15),
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -119,7 +130,8 @@ class _BodyState extends State<Body> {
                                         Text(
                                           "Track or  view your order",
                                           style: TextStyle(
-                                            fontSize: getProportionateScreenWidth(12),
+                                            fontSize:
+                                                getProportionateScreenWidth(12),
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -137,24 +149,35 @@ class _BodyState extends State<Body> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, MyAccount.routeName);
+                              String authkey =
+                                  UserSimplePreferences.getAuthKey() ?? "";
+                              if (authkey != "") {
+                                Navigator.pushNamed(
+                                    context, MyAccount.routeName);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, SignInScreen.routeName);
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
                                   left: getProportionateScreenWidth(10),
                                   top: getProportionateScreenHeight(10)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Account Setting",
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: getProportionateScreenWidth(15),
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -162,7 +185,8 @@ class _BodyState extends State<Body> {
                                         Text(
                                           "Edit Username,address or wallet details",
                                           style: TextStyle(
-                                            fontSize: getProportionateScreenWidth(12),
+                                            fontSize:
+                                                getProportionateScreenWidth(12),
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -248,15 +272,18 @@ class _BodyState extends State<Body> {
                     children: [
                       Text(
                         "For further queries fill this",
-                        style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(13)),
                       ),
                       GestureDetector(
                         onTap: () {
-                          String authkey = UserSimplePreferences.getAuthKey() ?? "";
+                          String authkey =
+                              UserSimplePreferences.getAuthKey() ?? "";
                           if (authkey != "") {
                             Navigator.pushNamed(context, HelpForm.routeName);
                           } else {
-                            Navigator.pushNamed(context, SignInScreen.routeName);
+                            Navigator.pushNamed(
+                                context, SignInScreen.routeName);
                           }
                         },
                         child: Text(
