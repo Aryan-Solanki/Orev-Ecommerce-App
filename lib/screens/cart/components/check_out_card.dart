@@ -16,10 +16,12 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 class CheckoutCard extends StatefulWidget {
   final List<dynamic> keys;
   final Map currentAddress;
+  final Function func;
   const CheckoutCard({
     Key key,
     this.keys,
     @required this.currentAddress,
+    @required this.func,
   }) : super(key: key);
   @override
   _CheckoutCardState createState() => _CheckoutCardState();
@@ -177,6 +179,10 @@ class _CheckoutCardState extends State<CheckoutCard> {
         checkoutavailable = true;
       }
       totalamt = totalamt + finalDeliveryCost;
+      if (counter >= 0) {
+        widget.func();
+      }
+      counter += 1;
     });
   }
 
@@ -187,11 +193,14 @@ class _CheckoutCardState extends State<CheckoutCard> {
     setState(() {});
   }
 
+  int counter;
+
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
     getAllCartProducts(widget.currentAddress);
     getWalletBalance();
+    counter = 0;
     super.initState();
   }
 

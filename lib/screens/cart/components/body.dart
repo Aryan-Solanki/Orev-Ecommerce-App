@@ -142,10 +142,13 @@ class BodyState extends State<Body> {
     });
   }
 
-  bool loading = false;
+  bool loading;
+  int i;
 
   @override
   void initState() {
+    loading = true;
+    i = 0;
     user_key = AuthProvider().user.uid;
     getAllCartProducts(widget.currentAddress);
     super.initState();
@@ -160,9 +163,9 @@ class BodyState extends State<Body> {
     }
 
     stopLoading() {
-      setState(() {
-        loading = false;
-      });
+      // setState(() {
+      //   loading = false;
+      // });
     }
 
     changeAddress(CurrentAddress) {
@@ -248,6 +251,7 @@ class BodyState extends State<Body> {
                 ),
               ),
         CheckoutCard(
+          func: stopLoading,
           keys: keys,
           key: UniqueKey(),
           currentAddress: currentAddress,
