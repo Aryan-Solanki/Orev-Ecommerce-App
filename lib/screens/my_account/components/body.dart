@@ -7,7 +7,6 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
-
   @override
   _BodyState createState() => _BodyState();
 }
@@ -22,33 +21,42 @@ class _BodyState extends State<Body> {
           SizedBox(height: getProportionateScreenHeight(10)),
           HomeHeader(),
           SizedBox(height: getProportionateScreenHeight(10)),
-          Expanded( 
+          Expanded(
             child: Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text("Hello Aryan!!", style: headingStyle),
-                    Text(
-                      "Update your profile",
-                      style: TextStyle(fontSize: getProportionateScreenWidth(15)),
-                      textAlign: TextAlign.center,
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text("Hello Aryan!!", style: headingStyle),
+                        Text(
+                          "Update your profile",
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(15)),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.04),
+                        ProfilePic(
+                          camera: true,
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.04),
+                        UpdateProfileForm(),
+                        SizedBox(height: SizeConfig.screenHeight * 0.08),
+                        Text(
+                          'By continuing your confirm that you agree \nwith our Term and Condition',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(13)),
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.01),
+                      ],
                     ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.04),
-                    ProfilePic(camera: true,),
-                    SizedBox(height: SizeConfig.screenHeight * 0.04),
-                    UpdateProfileForm(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.08),
-                    Text(
-                      'By continuing your confirm that you agree \nwith our Term and Condition',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(13)
-                      ),
-                    ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.01),
-                  ],
+                  ),
                 ),
               ),
             ),

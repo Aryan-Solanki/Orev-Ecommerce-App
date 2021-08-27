@@ -140,774 +140,832 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
             HomeHeader(),
             SizedBox(height: getProportionateScreenHeight(10)),
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              DetailsScreen.routeName,
-                              arguments:
-                                  ProductDetailsArguments(product: product),
-                            );
-                          },
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${widget.order.product.title}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    16)),
-                                      ),
-                                      SizedBox(
-                                        height: getProportionateScreenHeight(5),
-                                      ),
-                                      Text(
-                                          "${widget.order.product.variant.title}",
-                                          style: TextStyle(
-                                              fontSize:
-                                                  getProportionateScreenWidth(
-                                                      12))),
-                                      SizedBox(
-                                        height: getProportionateScreenHeight(5),
-                                      ),
-                                      Text("Qty : ${widget.order.qty}",
-                                          style: TextStyle(
-                                              fontSize:
-                                                  getProportionateScreenWidth(
-                                                      12))),
-                                      SizedBox(
-                                        height: getProportionateScreenHeight(5),
-                                      ),
-                                      Text("Seller : $sellername",
-                                          style: TextStyle(
-                                              fontSize:
-                                                  getProportionateScreenWidth(
-                                                      12))),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: getProportionateScreenHeight(100),
-                                  width: getProportionateScreenWidth(100),
-                                  child: Image.network(
-                                      "${widget.order.product.variant.images[0]}"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        return_cancel_value == ""
-                            ? Center()
-                            : Text(
-                                return_cancel_value == "return"
-                                    ? "Your order is being process for returning"
-                                    : "This order has been cancelled",
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(15),
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                        Divider(color: Colors.black),
-                        return_cancel_value == "cancel"
-                            ? Center()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  return_cancel_value == "cancel"
-                                      ? Center()
-                                      : Text(
-                                          return_cancel_value == "return"
-                                              ? "Returning Address"
-                                              : "Shipping Address",
-                                          style: TextStyle(
-                                              fontSize:
-                                                  getProportionateScreenWidth(
-                                                      25),
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black),
-                                        ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  Text(""),
-                                  Container(
-                                    padding: EdgeInsets.all(
-                                        getProportionateScreenWidth(15)),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors
-                                              .black45, // red as border color
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "${widget.order.selectedAddress["name"]}",
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        getProportionateScreenWidth(
-                                                            20),
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black),
-                                              ),
-                                              SizedBox(
-                                                height:
-                                                    getProportionateScreenHeight(
-                                                        5),
-                                              ),
-                                              Text(
-                                                  "${widget.order.selectedAddress["adline1"]}",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              14))),
-                                              Text(
-                                                  "${widget.order.selectedAddress["adline2"]}",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              14))),
-                                              Text(
-                                                  "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              14))),
-                                              Text("Phone number: $userphone",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              14))),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                            height:
-                                                getProportionateScreenHeight(
-                                                    200),
-                                            child: SfLinearGauge(
-                                              orientation:
-                                                  LinearGaugeOrientation
-                                                      .vertical,
-                                              minimum: 0,
-                                              maximum: return_cancel_value == ""
-                                                  ? 30
-                                                  : 20,
-                                              labelOffset: 24,
-                                              isAxisInversed: true,
-                                              showTicks: false,
-                                              onGenerateLabels: () {
-                                                return return_cancel_value == ""
-                                                    ? <LinearAxisLabel>[
-                                                        const LinearAxisLabel(
-                                                            text: 'Ordered',
-                                                            value: 0),
-                                                        const LinearAxisLabel(
-                                                            text: 'Packed',
-                                                            value: 10),
-                                                        const LinearAxisLabel(
-                                                            text: 'Shipped',
-                                                            value: 20),
-                                                        const LinearAxisLabel(
-                                                            text: 'Delivered',
-                                                            value: 30),
-                                                      ]
-                                                    : <LinearAxisLabel>[
-                                                        const LinearAxisLabel(
-                                                            text:
-                                                                'Return Accepted',
-                                                            value: 0),
-                                                        const LinearAxisLabel(
-                                                            text: 'On the way',
-                                                            value: 10),
-                                                        const LinearAxisLabel(
-                                                            text: 'Returned',
-                                                            value: 20),
-                                                      ];
-                                              },
-                                              axisTrackStyle:
-                                                  LinearAxisTrackStyle(
-                                                color: _activeColor,
-                                              ),
-                                              barPointers: <LinearBarPointer>[
-                                                LinearBarPointer(
-                                                  value: _deliveryStatus,
-                                                  color: _activeColor,
-                                                  enableAnimation: false,
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                ),
-                                              ],
-                                              markerPointers: <
-                                                  LinearMarkerPointer>[
-                                                LinearWidgetPointer(
-                                                  value: _orderState,
-                                                  enableAnimation: false,
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                  child: Container(
-                                                    width:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    height:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            _deliveryStatus > 0
-                                                                ? _activeColor
-                                                                : Colors.white,
-                                                        border: Border.all(
-                                                            width: 4,
-                                                            color:
-                                                                _activeColor),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12))),
-                                                  ),
-                                                ),
-                                                LinearWidgetPointer(
-                                                  enableAnimation: false,
-                                                  value: _packedState,
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                  child: Container(
-                                                    width:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    height:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            _deliveryStatus > 10
-                                                                ? _activeColor
-                                                                : Colors.white,
-                                                        border: Border.all(
-                                                            width: 4,
-                                                            color:
-                                                                _activeColor),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12))),
-                                                  ),
-                                                ),
-                                                LinearWidgetPointer(
-                                                  value: _shippedState,
-                                                  enableAnimation: false,
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                  child: Container(
-                                                    width:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    height:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            _deliveryStatus > 20
-                                                                ? _activeColor
-                                                                : Colors.white,
-                                                        border: Border.all(
-                                                            width: 4,
-                                                            color:
-                                                                _activeColor),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12))),
-                                                  ),
-                                                ),
-                                                LinearWidgetPointer(
-                                                  value: _deliveredState,
-                                                  enableAnimation: false,
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                  child: Container(
-                                                    width:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    height:
-                                                        getProportionateScreenWidth(
-                                                            14),
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            _deliveryStatus > 30
-                                                                ? _activeColor
-                                                                : Colors.white,
-                                                        border: Border.all(
-                                                            width: 4,
-                                                            color:
-                                                                _activeColor),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12))),
-                                                  ),
-                                                ),
-                                                LinearShapePointer(
-                                                  animationDuration: 2000,
-                                                  value: _deliveryStatus,
-                                                  enableAnimation: true,
-                                                  color: _activeColor,
-                                                  width:
-                                                      getProportionateScreenWidth(
-                                                          14),
-                                                  height:
-                                                      getProportionateScreenWidth(
-                                                          14),
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross,
-                                                  shapeType:
-                                                      LinearShapePointerType
-                                                          .circle,
-                                                ),
-                                              ],
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  Divider(color: Colors.black),
-                                ],
-                              ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "Payment Information",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Container(
-                            padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black45, // red as border color
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Payment Method",
-                                  style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(18),
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  widget.order.cod
-                                      ? "Online Payment"
-                                      : "Cash On Delivery",
-                                  style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(15),
-                                      color: Colors.black),
-                                ),
-                                Divider(color: Colors.black),
-                                Text(
-                                  "Billing Address",
-                                  style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(18),
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  height: getProportionateScreenHeight(5),
-                                ),
-                                Text(
-                                    "${widget.order.selectedAddress["adline1"]}",
-                                    style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                        color: Colors.black)),
-                                Text(
-                                    "${widget.order.selectedAddress["adline2"]}",
-                                    style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                        color: Colors.black)),
-                                Text(
-                                    "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
-                                    style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                        color: Colors.black)),
-                                Text("Phone number: $userphone",
-                                    style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(15),
-                                        color: Colors.black)),
-                              ],
-                            )),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Divider(color: Colors.black),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "Order Summary",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Container(
-                            padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black45, // red as border color
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  DetailsScreen.routeName,
+                                  arguments:
+                                      ProductDetailsArguments(product: product),
+                                );
+                              },
+                              child: Container(
+                                child: Row(
                                   children: [
-                                    Text(
-                                      "Item Cost:",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(15)),
-                                    ),
-                                    Text(
-                                        "₹${widget.order.product.variant.price}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    15))),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Postage & Packing:",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(15)),
-                                    ),
-                                    Text("₹0.00",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize:
-                                                getProportionateScreenWidth(
-                                                    15))),
-                                  ],
-                                ),
-                                widget.order.usedOrevWallet
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Wallet Amount Used:",
+                                            "${widget.order.product.title}",
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
                                                     getProportionateScreenWidth(
-                                                        15)),
+                                                        16)),
+                                          ),
+                                          SizedBox(
+                                            height:
+                                                getProportionateScreenHeight(5),
                                           ),
                                           Text(
-                                              " - ₹${widget.order.orevWalletAmountUsed}",
+                                              "${widget.order.product.variant.title}",
                                               style: TextStyle(
-                                                  color: Colors.black,
                                                   fontSize:
                                                       getProportionateScreenWidth(
-                                                          15))),
+                                                          12))),
+                                          SizedBox(
+                                            height:
+                                                getProportionateScreenHeight(5),
+                                          ),
+                                          Text("Qty : ${widget.order.qty}",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          12))),
+                                          SizedBox(
+                                            height:
+                                                getProportionateScreenHeight(5),
+                                          ),
+                                          Text("Seller : $sellername",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          12))),
                                         ],
-                                      )
-                                    : Center(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total:",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              getProportionateScreenWidth(20),
-                                          fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                    Text("₹${widget.order.totalCost}",
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontSize:
-                                                getProportionateScreenWidth(20),
-                                            fontWeight: FontWeight.bold)),
+                                    Container(
+                                      height: getProportionateScreenHeight(100),
+                                      width: getProportionateScreenWidth(100),
+                                      child: Image.network(
+                                          "${widget.order.product.variant.images[0]}"),
+                                    ),
                                   ],
                                 ),
-                              ],
-                            )),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Divider(color: Colors.black),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "Transaction Summary",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Container(
-                          padding:
-                              EdgeInsets.all(getProportionateScreenWidth(15)),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black45, // red as border color
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Column(
-                            children: [
-                              DetailRow(
-                                  "Items",
-                                  "\₹${itemsCost}",
-                                  15.0,
-                                  FontWeight.normal,
-                                  Color(0xff777777),
-                                  Color(0xff777777)),
-                              DetailRow(
-                                  "Delivery",
-                                  "+ \₹${delivery}",
-                                  15.0,
-                                  FontWeight.normal,
-                                  Color(0xff777777),
-                                  Color(0xff777777)),
-                              DetailRow(
-                                  "Wallet",
-                                  "- \₹${wallet}",
-                                  15.0,
-                                  FontWeight.normal,
-                                  Color(0xff777777),
-                                  Color(0xff777777)),
-                              widget.order.cod
-                                  ? DetailRow(
-                                      "COD Charges",
-                                      "+ \₹${codCharges}",
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            return_cancel_value == ""
+                                ? Center()
+                                : Text(
+                                    return_cancel_value == "return"
+                                        ? "Your order is being process for returning"
+                                        : "This order has been cancelled",
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenWidth(15),
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                            Divider(color: Colors.black),
+                            return_cancel_value == "cancel"
+                                ? Center()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(10),
+                                      ),
+                                      return_cancel_value == "cancel"
+                                          ? Center()
+                                          : Text(
+                                              return_cancel_value == "return"
+                                                  ? "Returning Address"
+                                                  : "Shipping Address",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          25),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(10),
+                                      ),
+                                      Text(""),
+                                      Container(
+                                        padding: EdgeInsets.all(
+                                            getProportionateScreenWidth(15)),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors
+                                                  .black45, // red as border color
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${widget.order.selectedAddress["name"]}",
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                20),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        getProportionateScreenHeight(
+                                                            5),
+                                                  ),
+                                                  Text(
+                                                      "${widget.order.selectedAddress["adline1"]}",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14))),
+                                                  Text(
+                                                      "${widget.order.selectedAddress["adline2"]}",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14))),
+                                                  Text(
+                                                      "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14))),
+                                                  Text(
+                                                      "Phone number: $userphone",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  14))),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                                height:
+                                                    getProportionateScreenHeight(
+                                                        200),
+                                                child: SfLinearGauge(
+                                                  orientation:
+                                                      LinearGaugeOrientation
+                                                          .vertical,
+                                                  minimum: 0,
+                                                  maximum:
+                                                      return_cancel_value == ""
+                                                          ? 30
+                                                          : 20,
+                                                  labelOffset: 24,
+                                                  isAxisInversed: true,
+                                                  showTicks: false,
+                                                  onGenerateLabels: () {
+                                                    return return_cancel_value ==
+                                                            ""
+                                                        ? <LinearAxisLabel>[
+                                                            const LinearAxisLabel(
+                                                                text: 'Ordered',
+                                                                value: 0),
+                                                            const LinearAxisLabel(
+                                                                text: 'Packed',
+                                                                value: 10),
+                                                            const LinearAxisLabel(
+                                                                text: 'Shipped',
+                                                                value: 20),
+                                                            const LinearAxisLabel(
+                                                                text:
+                                                                    'Delivered',
+                                                                value: 30),
+                                                          ]
+                                                        : <LinearAxisLabel>[
+                                                            const LinearAxisLabel(
+                                                                text:
+                                                                    'Return Accepted',
+                                                                value: 0),
+                                                            const LinearAxisLabel(
+                                                                text:
+                                                                    'On the way',
+                                                                value: 10),
+                                                            const LinearAxisLabel(
+                                                                text:
+                                                                    'Returned',
+                                                                value: 20),
+                                                          ];
+                                                  },
+                                                  axisTrackStyle:
+                                                      LinearAxisTrackStyle(
+                                                    color: _activeColor,
+                                                  ),
+                                                  barPointers: <
+                                                      LinearBarPointer>[
+                                                    LinearBarPointer(
+                                                      value: _deliveryStatus,
+                                                      color: _activeColor,
+                                                      enableAnimation: false,
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                    ),
+                                                  ],
+                                                  markerPointers: <
+                                                      LinearMarkerPointer>[
+                                                    LinearWidgetPointer(
+                                                      value: _orderState,
+                                                      enableAnimation: false,
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                      child: Container(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        height:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                _deliveryStatus >
+                                                                        0
+                                                                    ? _activeColor
+                                                                    : Colors
+                                                                        .white,
+                                                            border: Border.all(
+                                                                width: 4,
+                                                                color:
+                                                                    _activeColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            12))),
+                                                      ),
+                                                    ),
+                                                    LinearWidgetPointer(
+                                                      enableAnimation: false,
+                                                      value: _packedState,
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                      child: Container(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        height:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                _deliveryStatus >
+                                                                        10
+                                                                    ? _activeColor
+                                                                    : Colors
+                                                                        .white,
+                                                            border: Border.all(
+                                                                width: 4,
+                                                                color:
+                                                                    _activeColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            12))),
+                                                      ),
+                                                    ),
+                                                    LinearWidgetPointer(
+                                                      value: _shippedState,
+                                                      enableAnimation: false,
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                      child: Container(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        height:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                _deliveryStatus >
+                                                                        20
+                                                                    ? _activeColor
+                                                                    : Colors
+                                                                        .white,
+                                                            border: Border.all(
+                                                                width: 4,
+                                                                color:
+                                                                    _activeColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            12))),
+                                                      ),
+                                                    ),
+                                                    LinearWidgetPointer(
+                                                      value: _deliveredState,
+                                                      enableAnimation: false,
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                      child: Container(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        height:
+                                                            getProportionateScreenWidth(
+                                                                14),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                _deliveryStatus >
+                                                                        30
+                                                                    ? _activeColor
+                                                                    : Colors
+                                                                        .white,
+                                                            border: Border.all(
+                                                                width: 4,
+                                                                color:
+                                                                    _activeColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            12))),
+                                                      ),
+                                                    ),
+                                                    LinearShapePointer(
+                                                      animationDuration: 2000,
+                                                      value: _deliveryStatus,
+                                                      enableAnimation: true,
+                                                      color: _activeColor,
+                                                      width:
+                                                          getProportionateScreenWidth(
+                                                              14),
+                                                      height:
+                                                          getProportionateScreenWidth(
+                                                              14),
+                                                      position:
+                                                          LinearElementPosition
+                                                              .cross,
+                                                      shapeType:
+                                                          LinearShapePointerType
+                                                              .circle,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(10),
+                                      ),
+                                      Divider(color: Colors.black),
+                                    ],
+                                  ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Text(
+                              "Payment Information",
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(25),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Container(
+                                padding: EdgeInsets.all(
+                                    getProportionateScreenWidth(15)),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color:
+                                          Colors.black45, // red as border color
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Payment Method",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(18),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    Text(
+                                      widget.order.cod
+                                          ? "Online Payment"
+                                          : "Cash On Delivery",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(15),
+                                          color: Colors.black),
+                                    ),
+                                    Divider(color: Colors.black),
+                                    Text(
+                                      "Billing Address",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(18),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(5),
+                                    ),
+                                    Text(
+                                        "${widget.order.selectedAddress["adline1"]}",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
+                                            color: Colors.black)),
+                                    Text(
+                                        "${widget.order.selectedAddress["adline2"]}",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
+                                            color: Colors.black)),
+                                    Text(
+                                        "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
+                                            color: Colors.black)),
+                                    Text("Phone number: $userphone",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
+                                            color: Colors.black)),
+                                  ],
+                                )),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                            Divider(color: Colors.black),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Text(
+                              "Order Summary",
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(25),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Container(
+                                padding: EdgeInsets.all(
+                                    getProportionateScreenWidth(15)),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color:
+                                          Colors.black45, // red as border color
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Item Cost:",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      15)),
+                                        ),
+                                        Text(
+                                            "₹${widget.order.product.variant.price}",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        15))),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Postage & Packing:",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      15)),
+                                        ),
+                                        Text("₹0.00",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        15))),
+                                      ],
+                                    ),
+                                    widget.order.usedOrevWallet
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Wallet Amount Used:",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize:
+                                                        getProportionateScreenWidth(
+                                                            15)),
+                                              ),
+                                              Text(
+                                                  " - ₹${widget.order.orevWalletAmountUsed}",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              15))),
+                                            ],
+                                          )
+                                        : Center(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Total:",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      20),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text("₹${widget.order.totalCost}",
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize:
+                                                    getProportionateScreenWidth(
+                                                        20),
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                            Divider(color: Colors.black),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Text(
+                              "Transaction Summary",
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(25),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(
+                                  getProportionateScreenWidth(15)),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color:
+                                        Colors.black45, // red as border color
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Column(
+                                children: [
+                                  DetailRow(
+                                      "Items",
+                                      "\₹${itemsCost}",
                                       15.0,
                                       FontWeight.normal,
                                       Color(0xff777777),
-                                      Color(0xff777777))
-                                  : Center(),
-                              SizedBox(
-                                height: getProportionateScreenHeight(10),
-                              ),
-                              DetailRow("Order Total:", "\₹${orderTotal}", 20.0,
-                                  FontWeight.w800, Colors.black, kPrimaryColor),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        invoice == true
-                            ? Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final date = DateTime.now();
-                                    final dueDate = date.add(Duration(days: 7));
-                                    final invoice = Invoice(
-                                      supplier: Supplier(
-                                        name: 'Sarah Field',
-                                        address:
-                                            'Sarah Street 9, Beijing, China',
-                                        paymentInfo:
-                                            'https://paypal.me/sarahfieldzz',
-                                      ),
-                                      customer: Customer(
-                                        name: 'Apple Inc.',
-                                        address:
-                                            'Apple Street, Cupertino, CA 95014',
-                                      ),
-                                      info: InvoiceInfo(
-                                        date: date,
-                                        dueDate: dueDate,
-                                        description: 'My description...',
-                                        number: '${DateTime.now().year}-9999',
-                                      ),
-                                      items: [
-                                        InvoiceItem(
-                                          description: 'Coffee',
-                                          date: DateTime.now(),
-                                          quantity: 3,
-                                          vat: 0.19,
-                                          unitPrice: 5.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Water',
-                                          date: DateTime.now(),
-                                          quantity: 8,
-                                          vat: 0.19,
-                                          unitPrice: 0.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Orange',
-                                          date: DateTime.now(),
-                                          quantity: 3,
-                                          vat: 0.19,
-                                          unitPrice: 2.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Apple',
-                                          date: DateTime.now(),
-                                          quantity: 8,
-                                          vat: 0.19,
-                                          unitPrice: 3.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Mango',
-                                          date: DateTime.now(),
-                                          quantity: 1,
-                                          vat: 0.19,
-                                          unitPrice: 1.59,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Blue Berries',
-                                          date: DateTime.now(),
-                                          quantity: 5,
-                                          vat: 0.19,
-                                          unitPrice: 0.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Lemon',
-                                          date: DateTime.now(),
-                                          quantity: 4,
-                                          vat: 0.19,
-                                          unitPrice: 1.29,
-                                        ),
-                                      ],
-                                    );
-
-                                    final pdfFile =
-                                        await PdfInvoiceApi.generate(invoice);
-
-                                    PdfApi.openFile(pdfFile);
-                                  },
-                                  child: Text(
-                                    "Download Invoice",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize:
-                                            getProportionateScreenWidth(13)),
-                                  ),
-                                ),
-                              )
-                            : Center(),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        return_cancel_value == ""
-                            ? Column(
-                                children: [
-                                  DefaultButton(
-                                    color: kPrimaryColor2,
-                                    text: "Return/Replacement",
-                                    press: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ReturnCancel(
-                                                  formname: "Return Form",
-                                                )),
-                                      );
-                                    },
-                                  ),
+                                      Color(0xff777777)),
+                                  DetailRow(
+                                      "Delivery",
+                                      "+ \₹${delivery}",
+                                      15.0,
+                                      FontWeight.normal,
+                                      Color(0xff777777),
+                                      Color(0xff777777)),
+                                  DetailRow(
+                                      "Wallet",
+                                      "- \₹${wallet}",
+                                      15.0,
+                                      FontWeight.normal,
+                                      Color(0xff777777),
+                                      Color(0xff777777)),
+                                  widget.order.cod
+                                      ? DetailRow(
+                                          "COD Charges",
+                                          "+ \₹${codCharges}",
+                                          15.0,
+                                          FontWeight.normal,
+                                          Color(0xff777777),
+                                          Color(0xff777777))
+                                      : Center(),
                                   SizedBox(
-                                    height: getProportionateScreenHeight(20),
+                                    height: getProportionateScreenHeight(10),
                                   ),
-                                  DefaultButton(
-                                    color: Colors.red,
-                                    text: "Cancel",
-                                    press: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ReturnCancel(
-                                                  formname: "Cancel Form",
-                                                )),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(20),
-                                  ),
+                                  DetailRow(
+                                      "Order Total:",
+                                      "\₹${orderTotal}",
+                                      20.0,
+                                      FontWeight.w800,
+                                      Colors.black,
+                                      kPrimaryColor),
                                 ],
-                              )
-                            : Center(),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                      ]),
+                              ),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            invoice == true
+                                ? Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        final date = DateTime.now();
+                                        final dueDate =
+                                            date.add(Duration(days: 7));
+                                        final invoice = Invoice(
+                                          supplier: Supplier(
+                                            name: 'Sarah Field',
+                                            address:
+                                                'Sarah Street 9, Beijing, China',
+                                            paymentInfo:
+                                                'https://paypal.me/sarahfieldzz',
+                                          ),
+                                          customer: Customer(
+                                            name: 'Apple Inc.',
+                                            address:
+                                                'Apple Street, Cupertino, CA 95014',
+                                          ),
+                                          info: InvoiceInfo(
+                                            date: date,
+                                            dueDate: dueDate,
+                                            description: 'My description...',
+                                            number:
+                                                '${DateTime.now().year}-9999',
+                                          ),
+                                          items: [
+                                            InvoiceItem(
+                                              description: 'Coffee',
+                                              date: DateTime.now(),
+                                              quantity: 3,
+                                              vat: 0.19,
+                                              unitPrice: 5.99,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Water',
+                                              date: DateTime.now(),
+                                              quantity: 8,
+                                              vat: 0.19,
+                                              unitPrice: 0.99,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Orange',
+                                              date: DateTime.now(),
+                                              quantity: 3,
+                                              vat: 0.19,
+                                              unitPrice: 2.99,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Apple',
+                                              date: DateTime.now(),
+                                              quantity: 8,
+                                              vat: 0.19,
+                                              unitPrice: 3.99,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Mango',
+                                              date: DateTime.now(),
+                                              quantity: 1,
+                                              vat: 0.19,
+                                              unitPrice: 1.59,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Blue Berries',
+                                              date: DateTime.now(),
+                                              quantity: 5,
+                                              vat: 0.19,
+                                              unitPrice: 0.99,
+                                            ),
+                                            InvoiceItem(
+                                              description: 'Lemon',
+                                              date: DateTime.now(),
+                                              quantity: 4,
+                                              vat: 0.19,
+                                              unitPrice: 1.29,
+                                            ),
+                                          ],
+                                        );
+
+                                        final pdfFile =
+                                            await PdfInvoiceApi.generate(
+                                                invoice);
+
+                                        PdfApi.openFile(pdfFile);
+                                      },
+                                      child: Text(
+                                        "Download Invoice",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize:
+                                                getProportionateScreenWidth(
+                                                    13)),
+                                      ),
+                                    ),
+                                  )
+                                : Center(),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                            return_cancel_value == ""
+                                ? Column(
+                                    children: [
+                                      DefaultButton(
+                                        color: kPrimaryColor2,
+                                        text: "Return/Replacement",
+                                        press: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ReturnCancel(
+                                                      formname: "Return Form",
+                                                    )),
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(20),
+                                      ),
+                                      DefaultButton(
+                                        color: Colors.red,
+                                        text: "Cancel",
+                                        press: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ReturnCancel(
+                                                      formname: "Cancel Form",
+                                                    )),
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(20),
+                                      ),
+                                    ],
+                                  )
+                                : Center(),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                          ]),
+                    ),
+                  ),
                 ),
               ),
             )

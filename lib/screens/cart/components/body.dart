@@ -87,6 +87,7 @@ class BodyState extends State<Body> {
   }
 
   Future<void> getAllCartProducts(currentAddress) async {
+    loading = true;
     for (var k in widget.keys) {
       ProductServices _services = new ProductServices();
       UserServices _user_services = new UserServices();
@@ -136,8 +137,12 @@ class BodyState extends State<Body> {
         }
       }
     }
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
   }
+
+  bool loading = false;
 
   @override
   void initState() {
@@ -154,6 +159,12 @@ class BodyState extends State<Body> {
       });
     }
 
+    stopLoading() {
+      setState(() {
+        loading = false;
+      });
+    }
+
     changeAddress(CurrentAddress) {
       setState(() {
         CartList = [];
@@ -166,65 +177,76 @@ class BodyState extends State<Body> {
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
         AddressHeader(
+          loading: loading,
           address: true,
           notifyParent: changeAddress,
         ),
         SizedBox(height: getProportionateScreenHeight(10)),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: ScrollConfiguration(
-              behavior: ScrollBehavior(),
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color: kPrimaryColor2,
-                child: ListView.builder(
-                  itemCount: CartList.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Dismissible(
-                      key: Key(CartList[index].product.id.toString()),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) {
-                        removeFromCart(CartList[index].varientNumber,
-                            CartList[index].product.id);
-                        CartList.removeAt(index);
-                        widget.notifyParent();
-                      },
-                      background: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFFE6E6),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            SvgPicture.asset("assets/icons/Trash.svg"),
-                          ],
+        !loading
+            ? Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: ScrollConfiguration(
+                    behavior: ScrollBehavior(),
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.down,
+                      color: kPrimaryColor2,
+                      child: ListView.builder(
+                        itemCount: CartList.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Dismissible(
+                            key: Key(CartList[index].product.id.toString()),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) {
+                              removeFromCart(CartList[index].varientNumber,
+                                  CartList[index].product.id);
+                              CartList.removeAt(index);
+                              widget.notifyParent();
+                            },
+                            background: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFFE6E6),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  SvgPicture.asset("assets/icons/Trash.svg"),
+                                ],
+                              ),
+                            ),
+                            child: CartList[index].deliverable
+                                ? CartCard(
+                                    cart: CartList[index],
+                                    notifyParent: refresh,
+                                    key: UniqueKey(),
+                                    errorvalue: "", //not_deliverable
+                                  )
+                                : CartCard(
+                                    cart: CartList[index],
+                                    notifyParent: refresh,
+                                    key: UniqueKey(),
+                                    errorvalue:
+                                        "not_deliverable", //not_deliverable
+                                  ),
+                          ),
                         ),
                       ),
-                      child: CartList[index].deliverable
-                          ? CartCard(
-                              cart: CartList[index],
-                              notifyParent: refresh,
-                              key: UniqueKey(),
-                              errorvalue: "", //not_deliverable
-                            )
-                          : CartCard(
-                              cart: CartList[index],
-                              notifyParent: refresh,
-                              key: UniqueKey(),
-                              errorvalue: "not_deliverable", //not_deliverable
-                            ),
                     ),
                   ),
                 ),
+              )
+            : Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         CheckoutCard(
           keys: keys,
           key: UniqueKey(),
@@ -238,6 +260,7 @@ class BodyState extends State<Body> {
 class AddressHeader extends StatefulWidget {
   final bool simplebutton;
   final bool address;
+  final bool loading;
   final Function func;
   final Function(Map) notifyParent;
   const AddressHeader({
@@ -245,6 +268,7 @@ class AddressHeader extends StatefulWidget {
     bool this.address = false,
     @required this.func,
     @required this.notifyParent,
+    @required this.loading,
     Key key,
   }) : super(key: key);
 
@@ -347,52 +371,62 @@ class _AddressHeaderState extends State<AddressHeader> {
       widget.func(value, boo);
     }
 
+    bool rukbc = false;
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: SizeConfig.screenWidth * 0.75,
-            height: getProportionateScreenHeight(65),
-            child: MenuButton<String>(
-              menuButtonBackgroundColor: Colors.transparent,
-              decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(
-                      0.1), //border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(15.0),
-                  )),
-              child: normalChildButton,
-              items: addresses,
-              itemBuilder: (String value) => Container(
-                color: kSecondaryColor.withOpacity(0.1),
-                height: getProportionateScreenHeight(65),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(10)),
-                child: Text(value,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
-                    overflow: TextOverflow.ellipsis),
-              ),
-              toggledChild: Container(
+          StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              width: SizeConfig.screenWidth * 0.75,
+              height: getProportionateScreenHeight(65),
+              child: MenuButton<String>(
+                menuButtonBackgroundColor: Colors.transparent,
+                decoration: BoxDecoration(
+                    color: kSecondaryColor.withOpacity(
+                        0.1), //border: Border.all(color: Colors.grey[300]!),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15.0),
+                    )),
                 child: normalChildButton,
+                items: addresses,
+                itemBuilder: (String value) => !rukbc
+                    ? Container(
+                        color: kSecondaryColor.withOpacity(0.1),
+                        height: getProportionateScreenHeight(65),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(10)),
+                        child: Text(value,
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(13)),
+                            overflow: TextOverflow.ellipsis),
+                      )
+                    : Center(),
+                toggledChild: Container(
+                  child: normalChildButton,
+                ),
+                onItemSelected: (String value) {
+                  setState(() {
+                    if (!widget.loading) {
+                      if (value == addresses[addresses.length - 1]) {
+                        Navigator.pushNamed(context, Address.routeName);
+                      } else {
+                        selectedKey = value;
+                        CurrentAddress = addressMapFinal[selectedKey];
+                        widget.notifyParent(CurrentAddress);
+                      }
+                    }
+                  });
+                },
+                onMenuButtonToggle: (bool isToggle) {},
               ),
-              onItemSelected: (String value) {
-                setState(() {
-                  if (value == addresses[addresses.length - 1]) {
-                    Navigator.pushNamed(context, Address.routeName);
-                  } else {
-                    selectedKey = value;
-                    CurrentAddress = addressMapFinal[selectedKey];
-                    widget.notifyParent(CurrentAddress);
-                  }
-                });
-              },
-              onMenuButtonToggle: (bool isToggle) {},
-            ),
-          ),
+            );
+          }),
           numberOfItems == 0
               ? IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",

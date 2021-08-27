@@ -211,328 +211,342 @@ class _BodyState extends State<Body> {
               return true;
             },
             child: Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
-                  child: Column(
-                    children: [
-                      Row(
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: Column(
                         children: [
-                          Container(
-                            height: getProportionateScreenHeight(80),
-                            width: getProportionateScreenWidth(80),
-                            child: Image.network(widget.product
-                                .varients[selectedFoodVariants].images[0]),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.product.title,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize:
-                                          getProportionateScreenWidth(15)),
+                          Row(
+                            children: [
+                              Container(
+                                height: getProportionateScreenHeight(80),
+                                width: getProportionateScreenWidth(80),
+                                child: Image.network(widget.product
+                                    .varients[selectedFoodVariants].images[0]),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              getProportionateScreenWidth(15)),
+                                    ),
+                                    Text(
+                                      "${widget.product.varients[selectedFoodVariants].title}",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(13)),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  "${widget.product.varients[selectedFoodVariants].title}",
-                                  style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenWidth(13)),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      Divider(
-                        color: Colors.black,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              width: getProportionateScreenWidth(90),
-                              child: Text(
-                                "Deliver to",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              )),
-                          SizedBox(
-                            width: getProportionateScreenWidth(20),
+                              )
+                            ],
                           ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  SelectedAddress["name"],
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          getProportionateScreenWidth(16)),
-                                ),
-                                Text(
-                                  SelectedAddress["adline1"] +
-                                      " " +
-                                      SelectedAddress["adline2"] +
-                                      " " +
-                                      SelectedAddress["city"] +
-                                      " " +
-                                      SelectedAddress["state"],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenWidth(14)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.black,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              width: getProportionateScreenWidth(90),
-                              child: Text(
-                                "Pay with",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              )),
-                          SizedBox(
-                            width: getProportionateScreenWidth(20),
-                          ),
-                          Text(
-                            "Cash on Delivery (COD)",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: getProportionateScreenWidth(16)),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.black,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              width: getProportionateScreenWidth(90),
-                              child: Text(
-                                "COD Charges",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              )),
-                          SizedBox(
-                            width: getProportionateScreenWidth(20),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "\₹${codSellerCharge}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          getProportionateScreenWidth(16)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.black,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              width: getProportionateScreenWidth(90),
-                              child: Text(
-                                "Total",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: getProportionateScreenWidth(16)),
-                              )),
-                          SizedBox(
-                            width: getProportionateScreenWidth(20),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "\₹${totalCost}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          getProportionateScreenWidth(16)),
-                                ),
-                                Text(
-                                  "(includes tax + Delivery + COD Charges)",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenWidth(14)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(35)),
-                      SwipeButton(
-                        thumb: Icon(Icons.double_arrow_outlined),
-                        activeThumbColor: kPrimaryColor4,
-                        borderRadius: BorderRadius.circular(8),
-                        activeTrackColor: kPrimaryColor3,
-                        height: getProportionateScreenHeight(70),
-                        child: Text(
-                          "Swipe to place your order",
-                          style: TextStyle(
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          Divider(
                             color: Colors.black,
-                            fontSize: getProportionateScreenWidth(12),
                           ),
-                        ),
-                        onSwipe: () async {
-                          String authkey =
-                              UserSimplePreferences.getAuthKey() ?? "";
-                          if (authkey == "") {
-                            print("Some error occured");
-                          }
-                          String orderId =
-                              DateTime.now().millisecondsSinceEpoch.toString();
+                          Row(
+                            children: [
+                              Container(
+                                  width: getProportionateScreenWidth(90),
+                                  child: Text(
+                                    "Deliver to",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize:
+                                            getProportionateScreenWidth(16)),
+                                  )),
+                              SizedBox(
+                                width: getProportionateScreenWidth(20),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      SelectedAddress["name"],
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              getProportionateScreenWidth(16)),
+                                    ),
+                                    Text(
+                                      SelectedAddress["adline1"] +
+                                          " " +
+                                          SelectedAddress["adline2"] +
+                                          " " +
+                                          SelectedAddress["city"] +
+                                          " " +
+                                          SelectedAddress["state"],
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(14)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: getProportionateScreenWidth(90),
+                                  child: Text(
+                                    "Pay with",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize:
+                                            getProportionateScreenWidth(16)),
+                                  )),
+                              SizedBox(
+                                width: getProportionateScreenWidth(20),
+                              ),
+                              Text(
+                                "Cash on Delivery (COD)",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: getProportionateScreenWidth(16)),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: getProportionateScreenWidth(90),
+                                  child: Text(
+                                    "COD Charges",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize:
+                                            getProportionateScreenWidth(16)),
+                                  )),
+                              SizedBox(
+                                width: getProportionateScreenWidth(20),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "\₹${codSellerCharge}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              getProportionateScreenWidth(16)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: getProportionateScreenWidth(90),
+                                  child: Text(
+                                    "Total",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize:
+                                            getProportionateScreenWidth(16)),
+                                  )),
+                              SizedBox(
+                                width: getProportionateScreenWidth(20),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "\₹${totalCost}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              getProportionateScreenWidth(16)),
+                                    ),
+                                    Text(
+                                      "(includes tax + Delivery + COD Charges)",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(14)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(35)),
+                          SwipeButton(
+                            thumb: Icon(Icons.double_arrow_outlined),
+                            activeThumbColor: kPrimaryColor4,
+                            borderRadius: BorderRadius.circular(8),
+                            activeTrackColor: kPrimaryColor3,
+                            height: getProportionateScreenHeight(70),
+                            child: Text(
+                              "Swipe to place your order",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: getProportionateScreenWidth(12),
+                              ),
+                            ),
+                            onSwipe: () async {
+                              String authkey =
+                                  UserSimplePreferences.getAuthKey() ?? "";
+                              if (authkey == "") {
+                                print("Some error occured");
+                              }
+                              String orderId = DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString();
 
-                          String transactionId = "COD";
+                              String transactionId = "COD";
 
-                          Order order = Order(
-                              qty: quantity,
-                              transactionId: transactionId,
-                              cod: true,
-                              deliveryBoy: "",
-                              deliveryCost: finalDeliveryCost,
-                              orderStatus: "Ordered",
-                              product: new OrderProduct(
-                                  brandname: widget.product.brandname,
-                                  id: widget.product.id,
-                                  sellerId: widget.product.sellerId,
-                                  title: widget.product.title,
-                                  detail: widget.product.detail,
-                                  variant: widget
-                                      .product.varients[selectedFoodVariants],
-                                  tax: widget.product.tax),
-                              orderId: orderId,
-                              totalCost: totalCost,
-                              userId: authkey,
-                              timestamp: DateTime.now().toString(),
-                              selectedAddress: SelectedAddress,
-                              responseMsg: "Cash on Delivery order",
-                              codcharges: codSellerCharge,
-                              usedOrevWallet: orevwallet,
-                              orevWalletAmountUsed: usedWalletMoney);
+                              Order order = Order(
+                                  qty: quantity,
+                                  transactionId: transactionId,
+                                  cod: true,
+                                  deliveryBoy: "",
+                                  deliveryCost: finalDeliveryCost,
+                                  orderStatus: "Ordered",
+                                  product: new OrderProduct(
+                                      brandname: widget.product.brandname,
+                                      id: widget.product.id,
+                                      sellerId: widget.product.sellerId,
+                                      title: widget.product.title,
+                                      detail: widget.product.detail,
+                                      variant: widget.product
+                                          .varients[selectedFoodVariants],
+                                      tax: widget.product.tax),
+                                  orderId: orderId,
+                                  totalCost: totalCost,
+                                  userId: authkey,
+                                  timestamp: DateTime.now().toString(),
+                                  selectedAddress: SelectedAddress,
+                                  responseMsg: "Cash on Delivery order",
+                                  codcharges: codSellerCharge,
+                                  usedOrevWallet: orevwallet,
+                                  orevWalletAmountUsed: usedWalletMoney);
 
-                          var values = {
-                            "qty": order.qty,
-                            "cod": order.cod,
-                            "deliveryBoy": order.deliveryBoy,
-                            "deliveryCost": order.deliveryCost,
-                            "orderStatus": order.orderStatus,
-                            "product": {
-                              "brandname": order.product.brandname,
-                              "id": order.product.id,
-                              "sellerId": order.product.sellerId,
-                              "title": order.product.title,
-                              "detail": order.product.detail,
-                              "variant": {
-                                "title": order.product.variant.title,
-                                "default":
-                                    order.product.variant.default_product,
-                                "id": order.product.variant.id,
-                                "onSale": {
-                                  "comparedPrice":
-                                      order.product.variant.comparedPrice,
-                                  "discountPercentage":
-                                      order.product.variant.discountPercentage,
-                                  "isOnSale": order.product.variant.isOnSale,
+                              var values = {
+                                "qty": order.qty,
+                                "cod": order.cod,
+                                "deliveryBoy": order.deliveryBoy,
+                                "deliveryCost": order.deliveryCost,
+                                "orderStatus": order.orderStatus,
+                                "product": {
+                                  "brandname": order.product.brandname,
+                                  "id": order.product.id,
+                                  "sellerId": order.product.sellerId,
+                                  "title": order.product.title,
+                                  "detail": order.product.detail,
+                                  "variant": {
+                                    "title": order.product.variant.title,
+                                    "default":
+                                        order.product.variant.default_product,
+                                    "id": order.product.variant.id,
+                                    "onSale": {
+                                      "comparedPrice":
+                                          order.product.variant.comparedPrice,
+                                      "discountPercentage": order
+                                          .product.variant.discountPercentage,
+                                      "isOnSale":
+                                          order.product.variant.isOnSale,
+                                    },
+                                    "price": order.product.variant.price,
+                                    "stock": {
+                                      "inStock": order.product.variant.inStock,
+                                      "qty": order.product.variant.qty
+                                    },
+                                    "variantDetails": {
+                                      "images": order.product.variant.images,
+                                      "title": order.product.variant.title,
+                                    },
+                                  },
+                                  "tax": order.product.tax,
                                 },
-                                "price": order.product.variant.price,
-                                "stock": {
-                                  "inStock": order.product.variant.inStock,
-                                  "qty": order.product.variant.qty
+                                "orderId": order.orderId,
+                                "totalCost": order.totalCost,
+                                "userId": order.userId,
+                                "timestamp": order.timestamp,
+                                "responseMsg": order.responseMsg,
+                                "address": {
+                                  "name": SelectedAddress["name"],
+                                  "adline1": SelectedAddress["adline1"],
+                                  "adline2": SelectedAddress["adline2"],
+                                  "city": SelectedAddress["city"],
+                                  "state": SelectedAddress["state"],
+                                  "pincode": SelectedAddress["pincode"],
                                 },
-                                "variantDetails": {
-                                  "images": order.product.variant.images,
-                                  "title": order.product.variant.title,
-                                },
-                              },
-                              "tax": order.product.tax,
+                                "codcharges": order.codcharges,
+                                "usedOrevWallet": order.usedOrevWallet,
+                                "orevWalletAmountUsed":
+                                    order.orevWalletAmountUsed,
+                                "transactionId": transactionId,
+                              };
+                              OrderServices _services = new OrderServices();
+
+                              try {
+                                await _services.addOrder(values, order.orderId);
+                                Fluttertoast.showToast(
+                                    msg: "Order Placed",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 2,
+                                    gravity: ToastGravity.BOTTOM);
+                                updateWalletBalance(
+                                    newwalletbalance, orderId, order.timestamp);
+                                Navigator.push(
+                                    context,
+                                    (MaterialPageRoute(
+                                        builder: (context) => PaymentSuccess(
+                                              transaction_success: true,
+                                              order: order,
+                                              cod: true,
+                                            ))));
+                              } catch (e) {
+                                Fluttertoast.showToast(
+                                    msg: e.toString(),
+                                    toastLength: Toast.LENGTH_LONG,
+                                    timeInSecForIosWeb: 2,
+                                    gravity: ToastGravity.BOTTOM);
+                              }
                             },
-                            "orderId": order.orderId,
-                            "totalCost": order.totalCost,
-                            "userId": order.userId,
-                            "timestamp": order.timestamp,
-                            "responseMsg": order.responseMsg,
-                            "address": {
-                              "name": SelectedAddress["name"],
-                              "adline1": SelectedAddress["adline1"],
-                              "adline2": SelectedAddress["adline2"],
-                              "city": SelectedAddress["city"],
-                              "state": SelectedAddress["state"],
-                              "pincode": SelectedAddress["pincode"],
-                            },
-                            "codcharges": order.codcharges,
-                            "usedOrevWallet": order.usedOrevWallet,
-                            "orevWalletAmountUsed": order.orevWalletAmountUsed,
-                            "transactionId": transactionId,
-                          };
-                          OrderServices _services = new OrderServices();
-
-                          try {
-                            await _services.addOrder(values, order.orderId);
-                            Fluttertoast.showToast(
-                                msg: "Order Placed",
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 2,
-                                gravity: ToastGravity.BOTTOM);
-                            updateWalletBalance(
-                                newwalletbalance, orderId, order.timestamp);
-                            Navigator.push(
-                                context,
-                                (MaterialPageRoute(
-                                    builder: (context) => PaymentSuccess(
-                                          transaction_success: true,
-                                          order: order,
-                                          cod: true,
-                                        ))));
-                          } catch (e) {
-                            Fluttertoast.showToast(
-                                msg: e.toString(),
-                                toastLength: Toast.LENGTH_LONG,
-                                timeInSecForIosWeb: 2,
-                                gravity: ToastGravity.BOTTOM);
-                          }
-                        },
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          Text(
+                            "By placing your order, you agree to Orev's privacy notice and conditions of use.",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12)),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                        ],
                       ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      Text(
-                        "By placing your order, you agree to Orev's privacy notice and conditions of use.",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(12)),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -658,487 +672,561 @@ class _BodyState extends State<Body> {
           child: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Choose your location",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(23),
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(5)),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Choose a delivery address for your product.",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(12),
-                            color: Color(0xff565656),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      StatefulBuilder(
-                        builder: (BuildContext context, StateSetter setState) {
-                          return Column(
-                            children: [
-                              Container(
-                                height: getProportionateScreenHeight(180),
-                                child: ListView.builder(
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: addressmap.length,
-                                  itemBuilder: (context, i) {
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        var distanceInMeters =
-                                            addressmap[i]["distanceInMeters"];
-
-                                        if ((distanceInMeters / 1000) <
-                                            sellingdistance) {
-                                          deliverable = true;
-                                        } else {
-                                          deliverable = false;
-                                        }
-                                        _radioSelected = i;
-                                        SelectedAddress = addressmap[i];
-                                        await getFinalCost(
-                                            SelectedAddress, true);
-                                        setState(() {});
-                                      },
-                                      child: Container(
-                                          width:
-                                              getProportionateScreenWidth(200),
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 5),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 3, horizontal: 13),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: _radioSelected == i
-                                                  ? kPrimaryColor2
-                                                  : Color(0xff565656),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Text(
-                                                  addressmap[i]["name"],
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              18),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height:
-                                                    getProportionateScreenHeight(
-                                                        15),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      addressmap[i]["adline1"],
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              getProportionateScreenWidth(
-                                                                  14),
-                                                          color: Colors.black),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          getProportionateScreenHeight(
-                                                              3),
-                                                    ),
-                                                    Text(
-                                                      addressmap[i]["adline2"],
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              getProportionateScreenWidth(
-                                                                  14),
-                                                          color: Colors.black),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          getProportionateScreenHeight(
-                                                              3),
-                                                    ),
-                                                    Text(
-                                                      addressmap[i]["city"] +
-                                                          " ," +
-                                                          addressmap[i]
-                                                              ["state"],
-                                                      maxLines: 1,
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              getProportionateScreenWidth(
-                                                                  14),
-                                                          color: Colors.black),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          getProportionateScreenHeight(
-                                                              3),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          )),
-                                    );
-                                  },
-                                ),
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: kPrimaryColor2,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Choose your location",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenWidth(23),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(
-                                  height: getProportionateScreenHeight(10)),
-                              StatefulBuilder(
-                                  builder: (BuildContext context, setState) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          _navigateAndDisplaySelection(context);
-                                        },
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            "Add New Address",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    getProportionateScreenWidth(
-                                                        13),
-                                                color: Colors.blue,
-                                                decoration:
-                                                    TextDecoration.underline),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    coupon == "aryan"
-                                        ? Text(
-                                            "You saved \₹$coupon_value",
-                                            style: TextStyle(
-                                              fontSize:
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(5)),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Choose a delivery address for your product.",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12),
+                                color: Color(0xff565656),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(10)),
+                          StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: getProportionateScreenHeight(180),
+                                    child: ListView.builder(
+                                      // physics: NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: addressmap.length,
+                                      itemBuilder: (context, i) {
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            var distanceInMeters = addressmap[i]
+                                                ["distanceInMeters"];
+
+                                            if ((distanceInMeters / 1000) <
+                                                sellingdistance) {
+                                              deliverable = true;
+                                            } else {
+                                              deliverable = false;
+                                            }
+                                            _radioSelected = i;
+                                            SelectedAddress = addressmap[i];
+                                            await getFinalCost(
+                                                SelectedAddress, true);
+                                            setState(() {});
+                                          },
+                                          child: Container(
+                                              width:
                                                   getProportionateScreenWidth(
-                                                      13),
-                                            ),
-                                          )
-                                        : coupon == ""
-                                            ? Text("",
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      getProportionateScreenWidth(
-                                                          13),
-                                                ))
-                                            : Text("Invalid Coupon",
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      getProportionateScreenWidth(
-                                                          13),
-                                                )),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                                      200),
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 5, horizontal: 5),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3, horizontal: 13),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color: _radioSelected == i
+                                                      ? kPrimaryColor2
+                                                      : Color(0xff565656),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Text(
+                                                      addressmap[i]["name"],
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  18),
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        getProportionateScreenHeight(
+                                                            15),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          addressmap[i]
+                                                              ["adline1"],
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      14),
+                                                              color:
+                                                                  Colors.black),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              getProportionateScreenHeight(
+                                                                  3),
+                                                        ),
+                                                        Text(
+                                                          addressmap[i]
+                                                              ["adline2"],
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      14),
+                                                              color:
+                                                                  Colors.black),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              getProportionateScreenHeight(
+                                                                  3),
+                                                        ),
+                                                        Text(
+                                                          addressmap[i]
+                                                                  ["city"] +
+                                                              " ," +
+                                                              addressmap[i]
+                                                                  ["state"],
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  getProportionateScreenWidth(
+                                                                      14),
+                                                              color:
+                                                                  Colors.black),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              getProportionateScreenHeight(
+                                                                  3),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height: getProportionateScreenHeight(10)),
+                                  StatefulBuilder(builder:
+                                      (BuildContext context, setState) {
+                                    return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Use Orev Wallet",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          getProportionateScreenWidth(
-                                                              13)),
-                                                ),
-                                                Transform.scale(
-                                                  scale:
-                                                      getProportionateScreenHeight(
-                                                          1),
-                                                  child: Checkbox(
-                                                    activeColor: kPrimaryColor,
-                                                    value: orevwallet,
-                                                    onChanged:
-                                                        (bool newValue) async {
-                                                      orevwallet = newValue;
-                                                      SelectedAddress =
-                                                          addressmap[
-                                                              _radioSelected];
-
-                                                      await getFinalCost(
-                                                          SelectedAddress,
-                                                          false);
-
-                                                      setState(() {});
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            orevwallet == false
-                                                ? Text(
-                                                    "Balance: ₹$walletbalance",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            getProportionateScreenWidth(
-                                                                12),
-                                                        color: kPrimaryColor),
-                                                  )
-                                                : Text(
-                                                    totalCost >= walletbalance
-                                                        ? "Balance: ₹${newwalletbalance = 0.0}"
-                                                        : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            getProportionateScreenWidth(
-                                                                12),
-                                                        color: kPrimaryColor),
-                                                  ),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              _navigateAndDisplaySelection(
+                                                  context);
+                                            },
                                             child: FittedBox(
                                               fit: BoxFit.scaleDown,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      SizedBox(
-                                                        width:
-                                                            getProportionateScreenWidth(
-                                                                30),
-                                                      ),
-                                                      Container(
-                                                          child: Text(
-                                                        "Total",
-                                                        style: TextStyle(
-                                                            color: Colors.blue,
-                                                            fontSize:
-                                                                getProportionateScreenHeight(
-                                                                    23)),
-                                                      )),
-                                                      SizedBox(
-                                                        width:
-                                                            getProportionateScreenWidth(
-                                                                20),
-                                                      ),
-                                                      orevwallet == false
-                                                          ? Text(
-                                                              "\₹${totalCost}",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      getProportionateScreenHeight(
-                                                                          20)),
-                                                            )
-                                                          : Text(
-                                                              totalCost >
-                                                                      walletbalance
-                                                                  ? "\₹${totalCost = ((totalCost) - walletbalance)}"
-                                                                  : "\₹${totalCost = 0.0}",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      getProportionateScreenHeight(
-                                                                          20)),
-                                                            ),
-                                                    ],
-                                                  ),
-                                                  orevwallet == false
-                                                      ? Column(
-                                                          children: [
-                                                            Text(
-                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      getProportionateScreenWidth(
-                                                                          13)),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              "       (includes tax + Delivery: \₹$finalDeliveryCost)",
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      getProportionateScreenWidth(
-                                                                          13)),
-                                                            ),
-                                                            Text(
-                                                              totalCost >=
-                                                                      newwalletbalance
-                                                                  ? "( - Orev Wallet: ${walletbalance - newwalletbalance})"
-                                                                  : "( - Orev Wallet: ${walletbalance - newwalletbalance})",
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      getProportionateScreenWidth(
-                                                                          13)),
-                                                            )
-                                                          ],
-                                                        ),
-                                                ],
+                                              child: Text(
+                                                "Add New Address",
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        getProportionateScreenWidth(
+                                                            13),
+                                                    color: Colors.blue,
+                                                    decoration: TextDecoration
+                                                        .underline),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(20),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        deliverable == true
-                                            ? Center()
-                                            : Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  "This product is not availabe in the selected location",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        getProportionateScreenWidth(
-                                                            13),
-                                                    color: Colors.red,
+                                        coupon == "aryan"
+                                            ? Text(
+                                                "You saved \₹$coupon_value",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      getProportionateScreenWidth(
+                                                          13),
+                                                ),
+                                              )
+                                            : coupon == ""
+                                                ? Text("",
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              13),
+                                                    ))
+                                                : Text("Invalid Coupon",
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          getProportionateScreenWidth(
+                                                              13),
+                                                    )),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Use Orev Wallet",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              getProportionateScreenWidth(
+                                                                  13)),
+                                                    ),
+                                                    Transform.scale(
+                                                      scale:
+                                                          getProportionateScreenHeight(
+                                                              1),
+                                                      child: Checkbox(
+                                                        activeColor:
+                                                            kPrimaryColor,
+                                                        value: orevwallet,
+                                                        onChanged: (bool
+                                                            newValue) async {
+                                                          orevwallet = newValue;
+                                                          SelectedAddress =
+                                                              addressmap[
+                                                                  _radioSelected];
+
+                                                          await getFinalCost(
+                                                              SelectedAddress,
+                                                              false);
+
+                                                          setState(() {});
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                orevwallet == false
+                                                    ? Text(
+                                                        "Balance: ₹$walletbalance",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                getProportionateScreenWidth(
+                                                                    12),
+                                                            color:
+                                                                kPrimaryColor),
+                                                      )
+                                                    : Text(
+                                                        totalCost >=
+                                                                walletbalance
+                                                            ? "Balance: ₹${newwalletbalance = 0.0}"
+                                                            : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                getProportionateScreenWidth(
+                                                                    12),
+                                                            color:
+                                                                kPrimaryColor),
+                                                      ),
+                                              ],
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          SizedBox(
+                                                            width:
+                                                                getProportionateScreenWidth(
+                                                                    30),
+                                                          ),
+                                                          Container(
+                                                              child: Text(
+                                                            "Total",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontSize:
+                                                                    getProportionateScreenHeight(
+                                                                        23)),
+                                                          )),
+                                                          SizedBox(
+                                                            width:
+                                                                getProportionateScreenWidth(
+                                                                    20),
+                                                          ),
+                                                          orevwallet == false
+                                                              ? Text(
+                                                                  "\₹${totalCost}",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          getProportionateScreenHeight(
+                                                                              20)),
+                                                                )
+                                                              : Text(
+                                                                  totalCost >
+                                                                          walletbalance
+                                                                      ? "\₹${totalCost = ((totalCost) - walletbalance)}"
+                                                                      : "\₹${totalCost = 0.0}",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          getProportionateScreenHeight(
+                                                                              20)),
+                                                                ),
+                                                        ],
+                                                      ),
+                                                      orevwallet == false
+                                                          ? Column(
+                                                              children: [
+                                                                Text(
+                                                                  "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          getProportionateScreenWidth(
+                                                                              13)),
+                                                                )
+                                                              ],
+                                                            )
+                                                          : Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Text(
+                                                                  "       (includes tax + Delivery: \₹$finalDeliveryCost)",
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          getProportionateScreenWidth(
+                                                                              13)),
+                                                                ),
+                                                                Text(
+                                                                  totalCost >=
+                                                                          newwalletbalance
+                                                                      ? "( - Orev Wallet: ${walletbalance - newwalletbalance})"
+                                                                      : "( - Orev Wallet: ${walletbalance - newwalletbalance})",
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          getProportionateScreenWidth(
+                                                                              13)),
+                                                                )
+                                                              ],
+                                                            ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
+                                            ),
+                                          ],
+                                        ),
                                         SizedBox(
                                           height:
-                                              getProportionateScreenHeight(5),
+                                              getProportionateScreenHeight(20),
                                         ),
-                                        cod_available == true
-                                            ? Center()
-                                            : Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  "Cash On Delivery is not available for this product",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        getProportionateScreenWidth(
-                                                            13),
-                                                    color: Colors.red,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            deliverable == true
+                                                ? Center()
+                                                : Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "This product is not availabe in the selected location",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                13),
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
+                                            SizedBox(
+                                              height:
+                                                  getProportionateScreenHeight(
+                                                      5),
+                                            ),
+                                            cod_available == true
+                                                ? Center()
+                                                : Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "Cash On Delivery is not available for this product",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            getProportionateScreenWidth(
+                                                                13),
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+                                            SizedBox(
+                                              height:
+                                                  getProportionateScreenHeight(
+                                                      10),
+                                            ),
+                                          ],
+                                        ),
+                                        deliverable == true
+                                            ? cod_available
+                                                ? DefaultButton(
+                                                    textheight: 15,
+                                                    colour: Colors.white,
+                                                    height: 70,
+                                                    color: kPrimaryColor2,
+                                                    text: orevwallet == true
+                                                        ? totalCost == 0.0
+                                                            ? "Place Order"
+                                                            : "Cash on Delivery (COD)"
+                                                        : "Cash on Delivery (COD)",
+                                                    press: () {
+                                                      // Navigator.pop(context);
+                                                      var usedWalletMoney =
+                                                          walletbalance -
+                                                              newwalletbalance;
+                                                      _showCODDialog(
+                                                          totalCost,
+                                                          finalDeliveryCost,
+                                                          usedWalletMoney);
+                                                    },
+                                                  )
+                                                : Center()
+                                            : cod_available
+                                                ? DefaultButton(
+                                                    textheight: 15,
+                                                    colour: Colors.white,
+                                                    height: 70,
+                                                    color: kSecondaryColor,
+                                                    text:
+                                                        "Cash on Delivery (COD)",
+                                                    press: () {},
+                                                  )
+                                                : Center(),
                                         SizedBox(
                                           height:
                                               getProportionateScreenHeight(10),
                                         ),
-                                      ],
-                                    ),
-                                    deliverable == true
-                                        ? cod_available
-                                            ? DefaultButton(
-                                                textheight: 15,
-                                                colour: Colors.white,
-                                                height: 70,
-                                                color: kPrimaryColor2,
-                                                text: orevwallet == true
-                                                    ? totalCost == 0.0
-                                                        ? "Place Order"
-                                                        : "Cash on Delivery (COD)"
-                                                    : "Cash on Delivery (COD)",
-                                                press: () {
-                                                  // Navigator.pop(context);
-                                                  var usedWalletMoney =
-                                                      walletbalance -
-                                                          newwalletbalance;
-                                                  _showCODDialog(
-                                                      totalCost,
-                                                      finalDeliveryCost,
-                                                      usedWalletMoney);
-                                                },
-                                              )
-                                            : Center()
-                                        : cod_available
-                                            ? DefaultButton(
-                                                textheight: 15,
-                                                colour: Colors.white,
-                                                height: 70,
-                                                color: kSecondaryColor,
-                                                text: "Cash on Delivery (COD)",
-                                                press: () {},
-                                              )
-                                            : Center(),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(10),
-                                    ),
-                                    deliverable == true
-                                        ? orevwallet == true
-                                            ? totalCost == 0.0
-                                                ? Center()
+                                        deliverable == true
+                                            ? orevwallet == true
+                                                ? totalCost == 0.0
+                                                    ? Center()
+                                                    : DefaultButton(
+                                                        textheight: 15,
+                                                        colour: Colors.white,
+                                                        height: 70,
+                                                        color: kPrimaryColor,
+                                                        text: "Pay Online",
+                                                        press: () {
+                                                          var usedWalletMoney =
+                                                              walletbalance -
+                                                                  newwalletbalance;
+
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => OrderDetails(
+                                                                    key:
+                                                                        UniqueKey(),
+                                                                    usedorevwallet:
+                                                                        orevwallet,
+                                                                    codSellerCharge:
+                                                                        0.0,
+                                                                    orevWalletMoneyUsed:
+                                                                        usedWalletMoney,
+                                                                    product: widget
+                                                                        .product,
+                                                                    currentVarient:
+                                                                        selectedFoodVariants,
+                                                                    quantity:
+                                                                        quantity,
+                                                                    selectedaddress:
+                                                                        SelectedAddress,
+                                                                    totalCost:
+                                                                        totalCost,
+                                                                    deliveryCost:
+                                                                        finalDeliveryCost,
+                                                                    newwalletbalance:
+                                                                        newwalletbalance,
+                                                                    oldwalletbalance:
+                                                                        walletbalance)),
+                                                          );
+                                                        },
+                                                      )
                                                 : DefaultButton(
                                                     textheight: 15,
                                                     colour: Colors.white,
@@ -1179,66 +1267,28 @@ class _BodyState extends State<Body> {
                                                                 oldwalletbalance:
                                                                     walletbalance)),
                                                       );
-                                                    },
-                                                  )
+                                                    })
                                             : DefaultButton(
                                                 textheight: 15,
-                                                colour: Colors.white,
+                                                // colour: Colors.white,
                                                 height: 70,
-                                                color: kPrimaryColor,
+                                                color: kSecondaryColor,
                                                 text: "Pay Online",
-                                                press: () {
-                                                  var usedWalletMoney =
-                                                      walletbalance -
-                                                          newwalletbalance;
-
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) => OrderDetails(
-                                                            key: UniqueKey(),
-                                                            usedorevwallet:
-                                                                orevwallet,
-                                                            codSellerCharge:
-                                                                0.0,
-                                                            orevWalletMoneyUsed:
-                                                                usedWalletMoney,
-                                                            product:
-                                                                widget.product,
-                                                            currentVarient:
-                                                                selectedFoodVariants,
-                                                            quantity: quantity,
-                                                            selectedaddress:
-                                                                SelectedAddress,
-                                                            totalCost:
-                                                                totalCost,
-                                                            deliveryCost:
-                                                                finalDeliveryCost,
-                                                            newwalletbalance:
-                                                                newwalletbalance,
-                                                            oldwalletbalance:
-                                                                walletbalance)),
-                                                  );
-                                                })
-                                        : DefaultButton(
-                                            textheight: 15,
-                                            // colour: Colors.white,
-                                            height: 70,
-                                            color: kSecondaryColor,
-                                            text: "Pay Online",
-                                            press: () {},
-                                          ),
-                                  ],
-                                );
-                              }),
-                            ],
-                          );
-                        },
+                                                press: () {},
+                                              ),
+                                      ],
+                                    );
+                                  }),
+                                ],
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(10),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),

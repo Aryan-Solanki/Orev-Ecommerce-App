@@ -20,10 +20,6 @@ class CartScreenState extends State<CartScreen> {
   String user_key;
   List<dynamic> keys = [];
 
-  void printSample() {
-    print("Sample text");
-  }
-
   Future<void> getCartInfo() async {
     ProductServices _services = ProductServices();
     var favref = await _services.cart.doc(user_key).get();
@@ -37,12 +33,6 @@ class CartScreenState extends State<CartScreen> {
     user_key = AuthProvider().user.uid;
     getCartInfo();
     super.initState();
-  }
-
-  refresh2() {
-    ProductServices _services = ProductServices();
-    print("Refresh2 called");
-    return true;
   }
 
   refresh() async {
