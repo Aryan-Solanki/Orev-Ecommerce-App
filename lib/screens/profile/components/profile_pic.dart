@@ -28,13 +28,14 @@ class ProfilePic extends StatelessWidget {
               height: getProportionateScreenWidth(38),
               width: getProportionateScreenWidth(38),
               child: FlatButton(
+                padding: EdgeInsets.all(0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                   side: BorderSide(color: Colors.white),
                 ),
                 color: Color(0xFFF5F6F9),
                 onPressed: () {},
-                child: SvgPicture.asset("assets/icons/Camera Icon.svg",height: getProportionateScreenHeight(20),),
+                child: Expanded(child: SvgPicture.asset("assets/icons/Camera Icon.svg")),
               ),
             ),
           ):Center(),
