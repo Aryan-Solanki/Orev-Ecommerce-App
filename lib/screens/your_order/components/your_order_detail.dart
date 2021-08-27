@@ -185,7 +185,15 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         style: TextStyle(
                                             fontSize:
                                                 getProportionateScreenWidth(
-                                                    12)))
+                                                    12))),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(5),
+                                    ),
+                                    Text("Seller : $sellername",
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(
+                                                    12))),
                                   ],
                                 ),
                               ),
@@ -198,12 +206,6 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(5),
-                        ),
-                        Text("Seller : $sellername",
-                            style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12))),
                         SizedBox(
                           height: getProportionateScreenHeight(10),
                         ),
