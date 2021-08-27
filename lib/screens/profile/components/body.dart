@@ -32,83 +32,96 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthProvider>(context);
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: getProportionateScreenHeight(10)),
-          HomeHeader(),
-          SizedBox(height: getProportionateScreenHeight(10)),
-          Column(
+    return ScrollConfiguration(
+      behavior: ScrollBehavior(),
+      child: GlowingOverscrollIndicator(
+        axisDirection: AxisDirection.down,
+        color: kPrimaryColor2,
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              ProfilePic(
-                camera: false,
-              ),
-              SizedBox(height: 20),
-              ProfileMenu(
-                text: "My Account",
-                icon: "assets/icons/User Icon.svg",
-                press: () {
-                  if (authkey != "") {
-                    Navigator.pushNamed(context, MyAccount.routeName);
-                  } else {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
-                  }
-                },
-              ),
-              ProfileMenu(
-                text: "Your Orders",
-                icon: "assets/icons/Bell.svg",
-                press: () {
-                  if (authkey != "") {
-                    Navigator.pushNamed(context, YourOrder.routeName);
-                  } else {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
-                  }
-                },
-              ),
-              ProfileMenu(
-                text: "Help Center",
-                icon: "assets/icons/Question mark.svg",
-                press: () {
-                  Navigator.pushNamed(context, HelpCenter.routeName);
-                },
-              ),
-              authkey != ""
-                  ? ProfileMenu(
-                text: "Log Out",
-                icon: "assets/icons/Log out.svg",
-                press: () {
-                  _auth.signOut();
-                  UserSimplePreferences.setAuthKey("");
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
-                },
+              SizedBox(height: getProportionateScreenHeight(10)),
+              HomeHeader(),
+              SizedBox(height: getProportionateScreenHeight(10)),
+              Column(
+                children: [
+                  ProfilePic(
+                    camera: false,
+                  ),
+                  SizedBox(height: 20),
+                  ProfileMenu(
+                    text: "My Account",
+                    icon: "assets/icons/User Icon.svg",
+                    press: () {
+                      if (authkey != "") {
+                        Navigator.pushNamed(context, MyAccount.routeName);
+                      } else {
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      }
+                    },
+                  ),
+                  ProfileMenu(
+                    text: "Your Orders",
+                    icon: "assets/icons/Bell.svg",
+                    press: () {
+                      if (authkey != "") {
+                        Navigator.pushNamed(context, YourOrder.routeName);
+                      } else {
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      }
+                    },
+                  ),
+                  ProfileMenu(
+                    text: "Help Center",
+                    icon: "assets/icons/Question mark.svg",
+                    press: () {
+                      Navigator.pushNamed(context, HelpCenter.routeName);
+                    },
+                  ),
+                  authkey != ""
+                      ? ProfileMenu(
+                          text: "Log Out",
+                          icon: "assets/icons/Log out.svg",
+                          press: () {
+                            _auth.signOut();
+                            UserSimplePreferences.setAuthKey("");
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          },
+                        )
+                      : ProfileMenu(
+                          text: "Sign In",
+                          icon: "assets/icons/Log out.svg",
+                          press: () {
+                            Navigator.pushReplacementNamed(
+                                context, SignInScreen.routeName);
+                          },
+                        ),
+                  ProfileMenu(
+                    text: "Become a Vendor",
+                    icon: "assets/icons/Shop Icon.svg",
+                    press: () {
+                      if (authkey != "") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ComingSoon(
+                                    value: "Vendor Service",
+                                    bottomNavigation: false,
+                                  )),
+                        );
+                      } else {
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      }
+                    },
+                  ),
+                ],
               )
-                  : ProfileMenu(
-                text: "Sign In",
-                icon: "assets/icons/Log out.svg",
-                press: () {
-                  Navigator.pushReplacementNamed(
-                      context, SignInScreen.routeName);
-                },
-              ),
-              ProfileMenu(
-                text: "Become a Vendor",
-                icon: "assets/icons/Shop Icon.svg",
-                press: () {
-                  if (authkey != "") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ComingSoon(value: "Vendor Service",bottomNavigation: false,)),
-                    );
-                  } else {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
-                  }
-                },
-              ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
