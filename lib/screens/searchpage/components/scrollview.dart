@@ -6,6 +6,7 @@ import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class AllItems extends StatefulWidget {
@@ -106,10 +107,16 @@ class AllItemsState extends State<AllItems> {
       ),
       SizedBox(height: getProportionateScreenWidth(20)),
       _loadingProducts == true
-          ? Container(
-              child: Text("Loading..."),
-              // REPLACE THIS WITH LOADING
-            )
+          ? widget.productList.length == 0
+              ? Center(
+                  child: Text("No products to display"),
+                )
+              : Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                  ),
+                )
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: widget.productList.length == 0

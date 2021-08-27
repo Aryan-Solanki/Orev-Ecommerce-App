@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/screens/home/home_screen.dart';
 
 import 'components/body.dart';
 
@@ -23,8 +24,15 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   _SearchResultsPageState({this.productList, this.title});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Body(productList: productList, title: title),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        return false;
+      },
+      child: Scaffold(
+        body: Body(productList: productList, title: title),
+      ),
     );
   }
 }

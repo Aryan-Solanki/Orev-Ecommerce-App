@@ -103,18 +103,14 @@ class _BodyState extends State<Body> {
                     text: "Become a Vendor",
                     icon: "assets/icons/Shop Icon.svg",
                     press: () {
-                      if (authkey != "") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ComingSoon(
-                                    value: "Vendor Service",
-                                    bottomNavigation: false,
-                                  )),
-                        );
-                      } else {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ComingSoon(
+                                  value: "Vendor Service",
+                                  bottomNavigation: false,
+                                )),
+                      );
                     },
                   ),
                 ],

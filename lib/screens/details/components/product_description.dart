@@ -9,6 +9,8 @@ import 'package:orev/services/user_simple_preferences.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
+bool seemore = false;
+
 class ProductDescription extends StatefulWidget {
   const ProductDescription({
     Key key,
@@ -37,7 +39,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
     this.quantity = 1,
   });
   final Product product;
-  bool seemore = false;
   bool sale = true;
   bool favor = false;
   String brandname = "";
