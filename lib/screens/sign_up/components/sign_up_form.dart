@@ -111,7 +111,14 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         "id": uid_real,
         "name": name,
         "number": "+91" + number,
-        "address": null,
+        "address": {
+          "adline1": "",
+          "adline2": "",
+          "name": "",
+          "city": "",
+          "state": "",
+          "pincode": 110076
+        },
         "image": "",
         "walletAmt": 0,
         "walletTransactions": null,
