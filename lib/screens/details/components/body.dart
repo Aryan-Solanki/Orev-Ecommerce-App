@@ -77,6 +77,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> getYouMayAlsoLikeProductList() async {
+    L_loading = true;
     ProductServices _services = ProductServices();
     List<dynamic> ymalp = widget.product.youmayalsolike;
     for (var pr in ymalp) {
@@ -92,9 +93,10 @@ class _BodyState extends State<Body> {
     UserServices _services2 = UserServices();
     var result = await _services2.getUserById(user_key);
     walletbalance = result["walletAmt"].toDouble();
-    L_loading = true;
     codSellerCharge = await _services.getSellerCODcost(widget.product.sellerId);
-    setState(() {});
+    setState(() {
+      L_loading = false;
+    });
   }
 
   Future<void> getWalletBalance() async {
@@ -1343,351 +1345,391 @@ class _BodyState extends State<Body> {
             SizedBox(height: getProportionateScreenHeight(10)),
             HomeHeader(),
             SizedBox(height: getProportionateScreenHeight(10)),
-            Expanded(
-              child: DirectSelectContainer(
-                child: ScrollConfiguration(
-                  behavior: ScrollBehavior(),
-                  child: GlowingOverscrollIndicator(
-                    axisDirection: AxisDirection.down,
-                    color: kPrimaryColor2,
-                    child: ListView(
-                      children: [
-                        ProductImages(
-                            key: UniqueKey(),
-                            product: widget.product,
-                            currentVarient: selectedFoodVariants),
-                        TopRoundedContainer(
-                          color: Colors.white,
-                          child: Column(
+            !L_loading
+                ? Expanded(
+                    child: DirectSelectContainer(
+                      child: ScrollConfiguration(
+                        behavior: ScrollBehavior(),
+                        child: GlowingOverscrollIndicator(
+                          axisDirection: AxisDirection.down,
+                          color: kPrimaryColor2,
+                          child: ListView(
                             children: [
-                              ProductDescription(
-                                key: UniqueKey(),
-                                product: widget.product,
-                                currentVarient: selectedFoodVariants,
-                                quantity: quantity,
-                              ),
+                              ProductImages(
+                                  key: UniqueKey(),
+                                  product: widget.product,
+                                  currentVarient: selectedFoodVariants),
                               TopRoundedContainer(
-                                color: Color(0xFFF6F7F9),
+                                color: Colors.white,
                                 child: Column(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: Row(
-                                        // mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                          Expanded(
-                                              child: DirectSelectList<String>(
-                                                  values: foodVariantsTitles,
-                                                  defaultItemIndex:
-                                                      selectedFoodVariants,
-                                                  itemBuilder: (String value) =>
-                                                      getDropDownMenuItem(
-                                                          value),
-                                                  focusedItemDecoration:
-                                                      getDslDecoration(),
-                                                  onItemSelectedListener:
-                                                      (item, index, context) {
-                                                    selectedFoodVariants =
-                                                        index;
-                                                    setState(() {});
-                                                  })),
-                                          // SizedBox(width: getProportionateScreenWidth(100),),
-                                          Icon(
-                                            Icons.unfold_more,
-                                            color: Colors.black,
-                                          ),
-                                          SizedBox(
-                                            width:
-                                                getProportionateScreenWidth(15),
-                                          ),
-                                          RoundedIconBtn(
-                                            icon: Icon(
-                                              Icons.remove,
-                                              color: Colors.black,
+                                    ProductDescription(
+                                      key: UniqueKey(),
+                                      product: widget.product,
+                                      currentVarient: selectedFoodVariants,
+                                      quantity: quantity,
+                                    ),
+                                    TopRoundedContainer(
+                                      color: Color(0xFFF6F7F9),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20.0),
+                                            child: Row(
+                                              // mainAxisSize: MainAxisSize.max,
+                                              children: <Widget>[
+                                                Expanded(
+                                                    child: DirectSelectList<
+                                                            String>(
+                                                        values:
+                                                            foodVariantsTitles,
+                                                        defaultItemIndex:
+                                                            selectedFoodVariants,
+                                                        itemBuilder: (String
+                                                                value) =>
+                                                            getDropDownMenuItem(
+                                                                value),
+                                                        focusedItemDecoration:
+                                                            getDslDecoration(),
+                                                        onItemSelectedListener:
+                                                            (item, index,
+                                                                context) {
+                                                          selectedFoodVariants =
+                                                              index;
+                                                          setState(() {});
+                                                        })),
+                                                // SizedBox(width: getProportionateScreenWidth(100),),
+                                                Icon(
+                                                  Icons.unfold_more,
+                                                  color: Colors.black,
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      getProportionateScreenWidth(
+                                                          15),
+                                                ),
+                                                RoundedIconBtn(
+                                                  icon: Icon(
+                                                    Icons.remove,
+                                                    color: Colors.black,
+                                                  ),
+                                                  press: () {
+                                                    if (quantity != 1) {
+                                                      setState(() {
+                                                        quantity--;
+                                                        getFinalCost(
+                                                            SelectedAddress,
+                                                            false);
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        getProportionateScreenWidth(
+                                                            20)),
+                                                Text(
+                                                  "x " + quantity.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize:
+                                                          getProportionateScreenHeight(
+                                                              20)),
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        getProportionateScreenWidth(
+                                                            20)),
+                                                RoundedIconBtn(
+                                                  icon: Icon(
+                                                    Icons.add,
+                                                    color: Colors.black,
+                                                  ),
+                                                  showShadow: true,
+                                                  press: () {
+                                                    if (quantity <
+                                                        widget
+                                                            .product
+                                                            .varients[
+                                                                selectedFoodVariants]
+                                                            .qty) {
+                                                      setState(() {
+                                                        quantity++;
+                                                        getFinalCost(
+                                                            SelectedAddress,
+                                                            false);
+                                                      });
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "Seller Quantity Exceeded",
+                                                          toastLength: Toast
+                                                              .LENGTH_SHORT,
+                                                          timeInSecForIosWeb: 2,
+                                                          gravity: ToastGravity
+                                                              .BOTTOM);
+                                                    }
+                                                  },
+                                                ),
+                                              ],
                                             ),
-                                            press: () {
-                                              if (quantity != 1) {
-                                                setState(() {
-                                                  quantity--;
-                                                  getFinalCost(
-                                                      SelectedAddress, false);
-                                                });
-                                              }
-                                            },
                                           ),
-                                          SizedBox(
-                                              width:
-                                                  getProportionateScreenWidth(
-                                                      20)),
-                                          Text(
-                                            "x " + quantity.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize:
-                                                    getProportionateScreenHeight(
-                                                        20)),
-                                          ),
-                                          SizedBox(
-                                              width:
-                                                  getProportionateScreenWidth(
-                                                      20)),
-                                          RoundedIconBtn(
-                                            icon: Icon(
-                                              Icons.add,
-                                              color: Colors.black,
-                                            ),
-                                            showShadow: true,
-                                            press: () {
-                                              if (quantity <
-                                                  widget
+                                          !widget
                                                       .product
                                                       .varients[
                                                           selectedFoodVariants]
-                                                      .qty) {
-                                                setState(() {
-                                                  quantity++;
-                                                  getFinalCost(
-                                                      SelectedAddress, false);
-                                                });
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "Seller Quantity Exceeded",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    timeInSecForIosWeb: 2,
-                                                    gravity:
-                                                        ToastGravity.BOTTOM);
-                                              }
-                                            },
-                                          ),
+                                                      .inStock ==
+                                                  false
+                                              ? !L_loading
+                                                  ? TopRoundedContainer(
+                                                      color: Colors.white,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          left: SizeConfig
+                                                                  .screenWidth *
+                                                              0.1,
+                                                          right: SizeConfig
+                                                                  .screenWidth *
+                                                              0.1,
+                                                          bottom:
+                                                              getProportionateScreenWidth(
+                                                                  30),
+                                                          top:
+                                                              getProportionateScreenWidth(
+                                                                  10),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            DefaultButton(
+                                                              color:
+                                                                  kPrimaryColor2,
+                                                              text: "Buy Now",
+                                                              press: () {
+                                                                // Navigator.pushNamed(
+                                                                //     context,
+                                                                //     Invoice
+                                                                //         .routeName);
+                                                                // sendSms();
+                                                                setState(() {});
+                                                                if (authkey ==
+                                                                    '') {
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      SignInScreen
+                                                                          .routeName);
+                                                                } else {
+                                                                  if (addressmap
+                                                                      .isEmpty) {
+                                                                    Navigator.pushNamed(
+                                                                        context,
+                                                                        Address
+                                                                            .routeName);
+                                                                  } else {
+                                                                    firstTime =
+                                                                        true;
+                                                                    _radioSelected =
+                                                                        0;
+                                                                    setState(
+                                                                        () {});
+                                                                    _showDialog();
+                                                                  }
+                                                                }
+                                                              },
+                                                            ),
+                                                            SizedBox(
+                                                              height:
+                                                                  getProportionateScreenHeight(
+                                                                      15),
+                                                            ),
+                                                            DefaultButton(
+                                                              text:
+                                                                  "Add To Cart",
+                                                              press: () {
+                                                                if (authkey ==
+                                                                    '') {
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      SignInScreen
+                                                                          .routeName);
+                                                                } else {
+                                                                  addToCart();
+                                                                }
+                                                              },
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : TopRoundedContainer(
+                                                      color: Colors.white,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          left: SizeConfig
+                                                                  .screenWidth *
+                                                              0.1,
+                                                          right: SizeConfig
+                                                                  .screenWidth *
+                                                              0.1,
+                                                          bottom:
+                                                              getProportionateScreenWidth(
+                                                                  30),
+                                                          top:
+                                                              getProportionateScreenWidth(
+                                                                  10),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            DefaultButton(
+                                                              color:
+                                                                  kPrimaryColor2,
+                                                              text: "Buy Now",
+                                                              press: () {
+                                                                if (authkey ==
+                                                                    '') {
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      SignInScreen
+                                                                          .routeName);
+                                                                }
+                                                              },
+                                                            ),
+                                                            SizedBox(
+                                                              height:
+                                                                  getProportionateScreenHeight(
+                                                                      15),
+                                                            ),
+                                                            DefaultButton(
+                                                              text:
+                                                                  "Add To Cart",
+                                                              press: () {
+                                                                if (authkey ==
+                                                                    '') {
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      SignInScreen
+                                                                          .routeName);
+                                                                }
+                                                              },
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                              : TopRoundedContainer(
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                        left: SizeConfig
+                                                                .screenWidth *
+                                                            0.1,
+                                                        right: SizeConfig
+                                                                .screenWidth *
+                                                            0.1,
+                                                        bottom:
+                                                            getProportionateScreenWidth(
+                                                                30),
+                                                        top:
+                                                            getProportionateScreenWidth(
+                                                                10),
+                                                      ),
+                                                      child: DefaultButton(
+                                                        color: kSecondaryColor,
+                                                        text: "Out of Stock",
+                                                        press: () {},
+                                                      )),
+                                                ),
                                         ],
                                       ),
                                     ),
-                                    !widget
-                                                .product
-                                                .varients[selectedFoodVariants]
-                                                .inStock ==
-                                            false
-                                        ? L_loading
-                                            ? TopRoundedContainer(
-                                                color: Colors.white,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        SizeConfig.screenWidth *
-                                                            0.1,
-                                                    right:
-                                                        SizeConfig.screenWidth *
-                                                            0.1,
-                                                    bottom:
-                                                        getProportionateScreenWidth(
-                                                            30),
-                                                    top:
-                                                        getProportionateScreenWidth(
-                                                            10),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      DefaultButton(
-                                                        color: kPrimaryColor2,
-                                                        text: "Buy Now",
-                                                        press: () {
-                                                          // Navigator.pushNamed(
-                                                          //     context,
-                                                          //     Invoice
-                                                          //         .routeName);
-                                                          // sendSms();
-                                                          setState(() {});
-                                                          if (authkey == '') {
-                                                            Navigator.pushNamed(
-                                                                context,
-                                                                SignInScreen
-                                                                    .routeName);
-                                                          } else {
-                                                            if (addressmap
-                                                                .isEmpty) {
-                                                              Navigator.pushNamed(
-                                                                  context,
-                                                                  Address
-                                                                      .routeName);
-                                                            } else {
-                                                              firstTime = true;
-                                                              _radioSelected =
-                                                                  0;
-                                                              setState(() {});
-                                                              _showDialog();
-                                                            }
-                                                          }
-                                                        },
-                                                      ),
-                                                      SizedBox(
-                                                        height:
-                                                            getProportionateScreenHeight(
-                                                                15),
-                                                      ),
-                                                      DefaultButton(
-                                                        text: "Add To Cart",
-                                                        press: () {
-                                                          if (authkey == '') {
-                                                            Navigator.pushNamed(
-                                                                context,
-                                                                SignInScreen
-                                                                    .routeName);
-                                                          } else {
-                                                            addToCart();
-                                                          }
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : TopRoundedContainer(
-                                                color: Colors.white,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        SizeConfig.screenWidth *
-                                                            0.1,
-                                                    right:
-                                                        SizeConfig.screenWidth *
-                                                            0.1,
-                                                    bottom:
-                                                        getProportionateScreenWidth(
-                                                            30),
-                                                    top:
-                                                        getProportionateScreenWidth(
-                                                            10),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      DefaultButton(
-                                                        color: kPrimaryColor2,
-                                                        text: "Buy Now",
-                                                        press: () {
-                                                          if (authkey == '') {
-                                                            Navigator.pushNamed(
-                                                                context,
-                                                                SignInScreen
-                                                                    .routeName);
-                                                          }
-                                                        },
-                                                      ),
-                                                      SizedBox(
-                                                        height:
-                                                            getProportionateScreenHeight(
-                                                                15),
-                                                      ),
-                                                      DefaultButton(
-                                                        text: "Add To Cart",
-                                                        press: () {
-                                                          if (authkey == '') {
-                                                            Navigator.pushNamed(
-                                                                context,
-                                                                SignInScreen
-                                                                    .routeName);
-                                                          }
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                        : TopRoundedContainer(
-                                            color: Colors.white,
-                                            child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  left: SizeConfig.screenWidth *
-                                                      0.1,
-                                                  right:
-                                                      SizeConfig.screenWidth *
-                                                          0.1,
-                                                  bottom:
-                                                      getProportionateScreenWidth(
-                                                          30),
-                                                  top:
-                                                      getProportionateScreenWidth(
-                                                          10),
-                                                ),
-                                                child: DefaultButton(
-                                                  color: kSecondaryColor,
-                                                  text: "Out of Stock",
-                                                  press: () {},
-                                                )),
-                                          ),
                                   ],
                                 ),
                               ),
+                              authkey != ""
+                                  ? Container(
+                                      padding: EdgeInsets.only(bottom: 20),
+                                      color: Colors.white,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left:
+                                                    getProportionateScreenWidth(
+                                                        15),
+                                                bottom:
+                                                    getProportionateScreenWidth(
+                                                        5)),
+                                            child: Text(
+                                              "You Might Also Like",
+                                              style: smallerheadingStyle,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    10),
+                                          ),
+                                          ScrollConfiguration(
+                                            behavior: ScrollBehavior(),
+                                            child: GlowingOverscrollIndicator(
+                                              axisDirection:
+                                                  AxisDirection.right,
+                                              color: kPrimaryColor2,
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  children: [
+                                                    ...List.generate(
+                                                      widget
+                                                          .product
+                                                          .youmayalsolike
+                                                          .length,
+                                                      (index) {
+                                                        if (youMayAlsoLikeList
+                                                                .length ==
+                                                            0) {
+                                                          return SizedBox
+                                                              .shrink();
+                                                        } else {
+                                                          return ProductCard(
+                                                              product:
+                                                                  youMayAlsoLikeList[
+                                                                      index]);
+                                                        }
+                                                        // here by default width and height is 0
+                                                      },
+                                                    ),
+                                                    SizedBox(
+                                                        width:
+                                                            getProportionateScreenWidth(
+                                                                20)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Center(),
                             ],
                           ),
                         ),
-                        authkey != ""
-                            ? Container(
-                                padding: EdgeInsets.only(bottom: 20),
-                                color: Colors.white,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: getProportionateScreenWidth(15),
-                                          bottom:
-                                              getProportionateScreenWidth(5)),
-                                      child: Text(
-                                        "You Might Also Like",
-                                        style: smallerheadingStyle,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: getProportionateScreenHeight(10),
-                                    ),
-                                    ScrollConfiguration(
-                                      behavior: ScrollBehavior(),
-                                      child: GlowingOverscrollIndicator(
-                                        axisDirection: AxisDirection.right,
-                                        color: kPrimaryColor2,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            children: [
-                                              ...List.generate(
-                                                widget.product.youmayalsolike
-                                                    .length,
-                                                (index) {
-                                                  if (youMayAlsoLikeList
-                                                          .length ==
-                                                      0) {
-                                                    return SizedBox.shrink();
-                                                  } else {
-                                                    return ProductCard(
-                                                        product:
-                                                            youMayAlsoLikeList[
-                                                                index]);
-                                                  }
-                                                  // here by default width and height is 0
-                                                },
-                                              ),
-                                              SizedBox(
-                                                  width:
-                                                      getProportionateScreenWidth(
-                                                          20)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Center(),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  )
+                : Expanded(
+                    child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                    ),
+                  )),
           ],
         );
       },
