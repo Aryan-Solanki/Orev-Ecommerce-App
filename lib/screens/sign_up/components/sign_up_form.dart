@@ -121,7 +121,12 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         },
         "image": "",
         "walletAmt": 0,
-        "walletTransactions": null,
+        "walletTransactions": {
+          "newWalletBalance": 0,
+          "oldWalletBalance": 0,
+          "orderId": "",
+          "timestamp": "2021-08-21 22:31:14.104004"
+        },
       };
       Map<String, dynamic> keypass = {"id": phone_uid, "address": password};
       _userServices.createUserData(UserInfo);
