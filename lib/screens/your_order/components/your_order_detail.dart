@@ -942,21 +942,25 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             return_cancel_value == ""
                                 ? Column(
                                     children: [
-                                      DefaultButton(
-                                        color: kPrimaryColor2,
-                                        text: "Return/Replacement",
-                                        press: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ReturnCancel(
-                                                        formname: "Return Form",
-                                                        orderId: widget
-                                                            .order.orderId)),
-                                          );
-                                        },
-                                      ),
+                                      !cancelavailable
+                                          ? DefaultButton(
+                                              color: kPrimaryColor2,
+                                              text: "Return/Replacement",
+                                              press: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ReturnCancel(
+                                                              formname:
+                                                                  "Return Form",
+                                                              orderId: widget
+                                                                  .order
+                                                                  .orderId)),
+                                                );
+                                              },
+                                            )
+                                          : Center(),
                                       SizedBox(
                                         height:
                                             getProportionateScreenHeight(20),
