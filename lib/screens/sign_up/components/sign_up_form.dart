@@ -111,7 +111,10 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         "id": uid_real,
         "name": name,
         "number": "+91" + number,
-        "address": null
+        "address": null,
+        "image": "",
+        "walletAmt": 0,
+        "walletTransactions": null,
       };
       Map<String, dynamic> keypass = {"id": phone_uid, "address": password};
       _userServices.createUserData(UserInfo);
