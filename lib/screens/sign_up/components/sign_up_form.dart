@@ -119,6 +119,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       Map<String, dynamic> keypass = {"id": phone_uid, "address": password};
       _userServices.createUserData(UserInfo);
       _userServices.setKeyPass(keypass);
+      UserSimplePreferences.setAuthKey(uid_real);
       Navigator.pushNamed(context, HomeScreen.routeName);
     }
 

@@ -90,9 +90,11 @@ class _BodyState extends State<Body> {
         await _services.getSellerDeliveryCharge(widget.product.sellerId);
     deliveryCharge = deliveryCost["charge"].toDouble();
     freekms = deliveryCost["freeRadius"].toDouble();
-    UserServices _services2 = UserServices();
-    var result = await _services2.getUserById(user_key);
-    walletbalance = result["walletAmt"].toDouble();
+    if (authkey != "") {
+      UserServices _services2 = UserServices();
+      var result = await _services2.getUserById(user_key);
+      walletbalance = result["walletAmt"].toDouble();
+    }
     codSellerCharge = await _services.getSellerCODcost(widget.product.sellerId);
     setState(() {
       L_loading = false;
