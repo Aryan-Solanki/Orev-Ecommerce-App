@@ -117,6 +117,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "191702198973-1ta0cuobr4eou695ba44ctfbdmjkvn1r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shoppingapp.orev",
+            "certificate_hash": "aa94910fa6796a0c001f8d26cb1f0a34e13afa9b"
+          }
+        },
+        {
           "client_id": "191702198973-hd9253qjrckmujk8kj81ntnojqocpkh0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
