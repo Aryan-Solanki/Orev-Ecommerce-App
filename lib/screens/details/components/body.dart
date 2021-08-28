@@ -654,7 +654,9 @@ class _BodyState extends State<Body> {
       }
     }
 
-    getAllAddress();
+    if (authkey != "") {
+      getAllAddress();
+    }
 
     getFinalCost(SelectedAddress, false);
 
