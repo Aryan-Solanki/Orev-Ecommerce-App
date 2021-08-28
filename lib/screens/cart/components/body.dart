@@ -88,54 +88,58 @@ class BodyState extends State<Body> {
 
   Future<void> getAllCartProducts(currentAddress) async {
     loading = true;
-    for (var k in widget.keys) {
-      ProductServices _services = new ProductServices();
-      UserServices _user_services = new UserServices();
-      Product product = await _services.getProduct(k["productId"]);
-      if (product == null) {
-        removeFromCart(k["varientNumber"], k["productId"]);
-      } else {
-        var checklist =
-            await getVarientNumber(k["varientNumber"], k["productId"]);
-        var xx = checklist[0];
-        var y = checklist[1];
-        if (!y) {
+    try {
+      for (var k in widget.keys) {
+        ProductServices _services = new ProductServices();
+        UserServices _user_services = new UserServices();
+        Product product = await _services.getProduct(k["productId"]);
+        if (product == null) {
           removeFromCart(k["varientNumber"], k["productId"]);
-          continue;
-        }
-
-        Map returnMap = await _user_services.isAvailableOnUserLocation(
-            currentAddress, product.sellerId);
-
-        if (returnMap["deliverable"]) {
-          CartList.add(
-            new Cart(
-              product: product,
-              varientNumber: product.varients[xx].id,
-              actualVarientNumber: xx,
-              numOfItem: k["qty"],
-              deliverable: true,
-              deliveryCharges: returnMap["deliveryCost"],
-              codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"],
-            ),
-          );
-          totalamt += product.varients[xx].price * k["qty"];
         } else {
-          CartList.add(
-            new Cart(
-              product: product,
-              varientNumber: product.varients[xx].id,
-              actualVarientNumber: xx,
-              numOfItem: k["qty"],
-              deliverable: false,
-              deliveryCharges: returnMap["deliveryCost"],
-              codAvailable: returnMap["codAvailable"],
-              codCharges: returnMap["codCharges"],
-            ),
-          );
+          var checklist =
+              await getVarientNumber(k["varientNumber"], k["productId"]);
+          var xx = checklist[0];
+          var y = checklist[1];
+          if (!y) {
+            removeFromCart(k["varientNumber"], k["productId"]);
+            continue;
+          }
+
+          Map returnMap = await _user_services.isAvailableOnUserLocation(
+              currentAddress, product.sellerId);
+
+          if (returnMap["deliverable"]) {
+            CartList.add(
+              new Cart(
+                product: product,
+                varientNumber: product.varients[xx].id,
+                actualVarientNumber: xx,
+                numOfItem: k["qty"],
+                deliverable: true,
+                deliveryCharges: returnMap["deliveryCost"],
+                codAvailable: returnMap["codAvailable"],
+                codCharges: returnMap["codCharges"],
+              ),
+            );
+            totalamt += product.varients[xx].price * k["qty"];
+          } else {
+            CartList.add(
+              new Cart(
+                product: product,
+                varientNumber: product.varients[xx].id,
+                actualVarientNumber: xx,
+                numOfItem: k["qty"],
+                deliverable: false,
+                deliveryCharges: returnMap["deliveryCost"],
+                codAvailable: returnMap["codAvailable"],
+                codCharges: returnMap["codCharges"],
+              ),
+            );
+          }
         }
       }
+    } catch (e) {
+      print(e);
     }
     setState(() {
       loading = false;
