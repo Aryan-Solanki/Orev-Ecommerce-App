@@ -83,11 +83,18 @@ class _ReturnCancelFormState extends State<ReturnCancelForm>
   final _formKey = GlobalKey<FormState>();
   @override
   String message = "";
-  Widget build(BuildContext context) {
-    String selectedKey = widget.formname == "Return Form"
+
+  String selectedKey;
+
+  @override
+  void initState() {
+    selectedKey = widget.formname == "Return Form"
         ? "Reason for Return/Replacment"
         : "Reason for Cancel";
+    super.initState();
+  }
 
+  Widget build(BuildContext context) {
     final Widget normalChildButton = Container(
       height: getProportionateScreenHeight(getProportionateScreenHeight(90)),
       child: Padding(
