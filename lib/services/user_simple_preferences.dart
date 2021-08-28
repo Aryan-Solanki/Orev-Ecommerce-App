@@ -33,18 +33,6 @@ class UserSimplePreferences {
 
   static String getUserPhnum() => _preferences.getString(_keyUserPhone);
 
-  static Future setisBenefeciary(String status) async =>
-      await _preferences.setString(_keyIsBenefeciary, status);
-
-  static String getisBenefeciary() => _preferences.getString(_keyIsBenefeciary);
-
-  //
-
-  static Future setuserpoints(int pts) async =>
-      await _preferences.setInt(_keyUserPoints, pts);
-
-  static int getuserpoints() => _preferences.getInt(_keyUserPoints);
-
   static Future setImageLink(String link) async =>
       await _preferences.setString(_keyImagelink, link);
 

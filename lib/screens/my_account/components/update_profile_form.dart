@@ -239,6 +239,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
           DefaultButton(
             text: "Update",
             press: () async {
+              changeName(newname);
               print(newname);
             },
           ),
@@ -251,12 +252,14 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
     return Container(
       height: getProportionateScreenHeight(80),
       child: TextFormField(
+        onFieldSubmitted: (value) {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
         style: TextStyle(
           fontSize: getProportionateScreenWidth(16),
         ),
         onChanged: (value) {
           newname = value;
-          changeName(newname);
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(

@@ -34,6 +34,8 @@ dependencies:
   firebase_core: ^1.0.4
   firebase_auth:
   cloud_firestore:
+  firebase_storage:
+  image_picker: ^0.7.4
   slide_popup_dialog: ^0.0.2
   pinput: ^1.2.0
   carousel_slider: ^2.3.1
