@@ -17,6 +17,7 @@ import 'package:orev/services/order_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:paytm/paytm.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -479,6 +480,9 @@ class _BodyState extends State<Body> {
                 orderTotal: totalCost))));
   }
 
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -487,68 +491,83 @@ class _BodyState extends State<Body> {
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
-              child: Column(
-                children: [
-                  TotalPrice(
-                      key: UniqueKey(),
-                      totalCost: totalCost,
-                      CartList: widget.CartList,
-                      deliveryCost: widget.deliveryCost,
-                      walletAmountUsed: widget.orevWalletMoneyUsed,
-                      onlinePayment: widget.onlinePayment,
-                      codSellerCost: finaltotalSellerCharge,
-                      transactionId: transactionId),
-                  SizedBox(
-                    height: getProportionateScreenHeight(25),
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: Column(
+                    children: [
+                      TotalPrice(
+                          key: UniqueKey(),
+                          totalCost: totalCost,
+                          CartList: widget.CartList,
+                          deliveryCost: widget.deliveryCost,
+                          walletAmountUsed: widget.orevWalletMoneyUsed,
+                          onlinePayment: widget.onlinePayment,
+                          codSellerCost: finaltotalSellerCharge,
+                          transactionId: transactionId),
+                      SizedBox(
+                        height: getProportionateScreenHeight(25),
+                      ),
+                      OrderInfo(
+                        key: UniqueKey(),
+                        onlinepayment: widget.onlinePayment,
+                        CartList: widget.CartList,
+                        selectedaddress: widget.selectedaddress,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(15),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          child: Text(
+                            "By placing your order, you agree to Orev's privacy notice and conditions of use.",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12)),
+                          )),
+                      SizedBox(
+                        height: getProportionateScreenHeight(15),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          child: Text(
+                            "If you choose to pay using an electronic payment method (credit card or debit card), you will be directed to your bank's website to complete your payment. Your contract to purchase an item will not be complete until we receive your electronic payment and dispatch your item. If you choose to pay using Pay on Delivery (POD), you can pay using cash/card/net banking when you receive your item.",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(12)),
+                          )),
+                      SizedBox(
+                        height: getProportionateScreenHeight(80),
+                      ),
+                      RoundedLoadingButton(
+                        successColor: kPrimaryColor,
+                        duration: Duration(milliseconds: 1300),
+                        width: getProportionateScreenWidth(500),
+                        height: getProportionateScreenHeight(56),
+                        color: kPrimaryColor2,
+                        child: Text("  Place Order  ",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(18),
+                                color: Colors.white)),
+                        controller: _btnController,
+                        onPressed: () async {
+                          if (widget.onlinePayment) {
+                            generateTxnToken();
+                          } else {
+                            placeOrderCOD();
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(20),
+                      ),
+                    ],
                   ),
-                  OrderInfo(
-                    key: UniqueKey(),
-                    onlinepayment: widget.onlinePayment,
-                    CartList: widget.CartList,
-                    selectedaddress: widget.selectedaddress,
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(15),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      child: Text(
-                        "By placing your order, you agree to Orev's privacy notice and conditions of use.",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(12)),
-                      )),
-                  SizedBox(
-                    height: getProportionateScreenHeight(15),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      child: Text(
-                        "If you choose to pay using an electronic payment method (credit card or debit card), you will be directed to your bank's website to complete your payment. Your contract to purchase an item will not be complete until we receive your electronic payment and dispatch your item. If you choose to pay using Pay on Delivery (POD), you can pay using cash/card/net banking when you receive your item.",
-                        style: TextStyle(
-                            fontSize: getProportionateScreenWidth(12)),
-                      )),
-                  SizedBox(
-                    height: getProportionateScreenHeight(80),
-                  ),
-                  DefaultButton(
-                    color: kPrimaryColor2,
-                    text: "Place Order",
-                    press: () {
-                      if (widget.onlinePayment) {
-                        generateTxnToken();
-                      } else {
-                        placeOrderCOD();
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(20),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

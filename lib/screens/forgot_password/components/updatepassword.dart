@@ -16,26 +16,34 @@ class UpdatePassword extends StatelessWidget {
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
-                Text("Update Password", style: TextStyle(
-                  color: Colors.black,
-                  fontSize: getProportionateScreenWidth(27),
-                  fontWeight: FontWeight.bold,
-                )),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                UpdateForm(phone_uid: phone_uid),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Text(
-                  'By continuing your confirm that you agree \nwith our Term and Condition',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
-          ),
-                )
-              ],
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
+                    Text("Update Password",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenWidth(27),
+                          fontWeight: FontWeight.bold,
+                        )),
+                    SizedBox(height: SizeConfig.screenHeight * 0.08),
+                    UpdateForm(phone_uid: phone_uid),
+                    SizedBox(height: SizeConfig.screenHeight * 0.08),
+                    Text(
+                      'By continuing your confirm that you agree \nwith our Term and Condition',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ),

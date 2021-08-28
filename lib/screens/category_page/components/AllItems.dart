@@ -5,6 +5,7 @@ import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class AllItems extends StatefulWidget {
@@ -100,7 +101,7 @@ class _AllItemsState extends State<AllItems> {
       children: [
         Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
             title: widget.title,
             categoryId: widget.categoryId,
@@ -109,23 +110,30 @@ class _AllItemsState extends State<AllItems> {
           ),
         ),
         SizedBox(height: getProportionateScreenHeight(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              ...List.generate(
-                ProductList.length,
+        ScrollConfiguration(
+          behavior: ScrollBehavior(),
+          child: GlowingOverscrollIndicator(
+            axisDirection: AxisDirection.down,
+            color: kPrimaryColor2,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  ...List.generate(
+                    ProductList.length,
                     (index) {
-                  return FullWidthProductCard(
-                    product: ProductList[index],
-                    notifyParent: refresh,
-                  );
+                      return FullWidthProductCard(
+                        product: ProductList[index],
+                        notifyParent: refresh,
+                      );
 
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
+                      return SizedBox
+                          .shrink(); // here by default width and height is 0
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         )
       ],

@@ -12,28 +12,35 @@ class Body extends StatelessWidget {
       child: Padding(
         padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
-              Text(
-                "OTP Verification",
-                style: headingStyle,
+        child: ScrollConfiguration(
+          behavior: ScrollBehavior(),
+          child: GlowingOverscrollIndicator(
+            axisDirection: AxisDirection.down,
+            color: kPrimaryColor2,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: SizeConfig.screenHeight * 0.05),
+                  Text(
+                    "OTP Verification",
+                    style: headingStyle,
+                  ),
+                  Text("We sent your code to +1 898 860 ***"),
+                  buildTimer(),
+                  OtpForm(),
+                  SizedBox(height: SizeConfig.screenHeight * 0.1),
+                  GestureDetector(
+                    onTap: () {
+                      // OTP code resend
+                    },
+                    child: Text(
+                      "Resend OTP Code",
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                  )
+                ],
               ),
-              Text("We sent your code to +1 898 860 ***"),
-              buildTimer(),
-              OtpForm(),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
-              GestureDetector(
-                onTap: () {
-                  // OTP code resend
-                },
-                child: Text(
-                  "Resend OTP Code",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),

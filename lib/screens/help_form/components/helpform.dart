@@ -57,90 +57,98 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
         ),
       ),
     );
-    return SingleChildScrollView(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            MenuButton<String>(
-              // itemBackgroundColor: Colors.transparent,
-              menuButtonBackgroundColor: Colors.transparent,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: kTextColor,
+    return ScrollConfiguration(
+      behavior: ScrollBehavior(),
+      child: GlowingOverscrollIndicator(
+        axisDirection: AxisDirection.down,
+        color: kPrimaryColor2,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                MenuButton<String>(
+                  // itemBackgroundColor: Colors.transparent,
+                  menuButtonBackgroundColor: Colors.transparent,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: kTextColor,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(28))),
+                  child: normalChildButton,
+                  items: keys,
+                  itemBuilder: (String value) => Container(
+                    height: getProportionateScreenHeight(90),
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(
+                        vertical: getProportionateScreenHeight(20),
+                        horizontal: getProportionateScreenWidth(40)),
+                    child: Text(value,
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(13)),
+                        overflow: TextOverflow.ellipsis),
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(28))),
-              child: normalChildButton,
-              items: keys,
-              itemBuilder: (String value) => Container(
-                height: getProportionateScreenHeight(90),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenHeight(20),
-                    horizontal: getProportionateScreenWidth(40)),
-                child: Text(value,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
-                    overflow: TextOverflow.ellipsis),
-              ),
-              toggledChild: Container(
-                child: normalChildButton,
-              ),
-              onItemSelected: (String value) {
-                setState(() {
-                  selectedKey = value;
-                });
-              },
-              onMenuButtonToggle: (bool isToggle) {
-                print(isToggle);
-              },
-            ),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            MessageFormField(),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: "Continue",
-              press: () {
-                if (selectedKey != "Please Select" && message != "") {
-                  String authkey = UserSimplePreferences.getAuthKey() ?? "";
-                  var values = {
-                    "description": message,
-                    "topic": selectedKey,
-                    "id": authkey
-                  };
-                  UserServices _services = new UserServices();
-                  _services.registerComplaint(values);
+                  toggledChild: Container(
+                    child: normalChildButton,
+                  ),
+                  onItemSelected: (String value) {
+                    setState(() {
+                      selectedKey = value;
+                    });
+                  },
+                  onMenuButtonToggle: (bool isToggle) {
+                    print(isToggle);
+                  },
+                ),
+                SizedBox(height: getProportionateScreenHeight(30)),
+                MessageFormField(),
+                SizedBox(height: getProportionateScreenHeight(40)),
+                DefaultButton(
+                  text: "Continue",
+                  press: () {
+                    if (selectedKey != "Please Select" && message != "") {
+                      String authkey = UserSimplePreferences.getAuthKey() ?? "";
+                      var values = {
+                        "description": message,
+                        "topic": selectedKey,
+                        "id": authkey
+                      };
+                      UserServices _services = new UserServices();
+                      _services.registerComplaint(values);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => QuerySuccess(
-                              queryname: "Query",
-                            )),
-                  );
-                } else {
-                  if (message == "") {
-                    Fluttertoast.showToast(
-                        msg: "Write a message to continue",
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 2,
-                        gravity: ToastGravity.BOTTOM);
-                  } else if (selectedKey == "Please Select") {
-                    Fluttertoast.showToast(
-                        msg: "Please Select a valid  topic",
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 2,
-                        gravity: ToastGravity.BOTTOM);
-                  } else {
-                    Fluttertoast.showToast(
-                        msg: "Unknown error occured",
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 2,
-                        gravity: ToastGravity.BOTTOM);
-                  }
-                }
-              },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuerySuccess(
+                                  queryname: "Query",
+                                )),
+                      );
+                    } else {
+                      if (message == "") {
+                        Fluttertoast.showToast(
+                            msg: "Write a message to continue",
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 2,
+                            gravity: ToastGravity.BOTTOM);
+                      } else if (selectedKey == "Please Select") {
+                        Fluttertoast.showToast(
+                            msg: "Please Select a valid  topic",
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 2,
+                            gravity: ToastGravity.BOTTOM);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Unknown error occured",
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 2,
+                            gravity: ToastGravity.BOTTOM);
+                      }
+                    }
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

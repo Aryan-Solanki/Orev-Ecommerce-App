@@ -20,31 +20,37 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Column(
-            children: [
-              SizedBox(height: SizeConfig.screenHeight * 0.04),
-              Text(
-                "Forgot Password",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: getProportionateScreenWidth(27),
-                  fontWeight: FontWeight.bold,
-                ),
+      child: ScrollConfiguration(
+        behavior: ScrollBehavior(),
+        child: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: kPrimaryColor2,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: Column(
+                children: [
+                  SizedBox(height: SizeConfig.screenHeight * 0.04),
+                  Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(27),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                      "Please enter your phone number and we will send you an otp to return to your account",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(15),
+                      )),
+                  SizedBox(height: SizeConfig.screenHeight * 0.1),
+                  ForgotPassForm(),
+                ],
               ),
-              Text(
-                "Please enter your phone number and we will send you an otp to return to your account",
-                textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
-                  )
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
-              ForgotPassForm(),
-            ],
+            ),
           ),
         ),
       ),
@@ -122,10 +128,9 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       return Theme(
         data: Theme.of(context).copyWith(
             inputDecorationTheme: InputDecorationTheme(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-            )
-        ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+        )),
         child: PinPut(
           withCursor: true,
           fieldsCount: 6,
@@ -162,7 +167,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           controller: _pinPutController,
           submittedFieldDecoration: pinPutDecoration,
           selectedFieldDecoration:
-          pinPutDecoration.copyWith(color: Colors.lightGreen),
+              pinPutDecoration.copyWith(color: Colors.lightGreen),
           followingFieldDecoration: pinPutDecoration,
         ),
       );
@@ -171,33 +176,40 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
-          child: Expanded( 
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: Column(
-                  children: [
-                    Text(
-                      "One Time Password",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenWidth(27),
-                          fontWeight: FontWeight.bold,
+          child: Expanded(
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: Column(
+                      children: [
+                        Text(
+                          "One Time Password",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(27),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.05),
+                        boxedPinPutWithPreFilledSymbol(),
+                        SizedBox(height: SizeConfig.screenHeight * 0.05),
+                        Text(
+                          "Please enter the OTP that you have received on your provided phone number $number",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(15),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.1),
+                      ],
                     ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.05),
-                    boxedPinPutWithPreFilledSymbol(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.05),
-                    Text(
-                      "Please enter the OTP that you have received on your provided phone number $number",
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(15),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.1),
-                  ],
+                  ),
                 ),
               ),
             ),

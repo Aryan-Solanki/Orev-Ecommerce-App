@@ -118,6 +118,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       _userServices.setKeyPass(keypass);
       Navigator.pushNamed(context, HomeScreen.routeName);
     }
+
     final BoxDecoration pinPutDecoration = BoxDecoration(
       color: kPrimaryColor,
       borderRadius: BorderRadius.circular(5.0),
@@ -126,79 +127,84 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       return Theme(
         data: Theme.of(context).copyWith(
             inputDecorationTheme: InputDecorationTheme(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-            )
-        ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+        )),
         child: PinPut(
           withCursor: true,
           fieldsCount: 6,
           textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
           eachFieldWidth: getProportionateScreenWidth(50),
           eachFieldHeight: getProportionateScreenHeight(50),
-          onSubmit: (String pin) async{
-              try {
-                await auth
-                    .signInWithCredential(PhoneAuthProvider.credential(
-                    verificationId: _verificationCode, smsCode: pin))
-                    .then((value) async {
-                  if (value.user != null) {
-                    phone_uid = auth.currentUser.uid;
-                    auth.signOut();
-                    createNewUser(number, Name, password);
-                  }
-                });
-              } catch (e) {
-                print(e);
-              }
-
+          onSubmit: (String pin) async {
+            try {
+              await auth
+                  .signInWithCredential(PhoneAuthProvider.credential(
+                      verificationId: _verificationCode, smsCode: pin))
+                  .then((value) async {
+                if (value.user != null) {
+                  phone_uid = auth.currentUser.uid;
+                  auth.signOut();
+                  createNewUser(number, Name, password);
+                }
+              });
+            } catch (e) {
+              print(e);
+            }
           },
           focusNode: _pinPutFocusNode,
           controller: _pinPutController,
           submittedFieldDecoration: pinPutDecoration,
           selectedFieldDecoration:
-          pinPutDecoration.copyWith(color: Colors.lightGreen),
+              pinPutDecoration.copyWith(color: Colors.lightGreen),
           followingFieldDecoration: pinPutDecoration,
         ),
       );
     }
 
-
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
           child: Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: Column(
-                  children: [
-                    Text(
-                      "One Time Password",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: getProportionateScreenWidth(27),
-                        fontWeight: FontWeight.bold,
-                      ),
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: Column(
+                      children: [
+                        Text(
+                          "One Time Password",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(27),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.05),
+                        boxedPinPutWithPreFilledSymbol(),
+                        SizedBox(height: SizeConfig.screenHeight * 0.05),
+                        Text(
+                          "Please enter the OTP that you have received on your provided phone number $number",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(15),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight * 0.1),
+                      ],
                     ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.05),
-                    boxedPinPutWithPreFilledSymbol(),
-                    SizedBox(height: SizeConfig.screenHeight * 0.05),
-                    Text(
-                      "Please enter the OTP that you have received on your provided phone number $number",
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(15),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.1),
-                  ],
+                  ),
                 ),
               ),
             ),
           ));
     }
+
     return Form(
       key: _formKey,
       child: Column(
@@ -239,9 +245,9 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
     return Container(
       height: getProportionateScreenHeight(116),
       child: TextFormField(
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
-          ),
+        style: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+        ),
         onSaved: (newValue) => Name = newValue,
         onChanged: (value) {
           if (value.isNotEmpty) {

@@ -33,7 +33,7 @@ class _BodyState extends State<Body> {
   bool loading = false;
 
   final RoundedLoadingButtonController _btnController =
-  RoundedLoadingButtonController();
+      RoundedLoadingButtonController();
 
   void generateTxnToken() async {
     setState(() {
@@ -116,14 +116,20 @@ class _BodyState extends State<Body> {
               if (payment_response == "TXN_FAILURE") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: false,)),
+                  MaterialPageRoute(
+                      builder: (context) => AfterOrevWallet(
+                            transaction: false,
+                          )),
                 );
                 print("Transaction Failed");
                 print(value['response']['RESPMSG']);
               } else if (payment_response == "TXN_SUCCESS") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AfterOrevWallet(transaction: true,)),
+                  MaterialPageRoute(
+                      builder: (context) => AfterOrevWallet(
+                            transaction: true,
+                          )),
                 );
                 print("Transaction Successful");
                 print(value['response']['RESPMSG']);
@@ -174,109 +180,112 @@ class _BodyState extends State<Body> {
     getCurrentBalance();
     super.initState();
   }
-  String coupon="";
+
+  String coupon = "";
   @override
   Widget build(BuildContext context) {
-
-    double coupon_value=234.0;
+    double coupon_value = 234.0;
 
     void _showDialog() {
       slideDialog.showSlideDialog(
           context: context,
           child: Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState){
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Apply Coupon Code",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: getProportionateScreenWidth(25),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(50),
-                        ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              inputDecorationTheme: InputDecorationTheme(
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                contentPadding:
-                                EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-                              )),
-                          child: TextField(
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Apply Coupon Code",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(20),
-                                fontWeight: FontWeight.bold),
-                            onChanged: (value) {
-                              coupon=value;
-                              print(value);
-                            },
-                            decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: getProportionateScreenHeight(13)),
-                                      child: Text(
-                                        "Apply",
-                                        style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(12),
-                                          color: kPrimaryColor2,
-                                        ),
-                                      ),
-                                    )),
-                                hintText: 'Enter Coupon Code',
-                                hintStyle: TextStyle(
-                                    fontSize: getProportionateScreenWidth(20),
-                                    fontWeight: FontWeight.bold,
-                                    color: ruppeecolor),
-                                contentPadding: EdgeInsets.only(
-                                    bottom: getProportionateScreenHeight(13))),
+                              color: Colors.black,
+                              fontSize: getProportionateScreenWidth(25),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        coupon == "aryan"
-                            ? Text(
-                          "You saved \₹$coupon_value",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize:
-                            getProportionateScreenWidth(
-                                15),
+                          SizedBox(
+                            height: getProportionateScreenHeight(50),
                           ),
-                        )
-                            : coupon == ""
-                            ? Text("",
-                            style: TextStyle(
-                              fontSize:
-                              getProportionateScreenWidth(
-                                  15),
-                            ))
-                            : Text("Invalid Coupon",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize:
-                              getProportionateScreenWidth(
-                                  15),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                inputDecorationTheme: InputDecorationTheme(
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 42, vertical: 20),
                             )),
-
-                      ],
-                    );
-                  }
+                            child: TextField(
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(20),
+                                  fontWeight: FontWeight.bold),
+                              onChanged: (value) {
+                                coupon = value;
+                                print(value);
+                              },
+                              decoration: InputDecoration(
+                                  suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {});
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: getProportionateScreenHeight(
+                                                13)),
+                                        child: Text(
+                                          "Apply",
+                                          style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(12),
+                                            color: kPrimaryColor2,
+                                          ),
+                                        ),
+                                      )),
+                                  hintText: 'Enter Coupon Code',
+                                  hintStyle: TextStyle(
+                                      fontSize: getProportionateScreenWidth(20),
+                                      fontWeight: FontWeight.bold,
+                                      color: ruppeecolor),
+                                  contentPadding: EdgeInsets.only(
+                                      bottom:
+                                          getProportionateScreenHeight(13))),
+                            ),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                          coupon == "aryan"
+                              ? Text(
+                                  "You saved \₹$coupon_value",
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: getProportionateScreenWidth(15),
+                                  ),
+                                )
+                              : coupon == ""
+                                  ? Text("",
+                                      style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenWidth(15),
+                                      ))
+                                  : Text("Invalid Coupon",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize:
+                                            getProportionateScreenWidth(15),
+                                      )),
+                        ],
+                      );
+                    }),
+                  ),
                 ),
               ),
             ),
@@ -291,112 +300,121 @@ class _BodyState extends State<Body> {
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Orev Wallet",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(25),
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  Text(
-                    "Available Orev Balance ₹$currentBalance",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(50),
-                  ),
-                  Text(
-                    "Add Money",
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(18),
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(30),
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                        inputDecorationTheme: InputDecorationTheme(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 42, vertical: 20),
-                    )),
-                    child: TextField(
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(30),
-                          fontWeight: FontWeight.bold),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        amount = value;
-                        if (value == "") {
-                          setState(() {
-                            ruppeecolor = Colors.black45;
-                          });
-                        }
-                        if (value != "" && ruppeecolor == Colors.black45) {
-                          setState(() {
-                            ruppeecolor = Colors.black;
-                          });
-                        }
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                              onTap: () {
-                                print("halua");
-                                _showDialog();
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: getProportionateScreenHeight(13)),
-                                child: Text(
-                                  "Apply Coupon Code",
-                                  style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
-                                    color: kPrimaryColor2,
-                                  ),
-                                ),
-                              )),
-                          prefixIcon: Text(
-                            '₹',
-                            style: TextStyle(
-                                fontSize: getProportionateScreenWidth(40),
-                                color: ruppeecolor),
-                          ),
-                          // prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(45)),
-                          hintText: 'Amount',
-                          hintStyle: TextStyle(
-                              fontSize: getProportionateScreenWidth(30),
-                              fontWeight: FontWeight.bold,
-                              color: ruppeecolor),
-                          contentPadding: EdgeInsets.only(
-                              bottom: getProportionateScreenHeight(13))),
-                    ),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(100),
-                  ),
-                  RoundedLoadingButton(
-                    successColor: kPrimaryColor,
-                    duration: Duration(milliseconds: 1300),
-                    width: getProportionateScreenWidth(500),
-                    height: getProportionateScreenHeight(56),
-                    color: kPrimaryColor2,
-                    child: Text("  Proceed  ",
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Orev Wallet",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(25),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        "Available Orev Balance ₹$currentBalance",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(15)),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(50),
+                      ),
+                      Text(
+                        "Add Money",
                         style: TextStyle(
                             fontSize: getProportionateScreenWidth(18),
-                            color: Colors.white)),
-                    controller: _btnController,
-                    onPressed: () async {
-                      generateTxnToken();
-                    },
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(30),
+                      ),
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                            inputDecorationTheme: InputDecorationTheme(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 42, vertical: 20),
+                        )),
+                        child: TextField(
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(30),
+                              fontWeight: FontWeight.bold),
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            amount = value;
+                            if (value == "") {
+                              setState(() {
+                                ruppeecolor = Colors.black45;
+                              });
+                            }
+                            if (value != "" && ruppeecolor == Colors.black45) {
+                              setState(() {
+                                ruppeecolor = Colors.black;
+                              });
+                            }
+                            print(value);
+                          },
+                          decoration: InputDecoration(
+                              suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    print("halua");
+                                    _showDialog();
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: getProportionateScreenHeight(13)),
+                                    child: Text(
+                                      "Apply Coupon Code",
+                                      style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenWidth(12),
+                                        color: kPrimaryColor2,
+                                      ),
+                                    ),
+                                  )),
+                              prefixIcon: Text(
+                                '₹',
+                                style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(40),
+                                    color: ruppeecolor),
+                              ),
+                              // prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(45)),
+                              hintText: 'Amount',
+                              hintStyle: TextStyle(
+                                  fontSize: getProportionateScreenWidth(30),
+                                  fontWeight: FontWeight.bold,
+                                  color: ruppeecolor),
+                              contentPadding: EdgeInsets.only(
+                                  bottom: getProportionateScreenHeight(13))),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(100),
+                      ),
+                      RoundedLoadingButton(
+                        successColor: kPrimaryColor,
+                        duration: Duration(milliseconds: 1300),
+                        width: getProportionateScreenWidth(500),
+                        height: getProportionateScreenHeight(56),
+                        color: kPrimaryColor2,
+                        child: Text("  Proceed  ",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenWidth(18),
+                                color: Colors.white)),
+                        controller: _btnController,
+                        onPressed: () async {
+                          generateTxnToken();
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

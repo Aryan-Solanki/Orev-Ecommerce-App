@@ -117,22 +117,29 @@ class AllItemsState extends State<AllItems> {
                         new AlwaysStoppedAnimation<Color>(kPrimaryColor),
                   ),
                 )
-          : SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: widget.productList.length == 0
-                  ? Center(
-                      child: Text("No products to display"),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemCount: ProductList.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return FullWidthProductCard(
-                          product: ProductList[index],
-                          notifyParent: refresh,
-                        );
-                      }),
+          : ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: kPrimaryColor2,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: widget.productList.length == 0
+                      ? Center(
+                          child: Text("No products to display"),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: ProductList.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            return FullWidthProductCard(
+                              product: ProductList[index],
+                              notifyParent: refresh,
+                            );
+                          }),
+                ),
+              ),
             ),
     ]);
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'AllItems.dart';
 
@@ -24,9 +25,14 @@ class _BodyState extends State<Body> {
     }
 
     return SafeArea(
-      child: SingleChildScrollView(
-        child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
+      child: ScrollConfiguration(
+        behavior: ScrollBehavior(),
+        child: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: kPrimaryColor2,
+          child: SingleChildScrollView(
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
               return Column(
                 children: [
                   SizedBox(height: getProportionateScreenHeight(20)),
@@ -43,6 +49,8 @@ class _BodyState extends State<Body> {
                 ],
               );
             }),
+          ),
+        ),
       ),
     );
   }

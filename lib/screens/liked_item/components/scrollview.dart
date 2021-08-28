@@ -8,6 +8,7 @@ import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class AllItems extends StatefulWidget {
@@ -93,45 +94,52 @@ class _AllItemsState extends State<AllItems> {
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ...List.generate(
-                  ProductList.length,
-                  (index) {
-                    return Dismissible(
-                      key: Key(ProductList[index].id.toString()),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) {
-                        setState(() {
-                          removeFavourite(ProductList[index].id);
-                          ProductList.removeAt(index);
-                        });
-                      },
-                      background: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFFE6E6),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            SvgPicture.asset("assets/icons/Trash.svg"),
-                          ],
-                        ),
-                      ),
-                      child: FullWidthProductCard(
-                        product: ProductList[index],
-                        like: false,
-                      ),
-                    );
+          child: ScrollConfiguration(
+            behavior: ScrollBehavior(),
+            child: GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: kPrimaryColor2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...List.generate(
+                      ProductList.length,
+                      (index) {
+                        return Dismissible(
+                          key: Key(ProductList[index].id.toString()),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) {
+                            setState(() {
+                              removeFavourite(ProductList[index].id);
+                              ProductList.removeAt(index);
+                            });
+                          },
+                          background: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFE6E6),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Row(
+                              children: [
+                                Spacer(),
+                                SvgPicture.asset("assets/icons/Trash.svg"),
+                              ],
+                            ),
+                          ),
+                          child: FullWidthProductCard(
+                            product: ProductList[index],
+                            like: false,
+                          ),
+                        );
 
-                    return SizedBox
-                        .shrink(); // here by default width and height is 0
-                  },
+                        return SizedBox
+                            .shrink(); // here by default width and height is 0
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
