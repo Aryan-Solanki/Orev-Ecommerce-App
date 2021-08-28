@@ -3,16 +3,11 @@ import 'dart:math';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:orev/components/default_button.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/models/OrderProduct.dart';
-import 'package:orev/models/Product.dart';
-
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/multiple_payment_success/multiple_payment_success.dart';
-import 'package:orev/screens/payment_success/payment_success.dart';
-import 'package:orev/screens/your_order/your_order.dart';
 import 'package:orev/services/order_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
@@ -189,7 +184,8 @@ class _BodyState extends State<Body> {
                     widget.orevWalletMoneyUsed;
 
                 String orderIdnew =
-                    DateTime.now().millisecondsSinceEpoch.toString();
+                    DateTime.now().millisecondsSinceEpoch.toString() +
+                        generateRandomString(5);
                 orderList.add(
                   new Order(
                     qty: cart.numOfItem,
