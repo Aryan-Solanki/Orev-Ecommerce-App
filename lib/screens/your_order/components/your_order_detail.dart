@@ -107,7 +107,15 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
 
   @override
   Widget build(BuildContext context) {
-    String return_cancel_value = ""; // cancel , return ,
+    String return_cancel_value = widget.order.orderStatus == "Ordered"
+        ? ""
+        : widget.order.orderStatus == "Canceled"
+            ? "Canceled"
+            : widget.order.orderStatus == "Returning"
+                ? "Returning"
+                : widget.order.orderStatus == "Returned"
+                    ? "Returned"
+                    : ""; // cancel , return ,
     bool invoice = false;
     final double _orderState = 0;
     final double _packedState = 10;
@@ -115,6 +123,13 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
     final double _deliveredState = 30;
     final Color _activeColor = kPrimaryColor;
     final Color _inactiveColor = kPrimaryColor;
+    bool cancelavailable;
+
+    if (widget.order.orderStatus == "Delivered") {
+      cancelavailable = false;
+    } else {
+      cancelavailable = true;
+    }
 
     double _deliveryStatus = _orderState;
 
@@ -126,6 +141,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
       _deliveryStatus = _shippedState;
     } else if (widget.order.orderStatus == "Delivered") {
       _deliveryStatus = _deliveredState;
+    } else if (widget.order.orderStatus == "Returning") {
+      _deliveryStatus = 0;
+    } else if (widget.order.orderStatus == "Returned") {
+      _deliveryStatus = 30;
     }
 
     return SafeArea(
@@ -220,10 +239,15 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             ),
                             return_cancel_value == ""
                                 ? Center()
+                                : Divider(color: Colors.black),
+                            return_cancel_value == ""
+                                ? Center()
                                 : Text(
-                                    return_cancel_value == "return"
-                                        ? "Your order is being process for returning"
-                                        : "This order has been cancelled",
+                                    return_cancel_value == "Returned"
+                                        ? "This order has been returned.\nYou will receive a reimbursement in your Orev Wallet within 1-2 days."
+                                        : return_cancel_value == "Returning"
+                                            ? "Your order is being processed for return.\nAfter you return the goods, you will receive a reimbursement in your Orev Wallet within 1-2 days."
+                                            : "This order has been cancelled.\nYou return the goods, you will receive a reimbursement in your Orev Wallet within 1-2 days.",
                                     style: TextStyle(
                                         fontSize:
                                             getProportionateScreenWidth(15),
@@ -231,7 +255,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         fontWeight: FontWeight.bold),
                                   ),
                             Divider(color: Colors.black),
-                            return_cancel_value == "cancel"
+                            return_cancel_value == "Canceled"
                                 ? Center()
                                 : Column(
                                     crossAxisAlignment:
@@ -241,10 +265,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         height:
                                             getProportionateScreenHeight(10),
                                       ),
-                                      return_cancel_value == "cancel"
+                                      return_cancel_value == "Canceled"
                                           ? Center()
                                           : Text(
-                                              return_cancel_value == "return"
+                                              return_cancel_value == "Returned"
                                                   ? "Returning Address"
                                                   : "Shipping Address",
                                               style: TextStyle(
@@ -927,8 +951,9 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ReturnCancel(
-                                                      formname: "Return Form",
-                                                    )),
+                                                        formname: "Return Form",
+                                                        orderId: widget
+                                                            .order.orderId)),
                                           );
                                         },
                                       ),
@@ -936,20 +961,25 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         height:
                                             getProportionateScreenHeight(20),
                                       ),
-                                      DefaultButton(
-                                        color: Colors.red,
-                                        text: "Cancel",
-                                        press: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ReturnCancel(
-                                                      formname: "Cancel Form",
-                                                    )),
-                                          );
-                                        },
-                                      ),
+                                      cancelavailable
+                                          ? DefaultButton(
+                                              color: Colors.red,
+                                              text: "Cancel",
+                                              press: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ReturnCancel(
+                                                            formname:
+                                                                "Cancel Form",
+                                                            orderId: widget
+                                                                .order.orderId,
+                                                          )),
+                                                );
+                                              },
+                                            )
+                                          : Center(),
                                       SizedBox(
                                         height:
                                             getProportionateScreenHeight(20),

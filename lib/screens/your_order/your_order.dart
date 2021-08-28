@@ -3,6 +3,7 @@ import 'package:orev/models/Order.dart';
 import 'package:orev/models/OrderProduct.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/services/order_services.dart';
 import 'package:orev/services/product_services.dart';
 
@@ -85,11 +86,17 @@ class _YourOrderState extends State<YourOrder> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Body(
-          keys: orders,
-          key: UniqueKey(),
-          notifyParent: refresh,
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.pushNamed(context, HomeScreen.routeName);
+          return false;
+        },
+        child: Scaffold(
+          body: Body(
+            keys: orders,
+            key: UniqueKey(),
+            notifyParent: refresh,
+          ),
         ),
       ),
     );
