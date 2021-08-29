@@ -9,6 +9,7 @@ import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
@@ -219,6 +220,9 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
           ));
     }
 
+    final RoundedLoadingButtonController _btnController =
+        RoundedLoadingButtonController();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -232,9 +236,18 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
           buildConformPassFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(15)),
-          DefaultButton(
-            text: "Continue",
-            press: () async {
+          RoundedLoadingButton(
+            successColor: kPrimaryColor,
+            duration: Duration(milliseconds: 1300),
+            width: getProportionateScreenWidth(500),
+            height: getProportionateScreenHeight(56),
+            color: kPrimaryColor,
+            child: Text(" Continue ",
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(18),
+                    color: Colors.white)),
+            controller: _btnController,
+            onPressed: () async {
               errors = [];
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
