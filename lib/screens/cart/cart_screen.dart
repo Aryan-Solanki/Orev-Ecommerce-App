@@ -28,18 +28,26 @@ class CartScreenState extends State<CartScreen> {
     setState(() {});
   }
 
+  Map address;
+
   @override
   void initState() {
     user_key = AuthProvider().user.uid;
+    address = widget.address;
     getCartInfo();
     super.initState();
   }
 
-  refresh() async {
+  refresh(currentAddress) async {
     ProductServices _services = ProductServices();
     var favref = await _services.cart.doc(user_key).get();
     keys = favref["cartItems"];
     setState(() {
+      if (currentAddress == null) {
+        address = widget.address;
+      } else {
+        address = currentAddress;
+      }
       // final snackBar = SnackBar(
       //   content: Text('Cart Updated'),
       //   backgroundColor: kPrimaryColor,
@@ -53,7 +61,7 @@ class CartScreenState extends State<CartScreen> {
     return SafeArea(
       child: Scaffold(
         body: Body(
-          currentAddress: widget.address,
+          currentAddress: address,
           keys: keys,
           key: UniqueKey(),
           notifyParent: refresh,

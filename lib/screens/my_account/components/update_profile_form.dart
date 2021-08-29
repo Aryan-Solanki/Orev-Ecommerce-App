@@ -98,7 +98,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
 
       if (result) {
         setState(() {
-          Navigator.pop(context);
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),
             backgroundColor: kPrimaryColor,

@@ -133,7 +133,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
       if (result) {
         setState(() {
-          Navigator.pop(context);
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),
             backgroundColor: kPrimaryColor,
@@ -215,7 +214,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                                     )));
                         // Navigator.pushNamed(context, CartScreen.routeName);
                       } else {
-                        Navigator.pushNamed(context, Address.routeName);
+                        _navigateAndDisplaySelection(context);
                       }
                     }
                   },

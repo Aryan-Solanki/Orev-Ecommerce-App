@@ -22,7 +22,7 @@ import 'check_out_card.dart';
 class Body extends StatefulWidget {
   final List<dynamic> keys;
   final Map currentAddress;
-  final Function() notifyParent;
+  final Function(Map) notifyParent;
   const Body({
     Key key,
     this.keys,
@@ -59,7 +59,7 @@ class BodyState extends State<Body> {
     }
     keys.removeAt(ind);
     await _services.cart.doc(user_key).update({'cartItems': keys});
-    widget.notifyParent();
+    widget.notifyParent(currentAddress);
   }
 
   Future<List> getVarientNumber(id, productId) async {
@@ -162,7 +162,7 @@ class BodyState extends State<Body> {
   Widget build(BuildContext context) {
     refresh() {
       setState(() {
-        widget.notifyParent();
+        widget.notifyParent(currentAddress);
       });
     }
 
@@ -210,7 +210,7 @@ class BodyState extends State<Body> {
                               removeFromCart(CartList[index].varientNumber,
                                   CartList[index].product.id);
                               CartList.removeAt(index);
-                              widget.notifyParent();
+                              widget.notifyParent(currentAddress);
                             },
                             background: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -388,8 +388,9 @@ class _AddressHeaderState extends State<AddressHeader> {
       );
 
       if (result) {
+        addresses = [];
+        getuseraddress();
         setState(() {
-          Navigator.pop(context);
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),
             backgroundColor: kPrimaryColor,

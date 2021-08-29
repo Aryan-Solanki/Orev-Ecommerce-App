@@ -636,7 +636,8 @@ class _BodyState extends State<Body> {
       }
     }
 
-    _navigateAndDisplaySelection(BuildContext context) async {
+    _navigateAndDisplaySelection(
+        BuildContext context, bool buynowkeandar) async {
       final result = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Address()),
@@ -644,7 +645,9 @@ class _BodyState extends State<Body> {
 
       if (result) {
         setState(() {
-          Navigator.pop(context);
+          if (buynowkeandar) {
+            Navigator.pop(context);
+          }
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),
             backgroundColor: kPrimaryColor,
@@ -872,7 +875,7 @@ class _BodyState extends State<Body> {
                                           child: GestureDetector(
                                             onTap: () async {
                                               _navigateAndDisplaySelection(
-                                                  context);
+                                                  context, true);
                                             },
                                             child: FittedBox(
                                               fit: BoxFit.scaleDown,
@@ -1527,7 +1530,8 @@ class _BodyState extends State<Body> {
                                                                   if (addressmap
                                                                       .isEmpty) {
                                                                     _navigateAndDisplaySelection(
-                                                                        context);
+                                                                        context,
+                                                                        false);
                                                                   } else {
                                                                     firstTime =
                                                                         true;
