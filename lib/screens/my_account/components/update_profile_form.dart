@@ -97,6 +97,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
       );
 
       if (result) {
+        getAllAddress();
         setState(() {
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),
