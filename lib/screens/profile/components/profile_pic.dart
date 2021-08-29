@@ -97,9 +97,7 @@ class _ProfilePicState extends State<ProfilePic> {
                       onPressed: () {
                         getImage();
                       },
-                      child: Expanded(
-                          child:
-                              SvgPicture.asset("assets/icons/Camera Icon.svg")),
+                      child: SvgPicture.asset("assets/icons/Camera Icon.svg",height: getProportionateScreenHeight(18),),
                     ),
                   ),
                 )
