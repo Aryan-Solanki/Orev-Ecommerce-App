@@ -947,7 +947,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                               color: kPrimaryColor2,
                                               text: "Return/Replacement",
                                               press: () {
-                                                Navigator.push(
+                                                Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
@@ -970,7 +970,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                               color: Colors.red,
                                               text: "Cancel",
                                               press: () {
-                                                Navigator.push(
+                                                Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>

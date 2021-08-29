@@ -47,7 +47,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
     UserServices _services = new UserServices();
     var doc = await _services.getUserById(user_key);
     name = doc["name"];
-    orevwallet = doc["walletAmt"];
+    orevwallet = doc["walletAmt"].toDouble();
     setState(() {});
   }
 

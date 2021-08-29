@@ -88,7 +88,7 @@ class _YourOrderState extends State<YourOrder> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          Navigator.pushNamed(context, HomeScreen.routeName);
+          Navigator.pop(context);
           return false;
         },
         child: Scaffold(
