@@ -179,13 +179,6 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
               if (_formKey.currentState.validate() &&
                   selected_state != "" &&
                   selected_city != "Search for your City") {
-                print(Addressname);
-                print(AddressLine1);
-                print(AddressLine2);
-                print(selected_state);
-                print(selected_city);
-                print(pincode);
-                print("nexxxxxxxxxxt pageeeee");
                 var Adddict = {
                   "name": Addressname,
                   "adline1": AddressLine1,
@@ -194,7 +187,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
                   "state": selected_state,
                   "city": selected_city
                 };
-                setAddress(Adddict);
+                await setAddress(Adddict);
               }
             },
           ),
