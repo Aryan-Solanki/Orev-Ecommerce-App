@@ -381,6 +381,24 @@ class _AddressHeaderState extends State<AddressHeader> {
 
     bool rukbc = false;
 
+    _navigateAndDisplaySelection(BuildContext context) async {
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Address()),
+      );
+
+      if (result) {
+        setState(() {
+          Navigator.pop(context);
+          final snackBar = SnackBar(
+            content: Text('Address Added Successfully'),
+            backgroundColor: kPrimaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
+    }
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
@@ -422,7 +440,7 @@ class _AddressHeaderState extends State<AddressHeader> {
                   setState(() {
                     if (!widget.loading) {
                       if (value == addresses[addresses.length - 1]) {
-                        Navigator.pushNamed(context, Address.routeName);
+                        _navigateAndDisplaySelection(context);
                       } else {
                         selectedKey = value;
                         CurrentAddress = addressMapFinal[selectedKey];

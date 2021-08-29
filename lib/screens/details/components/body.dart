@@ -1526,10 +1526,8 @@ class _BodyState extends State<Body> {
                                                                 } else {
                                                                   if (addressmap
                                                                       .isEmpty) {
-                                                                    Navigator.pushNamed(
-                                                                        context,
-                                                                        Address
-                                                                            .routeName);
+                                                                    _navigateAndDisplaySelection(
+                                                                        context);
                                                                   } else {
                                                                     firstTime =
                                                                         true;
