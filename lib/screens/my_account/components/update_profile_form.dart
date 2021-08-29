@@ -90,6 +90,24 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
       });
     }
 
+    _navigateAndDisplaySelection(BuildContext context) async {
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Address()),
+      );
+
+      if (result) {
+        setState(() {
+          Navigator.pop(context);
+          final snackBar = SnackBar(
+            content: Text('Address Added Successfully'),
+            backgroundColor: kPrimaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
+    }
+
     return Form(
       key: _formKey,
       child: Column(
@@ -192,7 +210,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                             }),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, Address.routeName);
+                            _navigateAndDisplaySelection(context);
                           },
                           child: Align(
                             alignment: Alignment.bottomRight,
