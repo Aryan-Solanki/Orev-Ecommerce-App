@@ -6,6 +6,7 @@ import 'package:orev/components/form_error.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import '../../../constants.dart';
@@ -111,23 +112,20 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         "id": uid_real,
         "name": name,
         "number": "+91" + number,
-        "address": {
-          "adline1": "",
-          "adline2": "",
-          "name": "",
-          "city": "",
-          "state": "",
-          "pincode": 110076
-        },
+        "address": [],
         "image": "",
         "walletAmt": 0,
-        "walletTransactions": {
-          "newWalletBalance": 0,
-          "oldWalletBalance": 0,
-          "orderId": "",
-          "timestamp": "2021-08-21 22:31:14.104004"
-        },
+        "walletTransactions": [],
       };
+
+      var sampleCart = {"cartItems": []};
+
+      var sampleFav = {"favourites": []};
+
+      ProductServices _services = new ProductServices();
+      _services.favourites.doc(uid_real).set(sampleFav);
+      _services.cart.doc(uid_real).set(sampleCart);
+
       Map<String, dynamic> keypass = {"id": phone_uid, "address": password};
       _userServices.createUserData(UserInfo);
       _userServices.setKeyPass(keypass);

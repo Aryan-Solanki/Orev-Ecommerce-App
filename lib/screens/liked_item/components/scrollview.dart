@@ -22,6 +22,31 @@ class _AllItemsState extends State<AllItems> {
 
   String user_key;
 
+  Future<void> removeFavourite12(productId) async {
+    ProductServices _services = ProductServices();
+    print(user_key);
+    var favref = await _services.favourites.doc(user_key).get();
+    keys = favref["favourites"];
+    keys.remove(productId);
+    await _services.favourites.doc(user_key).update({'favourites': keys});
+  }
+
+  Future<List> getVarientNumber(id, productId) async {
+    ProductServices _services = ProductServices();
+    var product = await _services.getProduct(productId);
+    var varlist = product.varients;
+    int ind = 0;
+    bool foundit = false;
+    for (var varient in varlist) {
+      if (varient.id == id) {
+        foundit = true;
+        break;
+      }
+      ind += 1;
+    }
+    return [ind, foundit];
+  }
+
   Future<void> getAllProducts() async {
     ProductServices _services = ProductServices();
     print(user_key);
@@ -30,44 +55,56 @@ class _AllItemsState extends State<AllItems> {
 
     for (var k in keys) {
       var document = await _services.products.doc(k).get();
-      print(document.exists);
-      var listVarientraw = document["variant"];
-      print(listVarientraw);
-      List<Varient> listVarient = [];
-      for (var vari in listVarientraw) {
-        print(vari["variantDetails"]["title"]);
-        print(vari["variantDetails"]["title"]);
-        listVarient.add(new Varient(
-            id: vari["id"],
-            default_product: vari["default"],
-            isOnSale: vari["onSale"]["isOnSale"],
-            comparedPrice: vari["onSale"]["comparedPrice"].toDouble(),
-            discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
-            price: vari["price"].toDouble(),
-            inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
-            title: vari["variantDetails"]["title"],
-            images: vari["variantDetails"]["images"]));
+      if (!document.exists) {
+        removeFavourite12(k);
+      } else {
+        var checklist =
+            await getVarientNumber(k["varientNumber"], k["productId"]);
+        var xx = checklist[0];
+        var y = checklist[1];
+        if (!y) {
+          removeFavourite12(k);
+          continue;
+        }
+        var listVarientraw = document["variant"];
+        print(listVarientraw);
+        List<Varient> listVarient = [];
+        for (var vari in listVarientraw) {
+          print(vari["variantDetails"]["title"]);
+          print(vari["variantDetails"]["title"]);
+          listVarient.add(new Varient(
+              id: vari["id"],
+              default_product: vari["default"],
+              isOnSale: vari["onSale"]["isOnSale"],
+              comparedPrice: vari["onSale"]["comparedPrice"].toDouble(),
+              discountPercentage:
+                  vari["onSale"]["discountPercentage"].toDouble(),
+              price: vari["price"].toDouble(),
+              inStock: vari["stock"]["inStock"],
+              qty: vari["stock"]["qty"],
+              title: vari["variantDetails"]["title"],
+              images: vari["variantDetails"]["images"]));
+        }
+
+        ProductList.add(new Product(
+            id: document["productId"],
+            brandname: document["brand"],
+            varients: listVarient,
+            title: document["title"],
+            detail: document["detail"],
+            rating: document["rating"],
+            isFavourite: false,
+            sellerId: document["sellerId"],
+            isPopular: true,
+            tax: document["tax"].toDouble(),
+            youmayalsolike: document["youMayAlsoLike"]));
       }
 
-      ProductList.add(new Product(
-          id: document["productId"],
-          brandname: document["brand"],
-          varients: listVarient,
-          title: document["title"],
-          detail: document["detail"],
-          rating: document["rating"],
-          isFavourite: false,
-          sellerId: document["sellerId"],
-          isPopular: true,
-          tax: document["tax"].toDouble(),
-          youmayalsolike: document["youMayAlsoLike"]));
+      print(ProductList.length);
+      print(ProductList.length);
+      setState(() {});
+      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
     }
-
-    print(ProductList.length);
-    print(ProductList.length);
-    setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
   }
 
   @override
