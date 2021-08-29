@@ -257,8 +257,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
           DefaultButton(
             text: "Update",
             press: () async {
-              changeName(newname);
-              print(newname);
+              if (newname != "") {
+                changeName(newname);
+              }
             },
           ),
         ],
