@@ -131,10 +131,9 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     _loadingProducts == true
-                        ? Container(
-                            child: Text("Loading..."),
-                            // REPLACE THIS WITH LOADING
-                          )
+                        ? CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                    )
                         : Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: getProportionateScreenWidth(10)),
