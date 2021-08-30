@@ -48,7 +48,7 @@ class _BodyState extends State<Body> {
         SizedBox(height: getProportionateScreenHeight(10)),
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
-        Expanded(
+        keys.length != 0 ? Expanded(
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20)),
@@ -71,7 +71,7 @@ class _BodyState extends State<Body> {
               ),
             ),
           ),
-        ),
+        ):Expanded(child: Center( child: Text("No products ordered yet", style: TextStyle(fontSize: getProportionateScreenWidth(15)),),)),
       ],
     );
   }

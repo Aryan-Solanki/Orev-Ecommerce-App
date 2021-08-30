@@ -189,68 +189,78 @@ class BodyState extends State<Body> {
           notifyParent: changeAddress,
         ),
         SizedBox(height: getProportionateScreenHeight(10)),
-        !loading
-            ? Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
-                  child: ScrollConfiguration(
-                    behavior: ScrollBehavior(),
-                    child: GlowingOverscrollIndicator(
-                      axisDirection: AxisDirection.down,
-                      color: kPrimaryColor2,
-                      child: ListView.builder(
-                        itemCount: CartList.length,
-                        itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Dismissible(
-                            key: Key(CartList[index].product.id.toString()),
-                            direction: DismissDirection.endToStart,
-                            onDismissed: (direction) {
-                              removeFromCart(CartList[index].varientNumber,
-                                  CartList[index].product.id);
-                              CartList.removeAt(index);
-                              widget.notifyParent(currentAddress);
-                            },
-                            background: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFE6E6),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Row(
-                                children: [
-                                  Spacer(),
-                                  SvgPicture.asset("assets/icons/Trash.svg"),
-                                ],
+        CartList.length != 0
+            ? !loading
+                ? Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(20)),
+                      child: ScrollConfiguration(
+                        behavior: ScrollBehavior(),
+                        child: GlowingOverscrollIndicator(
+                          axisDirection: AxisDirection.down,
+                          color: kPrimaryColor2,
+                          child: ListView.builder(
+                            itemCount: CartList.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Dismissible(
+                                key: Key(CartList[index].product.id.toString()),
+                                direction: DismissDirection.endToStart,
+                                onDismissed: (direction) {
+                                  removeFromCart(CartList[index].varientNumber,
+                                      CartList[index].product.id);
+                                  CartList.removeAt(index);
+                                  widget.notifyParent(currentAddress);
+                                },
+                                background: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFFE6E6),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      SvgPicture.asset(
+                                          "assets/icons/Trash.svg"),
+                                    ],
+                                  ),
+                                ),
+                                child: CartList[index].deliverable
+                                    ? CartCard(
+                                        cart: CartList[index],
+                                        notifyParent: refresh,
+                                        key: UniqueKey(),
+                                        errorvalue: "", //not_deliverable
+                                      )
+                                    : CartCard(
+                                        cart: CartList[index],
+                                        notifyParent: refresh,
+                                        key: UniqueKey(),
+                                        errorvalue:
+                                            "not_deliverable", //not_deliverable
+                                      ),
                               ),
                             ),
-                            child: CartList[index].deliverable
-                                ? CartCard(
-                                    cart: CartList[index],
-                                    notifyParent: refresh,
-                                    key: UniqueKey(),
-                                    errorvalue: "", //not_deliverable
-                                  )
-                                : CartCard(
-                                    cart: CartList[index],
-                                    notifyParent: refresh,
-                                    key: UniqueKey(),
-                                    errorvalue:
-                                        "not_deliverable", //not_deliverable
-                                  ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              )
+                  )
+                : Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                      ),
+                    ),
+                  )
             : Expanded(
                 child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor:
-                        new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                  child: Text(
+                    "No items added in cart",
+                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
                   ),
                 ),
               ),

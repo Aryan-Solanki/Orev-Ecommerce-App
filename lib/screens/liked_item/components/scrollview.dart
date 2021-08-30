@@ -130,56 +130,66 @@ class _AllItemsState extends State<AllItems> {
         SizedBox(height: getProportionateScreenHeight(10)),
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
-        Expanded(
-          child: ScrollConfiguration(
-            behavior: ScrollBehavior(),
-            child: GlowingOverscrollIndicator(
-              axisDirection: AxisDirection.down,
-              color: kPrimaryColor2,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ...List.generate(
-                      ProductList.length,
-                      (index) {
-                        return Dismissible(
-                          key: Key(ProductList[index].id.toString()),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (direction) {
-                            setState(() {
-                              removeFavourite(ProductList[index].id);
-                              ProductList.removeAt(index);
-                            });
-                          },
-                          background: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFE6E6),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Row(
-                              children: [
-                                Spacer(),
-                                SvgPicture.asset("assets/icons/Trash.svg"),
-                              ],
-                            ),
-                          ),
-                          child: FullWidthProductCard(
-                            product: ProductList[index],
-                            like: false,
-                          ),
-                        );
+        ProductList.length != 0
+            ? Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollBehavior(),
+                  child: GlowingOverscrollIndicator(
+                    axisDirection: AxisDirection.down,
+                    color: kPrimaryColor2,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ...List.generate(
+                            ProductList.length,
+                            (index) {
+                              return Dismissible(
+                                key: Key(ProductList[index].id.toString()),
+                                direction: DismissDirection.endToStart,
+                                onDismissed: (direction) {
+                                  setState(() {
+                                    removeFavourite(ProductList[index].id);
+                                    ProductList.removeAt(index);
+                                  });
+                                },
+                                background: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFFE6E6),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      SvgPicture.asset(
+                                          "assets/icons/Trash.svg"),
+                                    ],
+                                  ),
+                                ),
+                                child: FullWidthProductCard(
+                                  product: ProductList[index],
+                                  like: false,
+                                ),
+                              );
 
-                        return SizedBox
-                            .shrink(); // here by default width and height is 0
-                      },
+                              return SizedBox
+                                  .shrink(); // here by default width and height is 0
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
+                ),
+              )
+            : Expanded(
+                child: Center(
+                  child: Text(
+                    "No item available",
+                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
         SizedBox(height: getProportionateScreenWidth(10)),
       ],
     );
