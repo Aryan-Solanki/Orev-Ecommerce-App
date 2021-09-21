@@ -58,8 +58,16 @@ class _AllItemsState extends State<AllItems> {
       if (!document.exists) {
         removeFavourite12(k);
       } else {
-        var checklist =
-            await getVarientNumber(k["varientNumber"], k["productId"]);
+        int index = 0;
+        for (var i in document["variant"]) {
+          if (i["default"] == true) {
+            break;
+          }
+          index += 1;
+        }
+
+        var checklist = await getVarientNumber(
+            document["variant"][index]["id"], document["productId"]);
         var xx = checklist[0];
         var y = checklist[1];
         if (!y) {
