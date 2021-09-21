@@ -126,8 +126,6 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
                     selected_state = value;
                   });
                 }
-
-// selectedValueSingleDialog = value;
               },
               isExpanded: true,
             ),

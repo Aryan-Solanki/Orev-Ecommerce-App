@@ -132,7 +132,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       );
 
       if (result) {
-        getuseraddress();
+        await getuseraddress();
         setState(() {
           final snackBar = SnackBar(
             content: Text('Address Added Successfully'),

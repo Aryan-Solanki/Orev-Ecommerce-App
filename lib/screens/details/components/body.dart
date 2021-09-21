@@ -96,6 +96,8 @@ class _BodyState extends State<Body> {
       walletbalance = result["walletAmt"].toDouble();
     }
     codSellerCharge = await _services.getSellerCODcost(widget.product.sellerId);
+    cod_available =
+        await _services.getSellerCODAvailable(widget.product.sellerId);
     setState(() {
       L_loading = false;
     });
@@ -138,7 +140,7 @@ class _BodyState extends State<Body> {
   // void sendSms() async {
   //   twilioFlutter.sendSMS(toNumber: '+919540014357', messageBody: 'aryan twilio msg');
   // }
-
+  bool cod_available = false;
   int quantity = 1;
   Map<String, dynamic> SelectedAddress;
   int _radioSelected = 0;
@@ -180,7 +182,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    bool cod_available = false;
     List<dynamic> addressmap = [];
 
     updateWalletBalance(newwalletbalance, orderId, timestamp) async {
