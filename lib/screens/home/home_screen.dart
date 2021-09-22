@@ -38,15 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
     if (updateAvailable) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => UpdateAvailable(value: "Download Now",bottomNavigation: false,)),
+        MaterialPageRoute(
+            builder: (context) => UpdateAvailable(
+                  value: "Download Now",
+                  bottomNavigation: false,
+                )),
       );
-      print("Push to Update Screen");
     } else if (maintenance) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => UpdateAvailable(value: "Come Back Soon",bottomNavigation: false,)),
+        MaterialPageRoute(
+            builder: (context) => UpdateAvailable(
+                  value: "Come Back Soon",
+                  bottomNavigation: false,
+                )),
       );
-      print("Push to Maintenance Screen");
     }
   }
 

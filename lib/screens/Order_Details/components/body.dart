@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
       "orderId": transactionId,
       // "amount": (widget.product.varients[widget.currentVarient].price * widget.quantity)
       //     .toString(),
-      "amount": "1",
+      "amount": "${widget.totalCost}",
       "callbackUrl": callBackUrl,
       "custId": "122",
       "testing": testing ? 0 : 1
@@ -112,7 +112,7 @@ class _BodyState extends State<Body> {
           // (widget.product.varients[widget.currentVarient].price *
           //         widget.quantity)
           //     .toString(),
-          "1",
+          "${widget.totalCost}",
           callBackUrl,
           testing);
 
