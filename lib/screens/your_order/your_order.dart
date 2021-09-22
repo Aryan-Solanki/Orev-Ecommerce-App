@@ -28,42 +28,43 @@ class _YourOrderState extends State<YourOrder> {
     querySnapshot.docs.forEach((doc) {
       orders.add(
         new Order(
-          qty: doc["qty"],
-          cod: doc["cod"],
-          deliveryBoy: doc["deliveryBoy"],
-          deliveryCost: doc["deliveryCost"],
-          orderStatus: doc["orderStatus"],
-          product: new OrderProduct(
-              brandname: doc["product"]["brandname"],
-              id: doc["product"]["id"],
-              sellerId: doc["product"]["sellerId"],
-              title: doc["product"]["title"],
-              detail: doc["product"]["detail"],
-              variant: new Varient(
-                  default_product: doc["product"]["variant"]["default"],
-                  isOnSale: doc["product"]["variant"]["onSale"]["isOnSale"],
-                  comparedPrice: doc["product"]["variant"]["onSale"]
-                      ["comparedPrice"],
-                  discountPercentage: doc["product"]["variant"]["onSale"]
-                      ["discountPercentage"],
-                  price: doc["product"]["variant"]["price"],
-                  inStock: doc["product"]["variant"]["stock"]["inStock"],
-                  qty: doc["product"]["variant"]["stock"]["qty"],
-                  title: doc["product"]["variant"]["title"],
-                  images: doc["product"]["variant"]["variantDetails"]["images"],
-                  id: doc["product"]["variant"]["id"]),
-              tax: doc["product"]["tax"]),
-          orderId: doc["orderId"],
-          totalCost: doc["totalCost"],
-          userId: doc["userId"],
-          timestamp: doc["timestamp"],
-          selectedAddress: doc["address"],
-          responseMsg: doc["responseMsg"],
-          codcharges: doc["codcharges"].toDouble(),
-          usedOrevWallet: doc["usedOrevWallet"],
-          orevWalletAmountUsed: doc["orevWalletAmountUsed"].toDouble(),
-          transactionId: doc["transactionId"],
-        ),
+            qty: doc["qty"],
+            cod: doc["cod"],
+            deliveryBoy: doc["deliveryBoy"],
+            deliveryCost: doc["deliveryCost"],
+            orderStatus: doc["orderStatus"],
+            product: new OrderProduct(
+                brandname: doc["product"]["brandname"],
+                id: doc["product"]["id"],
+                sellerId: doc["product"]["sellerId"],
+                title: doc["product"]["title"],
+                detail: doc["product"]["detail"],
+                variant: new Varient(
+                    default_product: doc["product"]["variant"]["default"],
+                    isOnSale: doc["product"]["variant"]["onSale"]["isOnSale"],
+                    comparedPrice: doc["product"]["variant"]["onSale"]
+                        ["comparedPrice"],
+                    discountPercentage: doc["product"]["variant"]["onSale"]
+                        ["discountPercentage"],
+                    price: doc["product"]["variant"]["price"],
+                    inStock: doc["product"]["variant"]["stock"]["inStock"],
+                    qty: doc["product"]["variant"]["stock"]["qty"],
+                    title: doc["product"]["variant"]["title"],
+                    images: doc["product"]["variant"]["variantDetails"]
+                        ["images"],
+                    id: doc["product"]["variant"]["id"]),
+                tax: doc["product"]["tax"]),
+            orderId: doc["orderId"],
+            totalCost: doc["totalCost"],
+            userId: doc["userId"],
+            timestamp: doc["timestamp"],
+            selectedAddress: doc["address"],
+            responseMsg: doc["responseMsg"],
+            codcharges: doc["codcharges"].toDouble(),
+            usedOrevWallet: doc["usedOrevWallet"],
+            orevWalletAmountUsed: doc["orevWalletAmountUsed"].toDouble(),
+            transactionId: doc["transactionId"],
+            invoice: doc["invoice"]),
       );
     });
     setState(() {});

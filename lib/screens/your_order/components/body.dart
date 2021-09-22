@@ -6,8 +6,6 @@ import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/your_order/components/your_order_cart.dart';
-import 'package:orev/services/product_services.dart';
-import 'package:orev/services/user_services.dart';
 
 import '../../../size_config.dart';
 
@@ -48,30 +46,38 @@ class _BodyState extends State<Body> {
         SizedBox(height: getProportionateScreenHeight(10)),
         HomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
-        keys.length != 0 ? Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: ScrollConfiguration(
-              behavior: ScrollBehavior(),
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color: kPrimaryColor2,
-                child: ListView.builder(
-                  itemCount: keys.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: YouOrderCard(
-                        order: keys[index],
-                        notifyParent: refresh,
-                        key: UniqueKey(),
-                        orders: keys),
+        keys.length != 0
+            ? Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: ScrollConfiguration(
+                    behavior: ScrollBehavior(),
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.down,
+                      color: kPrimaryColor2,
+                      child: ListView.builder(
+                        itemCount: keys.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: YouOrderCard(
+                              order: keys[index],
+                              notifyParent: refresh,
+                              key: UniqueKey(),
+                              orders: keys),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        ):Expanded(child: Center( child: Text("No products ordered yet", style: TextStyle(fontSize: getProportionateScreenWidth(15)),),)),
+              )
+            : Expanded(
+                child: Center(
+                child: Text(
+                  "No products ordered yet",
+                  style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                ),
+              )),
       ],
     );
   }

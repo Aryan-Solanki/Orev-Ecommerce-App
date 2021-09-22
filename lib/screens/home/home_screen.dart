@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
+import 'package:orev/services/product_services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../constants.dart';
 import 'components/body.dart';
@@ -15,10 +18,33 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool firsttime = false;
+  bool maintenance = false;
+  bool updateAvailable = false;
+
+  checkInitial() async {
+    ProductServices _services = ProductServices();
+    DocumentSnapshot check = await _services.initialChecks.get();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String version = packageInfo.version;
+
+    if (version != check["currentVersion"] && check["updateAvailable"]) {
+      updateAvailable = true;
+    }
+
+    maintenance = check["maintenance"];
+
+    if (updateAvailable) {
+      print("Push to Update Screen");
+    } else if (maintenance) {
+      print("Push to Maintenance Screen");
+    }
+  }
 
   @override
   void initState() {
     firsttime = true;
+    checkInitial();
     super.initState();
   }
 

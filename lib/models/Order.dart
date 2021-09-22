@@ -20,6 +20,7 @@ class Order {
   final bool usedOrevWallet;
   final double orevWalletAmountUsed;
   final String transactionId;
+  final String invoice;
   Order(
       {this.cod,
       this.deliveryBoy,
@@ -36,5 +37,6 @@ class Order {
       this.codcharges,
       this.orevWalletAmountUsed,
       this.transactionId,
+      @required this.invoice,
       this.usedOrevWallet});
 }

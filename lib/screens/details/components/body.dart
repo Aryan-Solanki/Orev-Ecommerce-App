@@ -456,6 +456,7 @@ class _BodyState extends State<Body> {
                                   responseMsg: "Cash on Delivery order",
                                   codcharges: codSellerCharge,
                                   usedOrevWallet: orevwallet,
+                                  invoice: "",
                                   orevWalletAmountUsed: usedWalletMoney);
 
                               var values = {
@@ -513,6 +514,7 @@ class _BodyState extends State<Body> {
                                 "orevWalletAmountUsed":
                                     order.orevWalletAmountUsed,
                                 "transactionId": transactionId,
+                                "invoice": order.invoice,
                               };
                               OrderServices _services = new OrderServices();
 

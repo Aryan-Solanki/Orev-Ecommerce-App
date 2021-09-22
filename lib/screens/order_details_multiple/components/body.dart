@@ -212,6 +212,7 @@ class _BodyState extends State<Body> {
                     usedOrevWallet: widget.usedOrevWallet,
                     orevWalletAmountUsed: orevwalletamountused,
                     transactionId: transactionId,
+                    invoice: "",
                   ),
                 );
               }
@@ -285,6 +286,7 @@ class _BodyState extends State<Body> {
                     "usedOrevWallet": order.usedOrevWallet,
                     "orevWalletAmountUsed": order.orevWalletAmountUsed,
                     "transactionId": transactionId,
+                    "invoice": order.invoice
                   };
                   try {
                     await _services.addOrder(values, order.orderId);
@@ -390,6 +392,7 @@ class _BodyState extends State<Body> {
           usedOrevWallet: widget.usedOrevWallet,
           orevWalletAmountUsed: orevwalletamountused,
           transactionId: transactionId,
+          invoice: "",
         ),
       );
     }
@@ -446,6 +449,7 @@ class _BodyState extends State<Body> {
         "usedOrevWallet": order.usedOrevWallet,
         "orevWalletAmountUsed": order.orevWalletAmountUsed,
         "transactionId": transactionId,
+        "invoice": order.invoice,
       };
       try {
         await _services.addOrder(values, order.orderId);

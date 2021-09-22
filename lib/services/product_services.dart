@@ -9,6 +9,11 @@ class ProductServices {
   DocumentReference mainscreen = FirebaseFirestore.instance
       .collection('mainscreen')
       .doc("FPqix1bIAibs46FOA5zV");
+
+  DocumentReference initialChecks = FirebaseFirestore.instance
+      .collection('Maintainance')
+      .doc("JmEmXY3ZoYp71gznVp5I");
+
   CollectionReference products =
       FirebaseFirestore.instance.collection('products');
 

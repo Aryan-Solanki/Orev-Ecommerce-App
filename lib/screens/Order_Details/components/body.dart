@@ -179,6 +179,7 @@ class _BodyState extends State<Body> {
                   codcharges: widget.codSellerCharge,
                   usedOrevWallet: widget.usedOrevWallet,
                   transactionId: transactionId,
+                  invoice: "",
                   orevWalletAmountUsed: widget.orevWalletMoneyUsed);
               if (payment_response == "TXN_FAILURE") {
                 Navigator.push(
@@ -244,7 +245,8 @@ class _BodyState extends State<Body> {
                   "codcharges": order.codcharges,
                   "usedOrevWallet": order.usedOrevWallet,
                   "orevWalletAmountUsed": order.orevWalletAmountUsed,
-                  "transactionId": transactionId
+                  "transactionId": transactionId,
+                  "invoice": order.invoice
                 };
                 OrderServices _services = new OrderServices();
                 try {
