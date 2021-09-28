@@ -26,7 +26,7 @@ class ProfileMenu extends StatelessWidget {
         onPressed: press,
         child: Row(
           children: [
-            SvgPicture.asset(
+            icon==""?Icon(Icons.account_balance_outlined,color: kPrimaryColor,size: getProportionateScreenWidth(20)):SvgPicture.asset(
               icon,
               color: kPrimaryColor,
               width: getProportionateScreenWidth(18),

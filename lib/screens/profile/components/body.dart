@@ -6,6 +6,7 @@ import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/my_account/my_account.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
+import 'package:orev/screens/wallet/wallet.dart';
 import 'package:orev/screens/your_order/your_order.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,17 @@ class _BodyState extends State<Body> {
                     press: () {
                       if (authkey != "") {
                         Navigator.pushNamed(context, MyAccount.routeName);
+                      } else {
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      }
+                    },
+                  ),
+                  ProfileMenu(
+                    text: "Orev Wallet",
+                    icon: "",
+                    press: () {
+                      if (authkey != "") {
+                        Navigator.pushNamed(context, Wallet.routeName);
                       } else {
                         Navigator.pushNamed(context, SignInScreen.routeName);
                       }
