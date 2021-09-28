@@ -9,6 +9,7 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/address/address.dart';
 import 'package:orev/screens/complete_profile/complete_profile_screen.dart';
 import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/screens/wallet/wallet.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
@@ -252,6 +253,16 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                 )
               ],
             ),
+          ),
+          SizedBox(height: getProportionateScreenHeight(5)),
+          Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, Wallet.routeName);
+                },
+                  child: Text("Add Balance",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenWidth(13)),)
+              )
           ),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
