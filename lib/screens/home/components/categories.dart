@@ -14,6 +14,12 @@ import 'package:orev/services/user_simple_preferences.dart';
 import '../../../size_config.dart';
 
 class Categories extends StatefulWidget {
+  final int categoryint;
+
+  const Categories({
+    Key key,
+    @required this.categoryint,
+  }) : super(key: key);
   @override
   _CategoriesState createState() => _CategoriesState();
 }
@@ -38,41 +44,29 @@ class _CategoriesState extends State<Categories> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CategoryCard(
-              icon: Icons.label_important_outline,
-              text: "Essential",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                            categoryId: "JAgrZhNaIa3ryRug2wrn",
-                            title: "Essentials",
-                          )),
-                );
-              },
-            ),
-            SizedBox(width: getProportionateScreenWidth(20)),
-            CategoryCard(
+
+
+            widget.categoryint==1?CategoryCard(
               icon: Icons.local_offer_outlined,
               text: "Offer\nZone",
               press: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => SeeMore(
-                //             categoryId: "E7dYkDBguiRFEYag2sKi",
-                //             title: "Offer Zone",
-                //           )),
-                // );
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => OfferzoneCategory()),
                 );
               },
+            ):CategoryCard(
+              icon: Icons.fastfood_outlined,
+              text: "Food",
+              press: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OfferzoneCategory()),
+                // );
+              },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            CategoryCard(
+            widget.categoryint==1?CategoryCard(
               icon: Icons.account_balance_outlined,
               text: "Wallet",
               press: () {
@@ -82,44 +76,69 @@ class _CategoriesState extends State<Categories> {
                   Navigator.pushNamed(context, Wallet.routeName);
                 }
               },
-            ),
-            SizedBox(width: getProportionateScreenWidth(20)),
-            CategoryCard(
-              icon: Icons.shopping_basket_outlined,
-              text: "Fresh",
+            ):CategoryCard(
+              icon: Icons.health_and_safety_outlined,
+              text: "Health",
               press: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SeeMore(
-                            categoryId: "EQsBoA7cGvzpBxkylFVC",
-                            title: "Fresh")));
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OfferzoneCategory()),
+                // );
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            CategoryCard(
-              icon: Icons.category_outlined,
-              text: "Category",
+            widget.categoryint==1?CategoryCard(
+              icon: Icons.people_outline_rounded,
+              text: "Experts",
+              press: () {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => SeeMore(
+                //             categoryId: "EQsBoA7cGvzpBxkylFVC",
+                //             title: "Fresh")));
+              },
+            ):CategoryCard(
+              icon: Icons.female_outlined,
+              text: "Beauty",
+              press: () {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => SeeMore(
+                //             categoryId: "EQsBoA7cGvzpBxkylFVC",
+                //             title: "Fresh")));
+              },
+            ),
+            SizedBox(width: getProportionateScreenWidth(20)),
+            widget.categoryint==1?CategoryCard(
+              icon: Icons.library_books_outlined,
+              text: "E-Books",
+              press: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => CategoryPage(
+                //         categoryId: "JAgrZhNaIa3ryRug2wrn",
+                //         title: "Essentials",
+                //       )),
+                // );
+              },
+            ):CategoryCard(
+              icon: Icons.label_important_outline,
+              text: "Essentials",
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AllCategoryScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => CategoryPage(
+                        categoryId: "JAgrZhNaIa3ryRug2wrn",
+                        title: "Essentials",
+                      )),
                 );
               },
             ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            CategoryCard(
-              icon: Icons.thumb_up_alt_outlined,
-              text: "Best\nSellers",
-              press: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SeeMore(
-                            categoryId: "2iMKUa7Z2ViQJAnY54ef",
-                            title: "Best Sellers")));
-              },
-            ),
           ],
         ),
       ),

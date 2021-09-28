@@ -47,7 +47,8 @@ class _BodyState extends State<Body> {
   List<Widget> ListWidgets = [
     ImageSlider(),
     SizedBox(height: getProportionateScreenWidth(10)),
-    Categories(),
+    Categories(categoryint: 1,),
+    Categories(categoryint: 2,),
   ];
 
   Future<void> doSomeAsyncStuff() async {
