@@ -16,7 +16,6 @@ import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:provider/provider.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -53,6 +52,11 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
   _verifyPhone() async {
     await auth.verifyPhoneNumber(
         phoneNumber: '+91' + number,
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
@@ -69,11 +73,6 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         codeSent: (String verficationID, int resendToken) {
           setState(() {
             _verificationCode = verficationID;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
           });
         },
         timeout: Duration(seconds: 30));

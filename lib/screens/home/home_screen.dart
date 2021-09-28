@@ -13,14 +13,20 @@ import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
+  bool returnFromLogOut;
+  HomeScreen({this.returnFromLogOut = false});
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() =>
+      _HomeScreenState(returnFromLogOut: returnFromLogOut);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   bool firsttime = false;
   bool maintenance = false;
   bool updateAvailable = false;
+
+  bool returnFromLogOut;
+  _HomeScreenState({this.returnFromLogOut = false});
 
   checkInitial() async {
     ProductServices _services = ProductServices();
@@ -67,6 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (returnFromLogOut) {
+      Fluttertoast.showToast(
+          msg: "You have logged out successfully",
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIosWeb: 2,
+          gravity: ToastGravity.BOTTOM);
+    }
     return WillPopScope(
       onWillPop: () async {
         DateTime currenttime = DateTime.now();

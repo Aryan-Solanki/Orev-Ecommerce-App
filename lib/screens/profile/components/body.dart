@@ -98,9 +98,13 @@ class _BodyState extends State<Body> {
                             _auth.signOut();
                             UserSimplePreferences.setAuthKey("");
                             Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(
+                                  returnFromLogOut: true,
+                                ),
+                              ),
+                            );
                           },
                         )
                       : ProfileMenu(
