@@ -83,7 +83,7 @@ class _CategoriesState extends State<Categories> {
                     },
                   )
                 : CategoryCard(
-                    // icon: Icons.health_and_safety_outlined,
+                    icon: Icons.health_and_safety_outlined,
                     text: "Health",
                     press: () {
                       Navigator.push(
@@ -109,7 +109,7 @@ class _CategoriesState extends State<Categories> {
                     },
                   )
                 : CategoryCard(
-                    // icon: Icons.female_outlined,
+                    icon: Icons.female_outlined,
                     text: "Beauty",
                     press: () {
                       Navigator.push(
