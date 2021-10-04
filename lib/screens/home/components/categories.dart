@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Category.dart';
 import 'package:orev/screens/category_page/category_page.dart';
@@ -44,100 +45,108 @@ class _CategoriesState extends State<Categories> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
-            widget.categoryint==1?CategoryCard(
-              icon: Icons.local_offer_outlined,
-              text: "Offer\nZone",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OfferzoneCategory()),
-                );
-              },
-            ):CategoryCard(
-              icon: Icons.fastfood_outlined,
-              text: "Food",
-              press: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OfferzoneCategory()),
-                // );
-              },
-            ),
+            widget.categoryint == 1
+                ? CategoryCard(
+                    icon: Icons.local_offer_outlined,
+                    text: "Offer\nZone",
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OfferzoneCategory()),
+                      );
+                    },
+                  )
+                : CategoryCard(
+                    icon: Icons.fastfood_outlined,
+                    text: "Food",
+                    press: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeeMore(
+                                  categoryId: "43Gm8DaBXRsLPMCPw4ZZ",
+                                  title: "Food")));
+                    },
+                  ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            widget.categoryint==1?CategoryCard(
-              icon: Icons.account_balance_outlined,
-              text: "Wallet",
-              press: () {
-                if (authkey == '') {
-                  Navigator.pushNamed(context, SignInScreen.routeName);
-                } else {
-                  Navigator.pushNamed(context, Wallet.routeName);
-                }
-              },
-            ):CategoryCard(
-              icon: Icons.health_and_safety_outlined,
-              text: "Health",
-              press: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OfferzoneCategory()),
-                // );
-              },
-            ),
+            widget.categoryint == 1
+                ? CategoryCard(
+                    icon: Icons.account_balance_outlined,
+                    text: "Wallet",
+                    press: () {
+                      if (authkey == '') {
+                        Navigator.pushNamed(context, SignInScreen.routeName);
+                      } else {
+                        Navigator.pushNamed(context, Wallet.routeName);
+                      }
+                    },
+                  )
+                : CategoryCard(
+                    // icon: Icons.health_and_safety_outlined,
+                    text: "Health",
+                    press: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeeMore(
+                                  categoryId: "2f3ipLs8hmLEYEJk3xjn",
+                                  title: "Health")));
+                    },
+                  ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            widget.categoryint==1?CategoryCard(
-              icon: Icons.people_outline_rounded,
-              text: "Experts",
-              press: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => SeeMore(
-                //             categoryId: "EQsBoA7cGvzpBxkylFVC",
-                //             title: "Fresh")));
-              },
-            ):CategoryCard(
-              icon: Icons.female_outlined,
-              text: "Beauty",
-              press: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => SeeMore(
-                //             categoryId: "EQsBoA7cGvzpBxkylFVC",
-                //             title: "Fresh")));
-              },
-            ),
+            widget.categoryint == 1
+                ? CategoryCard(
+                    icon: Icons.people_outline_rounded,
+                    text: "Experts",
+                    press: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeeMore(
+                                  categoryId: "pmGbfQHUi0Z5TTrk6wLQ",
+                                  title: "Experts")));
+                    },
+                  )
+                : CategoryCard(
+                    // icon: Icons.female_outlined,
+                    text: "Beauty",
+                    press: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeeMore(
+                                  categoryId: "fe29yWr3MDBvPN7tdndB",
+                                  title: "Beauty")));
+                    },
+                  ),
             SizedBox(width: getProportionateScreenWidth(20)),
-            widget.categoryint==1?CategoryCard(
-              icon: Icons.library_books_outlined,
-              text: "E-Books",
-              press: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => CategoryPage(
-                //         categoryId: "JAgrZhNaIa3ryRug2wrn",
-                //         title: "Essentials",
-                //       )),
-                // );
-              },
-            ):CategoryCard(
-              icon: Icons.label_important_outline,
-              text: "Essentials",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryPage(
-                        categoryId: "JAgrZhNaIa3ryRug2wrn",
-                        title: "Essentials",
-                      )),
-                );
-              },
-            ),
+            widget.categoryint == 1
+                ? CategoryCard(
+                    icon: Icons.library_books_outlined,
+                    text: "E-Books",
+                    press: () {
+                      Fluttertoast.showToast(
+                          msg: "Service Coming Soon",
+                          toastLength: Toast.LENGTH_LONG,
+                          timeInSecForIosWeb: 2,
+                          gravity: ToastGravity.BOTTOM);
+                    },
+                  )
+                : CategoryCard(
+                    icon: Icons.label_important_outline,
+                    text: "Essentials",
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                  categoryId: "JAgrZhNaIa3ryRug2wrn",
+                                  title: "Essentials",
+                                )),
+                      );
+                    },
+                  ),
             SizedBox(width: getProportionateScreenWidth(20)),
           ],
         ),

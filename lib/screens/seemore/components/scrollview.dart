@@ -96,14 +96,11 @@ class AllItemsState extends State<AllItems> {
     ProductServices _services = ProductServices();
 
     var _documentRef = await _services.products;
-    print(widget.categoryId);
-    print(widget.categoryId);
     await _documentRef.get().then((ds) {
       if (ds != null) {
         ds.docs.forEach((value) {
           List val = value["categories"];
           if (val.contains(widget.categoryId)) {
-            print(value["productId"]);
             keys.add(value["productId"].trim());
           }
         });
@@ -138,7 +135,6 @@ class AllItemsState extends State<AllItems> {
   Widget build(BuildContext context) {
     refresh() {
       setState(() {
-        // print("Set state ho gyaaAAAA");
         widget.notifyParent();
       });
     }
@@ -148,9 +144,6 @@ class AllItemsState extends State<AllItems> {
     //   double currentScroll =  widget.scrollController.position.pixels;
     //   double delta = getProportionateScreenWidth(25);
     //
-    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     MAX SCROLL $maxScroll");
-    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     CURRENT SCROLL $currentScroll");
-    //   print("sdkjhsdfjsdjkfgsdjkfsdf :     DELTA $delta");
     //
     //   if (maxScroll - currentScroll < delta) {
     //     _getMoreProducts();
