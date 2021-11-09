@@ -109,7 +109,7 @@ class _CategoriesState extends State<Categories> {
                     },
                   )
                 : CategoryCard(
-                    icon: Icons.face_retouching_natural_outlined,
+                    icon: Icons.face_retouching_natural,
                     text: "Beauty",
                     press: () {
                       Navigator.push(
