@@ -6,7 +6,7 @@ class Varient {
   final double comparedPrice, discountPercentage;
   final double price;
   final bool inStock;
-  final int qty;
+  final double qty;
   final String title;
   final String id;
   final List<dynamic> images;
