@@ -86,7 +86,7 @@ class ProductServices {
             discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
             price: vari["price"].toDouble(),
             inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
+            qty: vari["stock"]["qty"].toDouble(),
             title: vari["variantDetails"]["title"],
             id: vari["id"],
             images: vari["variantDetails"]["images"]));
@@ -120,7 +120,7 @@ class ProductServices {
             discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
             price: vari["price"].toDouble(),
             inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
+            qty: vari["stock"]["qty"].toDouble(),
             title: vari["variantDetails"]["title"],
             id: vari["id"],
             images: vari["variantDetails"]["images"]));
@@ -156,7 +156,7 @@ class ProductServices {
             discountPercentage: vari["onSale"]["discountPercentage"].toDouble(),
             price: vari["price"].toDouble(),
             inStock: vari["stock"]["inStock"],
-            qty: vari["stock"]["qty"],
+            qty: vari["stock"]["qty"].toDouble(),
             title: vari["variantDetails"]["title"],
             id: vari["id"],
             images: vari["variantDetails"]["images"]));
