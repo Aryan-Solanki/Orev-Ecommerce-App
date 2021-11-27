@@ -3,6 +3,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/HelpCenterDesktop.dart';
 import 'components/HelpCenterMobile.dart';
+import 'components/HelpCenterTablet.dart';
 import 'components/body.dart';
 
 class HelpCenter extends StatefulWidget {
@@ -19,7 +20,7 @@ class _HelpCenterState extends State<HelpCenter> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: HelpCenterMobile(),
-          tablet: HelpCenterDesktop(),
+          tablet: HelpCenterTablet(),
           desktop: HelpCenterDesktop(),
         ),
       ),

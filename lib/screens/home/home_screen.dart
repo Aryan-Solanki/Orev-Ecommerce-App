@@ -12,6 +12,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../../constants.dart';
 import 'components/HomeScreenDesktop.dart';
 import 'components/HomeScreenMobile.dart';
+import 'components/HomeScreenTablet.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: HomeScreenMobile(),
-          tablet: HomeScreenDesktop(),
+          tablet: HomeScreenTablet(),
           desktop: HomeScreenDesktop(),
         ),
         bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),

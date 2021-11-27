@@ -4,6 +4,7 @@ import 'package:orev/screens/details/components/DetailsScreenMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../models/Product.dart';
+import 'components/DetailsScreenTablet.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
@@ -38,7 +39,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         body: ScreenTypeLayout(
           mobile: DetailsScreenMobile(
               product: agrs.product, varientNumberCart: agrs.varientCartNum),
-          tablet: DetailsScreenDesktop(
+          tablet: DetailsScreenTablet(
               product: agrs.product, varientNumberCart: agrs.varientCartNum),
           desktop: DetailsScreenDesktop(
               product: agrs.product, varientNumberCart: agrs.varientCartNum),

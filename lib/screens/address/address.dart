@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/screens/address/components/AddressPageDesktop.dart';
 import 'package:orev/screens/address/components/AddressPageMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'components/AddressPageTablet.dart';
 import 'components/body.dart';
 
 class Address extends StatelessWidget {
@@ -19,7 +20,7 @@ class Address extends StatelessWidget {
       ),
       body: ScreenTypeLayout(
         mobile: AddressPageMobile(),
-        tablet: AddressPageDesktop(),
+        tablet: AddressPageTablet(),
         desktop: AddressPageDesktop(),
       ),
     );
