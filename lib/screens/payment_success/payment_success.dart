@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/screens/home/home_screen.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/PaymentSuccessDesktop.dart';
+import 'components/PaymentSuccessMobile.dart';
 import 'components/body.dart';
 
 class PaymentSuccess extends StatefulWidget {
@@ -34,10 +37,22 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
                 ? "Payment Success"
                 : "Payment Failure"),
           ),
-          body: Body(
-            transaction: widget.transaction_success,
-            order: widget.order,
-            cod: widget.cod,
+          body: ScreenTypeLayout(
+            mobile: PaymentSuccessMobile(
+              transaction: widget.transaction_success,
+              order: widget.order,
+              cod: widget.cod,
+            ),
+            tablet: PaymentSuccessDesktop(
+              transaction: widget.transaction_success,
+              order: widget.order,
+              cod: widget.cod,
+            ),
+            desktop: PaymentSuccessDesktop(
+              transaction: widget.transaction_success,
+              order: widget.order,
+              cod: widget.cod,
+            ),
           ),
         ),
       ),

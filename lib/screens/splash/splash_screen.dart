@@ -4,6 +4,10 @@ import 'package:orev/screens/splash/components/body.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/size_config.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+
+import 'components/SplashScreenDesktop.dart';
+import 'components/SplashScreenMobile.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
@@ -31,7 +35,11 @@ class _SplashScreenState extends State<SplashScreen> {
         splash: 'assets/images/splash_1.png',
         nextScreen: (getFirst == '')
             ? Scaffold(
-                body: Body(),
+                body: ScreenTypeLayout(
+                  mobile: SplashScreenMobile(),
+                  tablet: SplashScreenDesktop(),
+                  desktop: SplashScreenDesktop(),
+                ),
               )
             : HomeScreen()
         // splashTransition: SplashTransition.rotationTransition,

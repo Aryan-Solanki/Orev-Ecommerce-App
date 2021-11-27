@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orev/constants.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
+import 'components/SignInScreenDesktop.dart';
+import 'components/SignInScreenMobile.dart';
 import 'components/body.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -44,7 +47,11 @@ class _SignInScreenState extends State<SignInScreen> {
           fontSize: getProportionateScreenWidth(18),
         ),),
       ),
-      body: Body(),
+      body: ScreenTypeLayout(
+        mobile: SignInScreenMobile(),
+        tablet: SignInScreenDesktop(),
+        desktop: SignInScreenDesktop(),
+      ),
     );
   }
 }

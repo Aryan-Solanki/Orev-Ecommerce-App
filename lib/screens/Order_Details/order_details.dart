@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
 import 'package:orev/models/Product.dart';
+import 'package:orev/screens/Order_Details/components/OrderDetailsMobile.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/OrderDetailsDesktop.dart';
 import 'components/body.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -48,19 +51,47 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(
-            key: UniqueKey(),
-            product: widget.product,
-            currentVarient: widget.currentVarient,
-            quantity: widget.quantity,
-            orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
-            codSellerCharge: widget.codSellerCharge,
-            selectedaddress: widget.selectedaddress,
-            totalCost: widget.totalCost,
-            deliveryCost: widget.deliveryCost,
-            newwalletbalance: widget.newwalletbalance,
-            oldwalletbalance: widget.oldwalletbalance,
-            usedOrevWallet: widget.usedorevwallet),
+        body: ScreenTypeLayout(
+          mobile: OrderDetailsMobile(
+              key: UniqueKey(),
+              product: widget.product,
+              currentVarient: widget.currentVarient,
+              quantity: widget.quantity,
+              orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+              codSellerCharge: widget.codSellerCharge,
+              selectedaddress: widget.selectedaddress,
+              totalCost: widget.totalCost,
+              deliveryCost: widget.deliveryCost,
+              newwalletbalance: widget.newwalletbalance,
+              oldwalletbalance: widget.oldwalletbalance,
+              usedOrevWallet: widget.usedorevwallet),
+          tablet: OrderDetailsDesktop(
+              key: UniqueKey(),
+              product: widget.product,
+              currentVarient: widget.currentVarient,
+              quantity: widget.quantity,
+              orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+              codSellerCharge: widget.codSellerCharge,
+              selectedaddress: widget.selectedaddress,
+              totalCost: widget.totalCost,
+              deliveryCost: widget.deliveryCost,
+              newwalletbalance: widget.newwalletbalance,
+              oldwalletbalance: widget.oldwalletbalance,
+              usedOrevWallet: widget.usedorevwallet),
+          desktop: OrderDetailsDesktop(
+              key: UniqueKey(),
+              product: widget.product,
+              currentVarient: widget.currentVarient,
+              quantity: widget.quantity,
+              orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
+              codSellerCharge: widget.codSellerCharge,
+              selectedaddress: widget.selectedaddress,
+              totalCost: widget.totalCost,
+              deliveryCost: widget.deliveryCost,
+              newwalletbalance: widget.newwalletbalance,
+              oldwalletbalance: widget.oldwalletbalance,
+              usedOrevWallet: widget.usedorevwallet),
+        ),
       ),
     );
   }

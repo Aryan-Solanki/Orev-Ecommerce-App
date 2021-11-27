@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/wallet/components/WalletScreenDesktop.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
+import 'components/WalletScreenMobile.dart';
 import 'components/body.dart';
 
 class Wallet extends StatefulWidget {
@@ -15,7 +18,11 @@ class _WalletState extends State<Wallet> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(),
+        body: ScreenTypeLayout(
+          mobile: WalletScreenMobile(),
+          tablet: WalletScreenDesktop(),
+          desktop: WalletScreenDesktop(),
+        ),
       ),
     );
   }
