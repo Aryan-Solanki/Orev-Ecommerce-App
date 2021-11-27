@@ -6,8 +6,11 @@ import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/services/order_services.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../constants.dart';
+import 'components/YourOrderDesktop.dart';
+import 'components/YourOrderMobile.dart';
 import 'components/body.dart';
 
 class YourOrder extends StatefulWidget {
@@ -93,10 +96,22 @@ class _YourOrderState extends State<YourOrder> {
           return false;
         },
         child: Scaffold(
-          body: Body(
-            keys: orders,
-            key: UniqueKey(),
-            notifyParent: refresh,
+          body: ScreenTypeLayout(
+            mobile: YourOrderMobile(
+              keys: orders,
+              key: UniqueKey(),
+              notifyParent: refresh,
+            ),
+            tablet: YourOrderDesktop(
+              keys: orders,
+              key: UniqueKey(),
+              notifyParent: refresh,
+            ),
+            desktop: YourOrderDesktop(
+              keys: orders,
+              key: UniqueKey(),
+              notifyParent: refresh,
+            ),
           ),
         ),
       ),
