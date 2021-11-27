@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/allCategoriesScreen/components/AllCategoriesScreenDesktop.dart';
+import 'package:orev/screens/allCategoriesScreen/components/AllCategoriesScreenMobile.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/body.dart';
 
@@ -17,7 +20,11 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(notifyParent: refresh),
+        body: ScreenTypeLayout(
+          mobile: AllCategoriesScreenMobile(notifyParent: refresh),
+          tablet: AllCategoriesScreenDesktop(notifyParent: refresh),
+          desktop: AllCategoriesScreenDesktop(notifyParent: refresh),
+        ),
       ),
     );
   }
