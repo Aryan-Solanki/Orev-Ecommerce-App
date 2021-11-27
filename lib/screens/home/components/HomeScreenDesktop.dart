@@ -3,6 +3,7 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/screens/home/components/DesktopCategories.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
 import 'package:orev/screens/home/components/threegrid.dart';
 
@@ -47,12 +48,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
   List<Widget> ListWidgets = [
     ImageSlider(),
     SizedBox(height: getProportionateScreenWidth(10)),
-    Categories(
-      categoryint: 1,
-    ),
-    Categories(
-      categoryint: 2,
-    ),
+    DesktopCategories(),
   ];
 
   Future<void> doSomeAsyncStuff() async {
