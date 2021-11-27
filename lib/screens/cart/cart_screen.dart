@@ -7,6 +7,7 @@ import 'package:orev/services/product_services.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../constants.dart';
+import 'components/CartScreenTablet.dart';
 import 'components/body.dart';
 import 'components/check_out_card.dart';
 
@@ -70,7 +71,7 @@ class CartScreenState extends State<CartScreen> {
             key: UniqueKey(),
             notifyParent: refresh,
           ),
-          tablet: CartScreenDesktop(
+          tablet: CartScreenTablet(
             currentAddress: address,
             keys: keys,
             key: UniqueKey(),

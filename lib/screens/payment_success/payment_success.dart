@@ -6,6 +6,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/PaymentSuccessDesktop.dart';
 import 'components/PaymentSuccessMobile.dart';
+import 'components/PaymentSuccessTablet.dart';
 import 'components/body.dart';
 
 class PaymentSuccess extends StatefulWidget {
@@ -43,7 +44,7 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
               order: widget.order,
               cod: widget.cod,
             ),
-            tablet: PaymentSuccessDesktop(
+            tablet: PaymentSuccessTablet(
               transaction: widget.transaction_success,
               order: widget.order,
               cod: widget.cod,

@@ -4,6 +4,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/OPTScreenDesktop.dart';
 import 'components/OPTScreenMobile.dart';
+import 'components/OPTScreenTablet.dart';
 import 'components/body.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class OtpScreen extends StatelessWidget {
       ),
       body: ScreenTypeLayout(
         mobile: OTPScreenMobile(),
-        tablet: OTPScreenDesktop(),
+        tablet: OTPScreenTablet(),
         desktop: OTPScreenDesktop(),
       ),
     );

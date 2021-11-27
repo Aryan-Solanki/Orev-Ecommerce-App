@@ -3,6 +3,7 @@ import 'package:orev/screens/complete_profile/components/CompleteProfileDesktop.
 import 'package:orev/screens/complete_profile/components/CompleteProfileMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/CompleteProfileTablet.dart';
 import 'components/body.dart';
 
 class CompleteProfileScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class CompleteProfileScreen extends StatelessWidget {
       ),
       body: ScreenTypeLayout(
         mobile: CompleteProfileMobile(),
-        tablet: CompleteProfileDesktop(),
+        tablet: CompleteProfileTablet(),
         desktop: CompleteProfileDesktop(),
       ),
     );

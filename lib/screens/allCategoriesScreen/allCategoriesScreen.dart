@@ -3,6 +3,7 @@ import 'package:orev/screens/allCategoriesScreen/components/AllCategoriesScreenD
 import 'package:orev/screens/allCategoriesScreen/components/AllCategoriesScreenMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/AllCategoriesScreenTablet.dart';
 import 'components/body.dart';
 
 class AllCategoryScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: AllCategoriesScreenMobile(notifyParent: refresh),
-          tablet: AllCategoriesScreenDesktop(notifyParent: refresh),
+          tablet: AllCategoriesScreenTablet(notifyParent: refresh),
           desktop: AllCategoriesScreenDesktop(notifyParent: refresh),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/HelpFormDesktop.dart';
 import 'components/HelpFormMobile.dart';
+import 'components/HelpFormTablet.dart';
 import 'components/body.dart';
 
 class HelpForm extends StatelessWidget {
@@ -12,7 +13,7 @@ class HelpForm extends StatelessWidget {
     return Scaffold(
       body: ScreenTypeLayout(
         mobile: HelpFormMobile(),
-        tablet: HelpFormDesktop(),
+        tablet: HelpFormTablet(),
         desktop: HelpFormDesktop(),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:orev/screens/forgot_password/components/ForgotPasswordMobile.dar
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
+import 'components/ForgotPasswordTablet.dart';
 import 'components/body.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class ForgotPasswordScreen extends StatelessWidget {
       ),
       body: ScreenTypeLayout(
         mobile: ForgotPasswordMobile(),
-        tablet: ForgotPasswordDesktop(),
+        tablet: ForgotPasswordTablet(),
         desktop: ForgotPasswordDesktop(),
       ),
     );

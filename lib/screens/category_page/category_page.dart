@@ -4,6 +4,7 @@ import 'package:orev/screens/category_page/components/CategoryPageMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
+import 'components/CategoryPageTablet.dart';
 import 'components/body.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       body: ScreenTypeLayout(
         mobile: CategoryPageMobile(categoryId: categoryId, title: title),
-        tablet: CategoryPageDesktop(categoryId: categoryId, title: title),
+        tablet: CategoryPageTablet(categoryId: categoryId, title: title),
         desktop: CategoryPageDesktop(categoryId: categoryId, title: title),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../../size_config.dart';
 import 'components/SignUpScreenDesktop.dart';
 import 'components/SignUpScreenMobile.dart';
+import 'components/SignUpScreenTablet.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: ScreenTypeLayout(
         mobile: SignUpScreenMobile(),
-        tablet: SignUpScreenDesktop(),
+        tablet: SignUpScreenTablet(),
         desktop: SignUpScreenDesktop(),
       ),
     );

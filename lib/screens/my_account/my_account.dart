@@ -3,6 +3,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/MyAccountDesktop.dart';
 import 'components/MyAccountMobile.dart';
+import 'components/MyAccountTablet.dart';
 import 'components/body.dart';
 
 class MyAccount extends StatefulWidget {
@@ -19,7 +20,7 @@ class _MyAccountState extends State<MyAccount> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: MyAccountMobile(),
-          tablet: MyAccountDesktop(),
+          tablet: MyAccountTablet(),
           desktop: MyAccountDesktop(),
         ),
       ),

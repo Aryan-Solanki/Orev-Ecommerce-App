@@ -6,6 +6,7 @@ import 'package:orev/screens/Order_Details/components/OrderDetailsMobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/OrderDetailsDesktop.dart';
+import 'components/OrderDetailsTablet.dart';
 import 'components/body.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -65,7 +66,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               newwalletbalance: widget.newwalletbalance,
               oldwalletbalance: widget.oldwalletbalance,
               usedOrevWallet: widget.usedorevwallet),
-          tablet: OrderDetailsDesktop(
+          tablet: OrderDetailsTablet(
               key: UniqueKey(),
               product: widget.product,
               currentVarient: widget.currentVarient,

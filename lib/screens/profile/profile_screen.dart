@@ -5,6 +5,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/ProfileScreenDesktop.dart';
 import 'components/ProfileScreenMobile.dart';
+import 'components/ProfileScreenTablet.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: ProfileScreenMobile(),
-          tablet: ProfileScreenDesktop(),
+          tablet: ProfileScreenTablet(),
           desktop: ProfileScreenDesktop(),
         ),
         bottomNavigationBar:

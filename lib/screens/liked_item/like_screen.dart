@@ -7,6 +7,7 @@ import 'package:orev/screens/liked_item/components/scrollview.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../enums.dart';
+import 'components/LikeScreenTablet.dart';
 import 'components/body.dart';
 
 class LikedScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _LikedScreenState extends State<LikedScreen> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: LikeScreenMobile(),
-          tablet: LikeScreenDesktop(),
+          tablet: LikeScreenTablet(),
           desktop: LikeScreenDesktop(),
         ),
         bottomNavigationBar:

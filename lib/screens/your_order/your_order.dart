@@ -11,6 +11,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../../constants.dart';
 import 'components/YourOrderDesktop.dart';
 import 'components/YourOrderMobile.dart';
+import 'components/YourOrderTablet.dart';
 import 'components/body.dart';
 
 class YourOrder extends StatefulWidget {
@@ -102,7 +103,7 @@ class _YourOrderState extends State<YourOrder> {
               key: UniqueKey(),
               notifyParent: refresh,
             ),
-            tablet: YourOrderDesktop(
+            tablet: YourOrderTablet(
               keys: orders,
               key: UniqueKey(),
               notifyParent: refresh,
