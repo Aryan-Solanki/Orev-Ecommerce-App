@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/login_success/components/LoginSuccessDesktop.dart';
+import 'package:orev/screens/login_success/components/LoginSuccessMobile.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/body.dart';
 
@@ -10,7 +13,11 @@ class LoginSuccessScreen extends StatelessWidget {
       appBar: AppBar(
         leading: SizedBox(),
       ),
-      body: Body(),
+      body: ScreenTypeLayout(
+        mobile: LoginSuccessMobile(),
+        tablet: LoginSuccessDesktop(),
+        desktop: LoginSuccessDesktop(),
+      ),
     );
   }
 }
