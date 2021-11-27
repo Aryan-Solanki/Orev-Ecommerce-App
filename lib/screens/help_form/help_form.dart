@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/HelpFormDesktop.dart';
+import 'components/HelpFormMobile.dart';
 import 'components/body.dart';
 
 class HelpForm extends StatelessWidget {
@@ -7,7 +10,11 @@ class HelpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: ScreenTypeLayout(
+        mobile: HelpFormMobile(),
+        tablet: HelpFormDesktop(),
+        desktop: HelpFormDesktop(),
+      ),
     );
   }
 }
