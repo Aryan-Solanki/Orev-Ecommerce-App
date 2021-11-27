@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/details/components/DetailsScreenDesktop.dart';
+import 'package:orev/screens/details/components/DetailsScreenMobile.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../models/Product.dart';
 import 'components/body.dart';
@@ -32,7 +35,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFF5F6F9),
-        body: Body(product: agrs.product, varientNumberCart: agrs.varientCartNum),
+        body: ScreenTypeLayout(
+          mobile: DetailsScreenMobile(
+              product: agrs.product, varientNumberCart: agrs.varientCartNum),
+          tablet: DetailsScreenDesktop(
+              product: agrs.product, varientNumberCart: agrs.varientCartNum),
+          desktop: DetailsScreenDesktop(
+              product: agrs.product, varientNumberCart: agrs.varientCartNum),
+        ),
       ),
     );
   }
