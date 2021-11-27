@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/MyAccountDesktop.dart';
+import 'components/MyAccountMobile.dart';
 import 'components/body.dart';
 
 class MyAccount extends StatefulWidget {
@@ -14,7 +17,11 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(),
+        body: ScreenTypeLayout(
+          mobile: MyAccountMobile(),
+          tablet: MyAccountDesktop(),
+          desktop: MyAccountDesktop(),
+        ),
       ),
     );
   }
