@@ -7,6 +7,7 @@ import 'package:orev/screens/offer_and_category_screen/components/body.dart';
 import 'package:orev/size_config.dart';
 
 import '../../../constants.dart';
+import 'OfferzoneCategoryMobile.dart';
 
 class OfferzoneCard extends StatefulWidget {
   final OfferZone offer;
