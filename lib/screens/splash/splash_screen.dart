@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/screens/splash/components/SplashScreenTablet.dart';
 import 'package:orev/screens/splash/components/body.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 import 'package:orev/size_config.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ? Scaffold(
                 body: ScreenTypeLayout(
                   mobile: SplashScreenMobile(),
-                  tablet: SplashScreenDesktop(),
+                  tablet: SplashScreenTablet(),
                   desktop: SplashScreenDesktop(),
                 ),
               )

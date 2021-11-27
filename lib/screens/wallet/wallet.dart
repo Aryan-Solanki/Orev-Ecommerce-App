@@ -4,6 +4,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
 import 'components/WalletScreenMobile.dart';
+import 'components/WalletScreenTablet.dart';
 import 'components/body.dart';
 
 class Wallet extends StatefulWidget {
@@ -20,7 +21,7 @@ class _WalletState extends State<Wallet> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: WalletScreenMobile(),
-          tablet: WalletScreenDesktop(),
+          tablet: WalletScreenTablet(),
           desktop: WalletScreenDesktop(),
         ),
       ),

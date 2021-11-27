@@ -6,6 +6,7 @@ import 'package:orev/screens/multiple_payment_success/components/MultiplePayment
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/MultiplePaymentSuccessDesktop.dart';
+import 'components/MultiplePaymentSuccessTablet.dart';
 import 'components/body.dart';
 
 class MultiplePaymentSuccess extends StatefulWidget {
@@ -45,7 +46,7 @@ class _MultiplePaymentSuccessState extends State<MultiplePaymentSuccess> {
                 order: widget.order,
                 cod: widget.cod,
                 orderTotal: widget.orderTotal),
-            tablet: MultiplePaymentSuccessDesktop(
+            tablet: MultiplePaymentSuccessTablet(
                 transaction: widget.transaction_success,
                 order: widget.order,
                 cod: widget.cod,

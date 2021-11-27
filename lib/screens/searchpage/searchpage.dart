@@ -7,6 +7,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/SearchPageDesktop.dart';
 import 'components/SearchPageMobile.dart';
+import 'components/SearchPageTablet.dart';
 import 'components/body.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
       child: Scaffold(
         body: ScreenTypeLayout(
           mobile: SearchPageMobile(productList: productList, title: title),
-          tablet: SearchPageDesktop(productList: productList, title: title),
+          tablet: SearchPageTablet(productList: productList, title: title),
           desktop: SearchPageDesktop(productList: productList, title: title),
         ),
       ),

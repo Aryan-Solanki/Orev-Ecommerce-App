@@ -5,6 +5,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/SeeMoreDesktop.dart';
 import 'components/SeeMoreMobile.dart';
+import 'components/SeeMoreTablet.dart';
 import 'components/body.dart';
 
 class SeeMore extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SeeMoreState extends State<SeeMore> {
     return Scaffold(
       body: ScreenTypeLayout(
         mobile: SeeMoreMobile(categoryId: categoryId, title: title),
-        tablet: SeeMoreDesktop(categoryId: categoryId, title: title),
+        tablet: SeeMoreTablet(categoryId: categoryId, title: title),
         desktop: SeeMoreDesktop(categoryId: categoryId, title: title),
       ),
     );

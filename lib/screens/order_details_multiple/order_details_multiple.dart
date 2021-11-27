@@ -7,6 +7,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'components/OrderDetailsMultipleDesktop.dart';
 import 'components/OrderDetailsMultipleMobile.dart';
+import 'components/OrderDetailsMultipleTablet.dart';
 import 'components/body.dart';
 
 class OrderDetailsMultiple extends StatefulWidget {
@@ -59,7 +60,7 @@ class _OrderDetailsMultipleState extends State<OrderDetailsMultiple> {
             onlinePayment: widget.onlinePayment,
             orevWalletMoneyUsed: widget.orevWalletMoneyUsed,
           ),
-          tablet: OrderDetailsMultipleDesktop(
+          tablet: OrderDetailsMultipleTablet(
             key: UniqueKey(),
             CartList: widget.CartList,
             codSellerCharge: widget.codSellerCost,
