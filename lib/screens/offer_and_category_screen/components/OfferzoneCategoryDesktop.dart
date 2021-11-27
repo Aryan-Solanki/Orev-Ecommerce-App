@@ -10,14 +10,15 @@ import '../../../size_config.dart';
 import 'OfferzoneCategoryMobile.dart';
 import 'offerzonecard.dart';
 
-class Body extends StatefulWidget {
+class OfferzoneCategoryDesktop extends StatefulWidget {
   final Function() notifyParent;
-  Body({this.notifyParent});
+  OfferzoneCategoryDesktop({this.notifyParent});
   @override
-  _BodyState createState() => _BodyState();
+  _OfferzoneCategoryDesktopState createState() =>
+      _OfferzoneCategoryDesktopState();
 }
 
-class _BodyState extends State<Body> {
+class _OfferzoneCategoryDesktopState extends State<OfferzoneCategoryDesktop> {
   List<OfferZone> OfferList = [];
   List<dynamic> keys = [];
 
@@ -171,10 +172,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
-// class OfferZone {
-//   final String image;
-//   final Product product;
-//
-//   OfferZone({this.image, this.product});
-// }

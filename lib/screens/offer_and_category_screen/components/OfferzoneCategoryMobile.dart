@@ -7,17 +7,17 @@ import 'package:orev/services/product_services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import 'OfferzoneCategoryMobile.dart';
 import 'offerzonecard.dart';
 
-class Body extends StatefulWidget {
+class OfferzoneCategoryMobile extends StatefulWidget {
   final Function() notifyParent;
-  Body({this.notifyParent});
+  OfferzoneCategoryMobile({this.notifyParent});
   @override
-  _BodyState createState() => _BodyState();
+  _OfferzoneCategoryMobileState createState() =>
+      _OfferzoneCategoryMobileState();
 }
 
-class _BodyState extends State<Body> {
+class _OfferzoneCategoryMobileState extends State<OfferzoneCategoryMobile> {
   List<OfferZone> OfferList = [];
   List<dynamic> keys = [];
 
@@ -172,9 +172,9 @@ class _BodyState extends State<Body> {
   }
 }
 
-// class OfferZone {
-//   final String image;
-//   final Product product;
-//
-//   OfferZone({this.image, this.product});
-// }
+class OfferZone {
+  final String image;
+  final Product product;
+
+  OfferZone({this.image, this.product});
+}
