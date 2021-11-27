@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
+import 'components/SignUpScreenDesktop.dart';
+import 'components/SignUpScreenMobile.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -9,11 +12,18 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up",style: TextStyle(
-          fontSize: getProportionateScreenWidth(18),
-        ),),
+        title: Text(
+          "Sign Up",
+          style: TextStyle(
+            fontSize: getProportionateScreenWidth(18),
+          ),
+        ),
       ),
-      body: Body(),
+      body: ScreenTypeLayout(
+        mobile: SignUpScreenMobile(),
+        tablet: SignUpScreenDesktop(),
+        desktop: SignUpScreenDesktop(),
+      ),
     );
   }
 }
