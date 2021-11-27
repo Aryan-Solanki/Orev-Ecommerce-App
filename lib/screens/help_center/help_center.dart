@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/HelpCenterDesktop.dart';
+import 'components/HelpCenterMobile.dart';
 import 'components/body.dart';
 
 class HelpCenter extends StatefulWidget {
@@ -14,7 +17,11 @@ class _HelpCenterState extends State<HelpCenter> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(),
+        body: ScreenTypeLayout(
+          mobile: HelpCenterMobile(),
+          tablet: HelpCenterDesktop(),
+          desktop: HelpCenterDesktop(),
+        ),
       ),
     );
   }
