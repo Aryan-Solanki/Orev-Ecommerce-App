@@ -7,8 +7,11 @@ import 'package:orev/components/updateavailablescreen.dart';
 import 'package:orev/enums.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../constants.dart';
+import 'components/HomeScreenDesktop.dart';
+import 'components/HomeScreenMobile.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -99,7 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
         return false;
       },
       child: Scaffold(
-        body: Body(),
+        body: ScreenTypeLayout(
+          mobile: HomeScreenMobile(),
+          tablet: HomeScreenDesktop(),
+          desktop: HomeScreenDesktop(),
+        ),
         bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
       ),
     );
