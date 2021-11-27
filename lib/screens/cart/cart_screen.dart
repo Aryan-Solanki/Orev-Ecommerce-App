@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/cart/components/CartScreenDesktop.dart';
+import 'package:orev/screens/cart/components/CartScreenMobile.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../constants.dart';
 import 'components/body.dart';
@@ -60,11 +63,25 @@ class CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(
-          currentAddress: address,
-          keys: keys,
-          key: UniqueKey(),
-          notifyParent: refresh,
+        body: ScreenTypeLayout(
+          mobile: CartScreenMobile(
+            currentAddress: address,
+            keys: keys,
+            key: UniqueKey(),
+            notifyParent: refresh,
+          ),
+          tablet: CartScreenDesktop(
+            currentAddress: address,
+            keys: keys,
+            key: UniqueKey(),
+            notifyParent: refresh,
+          ),
+          desktop: CartScreenDesktop(
+            currentAddress: address,
+            keys: keys,
+            key: UniqueKey(),
+            notifyParent: refresh,
+          ),
         ),
       ),
     );
