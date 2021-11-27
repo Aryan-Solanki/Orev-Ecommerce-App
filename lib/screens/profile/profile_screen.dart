@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/ProfileScreenDesktop.dart';
+import 'components/ProfileScreenMobile.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -10,8 +13,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Body(),
-        bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+        body: ScreenTypeLayout(
+          mobile: ProfileScreenMobile(),
+          tablet: ProfileScreenDesktop(),
+          desktop: ProfileScreenDesktop(),
+        ),
+        bottomNavigationBar:
+            CustomBottomNavBar(selectedMenu: MenuState.profile),
       ),
     );
   }
