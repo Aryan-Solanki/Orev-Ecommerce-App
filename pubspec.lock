@@ -709,6 +709,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  responsive_builder:
+    dependency: "direct main"
+    description:
+      name: responsive_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+2"
   rounded_loading_button:
     dependency: "direct main"
     description:
