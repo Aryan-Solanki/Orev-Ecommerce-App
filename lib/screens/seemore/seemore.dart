@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orev/components/coustom_bottom_nav_bar.dart';
 import 'package:orev/enums.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
+import 'components/SeeMoreDesktop.dart';
+import 'components/SeeMoreMobile.dart';
 import 'components/body.dart';
 
 class SeeMore extends StatefulWidget {
@@ -22,7 +25,11 @@ class _SeeMoreState extends State<SeeMore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(categoryId: categoryId, title: title),
+      body: ScreenTypeLayout(
+        mobile: SeeMoreMobile(categoryId: categoryId, title: title),
+        tablet: SeeMoreDesktop(categoryId: categoryId, title: title),
+        desktop: SeeMoreDesktop(categoryId: categoryId, title: title),
+      ),
     );
   }
 }
