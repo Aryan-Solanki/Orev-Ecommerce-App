@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/category_page/components/CategoryPageDesktop.dart';
+import 'package:orev/screens/category_page/components/CategoryPageMobile.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../size_config.dart';
 import 'components/body.dart';
@@ -14,7 +17,6 @@ class CategoryPage extends StatefulWidget {
       _CategoryPageState(categoryId: categoryId, title: title);
 }
 
-
 class _CategoryPageState extends State<CategoryPage> {
   static String routeName = "/category_page";
   final String categoryId;
@@ -23,12 +25,11 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(categoryId: categoryId, title: title),
+      body: ScreenTypeLayout(
+        mobile: CategoryPageMobile(categoryId: categoryId, title: title),
+        tablet: CategoryPageDesktop(categoryId: categoryId, title: title),
+        desktop: CategoryPageDesktop(categoryId: categoryId, title: title),
+      ),
     );
   }
 }
-
-
-
-
-
