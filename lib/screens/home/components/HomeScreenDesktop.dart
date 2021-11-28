@@ -33,13 +33,12 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
             arguments: ProductDetailsArguments(product: product));
       },
       child: Container(
-        width: double.maxFinite,
         margin: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(20),
             vertical: getProportionateScreenHeight(15)),
         child: Image.network(
           imagelink,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           alignment: Alignment.center,
         ),
       ),
