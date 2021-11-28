@@ -37,71 +37,78 @@ class _SearchFieldState extends State<SearchField> {
     String title = "";
 
     return widget.simplebutton == true
-        ? GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchPage()));
-            },
-            child: Container(
-              padding: EdgeInsets.only(left: getProportionateScreenWidth(13)),
-              height: getProportionateScreenHeight(65),
+        ? Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(right: getProportionateScreenWidth(15)),
+            child: GestureDetector( 
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchPage()));
+                },
+                child: Container(
+                  padding: EdgeInsets.only(left: getProportionateScreenWidth(13)),
+                  height: getProportionateScreenHeight(65),
+                  width: SizeConfig.screenWidth * 0.75,
+                  decoration: BoxDecoration(
+                    color: kSecondaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        size: getProportionateScreenWidth(18),
+                        color: kTextColor,
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(
+                        "Search product",
+                        style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+          ),
+        )
+        : Expanded(
+          child: Container(
               width: SizeConfig.screenWidth * 0.75,
+              height: getProportionateScreenHeight(65),
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    size: getProportionateScreenWidth(18),
-                    color: kTextColor,
-                  ),
-                  SizedBox(
-                    width: getProportionateScreenWidth(10),
-                  ),
-                  Text(
-                    "Search product",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(14)),
-                  )
-                ],
+              child: Center(
+                child: TextField(
+                  style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                  focusNode: focusNode,
+                  textInputAction: TextInputAction.search,
+                  onChanged: (value) {
+                    widget.func(value, false);
+                    title = value;
+                  },
+                  onSubmitted: (value) {
+                    widget.func(value, true);
+                  },
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: getProportionateScreenWidth(13)),
+                      // horizontal: getProportionateScreenWidth(20),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      hintText: "Search product",
+                      hintStyle: TextStyle(
+                        fontSize: getProportionateScreenWidth(14),
+                      ),
+                      prefixIcon: Icon(Icons.search,
+                          size: getProportionateScreenWidth(18))),
+                ),
               ),
             ),
-          )
-        : Container(
-            width: SizeConfig.screenWidth * 0.75,
-            height: getProportionateScreenHeight(65),
-            decoration: BoxDecoration(
-              color: kSecondaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-              child: TextField(
-                style: TextStyle(fontSize: getProportionateScreenWidth(14)),
-                focusNode: focusNode,
-                textInputAction: TextInputAction.search,
-                onChanged: (value) {
-                  widget.func(value, false);
-                  title = value;
-                },
-                onSubmitted: (value) {
-                  widget.func(value, true);
-                },
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenWidth(13)),
-                    // horizontal: getProportionateScreenWidth(20),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    hintText: "Search product",
-                    hintStyle: TextStyle(
-                      fontSize: getProportionateScreenWidth(14),
-                    ),
-                    prefixIcon: Icon(Icons.search,
-                        size: getProportionateScreenWidth(18))),
-              ),
-            ),
-          );
+        );
   }
 }

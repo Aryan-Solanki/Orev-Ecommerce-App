@@ -3,6 +3,8 @@ import 'package:orev/constants.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/screens/cart/cart_screen.dart';
 import 'package:orev/screens/details/details_screen.dart';
+import 'package:orev/screens/home/components/DesktopCategories.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
 import 'package:orev/screens/home/components/threegrid.dart';
 
@@ -47,12 +49,7 @@ class _HomeScreenTabletState extends State<HomeScreenTablet> {
   List<Widget> ListWidgets = [
     ImageSlider(),
     SizedBox(height: getProportionateScreenWidth(10)),
-    Categories(
-      categoryint: 1,
-    ),
-    Categories(
-      categoryint: 2,
-    ),
+    DesktopCategories(),
   ];
 
   Future<void> doSomeAsyncStuff() async {
@@ -174,7 +171,7 @@ class _HomeScreenTabletState extends State<HomeScreenTablet> {
         child: Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        TabletHomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: ScrollConfiguration(

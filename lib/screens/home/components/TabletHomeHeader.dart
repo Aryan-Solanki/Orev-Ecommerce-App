@@ -14,11 +14,11 @@ import '../../../size_config.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 
-class DesktopHomeHeader extends StatefulWidget {
+class TabletHomeHeader extends StatefulWidget {
   final bool simplebutton;
   final bool address;
   final Function func;
-  const DesktopHomeHeader({
+  const TabletHomeHeader({
     bool this.simplebutton = true,
     bool this.address = false,
     @required this.func,
@@ -26,10 +26,10 @@ class DesktopHomeHeader extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DesktopHomeHeaderState createState() => _DesktopHomeHeaderState();
+  _TabletHomeHeaderState createState() => _TabletHomeHeaderState();
 }
 
-class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
+class _TabletHomeHeaderState extends State<TabletHomeHeader> {
   final GlobalKey<CartScreenState> myCartScreenState =
   GlobalKey<CartScreenState>();
 
@@ -149,7 +149,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
       EdgeInsets.only(right: getProportionateScreenWidth(20),left: getProportionateScreenWidth(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [ 
+        children: [
           Container(height: getProportionateScreenHeight(100),child: Image(image: AssetImage('assets/images/splash_1.png'))),
           SizedBox(width: getProportionateScreenWidth(15),),
           widget.address == false
@@ -225,98 +225,6 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
           )
               : IconBtnWithCounter(
             svgSrc: "assets/icons/Cart Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          ),
-          SizedBox(width: getProportionateScreenWidth(15),),
-          IconBtn(
-            svgSrc: "assets/icons/Shop Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          ),
-          SizedBox(width: getProportionateScreenWidth(15),),
-          IconBtn(
-            svgSrc: "assets/icons/Heart Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          ),
-          SizedBox(width: getProportionateScreenWidth(15),),
-          IconBtn(
-            svgSrc: "assets/icons/Chat bubble Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          ),
-          SizedBox(width: getProportionateScreenWidth(15),),
-          IconBtn(
-            svgSrc: "assets/icons/User Icon.svg",
             numOfitem: numberOfItems,
             press: () {
               if (authkey == '') {

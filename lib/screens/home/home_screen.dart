@@ -108,7 +108,24 @@ class _HomeScreenState extends State<HomeScreen> {
           tablet: HomeScreenTablet(),
           desktop: HomeScreenDesktop(),
         ),
-        bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
+        bottomNavigationBar: ResponsiveBuilder(
+          builder: (context, sizingInformation) {
+            // Check the sizing information here and return your UI
+            if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+              return Visibility(visible: false,child: CustomBottomNavBar(selectedMenu: MenuState.home));
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+              return CustomBottomNavBar(selectedMenu: MenuState.home);
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+              return CustomBottomNavBar(selectedMenu: MenuState.home);
+            }
+
+            return CustomBottomNavBar(selectedMenu: MenuState.home);
+          },
+        )
       ),
     );
   }
