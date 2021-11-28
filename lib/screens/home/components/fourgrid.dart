@@ -3,6 +3,7 @@ import 'package:orev/components/product_card.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../../size_config.dart';
 import 'section_title.dart';
@@ -55,22 +56,93 @@ class _FourGridState extends State<FourGrid> {
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
-        GridView.count(
-          padding: EdgeInsets.all(0),
-          physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          children: [
-            ...List.generate(
-              ProductList.length,
-              (index) {
-                return ProductCard(product: ProductList[index]);
-                // return SizedBox
-                //     .shrink(); // here by default width and height is 0
-              },
-            ),
-          ],
-        )
+        ResponsiveBuilder(
+          builder: (context, sizingInformation) {
+            // Check the sizing information here and return your UI
+            if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[0])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(15),),
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[2])),
+                      Expanded(child: ProductCard(product: ProductList[3])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                    ],
+                  )
+                ],
+              );
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[0])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(15),),
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[2])),
+                      Expanded(child: ProductCard(product: ProductList[3])),
+                      Expanded(child: ProductCard(product: ProductList[1])),
+                    ],
+                  )
+                ],
+              );
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[0])),
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(15),),
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[2])),
+                    ],
+                  )
+                ],
+              );
+            }
+
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: ProductCard(product: ProductList[0])),
+                    Expanded(child: ProductCard(product: ProductList[1])),
+                  ],
+                ),
+                SizedBox(height: getProportionateScreenHeight(15),),
+                Row(
+                  children: [
+                    Expanded(child: ProductCard(product: ProductList[2])),
+                    Expanded(child: ProductCard(product: ProductList[3])),
+                  ],
+                )
+              ],
+            );
+          },
+        ),
+
       ],
     );
   }

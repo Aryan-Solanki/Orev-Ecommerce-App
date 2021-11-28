@@ -201,51 +201,6 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               },
             ),
           ),
-          numberOfItems == 0
-              ? IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          )
-              : IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            numOfitem: numberOfItems,
-            press: () {
-              if (authkey == '') {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              } else {
-                if (numberOfIAddress != 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            address: CurrentAddress,
-                            key: myCartScreenState,
-                          )));
-                  // Navigator.pushNamed(context, CartScreen.routeName);
-                } else {
-                  _navigateAndDisplaySelection(context);
-                }
-              }
-            },
-          ),
-          SizedBox(width: getProportionateScreenWidth(15),),
           IconBtn(
             svgSrc: "assets/icons/Shop Icon.svg",
             numOfitem: numberOfItems,
@@ -315,6 +270,51 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
             },
           ),
           SizedBox(width: getProportionateScreenWidth(15),),
+          numberOfItems == 0
+              ? IconBtnWithCount(
+            svgSrc: "assets/icons/Cart Icon.svg",
+            press: () {
+              if (authkey == '') {
+                Navigator.pushNamed(context, SignInScreen.routeName);
+              } else {
+                if (numberOfIAddress != 0) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CartScreen(
+                            address: CurrentAddress,
+                            key: myCartScreenState,
+                          )));
+                  // Navigator.pushNamed(context, CartScreen.routeName);
+                } else {
+                  _navigateAndDisplaySelection(context);
+                }
+              }
+            },
+          )
+              : IconBtnWithCount(
+            svgSrc: "assets/icons/Cart Icon.svg",
+            numOfitem: numberOfItems,
+            press: () {
+              if (authkey == '') {
+                Navigator.pushNamed(context, SignInScreen.routeName);
+              } else {
+                if (numberOfIAddress != 0) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CartScreen(
+                            address: CurrentAddress,
+                            key: myCartScreenState,
+                          )));
+                  // Navigator.pushNamed(context, CartScreen.routeName);
+                } else {
+                  _navigateAndDisplaySelection(context);
+                }
+              }
+            },
+          ),
+          SizedBox(width: getProportionateScreenWidth(15),),
           IconBtn(
             svgSrc: "assets/icons/User Icon.svg",
             numOfitem: numberOfItems,
@@ -337,6 +337,8 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               }
             },
           ),
+
+
           // IconBtnWithCounter(
           //   svgSrc: "assets/icons/Bell.svg",
           //   numOfitem: 3,
@@ -370,11 +372,73 @@ class IconBtn extends StatelessWidget {
         padding: EdgeInsets.all(getProportionateScreenWidth(12)),
         height: getProportionateScreenWidth(46),
         width: getProportionateScreenWidth(46),
-        decoration: BoxDecoration(
-          color: kSecondaryColor.withOpacity(0.1),
-          shape: BoxShape.circle,
-        ),
+        // decoration: BoxDecoration(
+        //   color: kSecondaryColor.withOpacity(0.1),
+        //   shape: BoxShape.circle,
+        // ),
         child: SvgPicture.asset(svgSrc),
+      ),
+    );
+  }
+}
+
+
+class IconBtnWithCount extends StatelessWidget {
+  const IconBtnWithCount({
+    Key key,
+    @required this.svgSrc,
+    this.numOfitem = 0,
+    @required this.press,
+  }) : super(key: key);
+
+  final String svgSrc;
+  final int numOfitem;
+  final GestureTapCallback press;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(100),
+      onTap: press,
+      child: Stack(
+        overflow: Overflow.visible,
+        children: [
+          Container(
+            padding: EdgeInsets.all(getProportionateScreenWidth(12)),
+            height: getProportionateScreenWidth(46),
+            width: getProportionateScreenWidth(46),
+            // decoration: BoxDecoration(
+            //   color: kSecondaryColor.withOpacity(0.1),
+            //   shape: BoxShape.circle,
+            // ),
+            child: SvgPicture.asset(svgSrc),
+          ),
+          if (numOfitem != 0)
+            Positioned(
+              top: -3,
+              right: 0,
+              child: Container(
+                height: getProportionateScreenWidth(16),
+                width: getProportionateScreenWidth(16),
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1.5, color: Colors.white),
+                ),
+                child: Center(
+                  child: Text(
+                    "$numOfitem",
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(10),
+                      height: 1,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            )
+        ],
       ),
     );
   }
