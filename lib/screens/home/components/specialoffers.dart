@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:loading_skeleton/loading_skeleton.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/size_config.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class ImageSlider extends StatefulWidget {
   @override
@@ -35,28 +36,32 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          if (_dataLength != 0)
-            FutureBuilder(
-              future: getSliderImageFromDb(),
-              builder: (_, snapShot) {
-                return snapShot.data == null
-                    ? Center(
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        // Check the sizing information here and return your UI
+        if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+          return Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                if (_dataLength != 0)
+                  FutureBuilder(
+                    future: getSliderImageFromDb(),
+                    builder: (_, snapShot) {
+                      return snapShot.data == null
+                          ? Center(
                         child: LoadingSkeleton(
                           width: MediaQuery.of(context).size.width,
-                          height: getProportionateScreenHeight(150),
+                          height: getProportionateScreenHeight(400),
                         ),
                       )
-                    : Padding(
+                          : Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: CarouselSlider.builder(
                             itemCount: snapShot.data.length,
                             itemBuilder: (context, int index) {
                               DocumentSnapshot sliderImage =
-                                  snapShot.data[index];
+                              snapShot.data[index];
                               Map getImage = sliderImage.data();
                               return SizedBox(
                                   width: MediaQuery.of(context).size.width,
@@ -66,7 +71,7 @@ class _ImageSliderState extends State<ImageSlider> {
                                     placeholder: (context, url) =>
                                     new LoadingSkeleton(
                                       width: MediaQuery.of(context).size.width,
-                                      height: getProportionateScreenHeight(150),
+                                      height: getProportionateScreenHeight(400),
                                     ),
                                     errorWidget: (context, url, error) => new Icon(Icons.error),
                                   )
@@ -76,7 +81,7 @@ class _ImageSliderState extends State<ImageSlider> {
                                 viewportFraction: 1,
                                 initialPage: 0,
                                 autoPlay: true,
-                                height: getProportionateScreenHeight(150),
+                                height: getProportionateScreenHeight(400),
                                 onPageChanged:
                                     (int i, carouselPageChangedReason) {
                                   setState(() {
@@ -84,21 +89,158 @@ class _ImageSliderState extends State<ImageSlider> {
                                   });
                                 })),
                       );
-              },
+                    },
+                  ),
+                if (_dataLength != 0)
+                  DotsIndicator(
+                    dotsCount: _dataLength,
+                    position: _index.toDouble(),
+                    decorator: DotsDecorator(
+                        size: const Size.square(5.0),
+                        activeSize: const Size(18.0, 5.0),
+                        activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        activeColor: kPrimaryColor),
+                  )
+              ],
             ),
-          if (_dataLength != 0)
-            DotsIndicator(
-              dotsCount: _dataLength,
-              position: _index.toDouble(),
-              decorator: DotsDecorator(
-                  size: const Size.square(5.0),
-                  activeSize: const Size(18.0, 5.0),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  activeColor: kPrimaryColor),
-            )
-        ],
-      ),
+          );
+        }
+
+        if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+          return Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                if (_dataLength != 0)
+                  FutureBuilder(
+                    future: getSliderImageFromDb(),
+                    builder: (_, snapShot) {
+                      return snapShot.data == null
+                          ? Center(
+                        child: LoadingSkeleton(
+                          width: MediaQuery.of(context).size.width,
+                          height: getProportionateScreenHeight(250),
+                        ),
+                      )
+                          : Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: CarouselSlider.builder(
+                            itemCount: snapShot.data.length,
+                            itemBuilder: (context, int index) {
+                              DocumentSnapshot sliderImage =
+                              snapShot.data[index];
+                              Map getImage = sliderImage.data();
+                              return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.fill,
+                                    imageUrl: getImage["image"],
+                                    placeholder: (context, url) =>
+                                    new LoadingSkeleton(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: getProportionateScreenHeight(250),
+                                    ),
+                                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                                  )
+                              );
+                            },
+                            options: CarouselOptions(
+                                viewportFraction: 1,
+                                initialPage: 0,
+                                autoPlay: true,
+                                height: getProportionateScreenHeight(250),
+                                onPageChanged:
+                                    (int i, carouselPageChangedReason) {
+                                  setState(() {
+                                    _index = i;
+                                  });
+                                })),
+                      );
+                    },
+                  ),
+                if (_dataLength != 0)
+                  DotsIndicator(
+                    dotsCount: _dataLength,
+                    position: _index.toDouble(),
+                    decorator: DotsDecorator(
+                        size: const Size.square(5.0),
+                        activeSize: const Size(18.0, 5.0),
+                        activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        activeColor: kPrimaryColor),
+                  )
+              ],
+            ),
+          );
+        }
+
+        return Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              if (_dataLength != 0)
+                FutureBuilder(
+                  future: getSliderImageFromDb(),
+                  builder: (_, snapShot) {
+                    return snapShot.data == null
+                        ? Center(
+                      child: LoadingSkeleton(
+                        width: MediaQuery.of(context).size.width,
+                        height: getProportionateScreenHeight(150),
+                      ),
+                    )
+                        : Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: CarouselSlider.builder(
+                          itemCount: snapShot.data.length,
+                          itemBuilder: (context, int index) {
+                            DocumentSnapshot sliderImage =
+                            snapShot.data[index];
+                            Map getImage = sliderImage.data();
+                            return SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl: getImage["image"],
+                                  placeholder: (context, url) =>
+                                  new LoadingSkeleton(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: getProportionateScreenHeight(150),
+                                  ),
+                                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                                )
+                            );
+                          },
+                          options: CarouselOptions(
+                              viewportFraction: 1,
+                              initialPage: 0,
+                              autoPlay: true,
+                              height: getProportionateScreenHeight(150),
+                              onPageChanged:
+                                  (int i, carouselPageChangedReason) {
+                                setState(() {
+                                  _index = i;
+                                });
+                              })),
+                    );
+                  },
+                ),
+              if (_dataLength != 0)
+                DotsIndicator(
+                  dotsCount: _dataLength,
+                  position: _index.toDouble(),
+                  decorator: DotsDecorator(
+                      size: const Size.square(5.0),
+                      activeSize: const Size(18.0, 5.0),
+                      activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      activeColor: kPrimaryColor),
+                )
+            ],
+          ),
+        );
+      },
     );
   }
 }
