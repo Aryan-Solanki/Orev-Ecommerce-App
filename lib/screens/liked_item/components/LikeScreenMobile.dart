@@ -89,7 +89,7 @@ class _LikeScreenMobileState extends State<LikeScreenMobile> {
                   vari["onSale"]["discountPercentage"].toDouble(),
               price: vari["price"].toDouble(),
               inStock: vari["stock"]["inStock"],
-              qty: vari["stock"]["qty"],
+              qty: vari["stock"]["qty"].toDouble(),
               title: vari["variantDetails"]["title"],
               images: vari["variantDetails"]["images"]));
         }
