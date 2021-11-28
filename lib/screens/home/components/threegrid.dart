@@ -3,6 +3,7 @@ import 'package:orev/components/product_card.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../../size_config.dart';
@@ -46,37 +47,157 @@ class _ThreeGridState extends State<ThreeGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(
-            title: widget.card_title,
-            press: () {},
-            categoryId: widget.categoryId,
-            seemore: true,
-          ),
-        ),
-        SizedBox(height: getProportionateScreenWidth(20)),
-        ProductList.length == 0
-            ? SkeletonListView()
-            : Row(
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        // Check the sizing information here and return your UI
+        if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+          return Row(
+            children: [
+              Column(
                 children: [
-                  ProductCard(
-                      aspectRetio: 0.89, product: ProductList[0], width: 188),
-                  Column(
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    child: SectionTitle(
+                      title: widget.card_title,
+                      press: () {},
+                      categoryId: widget.categoryId,
+                      seemore: true,
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenWidth(20)),
+                  ProductList.length == 0
+                      ? SkeletonListView()
+                      : Row(
                     children: [
-                      ProductCard(product: ProductList[1], width: 127),
-                      SizedBox(
-                        height: getProportionateScreenHeight(7),
-                      ),
-                      ProductCard(product: ProductList[2], width: 127)
+                      ProductCard(
+                          aspectRetio: 0.89, product: ProductList[0], width: 188),
+                      Column(
+                        children: [
+                          ProductCard(product: ProductList[1], width: 127),
+                          SizedBox(
+                            height: getProportionateScreenHeight(7),
+                          ),
+                          ProductCard(product: ProductList[2], width: 127)
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    child: SectionTitle(
+                      title: widget.card_title,
+                      press: () {},
+                      categoryId: widget.categoryId,
+                      seemore: true,
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenWidth(20)),
+                  ProductList.length == 0
+                      ? SkeletonListView()
+                      : Row(
+                    children: [
+                      ProductCard(
+                          aspectRetio: 0.89, product: ProductList[0], width: 188),
+                      Column(
+                        children: [
+                          ProductCard(product: ProductList[1], width: 127),
+                          SizedBox(
+                            height: getProportionateScreenHeight(7),
+                          ),
+                          ProductCard(product: ProductList[2], width: 127)
+                        ],
+                      )
                     ],
                   )
                 ],
               )
-      ],
+            ],
+          );
+        }
+
+        if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+          return Column(
+            children: [
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                child: SectionTitle(
+                  title: widget.card_title,
+                  press: () {},
+                  categoryId: widget.categoryId,
+                  seemore: true,
+                ),
+              ),
+              SizedBox(height: getProportionateScreenWidth(20)),
+              ProductList.length == 0
+                  ? SkeletonListView()
+                  : Row(
+                children: [
+                  Expanded(
+                    child: ProductCard(
+                        aspectRetio: 0.89, product: ProductList[0]),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        ProductCard(product: ProductList[1]),
+                        SizedBox(
+                          height: getProportionateScreenHeight(7),
+                        ),
+                        ProductCard(product: ProductList[2])
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        }
+
+        return Column(
+          children: [
+            Padding(
+              padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              child: SectionTitle(
+                title: widget.card_title,
+                press: () {},
+                categoryId: widget.categoryId,
+                seemore: true,
+              ),
+            ),
+            SizedBox(height: getProportionateScreenWidth(20)),
+            ProductList.length == 0
+                ? SkeletonListView()
+                : Row(
+              children: [
+                Expanded(
+                  child: ProductCard( 
+                      aspectRetio: 0.89, product: ProductList[0]),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      ProductCard(product: ProductList[1]),
+                      SizedBox(
+                        height: getProportionateScreenHeight(7),
+                      ),
+                      ProductCard(product: ProductList[2])
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 }
+
