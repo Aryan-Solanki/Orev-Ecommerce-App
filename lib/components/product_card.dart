@@ -8,6 +8,7 @@ import 'package:orev/screens/details/details_screen.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -82,110 +83,331 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: getProportionateScreenHeight(15),
-          right: getProportionateScreenHeight(15)),
-      child: SizedBox(
-        width: getProportionateScreenHeight(widget.width),
-        child: GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(product: widget.product),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: widget.aspectRetio,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: kSecondaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Hero(
-                    tag: widget.product.id.toString(),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.product.varients[0].images[0],
-                      placeholder: (context, url) => new LoadingSkeleton(
-                        width: getProportionateScreenHeight(500),
-                        height: getProportionateScreenHeight(500),
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        // Check the sizing information here and return your UI
+        if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+          return Padding(
+            padding: EdgeInsets.only(
+                left: getProportionateScreenHeight(15),
+                right: getProportionateScreenHeight(15)),
+            child: SizedBox(
+              width: getProportionateScreenHeight(360),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  DetailsScreen.routeName,
+                  arguments: ProductDetailsArguments(product: widget.product),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: widget.aspectRetio,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: kSecondaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Hero(
+                          tag: widget.product.id.toString(),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.product.varients[0].images[0],
+                            placeholder: (context, url) => new LoadingSkeleton(
+                              width: getProportionateScreenHeight(500),
+                              height: getProportionateScreenHeight(500),
+                            ),
+                            errorWidget: (context, url, error) =>
+                            new Icon(Icons.error),
+                          ),
+                        ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
                     ),
-                  ),
+                    Text(
+                      widget.product.title,
+                      style: TextStyle(
+                          fontSize: getProportionateScreenHeight(12),
+                          color: Colors.black),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "\₹${widget.product.varients[0].price}",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(17),
+                            fontWeight: FontWeight.w600,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(50),
+                          onTap: () {
+                            setState(() {
+                              if (authkey == '') {
+                                Navigator.pushNamed(context, SignInScreen.routeName);
+                              } else {
+                                if (favor == true) {
+                                  favor = false;
+                                  removeFavourite();
+                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Removed from Favourites"),
+                                    backgroundColor: kPrimaryColor2,
+                                  ));
+                                } else {
+                                  favor = true;
+                                  addFavourite();
+                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Added to Favourites"),
+                                    backgroundColor: kPrimaryColor2,
+                                  ));
+                                }
+                              }
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                            height: getProportionateScreenHeight(28),
+                            width: getProportionateScreenHeight(28),
+                            decoration: BoxDecoration(
+                              color: widget.product.isFavourite
+                                  ? kPrimaryColor.withOpacity(0.15)
+                                  : kSecondaryColor.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(
+                              "assets/icons/Heart Icon_2.svg",
+                              color: favor == true
+                                  ? Color(0xFFFF4848)
+                                  : Color(0xFFDBDEE4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              Text(
-                widget.product.title,
-                style: TextStyle(
-                    fontSize: getProportionateScreenHeight(12),
-                    color: Colors.black),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            ),
+          );
+        }
+
+        if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+          return Padding(
+            padding: EdgeInsets.only(
+                left: getProportionateScreenHeight(15),
+                right: getProportionateScreenHeight(15)),
+            child: SizedBox(
+              width: getProportionateScreenHeight(widget.width),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  DetailsScreen.routeName,
+                  arguments: ProductDetailsArguments(product: widget.product),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: widget.aspectRetio,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: kSecondaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Hero(
+                          tag: widget.product.id.toString(),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.product.varients[0].images[0],
+                            placeholder: (context, url) => new LoadingSkeleton(
+                              width: getProportionateScreenHeight(500),
+                              height: getProportionateScreenHeight(500),
+                            ),
+                            errorWidget: (context, url, error) =>
+                            new Icon(Icons.error),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      widget.product.title,
+                      style: TextStyle(
+                          fontSize: getProportionateScreenHeight(12),
+                          color: Colors.black),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "\₹${widget.product.varients[0].price}",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenHeight(17),
+                            fontWeight: FontWeight.w600,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(50),
+                          onTap: () {
+                            setState(() {
+                              if (authkey == '') {
+                                Navigator.pushNamed(context, SignInScreen.routeName);
+                              } else {
+                                if (favor == true) {
+                                  favor = false;
+                                  removeFavourite();
+                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Removed from Favourites"),
+                                    backgroundColor: kPrimaryColor2,
+                                  ));
+                                } else {
+                                  favor = true;
+                                  addFavourite();
+                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Added to Favourites"),
+                                    backgroundColor: kPrimaryColor2,
+                                  ));
+                                }
+                              }
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                            height: getProportionateScreenHeight(28),
+                            width: getProportionateScreenHeight(28),
+                            decoration: BoxDecoration(
+                              color: widget.product.isFavourite
+                                  ? kPrimaryColor.withOpacity(0.15)
+                                  : kSecondaryColor.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(
+                              "assets/icons/Heart Icon_2.svg",
+                              color: favor == true
+                                  ? Color(0xFFFF4848)
+                                  : Color(0xFFDBDEE4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+          );
+        }
+
+        return Padding(
+          padding: EdgeInsets.only(
+              left: getProportionateScreenHeight(15),
+              right: getProportionateScreenHeight(15)),
+          child: SizedBox(
+            width: getProportionateScreenHeight(widget.width),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                context,
+                DetailsScreen.routeName,
+                arguments: ProductDetailsArguments(product: widget.product),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "\₹${widget.product.varients[0].price}",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenHeight(17),
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {
-                      setState(() {
-                        if (authkey == '') {
-                          Navigator.pushNamed(context, SignInScreen.routeName);
-                        } else {
-                          if (favor == true) {
-                            favor = false;
-                            removeFavourite();
-                            Scaffold.of(context).showSnackBar(new SnackBar(
-                              content: new Text("Removed from Favourites"),
-                              backgroundColor: kPrimaryColor2,
-                            ));
-                          } else {
-                            favor = true;
-                            addFavourite();
-                            Scaffold.of(context).showSnackBar(new SnackBar(
-                              content: new Text("Added to Favourites"),
-                              backgroundColor: kPrimaryColor2,
-                            ));
-                          }
-                        }
-                      });
-                    },
+                  AspectRatio(
+                    aspectRatio: widget.aspectRetio,
                     child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenHeight(8)),
-                      height: getProportionateScreenHeight(28),
-                      width: getProportionateScreenHeight(28),
                       decoration: BoxDecoration(
-                        color: widget.product.isFavourite
-                            ? kPrimaryColor.withOpacity(0.15)
-                            : kSecondaryColor.withOpacity(0.1),
-                        shape: BoxShape.circle,
+                        color: kSecondaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      child: SvgPicture.asset(
-                        "assets/icons/Heart Icon_2.svg",
-                        color: favor == true
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
+                      child: Hero(
+                        tag: widget.product.id.toString(),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.product.varients[0].images[0],
+                          placeholder: (context, url) => new LoadingSkeleton(
+                            width: getProportionateScreenHeight(500),
+                            height: getProportionateScreenHeight(500),
+                          ),
+                          errorWidget: (context, url, error) =>
+                          new Icon(Icons.error),
+                        ),
                       ),
                     ),
                   ),
+                  Text(
+                    widget.product.title,
+                    style: TextStyle(
+                        fontSize: getProportionateScreenHeight(12),
+                        color: Colors.black),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "\₹${widget.product.varients[0].price}",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenHeight(17),
+                          fontWeight: FontWeight.w600,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(50),
+                        onTap: () {
+                          setState(() {
+                            if (authkey == '') {
+                              Navigator.pushNamed(context, SignInScreen.routeName);
+                            } else {
+                              if (favor == true) {
+                                favor = false;
+                                removeFavourite();
+                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                  content: new Text("Removed from Favourites"),
+                                  backgroundColor: kPrimaryColor2,
+                                ));
+                              } else {
+                                favor = true;
+                                addFavourite();
+                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                  content: new Text("Added to Favourites"),
+                                  backgroundColor: kPrimaryColor2,
+                                ));
+                              }
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                          height: getProportionateScreenHeight(28),
+                          width: getProportionateScreenHeight(28),
+                          decoration: BoxDecoration(
+                            color: widget.product.isFavourite
+                                ? kPrimaryColor.withOpacity(0.15)
+                                : kSecondaryColor.withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/Heart Icon_2.svg",
+                            color: favor == true
+                                ? Color(0xFFFF4848)
+                                : Color(0xFFDBDEE4),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/screens/seemore/seemore.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../../size_config.dart';
 import 'section_title.dart';
@@ -91,64 +92,255 @@ class SpecialOfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenHeight(20)),
-      child: GestureDetector(
-        onTap: press,
-        child: SizedBox(
-          width: getProportionateScreenHeight(242),
-          height: getProportionateScreenHeight(100),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              children: [
-                Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenHeight(15.0),
-                    vertical: getProportionateScreenHeight(10),
-                  ),
-                  child: Text.rich(
-                    TextSpan(
-                      style: TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: "$category\n",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenHeight(18),
-                            fontWeight: FontWeight.bold,
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        // Check the sizing information here and return your UI
+        if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+          return Padding(
+            padding: EdgeInsets.only(left: getProportionateScreenHeight(20)),
+            child: GestureDetector(
+              onTap: press,
+              child: SizedBox(
+                width: getProportionateScreenHeight(314),
+                height: getProportionateScreenHeight(130),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xFF343434).withOpacity(0.4),
+                              Color(0xFF343434).withOpacity(0.15),
+                            ],
                           ),
                         ),
-                        TextSpan(
-                          text: "$numOfBrands Products",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenHeight(10),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(15.0),
+                          vertical: getProportionateScreenHeight(10),
+                        ),
+                        child: Text.rich(
+                          TextSpan(
+                            style: TextStyle(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: "$category\n",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(18),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "$numOfBrands Products",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(10),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
+            ),
+          );
+        }
+
+        if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+          return Padding(
+            padding: EdgeInsets.only(left: getProportionateScreenHeight(20)),
+            child: GestureDetector(
+              onTap: press,
+              child: SizedBox(
+                width: getProportionateScreenHeight(242),
+                height: getProportionateScreenHeight(100),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xFF343434).withOpacity(0.4),
+                              Color(0xFF343434).withOpacity(0.15),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(15.0),
+                          vertical: getProportionateScreenHeight(10),
+                        ),
+                        child: Text.rich(
+                          TextSpan(
+                            style: TextStyle(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: "$category\n",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(18),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "$numOfBrands Products",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(10),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+          return Padding(
+            padding: EdgeInsets.only(left: getProportionateScreenHeight(20)),
+            child: GestureDetector(
+              onTap: press,
+              child: SizedBox(
+                width: getProportionateScreenHeight(242),
+                height: getProportionateScreenHeight(100),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xFF343434).withOpacity(0.4),
+                              Color(0xFF343434).withOpacity(0.15),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(15.0),
+                          vertical: getProportionateScreenHeight(10),
+                        ),
+                        child: Text.rich(
+                          TextSpan(
+                            style: TextStyle(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: "$category\n",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(18),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "$numOfBrands Products",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(10),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        return Padding(
+          padding: EdgeInsets.only(left: getProportionateScreenHeight(20)),
+          child: GestureDetector(
+            onTap: press,
+            child: SizedBox(
+              width: getProportionateScreenHeight(242),
+              height: getProportionateScreenHeight(100),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Stack(
+                  children: [
+                    Image.network(
+                      image,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF343434).withOpacity(0.4),
+                            Color(0xFF343434).withOpacity(0.15),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenHeight(15.0),
+                        vertical: getProportionateScreenHeight(10),
+                      ),
+                      child: Text.rich(
+                        TextSpan(
+                          style: TextStyle(color: Colors.white),
+                          children: [
+                            TextSpan(
+                              text: "$category\n",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenHeight(18),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "$numOfBrands Products",
+                              style: TextStyle(
+                                fontSize: getProportionateScreenHeight(10),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
