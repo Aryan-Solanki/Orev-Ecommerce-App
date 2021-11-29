@@ -58,7 +58,7 @@ class _TotalPriceState extends State<TotalPrice> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+      padding: EdgeInsets.all(getProportionateScreenHeight(15)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
@@ -99,14 +99,14 @@ class _TotalPriceState extends State<TotalPrice> {
         Text(
           Left,
           style: TextStyle(
-              fontSize: getProportionateScreenWidth(size),
+              fontSize: getProportionateScreenHeight(size),
               fontWeight: weight,
               color: colour1),
         ),
         Text(
           Right,
           style: TextStyle(
-              fontSize: getProportionateScreenWidth(size),
+              fontSize: getProportionateScreenHeight(size),
               fontWeight: weight,
               color: colour2),
         ),

@@ -36,7 +36,7 @@ class _QuerySuccessState extends State<QuerySuccess> {
             SizedBox(height: getProportionateScreenHeight(50)),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
+                  horizontal: getProportionateScreenHeight(20)),
               child: Column(
                 children: [
                   FittedBox(
@@ -46,7 +46,7 @@ class _QuerySuccessState extends State<QuerySuccess> {
                             ? Text(
                                 "Query Posted",
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(25),
+                                    fontSize: getProportionateScreenHeight(25),
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
                               )
@@ -55,7 +55,7 @@ class _QuerySuccessState extends State<QuerySuccess> {
                                     "Cancel Requested",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(25),
+                                            getProportionateScreenHeight(25),
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black),
                                   )
@@ -64,7 +64,7 @@ class _QuerySuccessState extends State<QuerySuccess> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(25),
+                                            getProportionateScreenHeight(25),
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black),
                                   ),
@@ -79,20 +79,20 @@ class _QuerySuccessState extends State<QuerySuccess> {
                           "Our Help team will contact you as soon as possible",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(15)),
+                              fontSize: getProportionateScreenHeight(15)),
                         )
                       : widget.queryname == "Cancel"
                           ? Text(
                               "Your Cancellation request in under processing we will notify you with further details",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(15)),
+                                  fontSize: getProportionateScreenHeight(15)),
                             )
                           : Text(
                               "Your Return/Replacement request in under processing we will notify you with further details",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(15)),
+                                  fontSize: getProportionateScreenHeight(15)),
                             ),
                   Container(
                     child: Lottie.asset("assets/animation/success.json",

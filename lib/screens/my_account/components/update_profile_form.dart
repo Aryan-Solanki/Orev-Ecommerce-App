@@ -116,7 +116,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
           buildUpdateNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+            padding: EdgeInsets.all(getProportionateScreenHeight(10)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: kTextColor)),
@@ -126,15 +126,15 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                   expandedTitleBackgroundColor: Colors.white,
                   contentPadding: EdgeInsets.only(bottom: 0, top: 0),
                   titlePadding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(8)),
+                      EdgeInsets.only(left: getProportionateScreenHeight(8)),
                   titleChild: Text(
                     "My Addresses (${addressmap.length})",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                   ),
                   // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
                   contentChild: Padding(
                     padding: EdgeInsets.only(
-                        top: 10, left: getProportionateScreenWidth(15)),
+                        top: 10, left: getProportionateScreenHeight(15)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -158,7 +158,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                                         addressmap[i]["name"],
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(
+                                                getProportionateScreenHeight(
                                                     15)),
                                       ),
                                       GestureDetector(
@@ -168,7 +168,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                                           child: Icon(
                                             Icons.delete_outline,
                                             size:
-                                                getProportionateScreenWidth(20),
+                                                getProportionateScreenHeight(20),
                                             color: kPrimaryColor,
                                           ))
                                     ],
@@ -182,22 +182,22 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                                         Text(addressmap[i]["adline1"],
                                             style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         13))),
                                         Text(addressmap[i]["adline2"],
                                             style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         13))),
                                         Text(addressmap[i]["city"],
                                             style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         13))),
                                         Text(addressmap[i]["state"],
                                             style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         13))),
                                       ],
                                     ),
@@ -218,7 +218,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                             child: Text(
                               "Add New Address",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(13),
+                                  fontSize: getProportionateScreenHeight(13),
                                   color: Colors.blue,
                                   decoration: TextDecoration.underline),
                             ),
@@ -235,8 +235,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
           Container(
             height: getProportionateScreenHeight(80),
             padding: EdgeInsets.only(
-                right: getProportionateScreenWidth(20),
-                left: getProportionateScreenWidth(20)),
+                right: getProportionateScreenHeight(20),
+                left: getProportionateScreenHeight(20)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: kTextColor)),
@@ -245,11 +245,11 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
               children: [
                 Text(
                   "Orev Balance",
-                  style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                  style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                 ),
                 Text(
                   "₹$orevwallet",
-                  style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                  style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                 )
               ],
             ),
@@ -261,7 +261,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
                 onTap: (){
                   Navigator.pushNamed(context, Wallet.routeName);
                 },
-                  child: Text("Add Balance",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenWidth(13)),)
+                  child: Text("Add Balance",style: TextStyle(color: Colors.blue,fontSize: getProportionateScreenHeight(13)),)
               )
           ),
           SizedBox(height: getProportionateScreenHeight(40)),
@@ -286,17 +286,17 @@ class _UpdateProfileFormState extends State<UpdateProfileForm>
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         onChanged: (value) {
           newname = value;
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Full Name",
           hintText: "$name",

@@ -198,7 +198,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
+                        horizontal: getProportionateScreenHeight(20)),
                     child: StatefulBuilder(
                         builder: (BuildContext context, StateSetter setState) {
                       return Column(
@@ -208,7 +208,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                             "Apply Coupon Code",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(25),
+                              fontSize: getProportionateScreenHeight(25),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -225,7 +225,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                             )),
                             child: TextField(
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(20),
+                                  fontSize: getProportionateScreenHeight(20),
                                   fontWeight: FontWeight.bold),
                               onChanged: (value) {
                                 coupon = value;
@@ -244,14 +244,14 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                                           "Apply",
                                           style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(12),
+                                                getProportionateScreenHeight(12),
                                             color: kPrimaryColor2,
                                           ),
                                         ),
                                       )),
                                   hintText: 'Enter Coupon Code',
                                   hintStyle: TextStyle(
-                                      fontSize: getProportionateScreenWidth(20),
+                                      fontSize: getProportionateScreenHeight(20),
                                       fontWeight: FontWeight.bold,
                                       color: ruppeecolor),
                                   contentPadding: EdgeInsets.only(
@@ -267,20 +267,20 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                                   "You saved \₹$coupon_value",
                                   style: TextStyle(
                                     color: kPrimaryColor,
-                                    fontSize: getProportionateScreenWidth(15),
+                                    fontSize: getProportionateScreenHeight(15),
                                   ),
                                 )
                               : coupon == ""
                                   ? Text("",
                                       style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(15),
+                                            getProportionateScreenHeight(15),
                                       ))
                                   : Text("Invalid Coupon",
                                       style: TextStyle(
                                         color: Colors.red,
                                         fontSize:
-                                            getProportionateScreenWidth(15),
+                                            getProportionateScreenHeight(15),
                                       )),
                         ],
                       );
@@ -299,7 +299,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+            padding: EdgeInsets.all(getProportionateScreenHeight(20)),
             child: ScrollConfiguration(
               behavior: ScrollBehavior(),
               child: GlowingOverscrollIndicator(
@@ -312,14 +312,14 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                       Text(
                         "Orev Wallet",
                         style: TextStyle(
-                            fontSize: getProportionateScreenWidth(25),
+                            fontSize: getProportionateScreenHeight(25),
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),
                       Text(
                         "Available Orev Balance ₹$currentBalance",
                         style: TextStyle(
-                            fontSize: getProportionateScreenWidth(15)),
+                            fontSize: getProportionateScreenHeight(15)),
                       ),
                       SizedBox(
                         height: getProportionateScreenHeight(50),
@@ -327,7 +327,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                       Text(
                         "Add Money",
                         style: TextStyle(
-                            fontSize: getProportionateScreenWidth(18),
+                            fontSize: getProportionateScreenHeight(18),
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
@@ -343,7 +343,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                         )),
                         child: TextField(
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(30),
+                              fontSize: getProportionateScreenHeight(30),
                               fontWeight: FontWeight.bold),
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
@@ -373,7 +373,7 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                                       "Apply Coupon Code",
                                       style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(12),
+                                            getProportionateScreenHeight(12),
                                         color: kPrimaryColor2,
                                       ),
                                     ),
@@ -381,13 +381,13 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                               prefixIcon: Text(
                                 '₹',
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(40),
+                                    fontSize: getProportionateScreenHeight(40),
                                     color: ruppeecolor),
                               ),
-                              // prefixStyle: TextStyle(fontSize: getProportionateScreenWidth(45)),
+                              // prefixStyle: TextStyle(fontSize: getProportionateScreenHeight(45)),
                               hintText: 'Amount',
                               hintStyle: TextStyle(
-                                  fontSize: getProportionateScreenWidth(30),
+                                  fontSize: getProportionateScreenHeight(30),
                                   fontWeight: FontWeight.bold,
                                   color: ruppeecolor),
                               contentPadding: EdgeInsets.only(
@@ -400,12 +400,12 @@ class _WalletScreenMobileState extends State<WalletScreenMobile> {
                       RoundedLoadingButton(
                         successColor: kPrimaryColor,
                         duration: Duration(milliseconds: 1300),
-                        width: getProportionateScreenWidth(500),
+                        width: getProportionateScreenHeight(500),
                         height: getProportionateScreenHeight(56),
                         color: kPrimaryColor2,
                         child: Text("  Proceed  ",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(18),
+                                fontSize: getProportionateScreenHeight(18),
                                 color: Colors.white)),
                         controller: _btnController,
                         onPressed: () async {

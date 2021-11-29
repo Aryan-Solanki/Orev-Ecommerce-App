@@ -93,8 +93,8 @@ class _TabletHomeHeaderState extends State<TabletHomeHeader> {
       child: Container(
         color: Colors.transparent,
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(10),
-            right: getProportionateScreenWidth(10)),
+            left: getProportionateScreenHeight(10),
+            right: getProportionateScreenHeight(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -104,7 +104,7 @@ class _TabletHomeHeaderState extends State<TabletHomeHeader> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(14),
+                    fontSize: getProportionateScreenHeight(14),
                   ),
                 )),
             FittedBox(
@@ -146,12 +146,12 @@ class _TabletHomeHeaderState extends State<TabletHomeHeader> {
 
     return Padding(
       padding:
-      EdgeInsets.only(right: getProportionateScreenWidth(20),left: getProportionateScreenWidth(10)),
+      EdgeInsets.only(right: getProportionateScreenHeight(20),left: getProportionateScreenHeight(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(height: getProportionateScreenHeight(100),child: Image(image: AssetImage('assets/images/splash_1.png'))),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           widget.address == false
               ? SearchField(
             simplebutton: widget.simplebutton,
@@ -175,10 +175,10 @@ class _TabletHomeHeaderState extends State<TabletHomeHeader> {
                 height: getProportionateScreenHeight(65),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(10)),
+                    horizontal: getProportionateScreenHeight(10)),
                 child: Text(value,
                     style: TextStyle(
-                        fontSize: getProportionateScreenWidth(13)),
+                        fontSize: getProportionateScreenHeight(13)),
                     overflow: TextOverflow.ellipsis),
               ),
               toggledChild: Container(
@@ -275,9 +275,9 @@ class IconBtn extends StatelessWidget {
       borderRadius: BorderRadius.circular(100),
       onTap: press,
       child: Container(
-        padding: EdgeInsets.all(getProportionateScreenWidth(12)),
-        height: getProportionateScreenWidth(46),
-        width: getProportionateScreenWidth(46),
+        padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+        height: getProportionateScreenHeight(46),
+        width: getProportionateScreenHeight(46),
         decoration: BoxDecoration(
           color: kSecondaryColor.withOpacity(0.1),
           shape: BoxShape.circle,

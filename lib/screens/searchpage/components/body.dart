@@ -27,7 +27,7 @@ class _BodyState extends State<Body> {
     _scrollController1.addListener(() {
       double maxScroll = _scrollController1.position.maxScrollExtent;
       double currentScroll = _scrollController1.position.pixels;
-      double delta = getProportionateScreenWidth(25);
+      double delta = getProportionateScreenHeight(25);
 
       if (maxScroll - currentScroll < delta) {
         _myWidgetState.currentState.getMoreProducts();
@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
             HomeHeader(
               key: UniqueKey(),
             ),
-            SizedBox(height: getProportionateScreenWidth(10)),
+            SizedBox(height: getProportionateScreenHeight(10)),
             Expanded(
               child: ScrollConfiguration(
                 behavior: ScrollBehavior(),
@@ -68,7 +68,7 @@ class _BodyState extends State<Body> {
                           notifyParent: refresh,
                           key: _myWidgetState,
                         ),
-                        SizedBox(height: getProportionateScreenWidth(30)),
+                        SizedBox(height: getProportionateScreenHeight(30)),
                       ],
                     ),
                   ),

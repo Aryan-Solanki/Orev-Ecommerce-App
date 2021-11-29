@@ -149,7 +149,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
           withCursor: true,
           fieldsCount: 6,
           textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-          eachFieldWidth: getProportionateScreenWidth(50),
+          eachFieldWidth: getProportionateScreenHeight(50),
           eachFieldHeight: getProportionateScreenHeight(50),
           onSubmit: (String pin) async {
             try {
@@ -189,14 +189,14 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
+                        horizontal: getProportionateScreenHeight(20)),
                     child: Column(
                       children: [
                         Text(
                           "One Time Password",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: getProportionateScreenWidth(27),
+                            fontSize: getProportionateScreenHeight(27),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -206,7 +206,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
                         Text(
                           "Please enter the OTP that you have received on your provided phone number $number",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(15),
+                            fontSize: getProportionateScreenHeight(15),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -239,12 +239,12 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
           RoundedLoadingButton(
             successColor: kPrimaryColor,
             duration: Duration(milliseconds: 1300),
-            width: getProportionateScreenWidth(500),
+            width: getProportionateScreenHeight(500),
             height: getProportionateScreenHeight(56),
             color: kPrimaryColor,
             child: Text(" Continue ",
                 style: TextStyle(
-                    fontSize: getProportionateScreenWidth(18),
+                    fontSize: getProportionateScreenHeight(18),
                     color: Colors.white)),
             controller: _btnController,
             onPressed: () async {
@@ -273,7 +273,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       height: getProportionateScreenHeight(116),
       child: TextFormField(
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         onSaved: (newValue) => Name = newValue,
         onChanged: (value) {
@@ -291,10 +291,10 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Full Name",
           hintText: "Enter your full name",
@@ -312,7 +312,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       height: getProportionateScreenHeight(116),
       child: TextFormField(
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         obscureText: true,
         onSaved: (newValue) => conform_password = newValue,
@@ -338,10 +338,10 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Confirm Password",
           hintText: "Re-enter your password",
@@ -359,7 +359,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       height: getProportionateScreenHeight(116),
       child: TextFormField(
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         obscureText: true,
         onSaved: (newValue) => password = newValue,
@@ -385,10 +385,10 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Password",
           hintText: "Enter your password",
@@ -406,7 +406,7 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
       height: getProportionateScreenHeight(116),
       child: TextFormField(
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         maxLength: 10,
         keyboardType: TextInputType.phone,
@@ -439,10 +439,10 @@ class _SignUpFormState extends State<SignUpForm> with ChangeNotifier {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Number",
           hintText: "Enter your number",

@@ -34,7 +34,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(20),
+            horizontal: getProportionateScreenHeight(20),
             vertical: getProportionateScreenHeight(15)),
         child: Image.network(
           imagelink,
@@ -47,7 +47,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
 
   List<Widget> ListWidgets = [
     ImageSlider(),
-    SizedBox(height: getProportionateScreenWidth(10)),
+    SizedBox(height: getProportionateScreenHeight(10)),
     DesktopCategories(),
   ];
 
@@ -99,7 +99,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
               card_title: card_title,
             ),
           );
-          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "3_grid") {
         var productIdList = [];
@@ -113,7 +113,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
             card_title: card_title,
             categoryId: categoryId,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "4_grid") {
         var productIdList = [];
@@ -127,7 +127,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
             keys: productIdList,
             card_title: card_title,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "slider_products") {
         var productIdList = [];
@@ -141,7 +141,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
             keys: productIdList,
             card_title: card_title,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "ads") {
         ProductServices _services = new ProductServices();
@@ -154,7 +154,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
         });
       }
     }
-    ListWidgets.add(SizedBox(height: getProportionateScreenWidth(20)));
+    ListWidgets.add(SizedBox(height: getProportionateScreenHeight(20)));
     setState(() {});
   }
 

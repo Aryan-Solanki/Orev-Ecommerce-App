@@ -39,14 +39,14 @@ class _SearchFieldState extends State<SearchField> {
     return widget.simplebutton == true
         ? Expanded(
           child: Padding(
-            padding: EdgeInsets.only(right: getProportionateScreenWidth(15)),
+            padding: EdgeInsets.only(right: getProportionateScreenHeight(15)),
             child: GestureDetector( 
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SearchPage()));
                 },
                 child: Container(
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(13)),
+                  padding: EdgeInsets.only(left: getProportionateScreenHeight(13)),
                   height: getProportionateScreenHeight(65),
                   width: SizeConfig.screenWidth * 0.75,
                   decoration: BoxDecoration(
@@ -57,15 +57,15 @@ class _SearchFieldState extends State<SearchField> {
                     children: [
                       Icon(
                         Icons.search,
-                        size: getProportionateScreenWidth(18),
+                        size: getProportionateScreenHeight(18),
                         color: kTextColor,
                       ),
                       SizedBox(
-                        width: getProportionateScreenWidth(10),
+                        width: getProportionateScreenHeight(10),
                       ),
                       Text(
                         "Search product",
-                        style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                        style: TextStyle(fontSize: getProportionateScreenHeight(14)),
                       )
                     ],
                   ),
@@ -83,7 +83,7 @@ class _SearchFieldState extends State<SearchField> {
               ),
               child: Center(
                 child: TextField(
-                  style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                  style: TextStyle(fontSize: getProportionateScreenHeight(14)),
                   focusNode: focusNode,
                   textInputAction: TextInputAction.search,
                   onChanged: (value) {
@@ -95,17 +95,17 @@ class _SearchFieldState extends State<SearchField> {
                   },
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
-                          vertical: getProportionateScreenWidth(13)),
-                      // horizontal: getProportionateScreenWidth(20),
+                          vertical: getProportionateScreenHeight(13)),
+                      // horizontal: getProportionateScreenHeight(20),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       hintText: "Search product",
                       hintStyle: TextStyle(
-                        fontSize: getProportionateScreenWidth(14),
+                        fontSize: getProportionateScreenHeight(14),
                       ),
                       prefixIcon: Icon(Icons.search,
-                          size: getProportionateScreenWidth(18))),
+                          size: getProportionateScreenHeight(18))),
                 ),
               ),
             ),

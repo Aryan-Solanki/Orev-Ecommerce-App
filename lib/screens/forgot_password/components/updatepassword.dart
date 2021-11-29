@@ -15,7 +15,7 @@ class UpdatePassword extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: ScrollConfiguration(
             behavior: ScrollBehavior(),
             child: GlowingOverscrollIndicator(
@@ -28,7 +28,7 @@ class UpdatePassword extends StatelessWidget {
                     Text("Update Password",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(27),
+                          fontSize: getProportionateScreenHeight(27),
                           fontWeight: FontWeight.bold,
                         )),
                     SizedBox(height: SizeConfig.screenHeight * 0.08),
@@ -38,7 +38,7 @@ class UpdatePassword extends StatelessWidget {
                       'By continuing your confirm that you agree \nwith our Term and Condition',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: getProportionateScreenWidth(15),
+                        fontSize: getProportionateScreenHeight(15),
                       ),
                     )
                   ],

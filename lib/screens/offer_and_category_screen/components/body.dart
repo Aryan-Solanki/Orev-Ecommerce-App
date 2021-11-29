@@ -88,7 +88,7 @@ class _BodyState extends State<Body> {
     _scrollController.addListener(() {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
-      double delta = getProportionateScreenWidth(25);
+      double delta = getProportionateScreenHeight(25);
 
       if (maxScroll - currentScroll < delta) {
         getMoreProducts();
@@ -123,7 +123,7 @@ class _BodyState extends State<Body> {
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: SectionTitle(
                         title: "OfferZone",
                         // categoryId: widget.categoryId,
@@ -138,7 +138,7 @@ class _BodyState extends State<Body> {
                           )
                         : Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(10)),
+                                horizontal: getProportionateScreenHeight(10)),
                             child: _offers.length == 0
                                 ? Center(
                                     child: Text("No products to display"),

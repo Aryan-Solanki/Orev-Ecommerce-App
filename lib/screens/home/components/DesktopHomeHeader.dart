@@ -93,8 +93,8 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
       child: Container(
         color: Colors.transparent,
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(10),
-            right: getProportionateScreenWidth(10)),
+            left: getProportionateScreenHeight(10),
+            right: getProportionateScreenHeight(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -104,7 +104,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(14),
+                    fontSize: getProportionateScreenHeight(14),
                   ),
                 )),
             FittedBox(
@@ -146,12 +146,12 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
 
     return Padding(
       padding:
-      EdgeInsets.only(right: getProportionateScreenWidth(20),left: getProportionateScreenWidth(10)),
+      EdgeInsets.only(right: getProportionateScreenHeight(20),left: getProportionateScreenHeight(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [ 
           Container(height: getProportionateScreenHeight(100),child: Image(image: AssetImage('assets/images/splash_1.png'))),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           widget.address == false
               ? SearchField(
             simplebutton: widget.simplebutton,
@@ -175,10 +175,10 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
                 height: getProportionateScreenHeight(65),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(10)),
+                    horizontal: getProportionateScreenHeight(10)),
                 child: Text(value,
                     style: TextStyle(
-                        fontSize: getProportionateScreenWidth(13)),
+                        fontSize: getProportionateScreenHeight(13)),
                     overflow: TextOverflow.ellipsis),
               ),
               toggledChild: Container(
@@ -223,7 +223,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               }
             },
           ),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           IconBtn(
             svgSrc: "assets/icons/Heart Icon.svg",
             numOfitem: numberOfItems,
@@ -246,7 +246,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               }
             },
           ),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           IconBtn(
             svgSrc: "assets/icons/Chat bubble Icon.svg",
             numOfitem: numberOfItems,
@@ -269,7 +269,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               }
             },
           ),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           numberOfItems == 0
               ? IconBtnWithCount(
             svgSrc: "assets/icons/Cart Icon.svg",
@@ -314,7 +314,7 @@ class _DesktopHomeHeaderState extends State<DesktopHomeHeader> {
               }
             },
           ),
-          SizedBox(width: getProportionateScreenWidth(15),),
+          SizedBox(width: getProportionateScreenHeight(15),),
           IconBtn(
             svgSrc: "assets/icons/User Icon.svg",
             numOfitem: numberOfItems,
@@ -369,9 +369,9 @@ class IconBtn extends StatelessWidget {
       borderRadius: BorderRadius.circular(100),
       onTap: press,
       child: Container(
-        padding: EdgeInsets.all(getProportionateScreenWidth(12)),
-        height: getProportionateScreenWidth(46),
-        width: getProportionateScreenWidth(46),
+        padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+        height: getProportionateScreenHeight(46),
+        width: getProportionateScreenHeight(46),
         // decoration: BoxDecoration(
         //   color: kSecondaryColor.withOpacity(0.1),
         //   shape: BoxShape.circle,
@@ -404,9 +404,9 @@ class IconBtnWithCount extends StatelessWidget {
         overflow: Overflow.visible,
         children: [
           Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(12)),
-            height: getProportionateScreenWidth(46),
-            width: getProportionateScreenWidth(46),
+            padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+            height: getProportionateScreenHeight(46),
+            width: getProportionateScreenHeight(46),
             // decoration: BoxDecoration(
             //   color: kSecondaryColor.withOpacity(0.1),
             //   shape: BoxShape.circle,
@@ -418,8 +418,8 @@ class IconBtnWithCount extends StatelessWidget {
               top: -3,
               right: 0,
               child: Container(
-                height: getProportionateScreenWidth(16),
-                width: getProportionateScreenWidth(16),
+                height: getProportionateScreenHeight(16),
+                width: getProportionateScreenHeight(16),
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
                   shape: BoxShape.circle,
@@ -429,7 +429,7 @@ class IconBtnWithCount extends StatelessWidget {
                   child: Text(
                     "$numOfitem",
                     style: TextStyle(
-                      fontSize: getProportionateScreenWidth(10),
+                      fontSize: getProportionateScreenHeight(10),
                       height: 1,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,

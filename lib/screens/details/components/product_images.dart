@@ -34,7 +34,7 @@ class _ProductImagesState extends State<ProductImages> {
     return Column(
       children: [
         SizedBox(
-          width: getProportionateScreenWidth(238),
+          width: getProportionateScreenHeight(238),
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
@@ -45,7 +45,7 @@ class _ProductImagesState extends State<ProductImages> {
                         .product.varients[currentVarient].images[selectedImage],
                     placeholder: (context, url) =>
                         new LoadingSkeleton(
-                          width: getProportionateScreenWidth(1000),
+                          width: getProportionateScreenHeight(1000),
                           height: getProportionateScreenHeight(1000),
                         ),
                     errorWidget: (context, url, error) => new Icon(Icons.error),
@@ -53,7 +53,7 @@ class _ProductImagesState extends State<ProductImages> {
                 )),
           ),
         ),
-        // SizedBox(height: getProportionateScreenWidth(20)),
+        // SizedBox(height: getProportionateScreenHeight(20)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -77,8 +77,8 @@ class _ProductImagesState extends State<ProductImages> {
         duration: defaultDuration,
         margin: EdgeInsets.only(right: 15),
         padding: EdgeInsets.all(8),
-        height: getProportionateScreenWidth(48),
-        width: getProportionateScreenWidth(48),
+        height: getProportionateScreenHeight(48),
+        width: getProportionateScreenHeight(48),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),

@@ -125,7 +125,7 @@ class _CartCardState extends State<CartCard> {
                   Row(
                     children: [
                       SizedBox(
-                        width: getProportionateScreenWidth(88),
+                        width: getProportionateScreenHeight(88),
                         child: AspectRatio(
                           aspectRatio: 0.88,
                           child: Container(
@@ -149,7 +149,7 @@ class _CartCardState extends State<CartCard> {
                                   color: widget.errorvalue != ""
                                       ? kSecondaryColor
                                       : Colors.black,
-                                  fontSize: getProportionateScreenWidth(15)),
+                                  fontSize: getProportionateScreenHeight(15)),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                             ),
@@ -157,7 +157,7 @@ class _CartCardState extends State<CartCard> {
                             Text(
                               "${widget.cart.product.varients[selectedVarient].title}",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(13)),
+                                  fontSize: getProportionateScreenHeight(13)),
                             ),
                             Text.rich(
                               TextSpan(
@@ -168,7 +168,7 @@ class _CartCardState extends State<CartCard> {
                                     color: widget.errorvalue != ""
                                         ? kSecondaryColor
                                         : Colors.black,
-                                    fontSize: getProportionateScreenWidth(18)),
+                                    fontSize: getProportionateScreenHeight(18)),
                                 children: [
                                   TextSpan(
                                       text: " x${quantity}",
@@ -176,7 +176,7 @@ class _CartCardState extends State<CartCard> {
                                           color: kTextColor,
                                           fontWeight: FontWeight.w400,
                                           fontSize:
-                                              getProportionateScreenWidth(14))),
+                                              getProportionateScreenHeight(14))),
                                 ],
                               ),
                             ),
@@ -187,7 +187,7 @@ class _CartCardState extends State<CartCard> {
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize:
-                                            getProportionateScreenWidth(11)),
+                                            getProportionateScreenHeight(11)),
                                   )
                                 : widget.errorvalue == "no_cod"
                                     ? Text(
@@ -195,7 +195,7 @@ class _CartCardState extends State<CartCard> {
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize:
-                                                getProportionateScreenWidth(
+                                                getProportionateScreenHeight(
                                                     11)))
                                     : Center(),
                           ],
@@ -203,7 +203,7 @@ class _CartCardState extends State<CartCard> {
                       )
                     ],
                   ),
-                  SizedBox(height: getProportionateScreenWidth(5)),
+                  SizedBox(height: getProportionateScreenHeight(5)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -230,7 +230,7 @@ class _CartCardState extends State<CartCard> {
                               }
                             },
                           ),
-                          SizedBox(width: getProportionateScreenWidth(7)),
+                          SizedBox(width: getProportionateScreenHeight(7)),
                           Text(
                             "x" + quantity.toString(),
                             style: TextStyle(
@@ -239,7 +239,7 @@ class _CartCardState extends State<CartCard> {
                                     : Colors.black,
                                 fontSize: getProportionateScreenHeight(20)),
                           ),
-                          SizedBox(width: getProportionateScreenWidth(7)),
+                          SizedBox(width: getProportionateScreenHeight(7)),
                           RoundedIconBtn(
                             width: 23.0,
                             height: 23.0,
@@ -269,7 +269,7 @@ class _CartCardState extends State<CartCard> {
                               color: widget.errorvalue != ""
                                   ? kSecondaryColor
                                   : kPrimaryColor,
-                              fontSize: getProportionateScreenWidth(18)),
+                              fontSize: getProportionateScreenHeight(18)),
                         ),
                       ),
                     ],
@@ -297,7 +297,7 @@ class _CartCardState extends State<CartCard> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       18),
                                               fontWeight: FontWeight.w900),
                                         )
@@ -306,7 +306,7 @@ class _CartCardState extends State<CartCard> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       18),
                                               fontWeight: FontWeight.w900),
                                         ),
@@ -318,7 +318,7 @@ class _CartCardState extends State<CartCard> {
                                     style: TextStyle(
                                         color: kPrimaryColor,
                                         fontSize:
-                                            getProportionateScreenWidth(15),
+                                            getProportionateScreenHeight(15),
                                         fontWeight: FontWeight.bold),
                                   )
                                 ]),

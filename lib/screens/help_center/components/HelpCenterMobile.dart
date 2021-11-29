@@ -32,7 +32,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20),
+                      horizontal: getProportionateScreenHeight(20),
                       vertical: getProportionateScreenHeight(10)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                         " Welcome to",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(27),
+                          fontSize: getProportionateScreenHeight(27),
                           fontWeight: FontWeight.w100,
                         ),
                       ),
@@ -49,7 +49,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                         " Customer Service",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(27),
+                          fontSize: getProportionateScreenHeight(27),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -58,7 +58,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                       ),
                       Container(
                         padding:
-                            EdgeInsets.all(getProportionateScreenWidth(20)),
+                            EdgeInsets.all(getProportionateScreenHeight(20)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           border: Border.all(
@@ -70,7 +70,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                             "Orev is focused on the health and safety of both the customers and associates.If your address lies in an area with local restrictions ,then your order might get delayed. You may also call us.For fast and easy self-help solutions.\nThank you for your patience",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(14),
+                              fontSize: getProportionateScreenHeight(14),
                             )),
                       ),
                       SizedBox(
@@ -80,7 +80,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                         " Quick Links ",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(20),
+                          fontSize: getProportionateScreenHeight(20),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -89,7 +89,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                       ),
                       Container(
                           padding:
-                              EdgeInsets.all(getProportionateScreenWidth(20)),
+                              EdgeInsets.all(getProportionateScreenHeight(20)),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             border: Border.all(
@@ -113,7 +113,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      left: getProportionateScreenWidth(10),
+                                      left: getProportionateScreenHeight(10),
                                       bottom: getProportionateScreenHeight(10)),
                                   child: Row(
                                     mainAxisAlignment:
@@ -129,7 +129,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15),
                                               ),
                                               maxLines: 1,
@@ -139,7 +139,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                               "Track or  view your order",
                                               style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         12),
                                               ),
                                               maxLines: 1,
@@ -170,7 +170,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      left: getProportionateScreenWidth(10),
+                                      left: getProportionateScreenHeight(10),
                                       top: getProportionateScreenHeight(10)),
                                   child: Row(
                                     mainAxisAlignment:
@@ -186,7 +186,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15),
                                               ),
                                               maxLines: 1,
@@ -196,7 +196,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                               "Edit Username,address or wallet details",
                                               style: TextStyle(
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         12),
                                               ),
                                               maxLines: 1,
@@ -219,7 +219,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                         " Need More Help ",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenWidth(20),
+                          fontSize: getProportionateScreenHeight(20),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -228,7 +228,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                       ),
                       Container(
                           padding:
-                              EdgeInsets.all(getProportionateScreenWidth(5)),
+                              EdgeInsets.all(getProportionateScreenHeight(5)),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             border: Border.all(
@@ -242,7 +242,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                               "Contact Us",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: getProportionateScreenWidth(15),
+                                fontSize: getProportionateScreenHeight(15),
                               ),
                             ),
                             // content: 'GetFlutter is an open source library that comes with pre-build 1000+ UI components.'
@@ -252,7 +252,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                 Text(
                                   "Contact Number: +91 70489 62990",
                                   style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
+                                    fontSize: getProportionateScreenHeight(12),
                                   ),
                                 ),
                                 SizedBox(
@@ -261,7 +261,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                 Text(
                                   "Contact Email: contact@orevhealth.com",
                                   style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
+                                    fontSize: getProportionateScreenHeight(12),
                                   ),
                                 ),
                                 SizedBox(
@@ -270,7 +270,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                                 Text(
                                   "Business Address: A1/356, Sushant Lok 2, Sector 55, Gurgaon, Haryana, India - 122011",
                                   style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12),
+                                    fontSize: getProportionateScreenHeight(12),
                                   ),
                                 ),
                               ],
@@ -285,7 +285,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                           Text(
                             "For further queries fill this",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(13)),
+                                fontSize: getProportionateScreenHeight(13)),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -302,7 +302,7 @@ class _HelpCenterMobileState extends State<HelpCenterMobile> {
                             child: Text(
                               " Form",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(13),
+                                  fontSize: getProportionateScreenHeight(13),
                                   color: kPrimaryColor),
                             ),
                           ),

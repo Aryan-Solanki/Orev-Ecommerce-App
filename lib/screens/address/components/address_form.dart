@@ -95,7 +95,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           Container(
             padding: EdgeInsets.symmetric(
                 vertical: getProportionateScreenHeight(20),
-                horizontal: getProportionateScreenWidth(13)),
+                horizontal: getProportionateScreenHeight(13)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
@@ -134,7 +134,7 @@ class _AddressFormState extends State<AddressForm> with ChangeNotifier {
           Container(
             padding: EdgeInsets.symmetric(
                 vertical: getProportionateScreenHeight(20),
-                horizontal: getProportionateScreenWidth(13)),
+                horizontal: getProportionateScreenHeight(13)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(

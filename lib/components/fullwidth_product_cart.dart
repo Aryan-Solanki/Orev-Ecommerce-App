@@ -151,7 +151,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     return Padding(
         padding: EdgeInsets.symmetric(
             vertical: getProportionateScreenHeight(5),
-            horizontal: getProportionateScreenWidth(20)),
+            horizontal: getProportionateScreenHeight(20)),
         child: Stack(
           children: [
             Container(
@@ -176,16 +176,16 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                       decoration: BoxDecoration(
                         color: kSecondaryColor.withOpacity(0.1),
                       ),
-                      width: getProportionateScreenWidth(160),
+                      width: getProportionateScreenHeight(160),
                       child: Hero(
                         tag: widget.product.id.toString(),
                         child: CachedNetworkImage(
                           height: getProportionateScreenHeight(150),
-                          width: getProportionateScreenWidth(160),
+                          width: getProportionateScreenHeight(160),
                           imageUrl:
                               widget.product.varients[defaultVarient].images[0],
                           placeholder: (context, url) => new LoadingSkeleton(
-                            width: getProportionateScreenWidth(500),
+                            width: getProportionateScreenHeight(500),
                             height: getProportionateScreenHeight(500),
                           ),
                           errorWidget: (context, url, error) =>
@@ -194,17 +194,17 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(10)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: getProportionateScreenWidth(150),
+                            width: getProportionateScreenHeight(150),
                             child: Text(
                               widget.product.title,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: getProportionateScreenWidth(14),
+                                fontSize: getProportionateScreenHeight(14),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -216,13 +216,13 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                               Text(
                                 "\₹${widget.product.varients[defaultVarient].price}",
                                 style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(15),
+                                  fontSize: getProportionateScreenHeight(15),
                                   fontWeight: FontWeight.w600,
                                   color: kPrimaryColor,
                                 ),
                               ),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               sale == true
                                   ? Text(
@@ -230,21 +230,21 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                       style: TextStyle(
                                         decoration: TextDecoration.lineThrough,
                                         fontSize:
-                                            getProportionateScreenWidth(12),
+                                            getProportionateScreenHeight(12),
                                         // fontWeight: FontWeight.w600,
                                         color: Color(0xFF6B6B6B),
                                       ),
                                     )
                                   : Text(""),
                               SizedBox(
-                                width: getProportionateScreenWidth(5),
+                                width: getProportionateScreenHeight(5),
                               ),
                               sale == true
                                   ? Text(
                                       "Sale",
                                       style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(14),
+                                            getProportionateScreenHeight(14),
                                         color: Colors.black,
                                         // fontWeight: FontWeight.w600,
                                       ),
@@ -253,7 +253,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                             ],
                           ),
                           Container(
-                            width: getProportionateScreenWidth(152),
+                            width: getProportionateScreenHeight(152),
                             height: getProportionateScreenHeight(36),
                             child: outofstock == false
                                 ? FlatButton(
@@ -272,7 +272,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                       "Add to Cart",
                                       style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(12),
+                                            getProportionateScreenHeight(12),
                                         color: Colors.white,
                                       ),
                                     ),
@@ -286,7 +286,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                                       "Out Of Stock",
                                       style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(12),
+                                            getProportionateScreenHeight(12),
                                         color: Colors.white,
                                       ),
                                     ),
@@ -326,9 +326,9 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
                       });
                     },
                     child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                      height: getProportionateScreenWidth(28),
-                      width: getProportionateScreenWidth(28),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                      height: getProportionateScreenHeight(28),
+                      width: getProportionateScreenHeight(28),
                       decoration: BoxDecoration(
                         color: widget.product.isFavourite
                             ? kPrimaryColor.withOpacity(0.15)

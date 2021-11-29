@@ -96,16 +96,16 @@ class AllItemsState extends State<AllItems> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
         child: Text(
           "Search Results for '${widget.title}'",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
+            fontSize: getProportionateScreenHeight(18),
             color: Colors.black,
           ),
         ),
       ),
-      SizedBox(height: getProportionateScreenWidth(20)),
+      SizedBox(height: getProportionateScreenHeight(20)),
       _loadingProducts == true
           ? widget.productList.length == 0
               ? Center(

@@ -26,7 +26,7 @@ class _ReturnCancelState extends State<ReturnCancel> {
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
+                horizontal: getProportionateScreenHeight(20)),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -101,14 +101,14 @@ class _ReturnCancelFormState extends State<ReturnCancelForm>
         padding: EdgeInsets.only(
             top: getProportionateScreenHeight(20),
             bottom: getProportionateScreenHeight(20),
-            left: getProportionateScreenWidth(40),
-            right: getProportionateScreenWidth(20)),
+            left: getProportionateScreenHeight(40),
+            right: getProportionateScreenHeight(20)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Flexible(
                 child: Text(selectedKey,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(13)),
                     overflow: TextOverflow.ellipsis)),
             FittedBox(
               fit: BoxFit.fill,
@@ -155,9 +155,9 @@ class _ReturnCancelFormState extends State<ReturnCancelForm>
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                     vertical: getProportionateScreenHeight(20),
-                    horizontal: getProportionateScreenWidth(40)),
+                    horizontal: getProportionateScreenHeight(40)),
                 child: Text(value,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(13)),
                     overflow: TextOverflow.ellipsis),
               ),
               toggledChild: Container(
@@ -178,12 +178,12 @@ class _ReturnCancelFormState extends State<ReturnCancelForm>
             RoundedLoadingButton(
               successColor: kPrimaryColor,
               duration: Duration(milliseconds: 1300),
-              width: getProportionateScreenWidth(500),
+              width: getProportionateScreenHeight(500),
               height: getProportionateScreenHeight(56),
               color: kPrimaryColor2,
               child: Text("Continue",
                   style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
+                      fontSize: getProportionateScreenHeight(18),
                       color: Colors.white)),
               controller: _btnController,
               onPressed: () {
@@ -216,7 +216,7 @@ class _ReturnCancelFormState extends State<ReturnCancelForm>
             ? "Return/Replacement Message"
             : "Cancellation Message",
         hintText: "Please enter your message ... ",
-        hintStyle: TextStyle(fontSize: getProportionateScreenWidth(13)),
+        hintStyle: TextStyle(fontSize: getProportionateScreenHeight(13)),
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,

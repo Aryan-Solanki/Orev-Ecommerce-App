@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
         title: Text(
           "Sign In",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
+            fontSize: getProportionateScreenHeight(18),
           ),
         ),
       ),

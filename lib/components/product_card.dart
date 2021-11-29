@@ -84,10 +84,10 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: getProportionateScreenWidth(15),
-          right: getProportionateScreenWidth(15)),
+          left: getProportionateScreenHeight(15),
+          right: getProportionateScreenHeight(15)),
       child: SizedBox(
-        width: getProportionateScreenWidth(widget.width),
+        width: getProportionateScreenHeight(widget.width),
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
@@ -109,7 +109,7 @@ class _ProductCardState extends State<ProductCard> {
                     child: CachedNetworkImage(
                       imageUrl: widget.product.varients[0].images[0],
                       placeholder: (context, url) => new LoadingSkeleton(
-                        width: getProportionateScreenWidth(500),
+                        width: getProportionateScreenHeight(500),
                         height: getProportionateScreenHeight(500),
                       ),
                       errorWidget: (context, url, error) =>
@@ -121,7 +121,7 @@ class _ProductCardState extends State<ProductCard> {
               Text(
                 widget.product.title,
                 style: TextStyle(
-                    fontSize: getProportionateScreenWidth(12),
+                    fontSize: getProportionateScreenHeight(12),
                     color: Colors.black),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -132,7 +132,7 @@ class _ProductCardState extends State<ProductCard> {
                   Text(
                     "\₹${widget.product.varients[0].price}",
                     style: TextStyle(
-                      fontSize: getProportionateScreenWidth(17),
+                      fontSize: getProportionateScreenHeight(17),
                       fontWeight: FontWeight.w600,
                       color: kPrimaryColor,
                     ),
@@ -163,9 +163,9 @@ class _ProductCardState extends State<ProductCard> {
                       });
                     },
                     child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                      height: getProportionateScreenWidth(28),
-                      width: getProportionateScreenWidth(28),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+                      height: getProportionateScreenHeight(28),
+                      width: getProportionateScreenHeight(28),
                       decoration: BoxDecoration(
                         color: widget.product.isFavourite
                             ? kPrimaryColor.withOpacity(0.15)

@@ -29,7 +29,7 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
             HomeHeader(),
             SizedBox(height: getProportionateScreenHeight(10)),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
               child: Column(
                 children: [
                   FittedBox(
@@ -39,14 +39,14 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
                             ? Text(
                           "Transaction Successful ",
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
+                              fontSize: getProportionateScreenHeight(25),
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         )
                             : Text(
                           "Transaction Failed",
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(25),
+                              fontSize: getProportionateScreenHeight(25),
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
@@ -71,7 +71,7 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: getProportionateScreenWidth(40)),
+                            fontSize: getProportionateScreenHeight(40)),
                       ),
                       FittedBox(
                         child: Text(
@@ -79,7 +79,7 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(15)),
+                              fontSize: getProportionateScreenHeight(15)),
                         ),
                       ),
                     ],
@@ -88,7 +88,7 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
                       SizedBox(height: getProportionateScreenHeight(80)),
                       Container(
                         padding:
-                        EdgeInsets.all(getProportionateScreenWidth(15)),
+                        EdgeInsets.all(getProportionateScreenHeight(15)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           border: Border.all(
@@ -101,14 +101,14 @@ class _AfterOrevWalletState extends State<AfterOrevWallet> {
                           "The transaction was not processed due to the following error.\nIf your money was debited you will get a refund within 24hrs.",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(18)),
+                              fontSize: getProportionateScreenHeight(18)),
                         ),
                       ),
                       Text(
                         "12:00:45 PM IST",
                         // "${widget.order.timestamp}",
                         style: TextStyle(
-                            fontSize: getProportionateScreenWidth(14)),
+                            fontSize: getProportionateScreenHeight(14)),
                       ),
                     ],
                   ),

@@ -33,7 +33,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
       child: Container(
         width: double.maxFinite,
         margin: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(20),
+            horizontal: getProportionateScreenHeight(20),
             vertical: getProportionateScreenHeight(15)),
         child: Image.network(
           imagelink,
@@ -46,7 +46,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
 
   List<Widget> ListWidgets = [
     ImageSlider(),
-    SizedBox(height: getProportionateScreenWidth(10)),
+    SizedBox(height: getProportionateScreenHeight(10)),
     Categories(
       categoryint: 1,
     ),
@@ -103,7 +103,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
               card_title: card_title,
             ),
           );
-          ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "3_grid") {
         var productIdList = [];
@@ -117,7 +117,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
             card_title: card_title,
             categoryId: categoryId,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "4_grid") {
         var productIdList = [];
@@ -131,7 +131,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
             keys: productIdList,
             card_title: card_title,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "slider_products") {
         var productIdList = [];
@@ -145,7 +145,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
             keys: productIdList,
             card_title: card_title,
           ));
-          // ListWidgets.add(SizedBox(height: getProportionateScreenWidth(30)));
+          // ListWidgets.add(SizedBox(height: getProportionateScreenHeight(30)));
         });
       } else if (type == "ads") {
         ProductServices _services = new ProductServices();
@@ -158,7 +158,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
         });
       }
     }
-    ListWidgets.add(SizedBox(height: getProportionateScreenWidth(20)));
+    ListWidgets.add(SizedBox(height: getProportionateScreenHeight(20)));
     setState(() {});
   }
 

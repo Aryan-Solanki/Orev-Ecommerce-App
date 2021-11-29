@@ -23,8 +23,8 @@ class RoundedIconBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getProportionateScreenWidth(height),
-      width: getProportionateScreenWidth(width),
+      height: getProportionateScreenHeight(height),
+      width: getProportionateScreenHeight(width),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         boxShadow: [

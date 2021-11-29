@@ -30,7 +30,7 @@ class _SectionTitleState extends State<SectionTitle> {
         Text(
           widget.title,
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
+            fontSize: getProportionateScreenHeight(18),
             color: Colors.black,
           ),
         ),
@@ -49,7 +49,7 @@ class _SectionTitleState extends State<SectionTitle> {
                   "See More",
                   style: TextStyle(
                       color: Color(0xFFBBBBBB),
-                      fontSize: getProportionateScreenWidth(12)),
+                      fontSize: getProportionateScreenHeight(12)),
                 ),
               )
             : Text(""),
@@ -80,7 +80,7 @@ class _SectionTitleState extends State<SectionTitle> {
 //         Text(
 //           title,
 //           style: TextStyle(
-//             fontSize: getProportionateScreenWidth(18),
+//             fontSize: getProportionateScreenHeight(18),
 //             color: Colors.black,
 //           ),
 //         ),

@@ -32,14 +32,14 @@ class _UpdateAvailableState extends State<UpdateAvailable> {
                   HomeHeader(),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
                     child: Column(
                         children:[
                           Text(
                             "Orev",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(35),
+                              fontSize: getProportionateScreenHeight(35),
                               fontWeight: FontWeight.w100,
                             ),
                           ),
@@ -47,7 +47,7 @@ class _UpdateAvailableState extends State<UpdateAvailable> {
                             widget.value,
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: getProportionateScreenWidth(23),
+                              fontSize: getProportionateScreenHeight(23),
                               fontWeight: FontWeight.bold,
                             ),
                           ),

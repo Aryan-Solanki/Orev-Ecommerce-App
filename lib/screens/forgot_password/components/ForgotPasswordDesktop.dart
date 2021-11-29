@@ -28,7 +28,7 @@ class ForgotPasswordDesktop extends StatelessWidget {
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
+                  horizontal: getProportionateScreenHeight(20)),
               child: Column(
                 children: [
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
@@ -36,7 +36,7 @@ class ForgotPasswordDesktop extends StatelessWidget {
                     "Forgot Password",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: getProportionateScreenWidth(27),
+                      fontSize: getProportionateScreenHeight(27),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -44,7 +44,7 @@ class ForgotPasswordDesktop extends StatelessWidget {
                       "Please enter your phone number and we will send you an otp to return to your account",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: getProportionateScreenWidth(15),
+                        fontSize: getProportionateScreenHeight(15),
                       )),
                   SizedBox(height: SizeConfig.screenHeight * 0.1),
                   ForgotPassForm(),
@@ -135,7 +135,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           withCursor: true,
           fieldsCount: 6,
           textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-          eachFieldWidth: getProportionateScreenWidth(50),
+          eachFieldWidth: getProportionateScreenHeight(50),
           eachFieldHeight: getProportionateScreenHeight(50),
           onSubmit: (String pin) async {
             try {
@@ -185,14 +185,14 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
+                        horizontal: getProportionateScreenHeight(20)),
                     child: Column(
                       children: [
                         Text(
                           "One Time Password",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: getProportionateScreenWidth(27),
+                            fontSize: getProportionateScreenHeight(27),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -202,7 +202,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                         Text(
                           "Please enter the OTP that you have received on your provided phone number $number",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(15),
+                            fontSize: getProportionateScreenHeight(15),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -248,7 +248,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       height: getProportionateScreenHeight(116),
       child: TextFormField(
         style: TextStyle(
-          fontSize: getProportionateScreenWidth(16),
+          fontSize: getProportionateScreenHeight(16),
         ),
         maxLength: 10,
         keyboardType: TextInputType.phone,
@@ -281,10 +281,10 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         },
         decoration: InputDecoration(
           labelStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
+            fontSize: getProportionateScreenHeight(15),
           ),
           hintStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(16),
+            fontSize: getProportionateScreenHeight(16),
           ),
           labelText: "Number",
           hintText: "Enter your number",

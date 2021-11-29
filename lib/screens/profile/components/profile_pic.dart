@@ -85,8 +85,8 @@ class _ProfilePicState extends State<ProfilePic> {
                   right: -16,
                   bottom: 0,
                   child: SizedBox(
-                    height: getProportionateScreenWidth(38),
-                    width: getProportionateScreenWidth(38),
+                    height: getProportionateScreenHeight(38),
+                    width: getProportionateScreenHeight(38),
                     child: FlatButton(
                       padding: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(

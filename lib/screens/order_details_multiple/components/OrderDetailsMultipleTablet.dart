@@ -501,7 +501,7 @@ class _OrderDetailsMultipleTabletState
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
+                      horizontal: getProportionateScreenHeight(20)),
                   child: Column(
                     children: [
                       TotalPrice(
@@ -530,7 +530,7 @@ class _OrderDetailsMultipleTabletState
                           child: Text(
                             "By placing your order, you agree to Orev's privacy notice and conditions of use.",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12)),
+                                fontSize: getProportionateScreenHeight(12)),
                           )),
                       SizedBox(
                         height: getProportionateScreenHeight(15),
@@ -540,7 +540,7 @@ class _OrderDetailsMultipleTabletState
                           child: Text(
                             "If you choose to pay using an electronic payment method (credit card or debit card), you will be directed to your bank's website to complete your payment. Your contract to purchase an item will not be complete until we receive your electronic payment and dispatch your item. If you choose to pay using Pay on Delivery (POD), you can pay using cash/card/net banking when you receive your item.",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12)),
+                                fontSize: getProportionateScreenHeight(12)),
                           )),
                       SizedBox(
                         height: getProportionateScreenHeight(80),
@@ -548,12 +548,12 @@ class _OrderDetailsMultipleTabletState
                       RoundedLoadingButton(
                         successColor: kPrimaryColor,
                         duration: Duration(milliseconds: 1300),
-                        width: getProportionateScreenWidth(500),
+                        width: getProportionateScreenHeight(500),
                         height: getProportionateScreenHeight(56),
                         color: kPrimaryColor2,
                         child: Text("  Place Order  ",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(18),
+                                fontSize: getProportionateScreenHeight(18),
                                 color: Colors.white)),
                         controller: _btnController,
                         onPressed: () async {

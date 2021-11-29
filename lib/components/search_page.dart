@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
+                      horizontal: getProportionateScreenHeight(20)),
                   child: StreamBuilder<List<AlgoliaObjectSnapshot>>(
                     stream: Stream.fromFuture(_operation(_searchTerm)),
                     builder: (context, snapshot) {
@@ -139,12 +139,12 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
               onTap: () {},
               child: Icon(
                 Icons.search,
-                size: getProportionateScreenWidth(15),
+                size: getProportionateScreenHeight(15),
                 color: kTextColor,
               ),
             ),
             SizedBox(
-              width: getProportionateScreenWidth(20),
+              width: getProportionateScreenHeight(20),
             ),
             Expanded(
               child: GestureDetector(
@@ -162,16 +162,16 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: kPrimaryColor,
-                      fontSize: getProportionateScreenWidth(18)),
+                      fontSize: getProportionateScreenHeight(18)),
                 ),
               ),
             ),
             SizedBox(
-              width: getProportionateScreenWidth(10),
+              width: getProportionateScreenHeight(10),
             ),
             Icon(
               Icons.north_west,
-              size: getProportionateScreenWidth(15),
+              size: getProportionateScreenHeight(15),
               color: kTextColor,
             ),
           ],

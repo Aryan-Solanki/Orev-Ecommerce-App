@@ -120,7 +120,7 @@ class AllItemsState extends State<AllItems> {
     }
 
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   // Future<void> getAllProducts() async {
@@ -171,7 +171,7 @@ class AllItemsState extends State<AllItems> {
   //   }
   //
   //   setState(() {});
-  //   // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+  //   // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   // }
 
   @override
@@ -192,7 +192,7 @@ class AllItemsState extends State<AllItems> {
       children: [
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: SectionTitle(
             title: widget.title,
             categoryId: widget.categoryId,
@@ -217,7 +217,7 @@ class AllItemsState extends State<AllItems> {
                             child: Text(
                               "No products to display",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(15)),
+                                  fontSize: getProportionateScreenHeight(15)),
                             ),
                           )
                         : ListView.builder(

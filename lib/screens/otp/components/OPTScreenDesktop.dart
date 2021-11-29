@@ -11,7 +11,7 @@ class OTPScreenDesktop extends StatelessWidget {
       width: double.infinity,
       child: Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
         child: ScrollConfiguration(
           behavior: ScrollBehavior(),
           child: GlowingOverscrollIndicator(

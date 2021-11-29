@@ -18,23 +18,23 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20), vertical: getProportionateScreenHeight(10)),
+      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20), vertical: getProportionateScreenHeight(10)),
       child: FlatButton(
-        padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+        padding: EdgeInsets.all(getProportionateScreenHeight(20)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: Color(0xFFF5F6F9),
         onPressed: press,
         child: Row(
           children: [
-            icon==""?Icon(Icons.account_balance_outlined,color: kPrimaryColor,size: getProportionateScreenWidth(20)):SvgPicture.asset(
+            icon==""?Icon(Icons.account_balance_outlined,color: kPrimaryColor,size: getProportionateScreenHeight(20)):SvgPicture.asset(
               icon,
               color: kPrimaryColor,
-              width: getProportionateScreenWidth(18),
+              width: getProportionateScreenHeight(18),
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
-            Expanded(child: Text(text,style: TextStyle(fontSize: getProportionateScreenWidth(13)),)),
+            SizedBox(width: getProportionateScreenHeight(20)),
+            Expanded(child: Text(text,style: TextStyle(fontSize: getProportionateScreenHeight(13)),)),
             Icon(Icons.arrow_forward_ios,size: 
-              getProportionateScreenWidth(18),),
+              getProportionateScreenHeight(18),),
           ],
         ),
       ),

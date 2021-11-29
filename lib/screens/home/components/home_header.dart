@@ -92,8 +92,8 @@ class _HomeHeaderState extends State<HomeHeader> {
       child: Container(
         color: Colors.transparent,
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(10),
-            right: getProportionateScreenWidth(10)),
+            left: getProportionateScreenHeight(10),
+            right: getProportionateScreenHeight(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -103,7 +103,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(14),
+                fontSize: getProportionateScreenHeight(14),
               ),
             )),
             FittedBox(
@@ -145,7 +145,7 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -172,10 +172,10 @@ class _HomeHeaderState extends State<HomeHeader> {
                       height: getProportionateScreenHeight(65),
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(10)),
+                          horizontal: getProportionateScreenHeight(10)),
                       child: Text(value,
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(13)),
+                              fontSize: getProportionateScreenHeight(13)),
                           overflow: TextOverflow.ellipsis),
                     ),
                     toggledChild: Container(

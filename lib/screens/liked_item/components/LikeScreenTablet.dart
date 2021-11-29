@@ -111,7 +111,7 @@ class _LikeScreenTabletState extends State<LikeScreenTablet> {
       print(ProductList.length);
       print(ProductList.length);
       setState(() {});
-      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+      // list.add(SizedBox(width: getProportionateScreenHeight(20)));
     }
   }
 
@@ -194,11 +194,11 @@ class _LikeScreenTabletState extends State<LikeScreenTablet> {
                 child: Center(
                   child: Text(
                     "No item available",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                   ),
                 ),
               ),
-        SizedBox(height: getProportionateScreenWidth(10)),
+        SizedBox(height: getProportionateScreenHeight(10)),
       ],
     );
   }

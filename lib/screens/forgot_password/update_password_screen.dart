@@ -13,7 +13,7 @@ class UpdatePasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Update Password",style: TextStyle(
-          fontSize: getProportionateScreenWidth(18),
+          fontSize: getProportionateScreenHeight(18),
         )),
       ),
       body: UpdatePassword(phone_uid: phone_uid),

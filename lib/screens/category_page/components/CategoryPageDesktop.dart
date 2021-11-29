@@ -28,7 +28,7 @@ class _CategoryPageDesktopState extends State<CategoryPageDesktop> {
     _scrollController.addListener(() {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
-      double delta = getProportionateScreenWidth(25);
+      double delta = getProportionateScreenHeight(25);
 
       if (maxScroll - currentScroll < delta) {
         _myWidgetState.currentState.getMoreProducts();
@@ -60,7 +60,7 @@ class _CategoryPageDesktopState extends State<CategoryPageDesktop> {
                   HomeHeader(
                     key: UniqueKey(),
                   ),
-                  SizedBox(height: getProportionateScreenWidth(10)),
+                  SizedBox(height: getProportionateScreenHeight(10)),
                   AllItems(
                     categoryId: categoryId,
                     title: widget.title,
@@ -68,7 +68,7 @@ class _CategoryPageDesktopState extends State<CategoryPageDesktop> {
                     key: _myWidgetState,
                     scrollController: _scrollController,
                   ),
-                  SizedBox(height: getProportionateScreenWidth(30)),
+                  SizedBox(height: getProportionateScreenHeight(30)),
                 ],
               );
             }),

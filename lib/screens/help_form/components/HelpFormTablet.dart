@@ -21,7 +21,7 @@ class _HelpFormTabletState extends State<HelpFormTablet> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20)),
+                  horizontal: getProportionateScreenHeight(20)),
               child: ScrollConfiguration(
                 behavior: ScrollBehavior(),
                 child: GlowingOverscrollIndicator(
@@ -36,7 +36,7 @@ class _HelpFormTabletState extends State<HelpFormTablet> {
                           "Complete your details",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(15)),
+                              fontSize: getProportionateScreenHeight(15)),
                         ),
                         SizedBox(height: SizeConfig.screenHeight * 0.08),
                         HelpForm(),
@@ -45,7 +45,7 @@ class _HelpFormTabletState extends State<HelpFormTablet> {
                           'By continuing your confirm that you agree \nwith our Term and Condition',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(13)),
+                              fontSize: getProportionateScreenHeight(13)),
                         ),
                         SizedBox(height: SizeConfig.screenHeight * 0.01),
                       ],

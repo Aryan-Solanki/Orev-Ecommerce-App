@@ -93,7 +93,7 @@ class _BodyState extends State<Body> {
     _scrollController.addListener(() {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
-      double delta = getProportionateScreenWidth(25);
+      double delta = getProportionateScreenHeight(25);
 
       if (maxScroll - currentScroll < delta) {
         getMoreProducts();
@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
               SizedBox(height: getProportionateScreenHeight(10)),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                    horizontal: getProportionateScreenHeight(20)),
                 child: SectionTitle(
                   title: "Categories",
                   // categoryId: widget.categoryId,
@@ -141,7 +141,7 @@ class _BodyState extends State<Body> {
                     )
                   : Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: _categories.length == 0
                           ? Center(
                               child: Text("No products to display"),
@@ -206,8 +206,8 @@ class CategoryCard extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: SizedBox(
-          width: getProportionateScreenWidth(400),
-          height: getProportionateScreenWidth(100),
+          width: getProportionateScreenHeight(400),
+          height: getProportionateScreenHeight(100),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
@@ -230,8 +230,8 @@ class CategoryCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(15.0),
-                    vertical: getProportionateScreenWidth(10),
+                    horizontal: getProportionateScreenHeight(15.0),
+                    vertical: getProportionateScreenHeight(10),
                   ),
                   child: Text.rich(
                     TextSpan(
@@ -240,14 +240,14 @@ class CategoryCard extends StatelessWidget {
                         TextSpan(
                           text: "$category\n",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(18),
+                            fontSize: getProportionateScreenHeight(18),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
                           text: "$numOfBrands Products",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(10),
+                            fontSize: getProportionateScreenHeight(10),
                           ),
                         )
                       ],

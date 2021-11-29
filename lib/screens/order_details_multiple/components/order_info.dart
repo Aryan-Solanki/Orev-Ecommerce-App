@@ -25,7 +25,7 @@ class _OrderInfoState extends State<OrderInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+      padding: EdgeInsets.all(getProportionateScreenHeight(10)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
@@ -48,7 +48,7 @@ class _OrderInfoState extends State<OrderInfo> {
                         children: [
                           Container(
                             height: getProportionateScreenHeight(80),
-                            width: getProportionateScreenWidth(80),
+                            width: getProportionateScreenHeight(80),
                             child: Image.network(widget
                                 .CartList[index]
                                 .product
@@ -65,7 +65,7 @@ class _OrderInfoState extends State<OrderInfo> {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize:
-                                          getProportionateScreenWidth(15)),
+                                          getProportionateScreenHeight(15)),
                                 ),
                               ],
                             ),
@@ -77,24 +77,24 @@ class _OrderInfoState extends State<OrderInfo> {
                       contentChild: Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: Container(
-                          // padding: EdgeInsets.only(left: getProportionateScreenWidth(80)),
+                          // padding: EdgeInsets.only(left: getProportionateScreenHeight(80)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Variant: ${widget.CartList[index].product.varients[widget.CartList[index].actualVarientNumber].title}",
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12)),
+                                    fontSize: getProportionateScreenHeight(12)),
                               ),
                               Text(
                                 "Quantity: ${widget.CartList[index].numOfItem}",
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12)),
+                                    fontSize: getProportionateScreenHeight(12)),
                               ),
                               Text(
                                 "${widget.CartList[index].product.detail}",
                                 style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(12)),
+                                    fontSize: getProportionateScreenHeight(12)),
                               )
                             ],
                           ),
@@ -117,11 +117,11 @@ class _OrderInfoState extends State<OrderInfo> {
                 Text("Deliver to",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: getProportionateScreenWidth(15))),
+                        fontSize: getProportionateScreenHeight(15))),
                 Text(widget.selectedaddress["name"],
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: getProportionateScreenWidth(15))),
+                        fontSize: getProportionateScreenHeight(15))),
               ],
             ),
             contentChild: Padding(
@@ -131,16 +131,16 @@ class _OrderInfoState extends State<OrderInfo> {
                 children: [
                   Text(widget.selectedaddress["adline1"],
                       style:
-                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                          TextStyle(fontSize: getProportionateScreenHeight(12))),
                   Text(widget.selectedaddress["adline2"],
                       style:
-                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                          TextStyle(fontSize: getProportionateScreenHeight(12))),
                   Text(widget.selectedaddress["city"],
                       style:
-                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                          TextStyle(fontSize: getProportionateScreenHeight(12))),
                   Text(widget.selectedaddress["state"],
                       style:
-                          TextStyle(fontSize: getProportionateScreenWidth(12))),
+                          TextStyle(fontSize: getProportionateScreenHeight(12))),
                 ],
               ),
             ),
@@ -160,21 +160,21 @@ class _OrderInfoState extends State<OrderInfo> {
                 Text("Pay with",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: getProportionateScreenWidth(15))),
+                        fontSize: getProportionateScreenHeight(15))),
                 Text(
                     widget.onlinepayment
                         ? "Online Payment"
                         : "Cash on Delivery (COD)",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: getProportionateScreenWidth(15))),
+                        fontSize: getProportionateScreenHeight(15))),
               ],
             ),
             contentChild: Padding(
               padding: EdgeInsets.only(top: 10),
               child: Text(
                 "We work hard to protect your security and privacy. Our payment security system encrypts your information during transmission. We don’t share your credit card details with third-party sellers, and we don’t sell your information to others. ",
-                style: TextStyle(fontSize: getProportionateScreenWidth(12)),
+                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
               ),
             ),
 

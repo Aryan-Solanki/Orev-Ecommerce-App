@@ -20,7 +20,7 @@ class SplashContent extends StatelessWidget {
         Text(
           "Orev Health",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(36),
+            fontSize: getProportionateScreenHeight(36),
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
@@ -33,10 +33,10 @@ class SplashContent extends StatelessWidget {
         anim==""?Image.asset(
           image,
           height: getProportionateScreenHeight(265),
-          width: getProportionateScreenWidth(235),
+          width: getProportionateScreenHeight(235),
         ):Container(
             height: getProportionateScreenHeight(265),
-            width: getProportionateScreenWidth(235),
+            width: getProportionateScreenHeight(235),
             child: Lottie.asset(anim)),
 
       ],

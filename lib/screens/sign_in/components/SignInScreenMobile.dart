@@ -11,7 +11,7 @@ class SignInScreenMobile extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -20,7 +20,7 @@ class SignInScreenMobile extends StatelessWidget {
                   "Welcome Back",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: getProportionateScreenWidth(27),
+                    fontSize: getProportionateScreenHeight(27),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -28,7 +28,7 @@ class SignInScreenMobile extends StatelessWidget {
                   "Sign in with your phone number",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
+                    fontSize: getProportionateScreenHeight(15),
                   ),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),

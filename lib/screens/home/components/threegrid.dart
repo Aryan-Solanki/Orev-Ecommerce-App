@@ -36,7 +36,7 @@ class _ThreeGridState extends State<ThreeGrid> {
     }
 
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   @override
@@ -55,7 +55,7 @@ class _ThreeGridState extends State<ThreeGrid> {
             children: [
               Padding(
                 padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
                 child: SectionTitle(
                   title: widget.card_title,
                   press: () {},
@@ -63,7 +63,7 @@ class _ThreeGridState extends State<ThreeGrid> {
                   seemore: true,
                 ),
               ),
-              SizedBox(height: getProportionateScreenWidth(20)),
+              SizedBox(height: getProportionateScreenHeight(20)),
               ProductList.length == 0
                   ? SkeletonListView()
                   : Row(
@@ -109,7 +109,7 @@ class _ThreeGridState extends State<ThreeGrid> {
             children: [
               Padding(
                 padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
                 child: SectionTitle(
                   title: widget.card_title,
                   press: () {},
@@ -117,7 +117,7 @@ class _ThreeGridState extends State<ThreeGrid> {
                   seemore: true,
                 ),
               ),
-              SizedBox(height: getProportionateScreenWidth(20)),
+              SizedBox(height: getProportionateScreenHeight(20)),
               ProductList.length == 0
                   ? SkeletonListView()
                   : Row(
@@ -158,7 +158,7 @@ class _ThreeGridState extends State<ThreeGrid> {
           children: [
             Padding(
               padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
               child: SectionTitle(
                 title: widget.card_title,
                 press: () {},
@@ -166,7 +166,7 @@ class _ThreeGridState extends State<ThreeGrid> {
                 seemore: true,
               ),
             ),
-            SizedBox(height: getProportionateScreenWidth(20)),
+            SizedBox(height: getProportionateScreenHeight(20)),
             ProductList.length == 0
                 ? SkeletonListView()
                 : Row(

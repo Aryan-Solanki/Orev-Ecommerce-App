@@ -21,13 +21,13 @@ class _OfferzoneCardState extends State<OfferzoneCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+      padding: EdgeInsets.all(getProportionateScreenHeight(10)),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: kSecondaryColor.withOpacity(0.1),
         ),
-        width: getProportionateScreenWidth(160),
+        width: getProportionateScreenHeight(160),
         child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(
@@ -44,7 +44,7 @@ class _OfferzoneCardState extends State<OfferzoneCard> {
             imageUrl: widget.offer.image,
             // widget.product.varients[defaultVarient].images[0],
             placeholder: (context, url) => new LoadingSkeleton(
-              width: getProportionateScreenWidth(700),
+              width: getProportionateScreenHeight(700),
               height: getProportionateScreenHeight(700),
             ),
             errorWidget: (context, url, error) => new Icon(Icons.error),

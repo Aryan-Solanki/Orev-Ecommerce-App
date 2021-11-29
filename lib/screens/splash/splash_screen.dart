@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     getFirst = UserSimplePreferences.getFirst() ?? '';
     return AnimatedSplashScreen(
         duration: 1,
-        splashIconSize: getProportionateScreenWidth(150),
+        splashIconSize: getProportionateScreenHeight(150),
         splash: 'assets/images/splash_1.png',
         nextScreen: (getFirst == '')
             ? Scaffold(

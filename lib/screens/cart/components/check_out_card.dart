@@ -229,7 +229,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20)),
+                        horizontal: getProportionateScreenHeight(20)),
                     child: Column(
                       children: [
                         Align(
@@ -237,7 +237,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                           child: Text(
                             "Shipping location",
                             style: TextStyle(
-                              fontSize: getProportionateScreenWidth(23),
+                              fontSize: getProportionateScreenHeight(23),
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
@@ -249,7 +249,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                           child: Text(
                             "This will be your shipping location",
                             style: TextStyle(
-                              fontSize: getProportionateScreenWidth(12),
+                              fontSize: getProportionateScreenHeight(12),
                               color: Color(0xff565656),
                             ),
                           ),
@@ -284,7 +284,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         18),
                                                 fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis,
@@ -306,7 +306,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 maxLines: 1,
                                                 style: TextStyle(
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             14),
                                                     color: Colors.black),
                                                 overflow: TextOverflow.ellipsis,
@@ -322,7 +322,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 maxLines: 1,
                                                 style: TextStyle(
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             14),
                                                     color: Colors.black),
                                                 overflow: TextOverflow.ellipsis,
@@ -345,7 +345,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 maxLines: 1,
                                                 style: TextStyle(
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             14),
                                                     color: Colors.black),
                                                 overflow: TextOverflow.ellipsis,
@@ -384,7 +384,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                     "Use Orev Wallet",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 13)),
                                                   ),
                                                   Transform.scale(
@@ -412,7 +412,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       "Balance: ₹$walletbalance",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   12),
                                                           color: kPrimaryColor),
                                                     )
@@ -422,7 +422,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                           : "Balance: ₹${newwalletbalance = (walletbalance - (totalamt))}",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   12),
                                                           color: kPrimaryColor),
                                                     ),
@@ -443,7 +443,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       children: [
                                                         SizedBox(
                                                           width:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   30),
                                                         ),
                                                         Container(
@@ -458,7 +458,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                         )),
                                                         SizedBox(
                                                           width:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   20),
                                                         ),
                                                         orevwallet == false
@@ -501,7 +501,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                         .ellipsis,
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        getProportionateScreenWidth(
+                                                                        getProportionateScreenHeight(
                                                                             13)),
                                                               )
                                                             ],
@@ -518,7 +518,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                         .ellipsis,
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        getProportionateScreenWidth(
+                                                                        getProportionateScreenHeight(
                                                                             13)),
                                                               ),
                                                               Text(
@@ -531,7 +531,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                         .ellipsis,
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        getProportionateScreenWidth(
+                                                                        getProportionateScreenHeight(
                                                                             13)),
                                                               )
                                                             ],
@@ -556,7 +556,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           13),
                                                   color: Colors.red,
                                                 ),
@@ -904,8 +904,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenWidth(15),
-              horizontal: getProportionateScreenWidth(30),
+              vertical: getProportionateScreenHeight(15),
+              horizontal: getProportionateScreenHeight(30),
             ),
             // height: 174,
             decoration: BoxDecoration(
@@ -935,19 +935,19 @@ class _CheckoutCardState extends State<CheckoutCard> {
                         TextSpan(
                           text: "Total:\n",
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(15)),
+                              fontSize: getProportionateScreenHeight(15)),
                           children: [
                             TextSpan(
                               text: "\₹$totalamt",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(18),
+                                  fontSize: getProportionateScreenHeight(18),
                                   color: Colors.black),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        width: getProportionateScreenWidth(190),
+                        width: getProportionateScreenHeight(190),
                         child: checkoutavailable
                             ? DefaultButton(
                                 text: "Checkout",

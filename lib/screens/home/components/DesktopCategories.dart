@@ -32,7 +32,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
+      EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(25)),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -50,7 +50,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                 );
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.fastfood_outlined,
               text: "Food",
@@ -63,7 +63,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                             title: "Food")));
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.account_balance_outlined,
               text: "Wallet",
@@ -75,7 +75,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                 }
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.medical_services_outlined,
               text: "Health",
@@ -88,7 +88,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                             title: "Health")));
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.people_outline_rounded,
               text: "Experts",
@@ -101,7 +101,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                             title: "Experts")));
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.face_retouching_natural,
               text: "Beauty",
@@ -114,7 +114,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                             title: "Beauty")));
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.library_books_outlined,
               text: "E-Books",
@@ -126,7 +126,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                     gravity: ToastGravity.BOTTOM);
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
             CategoryCard(
               icon: Icons.label_important_outline,
               text: "Essentials",
@@ -141,7 +141,7 @@ class _DesktopCategoriesState extends State<DesktopCategories> {
                 );
               },
             ),
-            SizedBox(width: getProportionateScreenWidth(20)),
+            SizedBox(width: getProportionateScreenHeight(30)),
           ],
         ),
       ),
@@ -166,13 +166,13 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: SizedBox(
-        width: getProportionateScreenWidth(55),
+        width: getProportionateScreenHeight(70),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-              height: getProportionateScreenWidth(55),
-              width: getProportionateScreenWidth(55),
+              padding: EdgeInsets.all(getProportionateScreenHeight(15)),
+              height: getProportionateScreenHeight(75),
+              width: getProportionateScreenHeight(75),
               decoration: BoxDecoration(
                 color: Color(0xffE1FDE1),
                 borderRadius: BorderRadius.circular(10),
@@ -180,13 +180,13 @@ class CategoryCard extends StatelessWidget {
               // child: SvgPicture.asset(icon),
               child: Icon(
                 icon,
-                size: getProportionateScreenWidth(23),
+                size: getProportionateScreenHeight(28),
                 color: kPrimaryColor,
               ),
             ),
             SizedBox(height: 5),
             Text(text,
-                style: TextStyle(fontSize: getProportionateScreenWidth(12)),
+                style: TextStyle(fontSize: getProportionateScreenHeight(14)),
                 textAlign: TextAlign.center),
             SizedBox(height: 15),
           ],

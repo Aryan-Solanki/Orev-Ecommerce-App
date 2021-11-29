@@ -62,7 +62,7 @@ class _SplashScreenTabletState extends State<SplashScreenTablet> {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                    horizontal: getProportionateScreenHeight(20)),
                 child: Column(
                   children: <Widget>[
                     Spacer(),

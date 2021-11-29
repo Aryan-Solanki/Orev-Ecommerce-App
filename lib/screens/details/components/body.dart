@@ -224,14 +224,14 @@ class _BodyState extends State<Body> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Container(
                                 height: getProportionateScreenHeight(80),
-                                width: getProportionateScreenWidth(80),
+                                width: getProportionateScreenHeight(80),
                                 child: Image.network(widget.product
                                     .varients[selectedFoodVariants].images[0]),
                               ),
@@ -244,13 +244,13 @@ class _BodyState extends State<Body> {
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize:
-                                              getProportionateScreenWidth(15)),
+                                              getProportionateScreenHeight(15)),
                                     ),
                                     Text(
                                       "${widget.product.varients[selectedFoodVariants].title}",
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(13)),
+                                              getProportionateScreenHeight(13)),
                                     )
                                   ],
                                 ),
@@ -264,16 +264,16 @@ class _BodyState extends State<Body> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Deliver to",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -285,7 +285,7 @@ class _BodyState extends State<Body> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                     Text(
                                       SelectedAddress["adline1"] +
@@ -298,7 +298,7 @@ class _BodyState extends State<Body> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(14)),
+                                              getProportionateScreenHeight(14)),
                                     ),
                                   ],
                                 ),
@@ -311,23 +311,23 @@ class _BodyState extends State<Body> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Pay with",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Text(
                                 "Cash on Delivery (COD)",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenWidth(16)),
+                                    fontSize: getProportionateScreenHeight(16)),
                               ),
                             ],
                           ),
@@ -337,16 +337,16 @@ class _BodyState extends State<Body> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "COD Charges",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -358,7 +358,7 @@ class _BodyState extends State<Body> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                   ],
                                 ),
@@ -371,16 +371,16 @@ class _BodyState extends State<Body> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Total",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -392,14 +392,14 @@ class _BodyState extends State<Body> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                     Text(
                                       "(includes tax + Delivery + COD Charges)",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(14)),
+                                              getProportionateScreenHeight(14)),
                                     ),
                                   ],
                                 ),
@@ -417,7 +417,7 @@ class _BodyState extends State<Body> {
                               "Swipe to place your order",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: getProportionateScreenWidth(12),
+                                fontSize: getProportionateScreenHeight(12),
                               ),
                             ),
                             onSwipe: () async {
@@ -548,7 +548,7 @@ class _BodyState extends State<Body> {
                           Text(
                             "By placing your order, you agree to Orev's privacy notice and conditions of use.",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12)),
+                                fontSize: getProportionateScreenHeight(12)),
                           ),
                           SizedBox(height: getProportionateScreenHeight(10)),
                         ],
@@ -692,7 +692,7 @@ class _BodyState extends State<Body> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                         children: [
                           Align(
@@ -700,7 +700,7 @@ class _BodyState extends State<Body> {
                             child: Text(
                               "Choose your location",
                               style: TextStyle(
-                                fontSize: getProportionateScreenWidth(23),
+                                fontSize: getProportionateScreenHeight(23),
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -712,7 +712,7 @@ class _BodyState extends State<Body> {
                             child: Text(
                               "Choose a delivery address for your product.",
                               style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12),
+                                fontSize: getProportionateScreenHeight(12),
                                 color: Color(0xff565656),
                               ),
                             ),
@@ -750,7 +750,7 @@ class _BodyState extends State<Body> {
                                           },
                                           child: Container(
                                               width:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       200),
                                               margin: EdgeInsets.symmetric(
                                                   vertical: 5, horizontal: 5),
@@ -778,7 +778,7 @@ class _BodyState extends State<Body> {
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   18),
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -805,7 +805,7 @@ class _BodyState extends State<Body> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -823,7 +823,7 @@ class _BodyState extends State<Body> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -844,7 +844,7 @@ class _BodyState extends State<Body> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -886,7 +886,7 @@ class _BodyState extends State<Body> {
                                                 "Add New Address",
                                                 style: TextStyle(
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             13),
                                                     color: Colors.blue,
                                                     decoration: TextDecoration
@@ -900,7 +900,7 @@ class _BodyState extends State<Body> {
                                                 "You saved \₹$coupon_value",
                                                 style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           13),
                                                 ),
                                               )
@@ -908,13 +908,13 @@ class _BodyState extends State<Body> {
                                                 ? Text("",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               13),
                                                     ))
                                                 : Text("Invalid Coupon",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               13),
                                                     )),
                                         Row(
@@ -933,7 +933,7 @@ class _BodyState extends State<Body> {
                                                       "Use Orev Wallet",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   13)),
                                                     ),
                                                     Transform.scale(
@@ -966,7 +966,7 @@ class _BodyState extends State<Body> {
                                                         "Balance: ₹$walletbalance",
                                                         style: TextStyle(
                                                             fontSize:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     12),
                                                             color:
                                                                 kPrimaryColor),
@@ -978,7 +978,7 @@ class _BodyState extends State<Body> {
                                                             : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
                                                         style: TextStyle(
                                                             fontSize:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     12),
                                                             color:
                                                                 kPrimaryColor),
@@ -1002,7 +1002,7 @@ class _BodyState extends State<Body> {
                                                         children: [
                                                           SizedBox(
                                                             width:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     30),
                                                           ),
                                                           Container(
@@ -1017,7 +1017,7 @@ class _BodyState extends State<Body> {
                                                           )),
                                                           SizedBox(
                                                             width:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     20),
                                                           ),
                                                           orevwallet == false
@@ -1060,7 +1060,7 @@ class _BodyState extends State<Body> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 )
                                                               ],
@@ -1077,7 +1077,7 @@ class _BodyState extends State<Body> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 ),
                                                                 Text(
@@ -1090,7 +1090,7 @@ class _BodyState extends State<Body> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 )
                                                               ],
@@ -1120,7 +1120,7 @@ class _BodyState extends State<Body> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 13),
                                                         color: Colors.red,
                                                       ),
@@ -1141,7 +1141,7 @@ class _BodyState extends State<Body> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 13),
                                                         color: Colors.red,
                                                       ),
@@ -1345,7 +1345,7 @@ class _BodyState extends State<Body> {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
-      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+      // list.add(SizedBox(width: getProportionateScreenHeight(20)));
     }
 
     return StatefulBuilder(
@@ -1409,14 +1409,14 @@ class _BodyState extends State<Body> {
                                                               index;
                                                           setState(() {});
                                                         })),
-                                                // SizedBox(width: getProportionateScreenWidth(100),),
+                                                // SizedBox(width: getProportionateScreenHeight(100),),
                                                 Icon(
                                                   Icons.unfold_more,
                                                   color: Colors.black,
                                                 ),
                                                 SizedBox(
                                                   width:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           15),
                                                 ),
                                                 RoundedIconBtn(
@@ -1437,7 +1437,7 @@ class _BodyState extends State<Body> {
                                                 ),
                                                 SizedBox(
                                                     width:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             20)),
                                                 Text(
                                                   "x " + quantity.toString(),
@@ -1449,7 +1449,7 @@ class _BodyState extends State<Body> {
                                                 ),
                                                 SizedBox(
                                                     width:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             20)),
                                                 RoundedIconBtn(
                                                   icon: Icon(
@@ -1504,10 +1504,10 @@ class _BodyState extends State<Body> {
                                                                   .screenWidth *
                                                               0.1,
                                                           bottom:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   30),
                                                           top:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   10),
                                                         ),
                                                         child: Column(
@@ -1583,10 +1583,10 @@ class _BodyState extends State<Body> {
                                                                   .screenWidth *
                                                               0.1,
                                                           bottom:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   30),
                                                           top:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   10),
                                                         ),
                                                         child: Column(
@@ -1638,10 +1638,10 @@ class _BodyState extends State<Body> {
                                                                 .screenWidth *
                                                             0.1,
                                                         bottom:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 30),
                                                         top:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 10),
                                                       ),
                                                       child: DefaultButton(
@@ -1667,10 +1667,10 @@ class _BodyState extends State<Body> {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15),
                                                 bottom:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         5)),
                                             child: Text(
                                               "You Might Also Like",
@@ -1715,7 +1715,7 @@ class _BodyState extends State<Body> {
                                                     ),
                                                     SizedBox(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 20)),
                                                   ],
                                                 ),

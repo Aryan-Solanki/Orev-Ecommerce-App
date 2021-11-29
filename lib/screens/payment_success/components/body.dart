@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
+                horizontal: getProportionateScreenHeight(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -70,14 +70,14 @@ class _BodyState extends State<Body> {
                           ? Text(
                               "Transaction Successful ",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(25),
+                                  fontSize: getProportionateScreenHeight(25),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             )
                           : Text(
                               "Transaction Failed ",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(25),
+                                  fontSize: getProportionateScreenHeight(25),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
                         children: [
                           Container(
                             padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
+                                EdgeInsets.all(getProportionateScreenHeight(15)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
@@ -120,7 +120,7 @@ class _BodyState extends State<Body> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
-                                    fontSize: getProportionateScreenWidth(18),
+                                    fontSize: getProportionateScreenHeight(18),
                                   ),
                                 ),
                                 SizedBox(
@@ -131,14 +131,14 @@ class _BodyState extends State<Body> {
                                     style: TextStyle(
                                         color: kTextColor,
                                         fontSize:
-                                            getProportionateScreenWidth(15)),
+                                            getProportionateScreenHeight(15)),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text:
                                               "Thank you for placing order with us.Your order ",
                                           style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                           )),
                                       TextSpan(
                                           text:
@@ -166,7 +166,7 @@ class _BodyState extends State<Body> {
                                               "\n is being processed by our delivery team, and you will soon receive a confirmation from our side.",
                                           style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                           )),
                                     ],
                                   ),
@@ -180,7 +180,7 @@ class _BodyState extends State<Body> {
                           Text(
                             "Transition Details ",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(20),
+                                fontSize: getProportionateScreenHeight(20),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
@@ -190,7 +190,7 @@ class _BodyState extends State<Body> {
                           Container(
                             width: double.maxFinite,
                             padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
+                                EdgeInsets.all(getProportionateScreenHeight(15)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
@@ -204,25 +204,25 @@ class _BodyState extends State<Body> {
                                 Text(
                                   "Date: ${widget.order.timestamp} IST",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                                 Text(
                                   "Seller: $sellername",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                                 Text(
                                   "Order Id: ${widget.order.orderId}",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                                 Text(
                                   "Status: Successful",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                                 Text(
@@ -230,13 +230,13 @@ class _BodyState extends State<Body> {
                                       ? "Payment Method: Cash On Delivery"
                                       : "Payment Method: Online",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                                 Text(
                                   "Transition amount: ₹${widget.order.totalCost}",
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenWidth(14),
+                                      fontSize: getProportionateScreenHeight(14),
                                       color: Colors.black),
                                 ),
                               ],
@@ -248,7 +248,7 @@ class _BodyState extends State<Body> {
                           Text(
                             "Billing Address",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(20),
+                                fontSize: getProportionateScreenHeight(20),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
@@ -258,7 +258,7 @@ class _BodyState extends State<Body> {
                           Container(
                             width: double.maxFinite,
                             padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
+                                EdgeInsets.all(getProportionateScreenHeight(15)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
@@ -273,24 +273,24 @@ class _BodyState extends State<Body> {
                                     "${widget.order.selectedAddress["adline1"]}",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(14),
+                                            getProportionateScreenHeight(14),
                                         color: Colors.black)),
                                 Text(
                                     "${widget.order.selectedAddress["adline2"]}",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(14),
+                                            getProportionateScreenHeight(14),
                                         color: Colors.black)),
                                 Text(
                                     "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(14),
+                                            getProportionateScreenHeight(14),
                                         color: Colors.black)),
                                 Text("Phone number: ${userphone}",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(14),
+                                            getProportionateScreenHeight(14),
                                         color: Colors.black)),
                               ],
                             ),
@@ -304,7 +304,7 @@ class _BodyState extends State<Body> {
                         children: [
                           Container(
                             padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
+                                EdgeInsets.all(getProportionateScreenHeight(15)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
@@ -316,17 +316,17 @@ class _BodyState extends State<Body> {
                               "The transaction was not processed due to the following error.\n ${widget.order.responseMsg}.\nIf your money was debited you will get a refund within 24hrs.",
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: getProportionateScreenWidth(18)),
+                                  fontSize: getProportionateScreenHeight(18)),
                             ),
                           ),
                           Text(
                             "${widget.order.timestamp}",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(14)),
+                                fontSize: getProportionateScreenHeight(14)),
                           ),
                           Text("Transaction ID: Not Generated",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14))),
+                                  fontSize: getProportionateScreenHeight(14))),
                         ],
                       ),
                 SizedBox(

@@ -19,7 +19,7 @@ class ColorDots extends StatelessWidget {
     int selectedColor = 3;
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
       child: Row(
         children: [
           ...List.generate(
@@ -37,7 +37,7 @@ class ColorDots extends StatelessWidget {
             ),
             press: () {},
           ),
-          SizedBox(width: getProportionateScreenWidth(20)),
+          SizedBox(width: getProportionateScreenHeight(20)),
           RoundedIconBtn(
             icon: Icon(
               Icons.add,
@@ -66,9 +66,9 @@ class ColorDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 2),
-      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-      height: getProportionateScreenWidth(40),
-      width: getProportionateScreenWidth(40),
+      padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+      height: getProportionateScreenHeight(40),
+      width: getProportionateScreenHeight(40),
       decoration: BoxDecoration(
         color: Colors.transparent,
         border:

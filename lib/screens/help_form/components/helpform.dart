@@ -37,14 +37,14 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
       height: getProportionateScreenHeight(90),
       child: Padding(
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(40),
-            right: getProportionateScreenWidth(20)),
+            left: getProportionateScreenHeight(40),
+            right: getProportionateScreenHeight(20)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Flexible(
                 child: Text(selectedKey,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(13)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(13)),
                     overflow: TextOverflow.ellipsis)),
             FittedBox(
               fit: BoxFit.fill,
@@ -82,10 +82,10 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(20),
-                        horizontal: getProportionateScreenWidth(40)),
+                        horizontal: getProportionateScreenHeight(40)),
                     child: Text(value,
                         style: TextStyle(
-                            fontSize: getProportionateScreenWidth(13)),
+                            fontSize: getProportionateScreenHeight(13)),
                         overflow: TextOverflow.ellipsis),
                   ),
                   toggledChild: Container(
@@ -157,7 +157,7 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
   TextFormField MessageFormField() {
     return TextFormField(
       style: TextStyle(
-        fontSize: getProportionateScreenWidth(15),
+        fontSize: getProportionateScreenHeight(15),
       ),
       maxLines: 5,
       onChanged: (value) {
@@ -166,10 +166,10 @@ class _HelpFormState extends State<HelpForm> with ChangeNotifier {
       decoration: InputDecoration(
         labelText: "Message",
         labelStyle: TextStyle(
-          fontSize: getProportionateScreenWidth(15),
+          fontSize: getProportionateScreenHeight(15),
         ),
         hintStyle: TextStyle(
-          fontSize: getProportionateScreenWidth(13),
+          fontSize: getProportionateScreenHeight(13),
         ),
         hintText: "Please enter your message ... ",
         // If  you are using latest version of flutter then lable text and hint text shown like this

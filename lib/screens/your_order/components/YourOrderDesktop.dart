@@ -50,7 +50,7 @@ class _YourOrderDesktopState extends State<YourOrderDesktop> {
             ? Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20)),
+                      horizontal: getProportionateScreenHeight(20)),
                   child: ScrollConfiguration(
                     behavior: ScrollBehavior(),
                     child: GlowingOverscrollIndicator(
@@ -75,7 +75,7 @@ class _YourOrderDesktopState extends State<YourOrderDesktop> {
                 child: Center(
                 child: Text(
                   "No products ordered yet",
-                  style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                  style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                 ),
               )),
       ],

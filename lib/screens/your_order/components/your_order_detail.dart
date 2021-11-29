@@ -165,7 +165,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -191,7 +191,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         16)),
                                           ),
                                           SizedBox(
@@ -202,7 +202,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                               "${widget.order.product.variant.title}",
                                               style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           12))),
                                           SizedBox(
                                             height:
@@ -211,7 +211,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           Text("Qty : ${widget.order.qty}",
                                               style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           12))),
                                           SizedBox(
                                             height:
@@ -220,14 +220,14 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           Text("Seller : $sellername",
                                               style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           12))),
                                         ],
                                       ),
                                     ),
                                     Container(
                                       height: getProportionateScreenHeight(100),
-                                      width: getProportionateScreenWidth(100),
+                                      width: getProportionateScreenHeight(100),
                                       child: Image.network(
                                           "${widget.order.product.variant.images[0]}"),
                                     ),
@@ -251,7 +251,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                             : "This order has been cancelled.\nYou return the goods, you will receive a reimbursement in your Orev Wallet within 1-2 days.",
                                     style: TextStyle(
                                         fontSize:
-                                            getProportionateScreenWidth(15),
+                                            getProportionateScreenHeight(15),
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -274,7 +274,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                   : "Shipping Address",
                                               style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           25),
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black),
@@ -286,7 +286,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                       Text(""),
                                       Container(
                                         padding: EdgeInsets.all(
-                                            getProportionateScreenWidth(15)),
+                                            getProportionateScreenHeight(15)),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                               color: Colors
@@ -309,7 +309,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                     "${widget.order.selectedAddress["name"]}",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 20),
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -324,25 +324,25 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                       "${widget.order.selectedAddress["adline1"]}",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   14))),
                                                   Text(
                                                       "${widget.order.selectedAddress["adline2"]}",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   14))),
                                                   Text(
                                                       "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   14))),
                                                   Text(
                                                       "Phone number: $userphone",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   14))),
                                                 ],
                                               ),
@@ -421,10 +421,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                               .cross,
                                                       child: Container(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         height:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         decoration: BoxDecoration(
                                                             color:
@@ -452,10 +452,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                               .cross,
                                                       child: Container(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         height:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         decoration: BoxDecoration(
                                                             color:
@@ -483,10 +483,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                               .cross,
                                                       child: Container(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         height:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         decoration: BoxDecoration(
                                                             color:
@@ -514,10 +514,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                               .cross,
                                                       child: Container(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         height:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 14),
                                                         decoration: BoxDecoration(
                                                             color:
@@ -543,10 +543,10 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                       enableAnimation: true,
                                                       color: _activeColor,
                                                       width:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               14),
                                                       height:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               14),
                                                       position:
                                                           LinearElementPosition
@@ -573,7 +573,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             Text(
                               "Payment Information",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(25),
+                                  fontSize: getProportionateScreenHeight(25),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -582,7 +582,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             ),
                             Container(
                                 padding: EdgeInsets.all(
-                                    getProportionateScreenWidth(15)),
+                                    getProportionateScreenHeight(15)),
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                       color:
@@ -597,7 +597,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                       "Payment Method",
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(18),
+                                              getProportionateScreenHeight(18),
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
                                     ),
@@ -607,7 +607,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           : "Cash On Delivery",
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(15),
+                                              getProportionateScreenHeight(15),
                                           color: Colors.black),
                                     ),
                                     Divider(color: Colors.black),
@@ -615,7 +615,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                       "Billing Address",
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(18),
+                                              getProportionateScreenHeight(18),
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
                                     ),
@@ -626,24 +626,24 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         "${widget.order.selectedAddress["adline1"]}",
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                             color: Colors.black)),
                                     Text(
                                         "${widget.order.selectedAddress["adline2"]}",
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                             color: Colors.black)),
                                     Text(
                                         "${widget.order.selectedAddress["city"]}-${widget.order.selectedAddress["pincode"].toString()}",
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                             color: Colors.black)),
                                     Text("Phone number: $userphone",
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenWidth(15),
+                                                getProportionateScreenHeight(15),
                                             color: Colors.black)),
                                   ],
                                 )),
@@ -657,7 +657,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             Text(
                               "Order Summary",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(25),
+                                  fontSize: getProportionateScreenHeight(25),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -666,7 +666,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             ),
                             Container(
                                 padding: EdgeInsets.all(
-                                    getProportionateScreenWidth(15)),
+                                    getProportionateScreenHeight(15)),
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                       color:
@@ -685,7 +685,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       15)),
                                         ),
                                         Text(
@@ -693,7 +693,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15))),
                                       ],
                                     ),
@@ -706,14 +706,14 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       15)),
                                         ),
                                         Text("₹0.00",
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15))),
                                       ],
                                     ),
@@ -727,7 +727,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             15)),
                                               ),
                                               Text(
@@ -735,7 +735,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               15))),
                                             ],
                                           )
@@ -749,7 +749,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       20),
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -757,7 +757,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                             style: TextStyle(
                                                 color: kPrimaryColor,
                                                 fontSize:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         20),
                                                 fontWeight: FontWeight.bold)),
                                       ],
@@ -774,7 +774,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             Text(
                               "Transaction Summary",
                               style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(25),
+                                  fontSize: getProportionateScreenHeight(25),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -783,7 +783,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                             ),
                             Container(
                               padding: EdgeInsets.all(
-                                  getProportionateScreenWidth(15)),
+                                  getProportionateScreenHeight(15)),
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color:
@@ -933,7 +933,7 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontSize:
-                                                getProportionateScreenWidth(
+                                                getProportionateScreenHeight(
                                                     13)),
                                       ),
                                     ),
@@ -1017,14 +1017,14 @@ class _YourOrderDetailState extends State<YourOrderDetail> {
         Text(
           Left,
           style: TextStyle(
-              fontSize: getProportionateScreenWidth(size),
+              fontSize: getProportionateScreenHeight(size),
               fontWeight: weight,
               color: colour1),
         ),
         Text(
           Right,
           style: TextStyle(
-              fontSize: getProportionateScreenWidth(size),
+              fontSize: getProportionateScreenHeight(size),
               fontWeight: weight,
               color: colour2),
         ),

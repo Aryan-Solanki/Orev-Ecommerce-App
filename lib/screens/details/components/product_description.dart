@@ -58,7 +58,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
       favor = true;
     }
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> removeFavourite() async {
@@ -69,7 +69,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
     keys.remove(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> getSellerName() async {
@@ -86,7 +86,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
     keys.add(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   @override
@@ -107,22 +107,22 @@ class _ProductDescriptionState extends State<ProductDescription> {
       children: [
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: Text(product.title,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(20),
+                fontSize: getProportionateScreenHeight(20),
                 color: Colors.black,
                 height: 1.5,
               )),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(20),
+              horizontal: getProportionateScreenHeight(20),
               vertical: getProportionateScreenHeight(7)),
           child: Text(
             product.brandname,
             style: TextStyle(
-              fontSize: getProportionateScreenWidth(11),
+              fontSize: getProportionateScreenHeight(11),
               // fontWeight: FontWeight.bold,
               color: Colors.black,
               height: 1.5,
@@ -131,7 +131,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(20),
+              horizontal: getProportionateScreenHeight(20),
               vertical: getProportionateScreenHeight(0)),
           child: Text(
             "Sold by $soldby",
@@ -145,39 +145,39 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 builder: (BuildContext context, StateSetter setState) {
               return Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                    horizontal: getProportionateScreenHeight(20)),
                 child: Row(
                   children: [
                     Text(
                       "\₹${product.varients[currentVarient].price * quantity}",
                       style: TextStyle(
-                        fontSize: getProportionateScreenWidth(23),
+                        fontSize: getProportionateScreenHeight(23),
                         fontWeight: FontWeight.w600,
                         color: kPrimaryColor,
                       ),
                     ),
                     SizedBox(
-                      width: getProportionateScreenWidth(20),
+                      width: getProportionateScreenHeight(20),
                     ),
                     sale == true
                         ? Text(
                             "\₹${product.varients[currentVarient].comparedPrice * quantity}",
                             style: TextStyle(
                               decoration: TextDecoration.lineThrough,
-                              fontSize: getProportionateScreenWidth(13),
+                              fontSize: getProportionateScreenHeight(13),
                               // fontWeight: FontWeight.w600,
                               color: Color(0xFF6B6B6B),
                             ),
                           )
                         : Text(""),
                     SizedBox(
-                      width: getProportionateScreenWidth(5),
+                      width: getProportionateScreenHeight(5),
                     ),
                     sale == true
                         ? Text(
                             "Sale",
                             style: TextStyle(
-                              fontSize: getProportionateScreenWidth(14),
+                              fontSize: getProportionateScreenHeight(14),
                               color: Colors.black,
                               // fontWeight: FontWeight.w600,
                             ),
@@ -214,8 +214,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-                  width: getProportionateScreenWidth(64),
+                  padding: EdgeInsets.all(getProportionateScreenHeight(15)),
+                  width: getProportionateScreenHeight(64),
                   decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.only(
@@ -227,7 +227,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     "assets/icons/Heart Icon_2.svg",
                     color:
                         favor == true ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-                    height: getProportionateScreenWidth(16),
+                    height: getProportionateScreenHeight(16),
                   ),
                 ),
               ),
@@ -236,21 +236,21 @@ class _ProductDescriptionState extends State<ProductDescription> {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(20),
-            right: getProportionateScreenWidth(64),
+            left: getProportionateScreenHeight(20),
+            right: getProportionateScreenHeight(64),
           ),
           child: seemore == true
               ? Text(
                   product.detail,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
+                    fontSize: getProportionateScreenHeight(15),
                     height: 1.5,
                   ),
                 )
               : Text(
                   product.detail,
                   style: TextStyle(
-                    fontSize: getProportionateScreenWidth(15),
+                    fontSize: getProportionateScreenHeight(15),
                     height: 1.5,
                   ),
                   maxLines: 2,
@@ -259,7 +259,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
         ),
         Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(20),
+              horizontal: getProportionateScreenHeight(20),
               vertical: 10,
             ),
             child: seemore == true
@@ -274,7 +274,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Text(
                           "See Less Detail",
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(14),
+                              fontSize: getProportionateScreenHeight(14),
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),
@@ -298,7 +298,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Text(
                           "See More Detail",
                           style: TextStyle(
-                              fontSize: getProportionateScreenWidth(14),
+                              fontSize: getProportionateScreenHeight(14),
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),

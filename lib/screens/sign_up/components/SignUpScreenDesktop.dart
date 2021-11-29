@@ -13,7 +13,7 @@ class SignUpScreenDesktop extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: ScrollConfiguration(
             behavior: ScrollBehavior(),
             child: GlowingOverscrollIndicator(
@@ -27,14 +27,14 @@ class SignUpScreenDesktop extends StatelessWidget {
                       "Register Account",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: getProportionateScreenWidth(27),
+                        fontSize: getProportionateScreenHeight(27),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       "Complete your details",
                       style: TextStyle(
-                        fontSize: getProportionateScreenWidth(15),
+                        fontSize: getProportionateScreenHeight(15),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -45,7 +45,7 @@ class SignUpScreenDesktop extends StatelessWidget {
                       'By continuing your confirm that you agree \nwith our Term and Condition',
                       textAlign: TextAlign.center,
                       style:
-                          TextStyle(fontSize: getProportionateScreenWidth(13)),
+                          TextStyle(fontSize: getProportionateScreenHeight(13)),
                     ),
                     SizedBox(height: SizeConfig.screenHeight * 0.015),
                   ],

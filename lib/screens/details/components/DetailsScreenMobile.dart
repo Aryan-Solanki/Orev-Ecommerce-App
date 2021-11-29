@@ -225,14 +225,14 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Container(
                                 height: getProportionateScreenHeight(80),
-                                width: getProportionateScreenWidth(80),
+                                width: getProportionateScreenHeight(80),
                                 child: Image.network(widget.product
                                     .varients[selectedFoodVariants].images[0]),
                               ),
@@ -245,13 +245,13 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize:
-                                              getProportionateScreenWidth(15)),
+                                              getProportionateScreenHeight(15)),
                                     ),
                                     Text(
                                       "${widget.product.varients[selectedFoodVariants].title}",
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(13)),
+                                              getProportionateScreenHeight(13)),
                                     )
                                   ],
                                 ),
@@ -265,16 +265,16 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Deliver to",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -286,7 +286,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                     Text(
                                       SelectedAddress["adline1"] +
@@ -299,7 +299,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(14)),
+                                              getProportionateScreenHeight(14)),
                                     ),
                                   ],
                                 ),
@@ -312,23 +312,23 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Pay with",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Text(
                                 "Cash on Delivery (COD)",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: getProportionateScreenWidth(16)),
+                                    fontSize: getProportionateScreenHeight(16)),
                               ),
                             ],
                           ),
@@ -338,16 +338,16 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "COD Charges",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -359,7 +359,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                   ],
                                 ),
@@ -372,16 +372,16 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                           Row(
                             children: [
                               Container(
-                                  width: getProportionateScreenWidth(90),
+                                  width: getProportionateScreenHeight(90),
                                   child: Text(
                                     "Total",
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontSize:
-                                            getProportionateScreenWidth(16)),
+                                            getProportionateScreenHeight(16)),
                                   )),
                               SizedBox(
-                                width: getProportionateScreenWidth(20),
+                                width: getProportionateScreenHeight(20),
                               ),
                               Expanded(
                                 child: Column(
@@ -393,14 +393,14 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize:
-                                              getProportionateScreenWidth(16)),
+                                              getProportionateScreenHeight(16)),
                                     ),
                                     Text(
                                       "(includes tax + Delivery + COD Charges)",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenWidth(14)),
+                                              getProportionateScreenHeight(14)),
                                     ),
                                   ],
                                 ),
@@ -418,7 +418,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                               "Swipe to place your order",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: getProportionateScreenWidth(12),
+                                fontSize: getProportionateScreenHeight(12),
                               ),
                             ),
                             onSwipe: () async {
@@ -549,7 +549,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                           Text(
                             "By placing your order, you agree to Orev's privacy notice and conditions of use.",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12)),
+                                fontSize: getProportionateScreenHeight(12)),
                           ),
                           SizedBox(height: getProportionateScreenHeight(10)),
                         ],
@@ -693,7 +693,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                         children: [
                           Align(
@@ -701,7 +701,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                             child: Text(
                               "Choose your location",
                               style: TextStyle(
-                                fontSize: getProportionateScreenWidth(23),
+                                fontSize: getProportionateScreenHeight(23),
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -713,7 +713,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                             child: Text(
                               "Choose a delivery address for your product.",
                               style: TextStyle(
-                                fontSize: getProportionateScreenWidth(12),
+                                fontSize: getProportionateScreenHeight(12),
                                 color: Color(0xff565656),
                               ),
                             ),
@@ -751,7 +751,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                           },
                                           child: Container(
                                               width:
-                                                  getProportionateScreenWidth(
+                                                  getProportionateScreenHeight(
                                                       200),
                                               margin: EdgeInsets.symmetric(
                                                   vertical: 5, horizontal: 5),
@@ -779,7 +779,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   18),
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -806,7 +806,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -824,7 +824,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -845,7 +845,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           maxLines: 1,
                                                           style: TextStyle(
                                                               fontSize:
-                                                                  getProportionateScreenWidth(
+                                                                  getProportionateScreenHeight(
                                                                       14),
                                                               color:
                                                                   Colors.black),
@@ -887,7 +887,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                 "Add New Address",
                                                 style: TextStyle(
                                                     fontSize:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             13),
                                                     color: Colors.blue,
                                                     decoration: TextDecoration
@@ -901,7 +901,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                 "You saved \₹$coupon_value",
                                                 style: TextStyle(
                                                   fontSize:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           13),
                                                 ),
                                               )
@@ -909,13 +909,13 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                 ? Text("",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               13),
                                                     ))
                                                 : Text("Invalid Coupon",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          getProportionateScreenWidth(
+                                                          getProportionateScreenHeight(
                                                               13),
                                                     )),
                                         Row(
@@ -934,7 +934,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                       "Use Orev Wallet",
                                                       style: TextStyle(
                                                           fontSize:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   13)),
                                                     ),
                                                     Transform.scale(
@@ -967,7 +967,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                         "Balance: ₹$walletbalance",
                                                         style: TextStyle(
                                                             fontSize:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     12),
                                                             color:
                                                                 kPrimaryColor),
@@ -979,7 +979,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                             : "Balance: ₹${newwalletbalance = (walletbalance - (totalCost))}",
                                                         style: TextStyle(
                                                             fontSize:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     12),
                                                             color:
                                                                 kPrimaryColor),
@@ -1003,7 +1003,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                         children: [
                                                           SizedBox(
                                                             width:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     30),
                                                           ),
                                                           Container(
@@ -1018,7 +1018,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           )),
                                                           SizedBox(
                                                             width:
-                                                                getProportionateScreenWidth(
+                                                                getProportionateScreenHeight(
                                                                     20),
                                                           ),
                                                           orevwallet == false
@@ -1061,7 +1061,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 )
                                                               ],
@@ -1078,7 +1078,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 ),
                                                                 Text(
@@ -1091,7 +1091,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                           .ellipsis,
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          getProportionateScreenWidth(
+                                                                          getProportionateScreenHeight(
                                                                               13)),
                                                                 )
                                                               ],
@@ -1121,7 +1121,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 13),
                                                         color: Colors.red,
                                                       ),
@@ -1142,7 +1142,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                         fontSize:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 13),
                                                         color: Colors.red,
                                                       ),
@@ -1346,7 +1346,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
-      // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+      // list.add(SizedBox(width: getProportionateScreenHeight(20)));
     }
 
     return StatefulBuilder(
@@ -1410,14 +1410,14 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                               index;
                                                           setState(() {});
                                                         })),
-                                                // SizedBox(width: getProportionateScreenWidth(100),),
+                                                // SizedBox(width: getProportionateScreenHeight(100),),
                                                 Icon(
                                                   Icons.unfold_more,
                                                   color: Colors.black,
                                                 ),
                                                 SizedBox(
                                                   width:
-                                                      getProportionateScreenWidth(
+                                                      getProportionateScreenHeight(
                                                           15),
                                                 ),
                                                 RoundedIconBtn(
@@ -1438,7 +1438,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                 ),
                                                 SizedBox(
                                                     width:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             20)),
                                                 Text(
                                                   "x " + quantity.toString(),
@@ -1450,7 +1450,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                 ),
                                                 SizedBox(
                                                     width:
-                                                        getProportionateScreenWidth(
+                                                        getProportionateScreenHeight(
                                                             20)),
                                                 RoundedIconBtn(
                                                   icon: Icon(
@@ -1505,10 +1505,10 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                   .screenWidth *
                                                               0.1,
                                                           bottom:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   30),
                                                           top:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   10),
                                                         ),
                                                         child: Column(
@@ -1584,10 +1584,10 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                   .screenWidth *
                                                               0.1,
                                                           bottom:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   30),
                                                           top:
-                                                              getProportionateScreenWidth(
+                                                              getProportionateScreenHeight(
                                                                   10),
                                                         ),
                                                         child: Column(
@@ -1639,10 +1639,10 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                                 .screenWidth *
                                                             0.1,
                                                         bottom:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 30),
                                                         top:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 10),
                                                       ),
                                                       child: DefaultButton(
@@ -1668,10 +1668,10 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         15),
                                                 bottom:
-                                                    getProportionateScreenWidth(
+                                                    getProportionateScreenHeight(
                                                         5)),
                                             child: Text(
                                               "You Might Also Like",
@@ -1716,7 +1716,7 @@ class _DetailsScreenMobileState extends State<DetailsScreenMobile> {
                                                     ),
                                                     SizedBox(
                                                         width:
-                                                            getProportionateScreenWidth(
+                                                            getProportionateScreenHeight(
                                                                 20)),
                                                   ],
                                                 ),

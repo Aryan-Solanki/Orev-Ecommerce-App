@@ -112,7 +112,7 @@ class AllItemsState extends State<AllItems> {
     }
 
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   @override
@@ -123,7 +123,7 @@ class AllItemsState extends State<AllItems> {
     // widget.scrollController.addListener(() {
     //   double maxScroll = widget.scrollController.position.maxScrollExtent;
     //   double currentScroll = widget.scrollController.position.pixels;
-    //   double delta = getProportionateScreenWidth(25);
+    //   double delta = getProportionateScreenHeight(25);
     //
     //   if (maxScroll - currentScroll < delta) {
     //     getMoreProducts();
@@ -142,7 +142,7 @@ class AllItemsState extends State<AllItems> {
     // widget.scrollController.addListener(() {
     //   double maxScroll =  widget.scrollController.position.maxScrollExtent;
     //   double currentScroll =  widget.scrollController.position.pixels;
-    //   double delta = getProportionateScreenWidth(25);
+    //   double delta = getProportionateScreenHeight(25);
     //
     //
     //   if (maxScroll - currentScroll < delta) {
@@ -153,7 +153,7 @@ class AllItemsState extends State<AllItems> {
     return Column(children: [
       Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
         child: SectionTitle(
           title: widget.title,
           categoryId: widget.categoryId,
@@ -161,7 +161,7 @@ class AllItemsState extends State<AllItems> {
           seemore: false,
         ),
       ),
-      SizedBox(height: getProportionateScreenWidth(20)),
+      SizedBox(height: getProportionateScreenHeight(20)),
       _loadingProducts == true
           ? CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
@@ -178,7 +178,7 @@ class AllItemsState extends State<AllItems> {
                           child: Text(
                             "No products to display",
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(15)),
+                                fontSize: getProportionateScreenHeight(15)),
                           ),
                         )
                       : ListView.builder(
@@ -201,7 +201,7 @@ class AllItemsState extends State<AllItems> {
 // children: [
 // Padding(
 // padding:
-// EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+// EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
 // child: SectionTitle(
 // title: widget.title,
 // categoryId: widget.categoryId,
@@ -209,7 +209,7 @@ class AllItemsState extends State<AllItems> {
 // seemore: false,
 // ),
 // ),
-// SizedBox(height: getProportionateScreenWidth(20)),
+// SizedBox(height: getProportionateScreenHeight(20)),
 // SingleChildScrollView(
 // scrollDirection: Axis.vertical,
 // child: Column(
@@ -230,7 +230,7 @@ class AllItemsState extends State<AllItems> {
 // onTap: () {},
 // child: Container(
 // margin: EdgeInsets.symmetric(
-// horizontal: getProportionateScreenWidth(20),
+// horizontal: getProportionateScreenHeight(20),
 // vertical: getProportionateScreenHeight(15)),
 // child: Image.network(
 // "https://cdn.shopify.com/s/files/1/0173/7644/4470/files/ITC_Header_Banner_Mobile_480x480.jpg?v=1608556751",

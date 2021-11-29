@@ -52,11 +52,11 @@ class _YouOrderCardState extends State<YouOrderCard> {
       child: Row(
         children: [
           SizedBox(
-            width: getProportionateScreenWidth(88),
+            width: getProportionateScreenHeight(88),
             child: AspectRatio(
               aspectRatio: 0.88,
               child: Container(
-                padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+                padding: EdgeInsets.all(getProportionateScreenHeight(10)),
                 decoration: BoxDecoration(
                   color: Color(0xFFF5F6F9),
                   borderRadius: BorderRadius.circular(15),
@@ -65,18 +65,18 @@ class _YouOrderCardState extends State<YouOrderCard> {
               ),
             ),
           ),
-          SizedBox(width: getProportionateScreenWidth(15)),
+          SizedBox(width: getProportionateScreenHeight(15)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 // height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(210),
+                width: getProportionateScreenHeight(210),
                 child: Text(
                   widget.order.product.title,
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: getProportionateScreenWidth(15)),
+                      fontSize: getProportionateScreenHeight(15)),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),

@@ -32,7 +32,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
       ProductList.add(product);
     }
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   @override
@@ -47,7 +47,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
       children: [
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
           child: SectionTitle(
             title: widget.card_title,
             press: () {},
@@ -55,7 +55,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
             categoryId: widget.categoryId,
           ),
         ),
-        SizedBox(height: getProportionateScreenWidth(20)),
+        SizedBox(height: getProportionateScreenHeight(20)),
         ResponsiveBuilder(
           builder: (context, sizingInformation) {
             // Check the sizing information here and return your UI
@@ -72,7 +72,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                         //     .shrink(); // here by default width and height is 0
                       },
                     ),
-                    SizedBox(width: getProportionateScreenWidth(20)),
+                    SizedBox(width: getProportionateScreenHeight(20)),
                   ],
                 ),
               );
@@ -90,7 +90,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                       //     .shrink(); // here by default width and height is 0
                     },
                   ),
-                  SizedBox(width: getProportionateScreenWidth(20)),
+                  SizedBox(width: getProportionateScreenHeight(20)),
                 ],
               ),
             );

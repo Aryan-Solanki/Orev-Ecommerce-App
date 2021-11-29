@@ -196,7 +196,7 @@ class CartScreenTabletState extends State<CartScreenTablet> {
                 ? Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
+                          horizontal: getProportionateScreenHeight(20)),
                       child: ScrollConfiguration(
                         behavior: ScrollBehavior(),
                         child: GlowingOverscrollIndicator(
@@ -262,7 +262,7 @@ class CartScreenTabletState extends State<CartScreenTablet> {
                 child: Center(
                   child: Text(
                     "No items added in cart",
-                    style: TextStyle(fontSize: getProportionateScreenWidth(15)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(15)),
                   ),
                 ),
               ),
@@ -359,8 +359,8 @@ class _AddressHeaderState extends State<AddressHeader> {
       child: Container(
         color: Colors.transparent,
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(10),
-            right: getProportionateScreenWidth(10)),
+            left: getProportionateScreenHeight(10),
+            right: getProportionateScreenHeight(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -370,7 +370,7 @@ class _AddressHeaderState extends State<AddressHeader> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(14),
+                fontSize: getProportionateScreenHeight(14),
               ),
             )),
             FittedBox(
@@ -415,7 +415,7 @@ class _AddressHeaderState extends State<AddressHeader> {
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -440,10 +440,10 @@ class _AddressHeaderState extends State<AddressHeader> {
                         height: getProportionateScreenHeight(65),
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(10)),
+                            horizontal: getProportionateScreenHeight(10)),
                         child: Text(value,
                             style: TextStyle(
-                                fontSize: getProportionateScreenWidth(13)),
+                                fontSize: getProportionateScreenHeight(13)),
                             overflow: TextOverflow.ellipsis),
                       )
                     : Center(),

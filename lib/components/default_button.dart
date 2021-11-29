@@ -32,7 +32,7 @@ class DefaultButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(textheight),
+            fontSize: getProportionateScreenHeight(textheight),
             color: colour,
           ),
         ),

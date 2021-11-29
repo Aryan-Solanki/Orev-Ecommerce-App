@@ -17,12 +17,12 @@ class CustomAppBar extends PreferredSize {
     return SafeArea(
       child: Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
         child: Row(
           children: [
             SizedBox(
-              height: getProportionateScreenWidth(40),
-              width: getProportionateScreenWidth(40),
+              height: getProportionateScreenHeight(40),
+              width: getProportionateScreenHeight(40),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60),
