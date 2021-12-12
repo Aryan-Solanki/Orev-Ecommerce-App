@@ -447,54 +447,59 @@ class _AddressHeaderState extends State<AddressHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              width: SizeConfig.screenHeight * 0.75,
-              height: getProportionateScreenHeight(65),
-              child: MenuButton<String>(
-                menuButtonBackgroundColor: Colors.transparent,
-                decoration: BoxDecoration(
-                    color: kSecondaryColor.withOpacity(
-                        0.1), //border: Border.all(color: Colors.grey[300]!),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15.0),
-                    )),
-                child: normalChildButton,
-                items: addresses,
-                itemBuilder: (String value) => !rukbc
-                    ? Container(
-                        color: kSecondaryColor.withOpacity(0.1),
-                        height: getProportionateScreenHeight(65),
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenHeight(10)),
-                        child: Text(value,
-                            style: TextStyle(
-                                fontSize: getProportionateScreenHeight(13)),
-                            overflow: TextOverflow.ellipsis),
-                      )
-                    : Center(),
-                toggledChild: Container(
+          Container(height: getProportionateScreenHeight(100),child: Image(image: AssetImage('assets/images/splash_1.png'))),
+          SizedBox(width: getProportionateScreenHeight(15),),
+          Expanded(
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                width: SizeConfig.screenHeight * 0.75,
+                height: getProportionateScreenHeight(65),
+                child: MenuButton<String>(
+                  menuButtonBackgroundColor: Colors.transparent,
+                  decoration: BoxDecoration(
+                      color: kSecondaryColor.withOpacity(
+                          0.1), //border: Border.all(color: Colors.grey[300]!),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(15.0),
+                      )),
                   child: normalChildButton,
-                ),
-                onItemSelected: (String value) {
-                  setState(() {
-                    if (!widget.loading) {
-                      if (value == addresses[addresses.length - 1]) {
-                        _navigateAndDisplaySelection(context);
-                      } else {
-                        selectedKey = value;
-                        CurrentAddress = addressMapFinal[selectedKey];
-                        widget.notifyParent(CurrentAddress);
+                  items: addresses,
+                  itemBuilder: (String value) => !rukbc
+                      ? Container(
+                          color: kSecondaryColor.withOpacity(0.1),
+                          height: getProportionateScreenHeight(65),
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenHeight(10)),
+                          child: Text(value,
+                              style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(13)),
+                              overflow: TextOverflow.ellipsis),
+                        )
+                      : Center(),
+                  toggledChild: Container(
+                    child: normalChildButton,
+                  ),
+                  onItemSelected: (String value) {
+                    setState(() {
+                      if (!widget.loading) {
+                        if (value == addresses[addresses.length - 1]) {
+                          _navigateAndDisplaySelection(context);
+                        } else {
+                          selectedKey = value;
+                          CurrentAddress = addressMapFinal[selectedKey];
+                          widget.notifyParent(CurrentAddress);
+                        }
                       }
-                    }
-                  });
-                },
-                onMenuButtonToggle: (bool isToggle) {},
-              ),
-            );
-          }),
+                    });
+                  },
+                  onMenuButtonToggle: (bool isToggle) {},
+                ),
+              );
+            }),
+          ),
+          SizedBox(width: getProportionateScreenHeight(15),),
           IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/Shop Icon.svg",height: getProportionateScreenHeight(25),

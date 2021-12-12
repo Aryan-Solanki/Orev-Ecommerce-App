@@ -26,8 +26,24 @@ class _LikedScreenState extends State<LikedScreen> {
           tablet: LikeScreenTablet(),
           desktop: LikeScreenDesktop(),
         ),
-        bottomNavigationBar:
-            CustomBottomNavBar(selectedMenu: MenuState.favourite),
+          bottomNavigationBar: ResponsiveBuilder(
+            builder: (context, sizingInformation) {
+              // Check the sizing information here and return your UI
+              if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+                return Visibility(visible: false,child: CustomBottomNavBar(selectedMenu: MenuState.home));
+              }
+
+              if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+                return CustomBottomNavBar(selectedMenu: MenuState.home);
+              }
+
+              if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+                return CustomBottomNavBar(selectedMenu: MenuState.home);
+              }
+
+              return CustomBottomNavBar(selectedMenu: MenuState.home);
+            },
+          )
       ),
     );
   }

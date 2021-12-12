@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../enums.dart';
@@ -33,7 +35,20 @@ class _ComingSoonState extends State<ComingSoon> {
               child: Column(
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
-                  HomeHeader(),
+                  ResponsiveBuilder(
+                    builder: (context, sizingInformation) {
+                      // Check the sizing information here and return your UI
+                      if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+                        return DesktopHomeHeader();
+                      }
+
+                      if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+                        return HomeHeader();
+                      }
+
+                      return HomeHeader();
+                    },
+                  ),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
@@ -89,7 +104,24 @@ class _ComingSoonState extends State<ComingSoon> {
                 ],
               ),
             )),
-        bottomNavigationBar: widget.bottomNavigation==true?CustomBottomNavBar(selectedMenu: MenuState.message):null,
+        bottomNavigationBar: widget.bottomNavigation==true?ResponsiveBuilder(
+          builder: (context, sizingInformation) {
+            // Check the sizing information here and return your UI
+            if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+              return Visibility(visible: false,child: CustomBottomNavBar(selectedMenu: MenuState.home));
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+              return CustomBottomNavBar(selectedMenu: MenuState.home);
+            }
+
+            if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+              return CustomBottomNavBar(selectedMenu: MenuState.home);
+            }
+
+            return CustomBottomNavBar(selectedMenu: MenuState.home);
+          },
+        ):Visibility(visible: false,child: CustomBottomNavBar(selectedMenu: MenuState.home)),
       ),
     );
   }
