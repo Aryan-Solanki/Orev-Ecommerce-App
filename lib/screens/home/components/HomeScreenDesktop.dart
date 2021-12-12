@@ -8,6 +8,7 @@ import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/specialoffers.dart';
 import 'package:orev/screens/home/components/threegrid.dart';
 
+import '../../../enums.dart';
 import '../../../size_config.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
@@ -170,7 +171,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
         child: Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        DesktopHomeHeader(),
+        DesktopHomeHeader(selectedMenu: MenuState.home,),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: ScrollConfiguration(

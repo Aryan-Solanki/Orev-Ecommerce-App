@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/comingsoonpage.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/help_center/help_center.dart';
+import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/my_account/my_account.dart';
@@ -12,6 +13,7 @@ import 'package:orev/services/user_simple_preferences.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../enums.dart';
 import '../../../size_config.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -42,7 +44,7 @@ class _ProfileScreenDesktopState extends State<ProfileScreenDesktop> {
           child: Column(
             children: [
               SizedBox(height: getProportionateScreenHeight(10)),
-              HomeHeader(),
+              DesktopHomeHeader(selectedMenu: MenuState.profile,),
               SizedBox(height: getProportionateScreenHeight(10)),
               Column(
                 children: [

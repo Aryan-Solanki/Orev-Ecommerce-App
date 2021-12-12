@@ -3,12 +3,14 @@ import 'package:orev/components/fullwidth_product_cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
+import '../../../enums.dart';
 import '../../../size_config.dart';
 
 class LikeScreenDesktop extends StatefulWidget {
@@ -136,7 +138,7 @@ class _LikeScreenDesktopState extends State<LikeScreenDesktop> {
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        DesktopHomeHeader(selectedMenu: MenuState.favourite,),
         SizedBox(height: getProportionateScreenHeight(10)),
         ProductList.length != 0
             ? Expanded(

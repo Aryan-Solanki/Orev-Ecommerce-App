@@ -5,17 +5,23 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:menu_button/menu_button.dart';
+import 'package:orev/components/comingsoonpage.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/address/address.dart';
+import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/icon_btn_with_counter.dart';
+import 'package:orev/screens/home/home_screen.dart';
+import 'package:orev/screens/liked_item/like_screen.dart';
+import 'package:orev/screens/profile/profile_screen.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
 import 'package:orev/services/product_services.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
 
+import '../../../enums.dart';
 import '../../../size_config.dart';
 import '../cart_screen.dart';
 import 'cart_card.dart';
@@ -335,6 +341,8 @@ class _AddressHeaderState extends State<AddressHeader> {
     setState(() {});
   }
 
+
+
   @override
   void initState() {
     authkey = UserSimplePreferences.getAuthKey() ?? '';
@@ -347,6 +355,25 @@ class _AddressHeaderState extends State<AddressHeader> {
   }
 
   String selectedKey = '';
+  final Color inActiveIconColor = Color(0xFFB6B6B6);
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Address()),
+    );
+
+    if (result) {
+      await getuseraddress();
+      setState(() {
+        final snackBar = SnackBar(
+          content: Text('Address Added Successfully'),
+          backgroundColor: kPrimaryColor,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -366,13 +393,13 @@ class _AddressHeaderState extends State<AddressHeader> {
           children: <Widget>[
             Flexible(
                 child: Text(
-              selectedKey,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: getProportionateScreenHeight(14),
-              ),
-            )),
+                  selectedKey,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(14),
+                  ),
+                )),
             FittedBox(
               fit: BoxFit.fill,
               child: Icon(
@@ -380,6 +407,7 @@ class _AddressHeaderState extends State<AddressHeader> {
                 // color: Colors.grey,
               ),
             ),
+
           ],
         ),
       ),
@@ -467,16 +495,62 @@ class _AddressHeaderState extends State<AddressHeader> {
               ),
             );
           }),
+          IconButton(
+              icon: SvgPicture.asset(
+                "assets/icons/Shop Icon.svg",height: getProportionateScreenHeight(25),
+                color: inActiveIconColor,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, HomeScreen.routeName);
+              }),
+          SizedBox(width: getProportionateScreenHeight(15),),
+          IconButton(
+            icon: SvgPicture.asset(
+              "assets/icons/Heart Icon.svg",height: getProportionateScreenHeight(25),
+              color: inActiveIconColor,
+            ),
+            onPressed: () {
+              if (authkey == '') {
+                Navigator.pushNamed(context, SignInScreen.routeName);
+              } else {
+                Navigator.pushNamed(context, LikedScreen.routeName);
+              }
+            },
+          ),
+          SizedBox(width: getProportionateScreenHeight(15),),
+          IconButton(
+            icon: SvgPicture.asset(
+              "assets/icons/Chat bubble Icon.svg",height: getProportionateScreenHeight(25),
+              color: inActiveIconColor,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ComingSoon(value: "Ticketing Service",bottomNavigation: true,)),
+              );
+            },
+          ),
+          SizedBox(width: getProportionateScreenHeight(15),),
           numberOfItems == 0
               ? IconBtnWithCounter(
-                  svgSrc: "assets/icons/Cart Icon.svg",
-                  press: () {},
-                )
+            svgSrc: "assets/icons/Cart Icon.svg",
+            press: () {},
+          )
               : IconBtnWithCounter(
-                  svgSrc: "assets/icons/Cart Icon.svg",
-                  numOfitem: numberOfItems,
-                  press: () {},
-                ),
+            svgSrc: "assets/icons/Cart Icon.svg",
+            numOfitem: numberOfItems,
+            press: () {},
+          ),
+          SizedBox(width: getProportionateScreenHeight(15),),
+          IconButton(
+              icon: SvgPicture.asset(
+                "assets/icons/User Icon.svg",height: getProportionateScreenHeight(25),
+                color: inActiveIconColor,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, ProfileScreen.routeName);
+
+              }),
           // IconBtnWithCounter(
           //   svgSrc: "assets/icons/Bell.svg",
           //   numOfitem: 3,
