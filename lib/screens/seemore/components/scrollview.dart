@@ -7,6 +7,7 @@ import 'package:orev/models/Product.dart';
 import 'package:orev/models/Varient.dart';
 import 'package:orev/screens/home/components/section_title.dart';
 import 'package:orev/services/product_services.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../../size_config.dart';
 
@@ -181,7 +182,28 @@ class AllItemsState extends State<AllItems> {
                                 fontSize: getProportionateScreenHeight(15)),
                           ),
                         )
-                      : ListView.builder(
+                      : ResponsiveBuilder(
+                    builder: (context, sizingInformation) {
+                      // Check the sizing information here and return your UI
+                      if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+                        return GridView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              // crossAxisSpacing: 5.0,
+                              // mainAxisSpacing: 5.0,
+                            ),
+                            itemCount: _products.length,
+                            itemBuilder: (BuildContext ctx, int index) {
+                              return FullWidthProductCard(
+                                product: ProductList[index],
+                                notifyParent: refresh,
+                              );
+                            });
+                      }
+
+                      return ListView.builder(
                           shrinkWrap: true,
                           physics: ClampingScrollPhysics(),
                           itemCount: _products.length,
@@ -190,7 +212,9 @@ class AllItemsState extends State<AllItems> {
                               product: ProductList[index],
                               notifyParent: refresh,
                             );
-                          }),
+                          });
+                    },
+                  )
                 ),
               ),
             ),

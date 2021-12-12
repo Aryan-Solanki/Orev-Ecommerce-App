@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import '../../../constants.dart';
 import 'scrollview.dart';
@@ -47,7 +48,7 @@ class _SeeMoreTabletState extends State<SeeMoreTablet> {
         return Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
-            HomeHeader(
+            TabletHomeHeader(
               key: UniqueKey(),
             ),
             SizedBox(height: getProportionateScreenHeight(10)),
