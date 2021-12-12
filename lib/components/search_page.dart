@@ -208,10 +208,10 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
 //                         "✕",
 //                         style: TextStyle(
 //                             fontSize:
-//                             getProportionateScreenWidth(15)),
+//                             getProportionateScreenHeight(15)),
 //                       )),
 //                   SizedBox(
-//                     width: getProportionateScreenWidth(20),
+//                     width: getProportionateScreenHeight(20),
 //                   ),
 //                   GestureDetector(
 //                       onTap: () {
@@ -227,7 +227,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
 //                             fontWeight: FontWeight.bold,
 //                             color: Colors.blue,
 //                             fontSize:
-//                             getProportionateScreenWidth(18)),
+//                             getProportionateScreenHeight(18)),
 //                       )),
 //                 ],
 //               ),

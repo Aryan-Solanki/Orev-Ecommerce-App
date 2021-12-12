@@ -36,14 +36,14 @@ class _ComingSoonState extends State<ComingSoon> {
                   HomeHeader(),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
                     child: Column(
                       children:[
                         Text(
                           "Orev",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: getProportionateScreenWidth(35),
+                            fontSize: getProportionateScreenHeight(35),
                             fontWeight: FontWeight.w100,
                           ),
                         ),
@@ -51,7 +51,7 @@ class _ComingSoonState extends State<ComingSoon> {
                           widget.value,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: getProportionateScreenWidth(30),
+                            fontSize: getProportionateScreenHeight(30),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -63,7 +63,7 @@ class _ComingSoonState extends State<ComingSoon> {
                         //     textAlign: TextAlign.center,
                         //     style: TextStyle(
                         //       color: Colors.black,
-                        //       fontSize: getProportionateScreenWidth(15),
+                        //       fontSize: getProportionateScreenHeight(15),
                         //       fontWeight: FontWeight.bold,
                         //     ),
                         //   ),
@@ -72,12 +72,12 @@ class _ComingSoonState extends State<ComingSoon> {
                           child: Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(text: "If you wish to register yourself as a vendor,  please write at ", style: TextStyle(fontSize: getProportionateScreenWidth(15),)),
+                                TextSpan(text: "If you wish to register yourself as a vendor,  please write at ", style: TextStyle(fontSize: getProportionateScreenHeight(15),)),
                                 TextSpan(text: 'contact@orevhealth.com',
                                     recognizer: new TapGestureRecognizer()
                                       ..onTap = () { launch('mailto:contact@orevhealth.com');
                                       },
-                                    style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: getProportionateScreenWidth(15),)),
+                                    style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: getProportionateScreenHeight(15),)),
                               ],
                             ),
                             textAlign:  TextAlign.center,

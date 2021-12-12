@@ -30,7 +30,7 @@ import 'screens/sign_up/sign_up_screen.dart';
 // We use name route
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
-  SplashScreen.routeName: (context) => SplashScreen(),//done ui
+  SplashScreen.routeName: (context) => SplashScreen(),//done ui pc also
   SignInScreen.routeName: (context) => SignInScreen(),//done ui
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),//done ui
   UpdatePasswordScreen.routeName: (context) => UpdatePasswordScreen(),//not done

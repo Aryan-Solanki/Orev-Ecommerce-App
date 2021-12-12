@@ -44,7 +44,7 @@ class _ProductCardState extends State<ProductCard> {
       favor = true;
     }
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> removeFavourite() async {
@@ -55,7 +55,7 @@ class _ProductCardState extends State<ProductCard> {
     keys.remove(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> addFavourite() async {
@@ -66,7 +66,7 @@ class _ProductCardState extends State<ProductCard> {
     keys.add(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   String authkey = "";
@@ -301,6 +301,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
           );
         }
+
 
         return Padding(
           padding: EdgeInsets.only(

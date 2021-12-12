@@ -17,19 +17,19 @@ const kTextColor = Color(0xFF757575);
 const kAnimationDuration = Duration(milliseconds: 200);
 
 final headingStyle = TextStyle(
-  fontSize: getProportionateScreenWidth(28),
+  fontSize: getProportionateScreenHeight(28),
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
 );
 final smallerheadingStyle = TextStyle(
-  fontSize: getProportionateScreenWidth(24),
+  fontSize: getProportionateScreenHeight(24),
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
 );
 final verysmallerheadingStyle = TextStyle(
-  fontSize: getProportionateScreenWidth(11),
+  fontSize: getProportionateScreenHeight(11),
   // fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
@@ -63,7 +63,7 @@ const String kInvalidPhoneError = "Please Enter Valid Phone Number";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
-      EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+      EdgeInsets.symmetric(vertical: getProportionateScreenHeight(15)),
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
@@ -71,7 +71,7 @@ final otpInputDecoration = InputDecoration(
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
+    borderRadius: BorderRadius.circular(getProportionateScreenHeight(15)),
     borderSide: BorderSide(color: kTextColor),
   );
 }

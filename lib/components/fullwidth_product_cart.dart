@@ -73,7 +73,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
       favor = true;
     }
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> removeFavourite() async {
@@ -83,7 +83,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     keys.remove(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> addFavourite() async {
@@ -93,7 +93,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
     keys.add(widget.product.id);
     await _services.favourites.doc(user_key).update({'favourites': keys});
     setState(() {});
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   Future<void> addToCart() async {
@@ -129,7 +129,7 @@ class _FullWidthProductCardState extends State<FullWidthProductCard> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
-    // list.add(SizedBox(width: getProportionateScreenWidth(20)));
+    // list.add(SizedBox(width: getProportionateScreenHeight(20)));
   }
 
   String authkey = "";
