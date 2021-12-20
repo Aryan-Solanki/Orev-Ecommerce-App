@@ -15,6 +15,7 @@ import 'package:orev/models/Varient.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/Order_Details/order_details.dart';
 import 'package:orev/screens/address/address.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/payment_success/payment_success.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
@@ -1157,38 +1158,44 @@ class _DetailsScreenTabletState extends State<DetailsScreenTablet> {
                                         ),
                                         deliverable == true
                                             ? cod_available
-                                                ? DefaultButton(
-                                                    textheight: 15,
-                                                    colour: Colors.white,
-                                                    height: 70,
-                                                    color: kPrimaryColor2,
-                                                    text: orevwallet == true
-                                                        ? totalCost == 0.0
-                                                            ? "Place Order"
-                                                            : "Cash on Delivery (COD)"
-                                                        : "Cash on Delivery (COD)",
-                                                    press: () {
-                                                      // Navigator.pop(context);
-                                                      var usedWalletMoney =
-                                                          walletbalance -
-                                                              newwalletbalance;
-                                                      _showCODDialog(
-                                                          totalCost,
-                                                          finalDeliveryCost,
-                                                          usedWalletMoney);
-                                                    },
-                                                  )
+                                                ? Align(
+                                                  alignment: Alignment.center,
+                                                  child: DefaultButton(
+                                                      textheight: 15,
+                                                      colour: Colors.white,
+                                                      height: 70,
+                                                      color: kPrimaryColor2,
+                                                      text: orevwallet == true
+                                                          ? totalCost == 0.0
+                                                              ? "Place Order"
+                                                              : "Cash on Delivery (COD)"
+                                                          : "Cash on Delivery (COD)",
+                                                      press: () {
+                                                        // Navigator.pop(context);
+                                                        var usedWalletMoney =
+                                                            walletbalance -
+                                                                newwalletbalance;
+                                                        _showCODDialog(
+                                                            totalCost,
+                                                            finalDeliveryCost,
+                                                            usedWalletMoney);
+                                                      },
+                                                    ),
+                                                )
                                                 : Center()
                                             : cod_available
-                                                ? DefaultButton(
-                                                    textheight: 15,
-                                                    colour: Colors.white,
-                                                    height: 70,
-                                                    color: kSecondaryColor,
-                                                    text:
-                                                        "Cash on Delivery (COD)",
-                                                    press: () {},
-                                                  )
+                                                ? Align(
+                                                  alignment: Alignment.center,
+                                                  child: DefaultButton(
+                                                      textheight: 15,
+                                                      colour: Colors.white,
+                                                      height: 70,
+                                                      color: kSecondaryColor,
+                                                      text:
+                                                          "Cash on Delivery (COD)",
+                                                      press: () {},
+                                                    ),
+                                                )
                                                 : Center(),
                                         SizedBox(
                                           height:
@@ -1198,97 +1205,106 @@ class _DetailsScreenTabletState extends State<DetailsScreenTablet> {
                                             ? orevwallet == true
                                                 ? totalCost == 0.0
                                                     ? Center()
-                                                    : DefaultButton(
-                                                        textheight: 15,
-                                                        colour: Colors.white,
-                                                        height: 70,
-                                                        color: kPrimaryColor,
-                                                        text: "Pay Online",
-                                                        press: () {
-                                                          var usedWalletMoney =
-                                                              walletbalance -
-                                                                  newwalletbalance;
+                                                    : Align(
+                                                      alignment: Alignment.center,
+                                                      child: DefaultButton(
+                                                          textheight: 15,
+                                                          colour: Colors.white,
+                                                          height: 70,
+                                                          color: kPrimaryColor,
+                                                          text: "Pay Online",
+                                                          press: () {
+                                                            var usedWalletMoney =
+                                                                walletbalance -
+                                                                    newwalletbalance;
 
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) => OrderDetails(
-                                                                    key:
-                                                                        UniqueKey(),
-                                                                    usedorevwallet:
-                                                                        orevwallet,
-                                                                    codSellerCharge:
-                                                                        0.0,
-                                                                    orevWalletMoneyUsed:
-                                                                        usedWalletMoney,
-                                                                    product: widget
-                                                                        .product,
-                                                                    currentVarient:
-                                                                        selectedFoodVariants,
-                                                                    quantity:
-                                                                        quantity,
-                                                                    selectedaddress:
-                                                                        SelectedAddress,
-                                                                    totalCost:
-                                                                        totalCost,
-                                                                    deliveryCost:
-                                                                        finalDeliveryCost,
-                                                                    newwalletbalance:
-                                                                        newwalletbalance,
-                                                                    oldwalletbalance:
-                                                                        walletbalance)),
-                                                          );
-                                                        },
-                                                      )
-                                                : DefaultButton(
-                                                    textheight: 15,
-                                                    colour: Colors.white,
-                                                    height: 70,
-                                                    color: kPrimaryColor,
-                                                    text: "Pay Online",
-                                                    press: () {
-                                                      var usedWalletMoney =
-                                                          walletbalance -
-                                                              newwalletbalance;
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => OrderDetails(
+                                                                      key:
+                                                                          UniqueKey(),
+                                                                      usedorevwallet:
+                                                                          orevwallet,
+                                                                      codSellerCharge:
+                                                                          0.0,
+                                                                      orevWalletMoneyUsed:
+                                                                          usedWalletMoney,
+                                                                      product: widget
+                                                                          .product,
+                                                                      currentVarient:
+                                                                          selectedFoodVariants,
+                                                                      quantity:
+                                                                          quantity,
+                                                                      selectedaddress:
+                                                                          SelectedAddress,
+                                                                      totalCost:
+                                                                          totalCost,
+                                                                      deliveryCost:
+                                                                          finalDeliveryCost,
+                                                                      newwalletbalance:
+                                                                          newwalletbalance,
+                                                                      oldwalletbalance:
+                                                                          walletbalance)),
+                                                            );
+                                                          },
+                                                        ),
+                                                    )
+                                                : Align(
+                                                  alignment: Alignment.center,
+                                                  child: DefaultButton(
+                                                      textheight: 15,
+                                                      colour: Colors.white,
+                                                      height: 70,
+                                                      color: kPrimaryColor,
+                                                      text: "Pay Online",
+                                                      press: () {
+                                                        var usedWalletMoney =
+                                                            walletbalance -
+                                                                newwalletbalance;
 
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => OrderDetails(
-                                                                key:
-                                                                    UniqueKey(),
-                                                                usedorevwallet:
-                                                                    orevwallet,
-                                                                codSellerCharge:
-                                                                    0.0,
-                                                                orevWalletMoneyUsed:
-                                                                    usedWalletMoney,
-                                                                product: widget
-                                                                    .product,
-                                                                currentVarient:
-                                                                    selectedFoodVariants,
-                                                                quantity:
-                                                                    quantity,
-                                                                selectedaddress:
-                                                                    SelectedAddress,
-                                                                totalCost:
-                                                                    totalCost,
-                                                                deliveryCost:
-                                                                    finalDeliveryCost,
-                                                                newwalletbalance:
-                                                                    newwalletbalance,
-                                                                oldwalletbalance:
-                                                                    walletbalance)),
-                                                      );
-                                                    })
-                                            : DefaultButton(
-                                                textheight: 15,
-                                                // colour: Colors.white,
-                                                height: 70,
-                                                color: kSecondaryColor,
-                                                text: "Pay Online",
-                                                press: () {},
-                                              ),
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => OrderDetails(
+                                                                  key:
+                                                                      UniqueKey(),
+                                                                  usedorevwallet:
+                                                                      orevwallet,
+                                                                  codSellerCharge:
+                                                                      0.0,
+                                                                  orevWalletMoneyUsed:
+                                                                      usedWalletMoney,
+                                                                  product: widget
+                                                                      .product,
+                                                                  currentVarient:
+                                                                      selectedFoodVariants,
+                                                                  quantity:
+                                                                      quantity,
+                                                                  selectedaddress:
+                                                                      SelectedAddress,
+                                                                  totalCost:
+                                                                      totalCost,
+                                                                  deliveryCost:
+                                                                      finalDeliveryCost,
+                                                                  newwalletbalance:
+                                                                      newwalletbalance,
+                                                                  oldwalletbalance:
+                                                                      walletbalance)),
+                                                        );
+                                                      }),
+                                                )
+                                            : Align(
+                                              alignment: Alignment.center,
+                                              child: DefaultButton(
+                                                  textheight: 15,
+                                                  // colour: Colors.white,
+                                                  height: 70,
+                                                  color: kSecondaryColor,
+                                                  text: "Pay Online",
+                                                  press: () {},
+                                                ),
+                                            ),
                                       ],
                                     );
                                   }),
@@ -1354,7 +1370,7 @@ class _DetailsScreenTabletState extends State<DetailsScreenTablet> {
         return Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(10)),
-            HomeHeader(),
+            TabletHomeHeader(),
             SizedBox(height: getProportionateScreenHeight(10)),
             !L_loading
                 ? Expanded(

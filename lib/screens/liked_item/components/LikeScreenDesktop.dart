@@ -148,46 +148,46 @@ class _LikeScreenDesktopState extends State<LikeScreenDesktop> {
                     axisDirection: AxisDirection.down,
                     color: kPrimaryColor2,
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ...List.generate(
-                            ProductList.length,
-                            (index) {
-                              return Dismissible(
-                                key: Key(ProductList[index].id.toString()),
-                                direction: DismissDirection.endToStart,
-                                onDismissed: (direction) {
-                                  setState(() {
-                                    removeFavourite(ProductList[index].id);
-                                    ProductList.removeAt(index);
-                                  });
-                                },
-                                background: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFFFE6E6),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Spacer(),
-                                      SvgPicture.asset(
-                                          "assets/icons/Trash.svg"),
-                                    ],
-                                  ),
-                                ),
-                                child: FullWidthProductCard(
-                                  product: ProductList[index],
-                                  like: false,
-                                ),
-                              );
-
-                              return SizedBox
-                                  .shrink(); // here by default width and height is 0
-                            },
+                      child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 2.3,
+                            // crossAxisSpacing: 5.0,
+                            mainAxisSpacing: 0.0,
                           ),
-                        ],
-                      ),
+                          itemCount: ProductList.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            return Dismissible(
+                              key: Key(ProductList[index].id.toString()),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                setState(() {
+                                  removeFavourite(ProductList[index].id);
+                                  ProductList.removeAt(index);
+                                });
+                              },
+                              background: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFFE6E6),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Spacer(),
+                                    SvgPicture.asset(
+                                        "assets/icons/Trash.svg"),
+                                  ],
+                                ),
+                              ),
+                              child: FullWidthProductCard(
+                                product: ProductList[index],
+                                like: false,
+                              ),
+                            );
+                          }),
                     ),
                   ),
                 ),

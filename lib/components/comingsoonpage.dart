@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -43,7 +44,7 @@ class _ComingSoonState extends State<ComingSoon> {
                       }
 
                       if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
-                        return HomeHeader();
+                        return TabletHomeHeader();
                       }
 
                       return HomeHeader();

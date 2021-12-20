@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:orev/constants.dart';
 import 'package:orev/screens/help_form/help_form.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/my_account/my_account.dart';
 import 'package:orev/screens/sign_in/sign_in_screen.dart';
@@ -21,7 +22,7 @@ class _HelpCenterTabletState extends State<HelpCenterTablet> {
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        TabletHomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: ScrollConfiguration(

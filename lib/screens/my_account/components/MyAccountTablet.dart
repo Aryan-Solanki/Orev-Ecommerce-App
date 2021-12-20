@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/my_account/components/update_profile_form.dart';
 import 'package:orev/screens/profile/components/profile_pic.dart';
@@ -38,7 +39,7 @@ class _MyAccountTabletState extends State<MyAccountTablet> {
       child: Column(
         children: [
           SizedBox(height: getProportionateScreenHeight(10)),
-          HomeHeader(),
+          TabletHomeHeader(),
           SizedBox(height: getProportionateScreenHeight(10)),
           Expanded(
             child: Padding(

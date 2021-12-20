@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orev/components/default_button.dart';
 import 'package:orev/components/orevwallet_afterpage.dart';
+import 'package:orev/screens/home/components/DesktopHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/services/user_services.dart';
 import 'package:orev/services/user_simple_preferences.dart';
@@ -295,7 +296,7 @@ class _WalletScreenDesktopState extends State<WalletScreenDesktop> {
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        DesktopHomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         Expanded(
           child: Padding(
