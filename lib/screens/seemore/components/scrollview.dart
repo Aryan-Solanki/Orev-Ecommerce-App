@@ -190,9 +190,9 @@ class AllItemsState extends State<AllItems> {
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 2.3,
                               crossAxisCount: 3,
-                              // crossAxisSpacing: 5.0,
-                              // mainAxisSpacing: 5.0,
+                              mainAxisSpacing: 0
                             ),
                             itemCount: _products.length,
                             itemBuilder: (BuildContext ctx, int index) {

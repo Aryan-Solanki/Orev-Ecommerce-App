@@ -4,6 +4,7 @@ import 'package:orev/models/Cart.dart';
 import 'package:orev/models/Order.dart';
 import 'package:orev/models/Product.dart';
 import 'package:orev/providers/auth_provider.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/your_order/components/your_order_cart.dart';
 
@@ -44,7 +45,7 @@ class _YourOrderTabletState extends State<YourOrderTablet> {
     return Column(
       children: [
         SizedBox(height: getProportionateScreenHeight(10)),
-        HomeHeader(),
+        TabletHomeHeader(),
         SizedBox(height: getProportionateScreenHeight(10)),
         keys.length != 0
             ? Expanded(

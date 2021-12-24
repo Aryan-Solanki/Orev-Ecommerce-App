@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orev/components/comingsoonpage.dart';
 import 'package:orev/providers/auth_provider.dart';
 import 'package:orev/screens/help_center/help_center.dart';
+import 'package:orev/screens/home/components/TabletHomeHeader.dart';
 import 'package:orev/screens/home/components/home_header.dart';
 import 'package:orev/screens/home/home_screen.dart';
 import 'package:orev/screens/my_account/my_account.dart';
@@ -42,7 +43,7 @@ class _ProfileScreenTabletState extends State<ProfileScreenTablet> {
           child: Column(
             children: [
               SizedBox(height: getProportionateScreenHeight(10)),
-              HomeHeader(),
+              TabletHomeHeader(),
               SizedBox(height: getProportionateScreenHeight(10)),
               Column(
                 children: [
