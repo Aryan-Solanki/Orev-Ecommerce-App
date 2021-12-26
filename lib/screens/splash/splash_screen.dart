@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 body: ScreenTypeLayout(
                   mobile: SplashScreenMobile(),
                   tablet: SplashScreenTablet(),
-                  desktop: SplashScreenDesktop(),
+                  desktop: HomeScreen(),
                 ),
               )
             : HomeScreen()
