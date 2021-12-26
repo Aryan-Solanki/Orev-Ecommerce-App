@@ -46,8 +46,8 @@ class _FourGridState extends State<FourGrid> {
     return Column(
       children: [
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenHeight(20)),
           child: SectionTitle(
             title: widget.card_title,
             press: () {},
@@ -59,24 +59,27 @@ class _FourGridState extends State<FourGrid> {
         ResponsiveBuilder(
           builder: (context, sizingInformation) {
             // Check the sizing information here and return your UI
-            if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+            if (sizingInformation.deviceScreenType ==
+                DeviceScreenType.desktop) {
               return Column(
                 children: [
                   Row(
                     children: [
                       Expanded(child: ProductCard(product: ProductList[0])),
                       Expanded(child: ProductCard(product: ProductList[1])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
-                    ],
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(15),),
-                  Row(
-                    children: [
                       Expanded(child: ProductCard(product: ProductList[2])),
                       Expanded(child: ProductCard(product: ProductList[3])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: ProductCard(product: ProductList[4])),
+                      Expanded(child: ProductCard(product: ProductList[5])),
+                      Expanded(child: ProductCard(product: ProductList[6])),
+                      Expanded(child: ProductCard(product: ProductList[7])),
                     ],
                   )
                 ],
@@ -90,15 +93,17 @@ class _FourGridState extends State<FourGrid> {
                     children: [
                       Expanded(child: ProductCard(product: ProductList[0])),
                       Expanded(child: ProductCard(product: ProductList[1])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[2])),
                     ],
                   ),
-                  SizedBox(height: getProportionateScreenHeight(15),),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
                   Row(
                     children: [
-                      Expanded(child: ProductCard(product: ProductList[2])),
                       Expanded(child: ProductCard(product: ProductList[3])),
-                      Expanded(child: ProductCard(product: ProductList[1])),
+                      Expanded(child: ProductCard(product: ProductList[4])),
+                      Expanded(child: ProductCard(product: ProductList[5])),
                     ],
                   )
                 ],
@@ -113,7 +118,9 @@ class _FourGridState extends State<FourGrid> {
                       Expanded(child: ProductCard(product: ProductList[0])),
                     ],
                   ),
-                  SizedBox(height: getProportionateScreenHeight(15),),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
                   Row(
                     children: [
                       Expanded(child: ProductCard(product: ProductList[2])),
@@ -131,7 +138,9 @@ class _FourGridState extends State<FourGrid> {
                     Expanded(child: ProductCard(product: ProductList[1])),
                   ],
                 ),
-                SizedBox(height: getProportionateScreenHeight(15),),
+                SizedBox(
+                  height: getProportionateScreenHeight(15),
+                ),
                 Row(
                   children: [
                     Expanded(child: ProductCard(product: ProductList[2])),
@@ -142,7 +151,6 @@ class _FourGridState extends State<FourGrid> {
             );
           },
         ),
-
       ],
     );
   }

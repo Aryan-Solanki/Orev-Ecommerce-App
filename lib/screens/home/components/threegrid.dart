@@ -54,8 +54,8 @@ class _ThreeGridState extends State<ThreeGrid> {
           return Column(
             children: [
               Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(20)),
                 child: SectionTitle(
                   title: widget.card_title,
                   press: () {},
@@ -67,39 +67,39 @@ class _ThreeGridState extends State<ThreeGrid> {
               ProductList.length == 0
                   ? SkeletonListView()
                   : Row(
-                children: [
-                  Expanded(
-                    child: ProductCard(
-                        aspectRetio: 0.89, product: ProductList[1]),
-                  ),
-                  Expanded(
-                    child: Column(
                       children: [
-                        ProductCard(product: ProductList[1]),
-                        SizedBox(
-                          height: getProportionateScreenHeight(7),
+                        Expanded(
+                          child: ProductCard(
+                              aspectRetio: 0.89, product: ProductList[0]),
                         ),
-                        ProductCard(product: ProductList[1])
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ProductCard(product: ProductList[1]),
+                              SizedBox(
+                                height: getProportionateScreenHeight(7),
+                              ),
+                              ProductCard(product: ProductList[2])
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: ProductCard(
+                              aspectRetio: 0.89, product: ProductList[3]),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ProductCard(product: ProductList[4]),
+                              SizedBox(
+                                height: getProportionateScreenHeight(7),
+                              ),
+                              ProductCard(product: ProductList[5])
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    child: ProductCard(
-                        aspectRetio: 0.89, product: ProductList[1]),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        ProductCard(product: ProductList[1]),
-                        SizedBox(
-                          height: getProportionateScreenHeight(7),
-                        ),
-                        ProductCard(product: ProductList[1])
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ],
           );
         }
@@ -108,8 +108,8 @@ class _ThreeGridState extends State<ThreeGrid> {
           return Column(
             children: [
               Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(20)),
                 child: SectionTitle(
                   title: widget.card_title,
                   press: () {},
@@ -121,35 +121,35 @@ class _ThreeGridState extends State<ThreeGrid> {
               ProductList.length == 0
                   ? SkeletonListView()
                   : Row(
-                children: [
-                  Expanded(
-                    child: ProductCard(
-                        aspectRetio: 0.89, product: ProductList[1]),
-                  ),
-                  Expanded(
-                    child: Column(
                       children: [
-                        ProductCard(product: ProductList[1]),
-                        SizedBox(
-                          height: getProportionateScreenHeight(7),
+                        Expanded(
+                          child: ProductCard(
+                              aspectRetio: 0.89, product: ProductList[0]),
                         ),
-                        ProductCard(product: ProductList[1])
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ProductCard(product: ProductList[1]),
+                              SizedBox(
+                                height: getProportionateScreenHeight(7),
+                              ),
+                              ProductCard(product: ProductList[2])
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ProductCard(product: ProductList[3]),
+                              SizedBox(
+                                height: getProportionateScreenHeight(7),
+                              ),
+                              ProductCard(product: ProductList[4])
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        ProductCard(product: ProductList[1]),
-                        SizedBox(
-                          height: getProportionateScreenHeight(7),
-                        ),
-                        ProductCard(product: ProductList[1])
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ],
           );
         }
@@ -157,8 +157,8 @@ class _ThreeGridState extends State<ThreeGrid> {
         return Column(
           children: [
             Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenHeight(20)),
               child: SectionTitle(
                 title: widget.card_title,
                 press: () {},
@@ -170,28 +170,27 @@ class _ThreeGridState extends State<ThreeGrid> {
             ProductList.length == 0
                 ? SkeletonListView()
                 : Row(
-              children: [
-                Expanded(
-                  child: ProductCard(
-                      aspectRetio: 0.89, product: ProductList[1]),
-                ),
-                Expanded(
-                  child: Column(
                     children: [
-                      ProductCard(product: ProductList[1]),
-                      SizedBox(
-                        height: getProportionateScreenHeight(7),
+                      Expanded(
+                        child: ProductCard(
+                            aspectRetio: 0.89, product: ProductList[0]),
                       ),
-                      ProductCard(product: ProductList[1])
+                      Expanded(
+                        child: Column(
+                          children: [
+                            ProductCard(product: ProductList[1]),
+                            SizedBox(
+                              height: getProportionateScreenHeight(7),
+                            ),
+                            ProductCard(product: ProductList[2])
+                          ],
+                        ),
+                      )
                     ],
-                  ),
-                )
-              ],
-            )
+                  )
           ],
         );
       },
     );
   }
 }
-
